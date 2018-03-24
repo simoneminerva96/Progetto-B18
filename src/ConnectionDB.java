@@ -21,7 +21,7 @@ public class ConnectionDB {
             st = cn.createStatement(); //creo un statement sulla connessione
             rs = st.executeQuery(sql); //faccio la query sullo statement
             while (rs.next() == true)
-                System.out.println(rs.getString("ID_CAT") + "\t" + rs.getString("ID_QUEST")+ "\t" + rs.getString("DESCRIZIONE"));
+                System.out.println(rs.getString("ID_QUEST") + "\t" + rs.getString("DESCRIZIONE"));
         } catch (SQLException e) {
             System.out.println("errore:" + e.getMessage());
         } // fine try-catch
