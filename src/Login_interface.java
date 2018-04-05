@@ -1,4 +1,3 @@
-package sample;
 
 import javafx.application.Application;
 import javafx.event.*;
@@ -16,12 +15,11 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
-
-
-
-public class Main extends Application {
-
+/*
+   CLASSE PER INTERFACCIA GRAFICA DI LOGIN E REGISTRAZIONE
+   DA COMMENTARE OPPORTUNAMENTE OGNI METODO/ATTRIBUTO
+*/
+public class Login_interface extends Application {
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Login");
@@ -80,7 +78,6 @@ public class Main extends Application {
     }
 
 
-    public static void main(String[] args) {
-        launch(args);
+    public static void main(String[] args) {launch(args);
     }
 }
