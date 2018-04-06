@@ -1,5 +1,7 @@
 import java.sql.*;
 import java.io.IOException;
+import java.util.Scanner;
+
 
 public class ConnectionDB {
     /*public static void main(String[] args) throws SQLException {
@@ -37,7 +39,18 @@ public class ConnectionDB {
 
 
     public static void main(String[] args) {
-        getPlayer("Mirko", "12345");
+
+        String NAME;
+        String PASS;
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Inserisci il tuo nome: ");
+        NAME = scanner.nextLine();
+
+        System.out.print("Inserisci la tua password: ");
+        PASS = scanner.nextLine();
+
+        getPlayer(NAME, PASS);
     }
 
     /**
