@@ -1,3 +1,4 @@
+import javax.xml.transform.Result;
 import java.sql.*;
 import java.io.IOException;
 import java.util.Scanner;
@@ -46,18 +47,28 @@ public class ConnectionDB {
 
         System.out.print("Inserisci il tuo nome: ");
         NAME = scanner.nextLine();
-
+                                                                //questo è l'inserimento di un nuovo utente
         System.out.print("Inserisci la tua password: ");
         PASS = scanner.nextLine();
 
         getPlayer(NAME, PASS);
+
+//------------------------------------------------------------------------------
+
+        System.out.print("Inserisci il tuo nome: ");
+        NAME = scanner.nextLine();
+                                                                    //questo è il login
+        System.out.print("Inserisci la tua password: ");
+        PASS = scanner.nextLine();
+
+        ExistsPlayer(NAME, PASS);
     }
 
     /**
      * @param IDNAME
      * @param PW
      */
-    public static void getPlayer(String IDNAME, String PW) {
+    public static void getPlayer(String IDNAME, String PW) {  //Procedura per l'inserimento delle credenziali utente nel DB
         //
         String query = "{ call ADD_PLAYER(?,?) }";
         ResultSet rs;
@@ -70,9 +81,34 @@ public class ConnectionDB {
 
             rs = stmt.executeQuery();
 
-            /*while (rs.next()) {
-                System.out.println(String.format("%s - %s", rs.getString("ID") + " " + rs.getString("PASSWORD")));
-            }*/
+            while (rs.next()) {
+                System.out.println( rs.getString("msg"));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+
+    }
+
+    public static void ExistsPlayer(String IDNAME, String PW) { //Funzione per fare ritornare il messaggio di avvenuto login o errore
+        //
+        String query = "{ ?=call PLAYER_EXIST(?,?) }";
+        ResultSet rs;
+
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/trivial?user=root&password=root");
+             CallableStatement stmt = conn.prepareCall(query)) {
+
+            stmt.registerOutParameter(1, Types.VARCHAR);
+            stmt.setString(2,IDNAME);
+            stmt.setString(3,PW);
+
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                System.out.println( rs.getString(1));
+            }
+
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
