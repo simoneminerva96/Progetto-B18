@@ -15,13 +15,22 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import java.util.*;
+import java.util.Scanner;
 /*
    CLASSE PER INTERFACCIA GRAFICA DI LOGIN E REGISTRAZIONE
    DA COMMENTARE OPPORTUNAMENTE OGNI METODO/ATTRIBUTO
 */
 public class Login_interface extends Application {
+
+    public static void main(String[] args) {launch(args);
+    }
+
     @Override
     public void start(Stage primaryStage) {
+
+        Scanner scanner = new Scanner(System.in);
+
         primaryStage.setTitle("Login");
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);
@@ -31,6 +40,7 @@ public class Login_interface extends Application {
         Text sceneTitle = new Text("Login");
         sceneTitle.setFont(Font.font("Tahoma", FontWeight.NORMAL,20));
         grid.add(sceneTitle,0,0,2,1);
+
         Label userName = new Label("Username:");
         grid.add(userName, 0, 1);
 
@@ -44,40 +54,53 @@ public class Login_interface extends Application {
         grid.add(pwBox, 1, 2);
 
         Button btn = new Button("Sign in");
-        //Button btn2 = new Button ("Sign up");
+        Button btn2 = new Button ("Sign up");
+
         HBox hbBtn = new HBox(10);
-        //HBox hbBtn2 = new HBox(10);
-        hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
-        //hbBtn2.setAlignment(Pos.BOTTOM_RIGHT);
+        HBox hbBtn2 = new HBox(10);
+
+        hbBtn.setAlignment(Pos.BOTTOM_LEFT);
+        hbBtn2.setAlignment(Pos.BOTTOM_RIGHT);
+
         hbBtn.getChildren().add(btn);
-        //hbBtn2.getChildren().add(btn2);
-        //grid.add(hbBtn2,0,4);
+        hbBtn2.getChildren().add(btn2);
+
         grid.add(hbBtn, 1, 4);
+        grid.add(hbBtn2,0,4);
+
         final Text actiontarget = new Text();
-        //final Text actiontarget2 = new Text();
+        final Text actiontarget2 = new Text();
+
         grid.add(actiontarget, 1, 6);
-        //grid.add(actiontarget2, 1,6);
-        btn.setOnAction(new EventHandler<ActionEvent>() {
+        grid.add(actiontarget2, 1,7);
+
+        btn.setOnAction(new EventHandler<ActionEvent>() { //bottone per il login
             @Override
             public void handle(ActionEvent e) {
+
                 actiontarget.setFill(Color.FIREBRICK);
-                actiontarget.setText("Ho premuto sign in");
+                actiontarget.setText("BENVENUTO!");
+
             }
         });
-        /*btn2.setOnAction(new EventHandler<ActionEvent>() {
+
+
+        btn2.setOnAction(new EventHandler<ActionEvent>() { //bottone per la registrazione
 
             @Override
             public void handle(ActionEvent e) {
+
                 actiontarget2.setFill(Color.FIREBRICK);
-                actiontarget2.setText("Ho premuto sign up");
+                actiontarget2.setText("Ti sei registrato");
             }
-        });*/
+        });
+
+
         Scene scene = new Scene(grid, 400, 400);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
 
 
-    public static void main(String[] args) {launch(args);
-    }
+
 }
