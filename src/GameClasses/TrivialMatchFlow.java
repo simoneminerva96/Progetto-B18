@@ -20,10 +20,13 @@ public class TrivialMatchFlow {
         //fine giocatori prova
         match.initializePlayers(gamingPlayers); //inizializzo i giocatori
         match.InitializePossiblePieces();  //inizializzo le possibili pedine per la scelta
+        match.BeginningDieRoll();
+        match.pieceChoose();
     }
 
     //psvm che poi andrà tolto perche questa classe esegue le operazioni nel costruttore quando viene istanziata
     public static void main(String[] args) {
+
         TrivialMatchFlow prova=new TrivialMatchFlow();
     }
 }

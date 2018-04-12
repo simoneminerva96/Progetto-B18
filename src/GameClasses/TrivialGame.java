@@ -1,7 +1,6 @@
 package GameClasses;
-
 import java.awt.*;
-import java.util.ArrayList;
+import java.util.*;
 
 /*
         classe a cui corrisponde una singola partita effettiva
@@ -21,9 +20,6 @@ public class TrivialGame {
         return players;
     }
 
-    public ArrayList<Piece> getPossiblePieces() {
-        return possiblePieces;
-    }
 
     //metodo che crea i giocatori che parteciperanno alla partita, riceve in ingresso la lista dei nickname
     public void initializePlayers(ArrayList<String> nicknames){
@@ -40,9 +36,90 @@ public class TrivialGame {
         possiblePieces.add(new Piece(Color.GREEN));
     }
 
-    //metodo che esegue il lancio iniziale del dado e che ordina di conseguenza i giocatori nell'ordine in cui giocheranno
+    /*metodo che esegue il lancio iniziale del dado e che ordina di conseguenza i giocatori nell'ordine in cui giocheranno
+    NB: implementato facendo in modo che i 4 lanci diano risultati diversi tra loro, altrimenti si rischia che questa fase
+        del gioco si prolunghi troppo in caso di continui pareggi
+    */
     public void BeginningDieRoll(){
-        //da implementare
+        ArrayList<Integer> launches=new ArrayList<Integer>();
+        launches.add(die.Launch());
+        Boolean check=false;
+        for(int i=0;i<players.size() -1;i++){
+            Integer actualLaunch = null;
+            while (check==false)
+            {
+                actualLaunch = die.Launch();
+                check = checkDifferentLaunches(launches, actualLaunch);
+            }
+            launches.add(actualLaunch);
+            check=false;
+        }
+        for(int i=0;i<players.size();i++) players.get(i).setInitialRollResult(launches.get(i)); // a ogni giocatore viene associato il risultato del suo lancio
+        //STAMPA DEL RISULTATO DEL LANCIO
+        System.out.println("risultati del lancio:");
+        for(int i=0;i<launches.size();i++) System.out.println("giocatore " + players.get(i).getNickname() + " : " + players.get(i).getInitialRollResult());
+        //ordinamento lanci precedenti
+        ArrayList<Integer> orderedLaunches=new ArrayList<Integer>();
+        orderedLaunches.addAll(orderLaunches(launches));
+        //creazione lista ordinata dei giocatori
+        ArrayList<Player> orderedPlayers=new ArrayList<Player>();
+        for(int i=0;i<orderedLaunches.size();i++){
+            for(int j=0;j<players.size();j++){
+                if(players.get(j).getInitialRollResult() == orderedLaunches.get(i)) orderedPlayers.add(players.get(j));
+            }
+        }
+        players.clear();
+        players.addAll(orderedPlayers);
+        //stampa giocatori ordinati
+        System.out.println("ordered players:");
+        for(int i=0;i<players.size();i++) System.out.println(players.get(i).getNickname());
     }
 
+    //metodo che ordina un array di interi in ordine decrescente
+    private ArrayList<Integer> orderLaunches(ArrayList<Integer> launches){
+        int swipVariable;
+        for(int i=0;i<launches.size();i++){
+            for(int j=0;j<launches.size();j++){
+                if(launches.get(i) > launches.get(j)){
+                    swipVariable=launches.get(i);
+                    launches.set(i,launches.get(j));
+                    launches.set(j,swipVariable);
+                }
+            }
+        }
+        return launches;
+    }
+
+    //metodo che viene usato per controllare che i lanci dei giocatori siano diversi tra loro
+    private Boolean checkDifferentLaunches(ArrayList<Integer> previousLaunches, int currentLaunch){
+        Boolean check=true;
+        for(int i=0;i<previousLaunches.size();i++){
+            if(currentLaunch==previousLaunches.get(i)) check=false;
+        }
+        return check;
+    }
+
+    /*
+        metodo che implementa la scelta iniziale della pedina (per ora con scelta da terminale)
+        NB finire con i casi(eccezzioni):
+        1)in cui non si inserisce una stringa corrispondente a un colore possibile
+        2)l'ultimo giocatore gli viene associata l'ultima pedina rimasta senza esplicita scelta
+     */
+    public void pieceChoose(){
+        Scanner sc=new Scanner(System.in);
+        for(int i=0;i<players.size();i++){
+            System.out.println("\n" + players.get(i).getNickname() + " quale pedina scegli?");
+            System.out.println("pedine disponibili: ");
+            for(int j=0;j<possiblePieces.size();j++){
+                System.out.print((j+1) +")" + possiblePieces.get(j).getAssociatedColor() + " ");
+            }
+            String choose=sc.next();
+            for(int h=0;h<possiblePieces.size();h++){
+                if(possiblePieces.get(h).getAssociatedColor().equalsIgnoreCase(choose)){
+                    players.get(i).setChosenPiece(possiblePieces.get(h));
+                    possiblePieces.remove(h);
+                }
+            }
+        }
+    }
 }
