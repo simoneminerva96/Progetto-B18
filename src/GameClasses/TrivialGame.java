@@ -9,11 +9,13 @@ public class TrivialGame {
     private ArrayList<Player> players;      //giccatori partecipanti
     private ArrayList<Piece> possiblePieces;        //possibili pedine tra cui scegliere
     private Die die;        //dado
+    private Board playBoard;        //tabellone di gioco
 
     public TrivialGame(){
         players=new ArrayList<Player>();
         possiblePieces=new ArrayList<Piece>();
         die=new Die();
+        playBoard=new Board();
     }
 
     public ArrayList<Player> getPlayers() {
@@ -101,8 +103,8 @@ public class TrivialGame {
 
     /*
         metodo che implementa la scelta iniziale della pedina (per ora con scelta da terminale)
-        NB finire con i casi(eccezzioni):
-        1)in cui non si inserisce una stringa corrispondente a un colore possibile
+        NB finire con i casi:
+        1)in cui un giocatore inserisci un colore corrispondente a una pedina gia scelta
         2)l'ultimo giocatore gli viene associata l'ultima pedina rimasta senza esplicita scelta
      */
     public void pieceChoose(){
@@ -113,7 +115,13 @@ public class TrivialGame {
             for(int j=0;j<possiblePieces.size();j++){
                 System.out.print((j+1) +")" + possiblePieces.get(j).getAssociatedColor() + " ");
             }
-            String choose=sc.next();
+            String choose;
+            do {
+                choose = sc.next();
+                if (!(choose.equalsIgnoreCase("red") || choose.equalsIgnoreCase("yellow") || choose.equalsIgnoreCase("blue") || choose.equalsIgnoreCase("green"))) {
+                    System.out.println("inserisci uno tra i colori disponibili");
+                }
+            }while (!(choose.equalsIgnoreCase("red") || choose.equalsIgnoreCase("yellow") || choose.equalsIgnoreCase("blue") || choose.equalsIgnoreCase("green")));
             for(int h=0;h<possiblePieces.size();h++){
                 if(possiblePieces.get(h).getAssociatedColor().equalsIgnoreCase(choose)){
                     players.get(i).setChosenPiece(possiblePieces.get(h));
@@ -121,5 +129,9 @@ public class TrivialGame {
                 }
             }
         }
+    }
+    //metodo che esegue il flusso dei turni di gioco
+    public void Play(){
+
     }
 }
