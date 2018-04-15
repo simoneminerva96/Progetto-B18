@@ -1,3 +1,4 @@
+package javagame;
 import javax.xml.transform.Result;
 import java.sql.*;
 import java.io.IOException;
@@ -39,8 +40,7 @@ public class ConnectionDB {
     }// fine main*/
 
 
-    public static void main(String[] args) {
-
+    public static void main(String[] args) throws SQLException  {
         String NAME;
         String PASS;
         Scanner scanner = new Scanner(System.in);
@@ -62,13 +62,17 @@ public class ConnectionDB {
         PASS = scanner.nextLine();
 
         ExistsPlayer(NAME, PASS);
+
+//-------------------------------------------------------------------------------
+
+
+        ChooseCOD("MAT"); //A seconda del codice passato, il metodo chiamato fa tornare una domanda casuale con le relative risposte
+
+
     }
 
-    /**
-     * @param IDNAME
-     * @param PW
-     */
-    public static void getPlayer(String IDNAME, String PW) {  //Procedura per l'inserimento delle credenziali utente nel DB
+
+    public static String getPlayer(String IDNAME, String PW) {  //Procedura per l'inserimento delle credenziali utente nel DB
         //
         String query = "{ call ADD_PLAYER(?,?) }";
         ResultSet rs;
@@ -82,13 +86,16 @@ public class ConnectionDB {
             rs = stmt.executeQuery();
 
             while (rs.next()) {
+                String r = rs.getString("msg"); //Il risultato viene inserito in una stringa
                 System.out.println( rs.getString("msg"));
+                return r;
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
 
 
+        return query;
     }
 
     public static void ExistsPlayer(String IDNAME, String PW) { //Funzione per fare ritornare il messaggio di avvenuto login o errore
@@ -107,6 +114,7 @@ public class ConnectionDB {
 
             while (rs.next()) {
                 System.out.println( rs.getString(1));
+
             }
 
         } catch (SQLException e) {
@@ -115,5 +123,179 @@ public class ConnectionDB {
 
 
     }
+
+    public static String ChooseCOD(String COD) { //Funzione per fare ritornare il messaggio di avvenuto login o errore
+        //
+        String query = "{ ?=call CHOOSE_IDQUEST(?) }";
+        ResultSet rs;
+
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/trivial?user=root&password=root");
+             CallableStatement stmt = conn.prepareCall(query)) {
+
+            stmt.registerOutParameter(1, Types.VARCHAR);
+            stmt.setString(2,COD);
+
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                String r =( rs.getString(1));
+                System.out.println( rs.getString(1));
+
+                ChooseQUEST(r);  //Passa il codice generato al metodo per la visaulizzazione della domanda
+
+
+                //Con questi quattro metodi, passa il codice generato ai metodi i quali, generano le quattro risposte corrispondenti
+                ChooseANSWER1(r);
+                ChooseANSWER2(r);
+                ChooseANSWER3(r);
+                ChooseANSWER4(r);
+
+                return r;
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return  query;
+
+    }
+
+    public static void ChooseQUEST(String QUEST) { //Funzione per fare ritornare il messaggio di avvenuto login o errore
+        //
+        String query = "{ ?=call CHOOSE_QUEST(?) }";
+        ResultSet rs;
+        String re;
+
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/trivial?user=root&password=root");
+             CallableStatement stmt = conn.prepareCall(query)) {
+
+            stmt.registerOutParameter(1, Types.VARCHAR);
+            stmt.setString(2,QUEST);
+
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                System.out.println( rs.getString(1));
+
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+
+
+    }
+
+    public static void ChooseANSWER1(String QUEST) { //Funzione per fare ritornare il messaggio di avvenuto login o errore
+        //
+        String query = "{ ?=call CHOOSE_ANSWER1(?) }";
+        ResultSet rs;
+        String re;
+
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/trivial?user=root&password=root");
+             CallableStatement stmt = conn.prepareCall(query)) {
+
+            stmt.registerOutParameter(1, Types.VARCHAR);
+            stmt.setString(2,QUEST);
+
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                System.out.println( rs.getString(1));
+
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+
+
+    }
+
+
+    public static void ChooseANSWER2(String QUEST) { //Funzione per fare ritornare il messaggio di avvenuto login o errore
+        //
+        String query = "{ ?=call CHOOSE_ANSWER2(?) }";
+        ResultSet rs;
+        String re;
+
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/trivial?user=root&password=root");
+             CallableStatement stmt = conn.prepareCall(query)) {
+
+            stmt.registerOutParameter(1, Types.VARCHAR);
+            stmt.setString(2,QUEST);
+
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                System.out.println( rs.getString(1));
+
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+
+
+    }
+
+    public static void ChooseANSWER3 (String QUEST) { //Funzione per fare ritornare il messaggio di avvenuto login o errore
+        //
+        String query = "{ ?=call CHOOSE_ANSWER3(?) }";
+        ResultSet rs;
+        String re;
+
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/trivial?user=root&password=root");
+             CallableStatement stmt = conn.prepareCall(query)) {
+
+            stmt.registerOutParameter(1, Types.VARCHAR);
+            stmt.setString(2,QUEST);
+
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                System.out.println( rs.getString(1));
+
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+
+
+    }
+
+    public static void ChooseANSWER4(String QUEST) { //Funzione per fare ritornare il messaggio di avvenuto login o errore
+        //
+        String query = "{ ?=call CHOOSE_ANSWER4(?) }";
+        ResultSet rs;
+        String re;
+
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/trivial?user=root&password=root");
+             CallableStatement stmt = conn.prepareCall(query)) {
+
+            stmt.registerOutParameter(1, Types.VARCHAR);
+            stmt.setString(2,QUEST);
+
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                System.out.println( rs.getString(1));
+
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+
+
+    }
+
 
 }
