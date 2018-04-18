@@ -1,14 +1,11 @@
 package Test;
 
-
 import GameClasses.Board;
 import GameClasses.Die;
 import GameClasses.Player;
 import GameClasses.TrivialGame;
 import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
-
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.*;
 
