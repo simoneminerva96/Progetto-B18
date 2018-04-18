@@ -22,6 +22,7 @@ public class TrivialMatchFlow {
         match.InitializePossiblePieces();  //inizializzo le possibili pedine per la scelta
         match.BeginningDieRoll();
         match.pieceChoose();
+        match.play();
     }
 
     //psvm che poi andrà tolto perche questa classe esegue le operazioni nel costruttore quando viene istanziata

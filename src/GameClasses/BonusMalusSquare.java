@@ -5,8 +5,8 @@ package GameClasses;
 public class BonusMalusSquare extends Square {
     private String bonusMalusType;
 
-    public BonusMalusSquare(Integer index,Categories category,String bonusMalusType){
-        super(index,category);
+    public BonusMalusSquare(Integer index,String bonusMalusType){
+        super(index);
         this.bonusMalusType=bonusMalusType;
     }
 
