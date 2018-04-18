@@ -1,4 +1,4 @@
-package javagame;
+package Graphics;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.*;
 

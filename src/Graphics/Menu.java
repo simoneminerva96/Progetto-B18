@@ -1,4 +1,4 @@
-package javagame;
+package Graphics;
 
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.*;
@@ -18,8 +18,8 @@ public class Menu extends BasicGameState {
 
     @Override
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
-        playNow = new Image("res/play.png");
-        exitGame = new Image("res/exit.png");
+        playNow = new Image("Immagini/play.png");
+        exitGame = new Image("Immagini/exit.png");
 
     }
     // we need to draw everything in render, it's like a paint brush

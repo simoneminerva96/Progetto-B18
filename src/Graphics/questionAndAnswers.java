@@ -1,4 +1,4 @@
-package javagame;
+package Graphics;
 
 public class questionAndAnswers {
     static String question ="Qual è la capitale dell'Italia?";

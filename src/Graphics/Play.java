@@ -1,4 +1,4 @@
-package javagame;
+package Graphics;
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.*;
@@ -22,11 +22,11 @@ public class Play extends BasicGameState {
 
     @Override
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
-        worldMap = new Image("res/sfondo.png");
-        Image[] walkUp = {new Image("res/blinky_up1.png"), new Image("res/blinky_up2.png")};
-        Image[] walkDown = {new Image("res/blinky_down1.png"), new Image("res/blinky_down2.png")};
-        Image[] walkLeft = {new Image("res/blinky_left1.png"), new Image("res/blinky_left2.png")};
-        Image[] walkRight = {new Image("res/blinky_right1.png"), new Image("res/blinky_right2.png")};
+        worldMap = new Image("Immagini/sfondo.png");
+        Image[] walkUp = {new Image("Immagini/blinky_up1.png"), new Image("Immagini/blinky_up2.png")};
+        Image[] walkDown = {new Image("Immagini/blinky_down1.png"), new Image("Immagini/blinky_down2.png")};
+        Image[] walkLeft = {new Image("Immagini/blinky_left1.png"), new Image("Immagini/blinky_left2.png")};
+        Image[] walkRight = {new Image("Immagini/blinky_right1.png"), new Image("Immagini/blinky_right2.png")};
         //freccia = new Image ("res/freccia.png");
         movingUp = new Animation(walkUp, duration, true);
         movingDown = new Animation(walkDown, duration, true);

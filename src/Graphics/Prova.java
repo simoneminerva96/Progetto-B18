@@ -1,4 +1,4 @@
-package javagame;
+package Graphics;
 
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.GameContainer;
@@ -11,6 +11,7 @@ import org.newdawn.slick.state.StateBasedGame;
 public class Prova extends BasicGameState {
     boolean answered = false;
     boolean end = false;
+    boolean passage = false;
 
     public Prova (int id){
 
@@ -38,11 +39,16 @@ public class Prova extends BasicGameState {
                 if (end == true) {
                     graphics.clear();
                     graphics.drawString("Risposta esatta!!", 500, 500);
+                    passage = true;
                 } else {
                     graphics.clear();
                     graphics.drawString("Risposta sbagliata buuu", 500, 500);
+                    passage = true;
                 }
+            }
 
+            if (passage == true){
+                stateBasedGame.enterState(1);
             }
     }
 
