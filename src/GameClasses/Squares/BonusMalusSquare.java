@@ -1,4 +1,5 @@
-package GameClasses;
+package GameClasses.Squares;
+import GameClasses.*;
 /*
     CLASSE CHE CORRISPONDE ALLA CASELLE BONUS MALUS
  */
