@@ -40,7 +40,7 @@ public class Turn {
         System.out.println("posizione di partenza : " + playerOnTurn.getActualPosition());
         if(direction.equalsIgnoreCase("cw")){
             if(playerOnTurn.getActualPosition() + resultOfDieRoll >= 40){
-                Integer position=playerOnTurn.getActualPosition() + resultOfDieRoll -39;
+                Integer position=playerOnTurn.getActualPosition() + resultOfDieRoll -40;
                 playerOnTurn.setActualPosition(position);
             }
             else playerOnTurn.setActualPosition(playerOnTurn.getActualPosition() + resultOfDieRoll);

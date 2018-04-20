@@ -2,11 +2,12 @@ package Test;
 
 import GameClasses.Board;
 import GameClasses.Die;
-import GameClasses.Player;
 import GameClasses.TrivialGame;
 import org.junit.jupiter.api.Test;
+
 import java.util.ArrayList;
-import static org.junit.Assert.assertTrue;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.*;
 
 class TrivialGameTest {
@@ -14,7 +15,7 @@ class TrivialGameTest {
     public void DieLaunch(){
         Die die=new Die();
         int roll=die.Launch();
-        //assertTrue(roll== 1 || roll== 2 || roll== 3 || roll== 4 || roll== 5 || roll== 6,"result: " + roll);
+        assertTrue(roll== 1 || roll== 2 || roll== 3 || roll== 4 || roll== 5 || roll== 6);
     }
     @Test
     public void Initialize4PlayersTest(){

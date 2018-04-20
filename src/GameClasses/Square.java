@@ -11,6 +11,7 @@ public class Square {
 
     public Square(Integer index){
         this.index=index;
+        possibleQuestions=new ArrayList<Question>();
     }
 
     public Integer getIndex() {
