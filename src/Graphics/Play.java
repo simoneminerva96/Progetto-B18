@@ -5,12 +5,11 @@ import org.newdawn.slick.state.*;
 
 public class Play extends BasicGameState {
     Animation pacman, movingUp, movingDown, movingLeft, movingRight;
-    Image worldMap, freccia;
+    Image worldMap;
     boolean quit = false;
     int [] duration = {200,200};
     float pacPositionX = 770;
     float pacPositionY = 608;
-
 
     public Play (int state) {
     }
@@ -27,7 +26,6 @@ public class Play extends BasicGameState {
         Image[] walkDown = {new Image("Immagini/blinky_down1.png"), new Image("Immagini/blinky_down2.png")};
         Image[] walkLeft = {new Image("Immagini/blinky_left1.png"), new Image("Immagini/blinky_left2.png")};
         Image[] walkRight = {new Image("Immagini/blinky_right1.png"), new Image("Immagini/blinky_right2.png")};
-        //freccia = new Image ("res/freccia.png");
         movingUp = new Animation(walkUp, duration, true);
         movingDown = new Animation(walkDown, duration, true);
         movingLeft = new Animation(walkLeft, duration, true);
@@ -38,9 +36,9 @@ public class Play extends BasicGameState {
     @Override
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
        worldMap.draw(185, 27);
-       //freccia.draw (850,600);
        pacman.draw(pacPositionX, pacPositionY);
        g.drawString("x:"+ pacPositionX + "\ny:" +pacPositionY, 0,300);
+
 
        if (quit == true){
            g.drawString("Resume (R)", 250,330);
@@ -57,24 +55,17 @@ public class Play extends BasicGameState {
         int posX = Mouse.getX();
         int posY = Mouse.getY();
         //System.out.println("x: "+posX+ " y: "+posY);
-        /*if (input.isMouseButtonDown(0)){
 
-            }
-        if (input.isMouseButtonDown(1)){
-            pacman = movingRight;
-            pacPositionX += 6;
-        }*/
-
-
-        /*if (input.isKeyDown(Input.KEY_C)){
-            pacPositionX -= 6;
-        }
         if (input.isKeyDown(Input.KEY_L)){
-           sbg.enterState(2);
-        }*/
+            if (questionAndAnswers.isAnswered() == false) {
+                sbg.enterState(2);
+            }
+        }
 
-        if (pacPositionX>689 && pacPositionX<711){
-            sbg.enterState(2);
+        if (pacPositionX>686 && pacPositionX<743) {
+            if (questionAndAnswers.isAnswered() == false) {
+                sbg.enterState(2);
+            }
         }
         if (input.isKeyDown(Input.KEY_UP)){
             pacman = movingUp;

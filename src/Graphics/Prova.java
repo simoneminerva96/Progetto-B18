@@ -1,19 +1,20 @@
 package Graphics;
 
 import org.lwjgl.input.Mouse;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Input;
-import org.newdawn.slick.SlickException;
+import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.state.transition.FadeInTransition;
+import org.newdawn.slick.state.transition.FadeOutTransition;
+
 
 public class Prova extends BasicGameState {
+    Image torna;
     boolean answered = false;
     boolean end = false;
     boolean passage = false;
 
-    public Prova (int id){
+    public Prova (int state){
 
     }
     @Override
@@ -23,33 +24,29 @@ public class Prova extends BasicGameState {
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-
+        torna = new Image ("Immagini/freccia.png");
     }
 
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
-        //graphics.drawString("Sei entrato in prova", 100, 100);
             graphics.drawString(questionAndAnswers.question, 100, 100);
             graphics.drawString(questionAndAnswers.a.answer, 100, 200);
             graphics.drawString(questionAndAnswers.a1.answer, 100, 300);
             graphics.drawString(questionAndAnswers.a2.answer, 100, 400);
             graphics.drawString(questionAndAnswers.a3.answer, 100, 500);
+            torna.draw(300,300);
 
             if (answered == true) {
+                questionAndAnswers.setAnswered(true);
                 if (end == true) {
-                    graphics.clear();
                     graphics.drawString("Risposta esatta!!", 500, 500);
-                    passage = true;
                 } else {
-                    graphics.clear();
                     graphics.drawString("Risposta sbagliata buuu", 500, 500);
-                    passage = true;
                 }
             }
+            /*if (passage == true){
 
-            if (passage == true){
-                stateBasedGame.enterState(1);
-            }
+            }*/
     }
 
     @Override
@@ -58,10 +55,13 @@ public class Prova extends BasicGameState {
         int posX = Mouse.getX();
         int posY = Mouse.getY();
 
-        if (input.isKeyDown(Input.KEY_W)){
-            stateBasedGame.enterState(1);
-        }
         //System.out.println("x: "+posX+ " y: "+posY);
+
+        if (posX>305 && posX<348 && posY>349 && posY<394){
+            if (Mouse.isButtonDown(0)){
+                stateBasedGame.enterState(1, new FadeOutTransition(), new FadeInTransition());
+            }
+        }
 
         if (posX>100 && posX<165){
             if (posY<500 && posY>470) {
@@ -89,7 +89,6 @@ public class Prova extends BasicGameState {
                     answered = true;
                 }
             }
-
         }
 
     }
