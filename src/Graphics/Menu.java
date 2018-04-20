@@ -7,6 +7,7 @@ import org.newdawn.slick.state.*;
 public class Menu extends BasicGameState {
     Image playNow;
     Image exitGame;
+    Music music;
 
     public Menu (int state){
 
@@ -20,7 +21,8 @@ public class Menu extends BasicGameState {
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
         playNow = new Image("Immagini/play.png");
         exitGame = new Image("Immagini/exit.png");
-
+        music = new Music("Immagini/Wallpaper.wav");
+        music.loop();
     }
     // we need to draw everything in render, it's like a paint brush
     @Override

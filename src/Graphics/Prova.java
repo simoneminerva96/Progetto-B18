@@ -12,7 +12,6 @@ public class Prova extends BasicGameState {
     Image torna;
     boolean answered = false;
     boolean end = false;
-    boolean passage = false;
 
     public Prova (int state){
 
@@ -44,9 +43,6 @@ public class Prova extends BasicGameState {
                     graphics.drawString("Risposta sbagliata buuu", 500, 500);
                 }
             }
-            /*if (passage == true){
-
-            }*/
     }
 
     @Override
@@ -59,7 +55,10 @@ public class Prova extends BasicGameState {
 
         if (posX>305 && posX<348 && posY>349 && posY<394){
             if (Mouse.isButtonDown(0)){
-                stateBasedGame.enterState(1, new FadeOutTransition(), new FadeInTransition());
+                if (answered == true) {
+                    stateBasedGame.enterState(1, new FadeOutTransition(), new FadeInTransition());
+                }
+
             }
         }
 
