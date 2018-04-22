@@ -14,4 +14,11 @@ public class BonusMalusSquare extends Square {
     public String getBonusMalusType() {
         return bonusMalusType;
     }
+
+    //metodo con i bonus/malus da implementare
+    @Override
+    public Boolean goOnIt() {
+        System.out.println("bonus /malus da implementare");
+        return false;
+    }
 }

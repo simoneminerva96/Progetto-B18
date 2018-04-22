@@ -14,5 +14,15 @@ public class Question {
         this.answers.addAll(answers);
     }
 
+    public String getQuestion() {
+        return question;
+    }
 
+    public Categories getCategory() {
+        return category;
+    }
+
+    public ArrayList<Answer> getAnswers() {
+        return answers;
+    }
 }

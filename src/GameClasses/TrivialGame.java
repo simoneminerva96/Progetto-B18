@@ -140,10 +140,14 @@ public class TrivialGame {
             correct = playBoard.getSquares().get(players.get(index).getActualPosition()).goOnIt();  //esegue la domanda corrispondente alla posizione attuale del giocatore
             //da inserire metodo che controlla la possibile vittoria del giocatore
             if(correct==false){
+                System.out.println("risposta errata!\n");
                 index++;
                 if(index==players.size() ) index=0;
                 turn.setPlayerOnTurn(players.get(index));
                 correct=true;
+            }
+            else{
+                System.out.println("risposta corretta!\n");
             }
         }while (correct==true);
 

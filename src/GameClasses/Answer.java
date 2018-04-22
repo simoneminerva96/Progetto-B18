@@ -8,4 +8,12 @@ public class Answer {
         this.answer=answer;
         this.correct=correct;
     }
+
+    public Boolean getCorrect() {
+        return correct;
+    }
+
+    public String getAnswer() {
+        return answer;
+    }
 }
