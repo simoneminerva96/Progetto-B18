@@ -3,6 +3,9 @@ package Graphics;
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.*;
+import org.newdawn.slick.state.transition.BlobbyTransition;
+import org.newdawn.slick.state.transition.HorizontalSplitTransition;
+import org.newdawn.slick.state.transition.RotateTransition;
 
 public class Menu extends BasicGameState {
     Image playNow;
@@ -40,7 +43,7 @@ public class Menu extends BasicGameState {
         //play now button
         if ((posX>436 && posX<562)&&(posY>304 && posY<412)){
             if (Mouse.isButtonDown(0)){
-                sbg.enterState(1);
+                sbg.enterState(1, null, new BlobbyTransition());
             }
         }
         // exit now button

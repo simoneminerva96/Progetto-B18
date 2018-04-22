@@ -1,11 +1,13 @@
 package Graphics;
+
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.*;
 
 public class Play extends BasicGameState {
+    static final int DIM_CASELLA = 15;
     Animation pacman, movingUp, movingDown, movingLeft, movingRight;
-    Image worldMap;
+    Image worldMap, freccia, freccia2, freccia3, freccia4;
     boolean quit = false;
     int [] duration = {200,200};
     float pacPositionX = 770;
@@ -22,6 +24,10 @@ public class Play extends BasicGameState {
     @Override
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
         worldMap = new Image("Immagini/sfondo.png");
+        freccia = new Image ("Immagini/freccia.png");
+        freccia2 = new Image ("Immagini/freccia2.png");
+        freccia3 = new Image("Immagini/freccia3.png");
+        freccia4 = new Image ("Immagini/freccia4.png");
         Image[] walkUp = {new Image("Immagini/blinky_up1.png"), new Image("Immagini/blinky_up2.png")};
         Image[] walkDown = {new Image("Immagini/blinky_down1.png"), new Image("Immagini/blinky_down2.png")};
         Image[] walkLeft = {new Image("Immagini/blinky_left1.png"), new Image("Immagini/blinky_left2.png")};
@@ -36,9 +42,12 @@ public class Play extends BasicGameState {
     @Override
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
        worldMap.draw(185, 27);
+       freccia.draw(840,500);
+       freccia2.draw(900, 500);
+       freccia3.draw(870, 460);
+       freccia4.draw(870, 540);
        pacman.draw(pacPositionX, pacPositionY);
        g.drawString("x:"+ pacPositionX + "\ny:" +pacPositionY, 0,300);
-
 
        if (quit == true){
            g.drawString("Resume (R)", 250,330);
@@ -62,40 +71,43 @@ public class Play extends BasicGameState {
             }
         }
 
-        if (pacPositionX>686 && pacPositionX<743) {
-            if (questionAndAnswers.isAnswered() == false) {
-                sbg.enterState(2);
-            }
-        }
-        if (input.isKeyDown(Input.KEY_UP)){
-            pacman = movingUp;
-            pacPositionY -= delta * .1f;
-            if (pacPositionY<28) {
-                pacPositionY += delta * .1f;
+        // freccia sinistra
+        if (posX>858 && posX<885 && posY>160 && posY<190){
+            if (Mouse.isButtonDown(0)){
+                pacPositionX -= 1 * DIM_CASELLA;
+                if (pacPositionX<187) {
+                    pacPositionX += 1 * DIM_CASELLA;
+                }
             }
         }
 
-        if (input.isKeyDown(Input.KEY_DOWN)){
-            pacman = movingDown;
-            pacPositionY += delta * .1f;
-            if (pacPositionY>643){
-                pacPositionY -= delta * .1f;
+        // freccia destra
+        if (posX>915 && posX<935 && posY>160 && posY<190){
+            if (Mouse.isButtonDown(0)){
+                pacPositionX += 1 * DIM_CASELLA;
+                if (pacPositionX>800) {
+                    pacPositionX -= 1 * DIM_CASELLA;
+                }
             }
         }
 
-        if (input.isKeyDown(Input.KEY_LEFT)){
-            pacman = movingLeft;
-                pacPositionX -= delta * .1f;
-            if (pacPositionX<187){
-                pacPositionX += delta * .1f;
+        // freccia su
+        if (posX>875 && posX<910 && posY>205 && posY<225){
+            if (Mouse.isButtonDown(0)){
+                pacPositionY -= 1 * DIM_CASELLA;
+                if (pacPositionY<28) {
+                    pacPositionY += 1 * DIM_CASELLA;
+                }
             }
         }
 
-        if (input.isKeyDown(Input.KEY_RIGHT)){
-            pacman = movingRight;
-            pacPositionX += delta * .1f;
-            if (pacPositionX>800){
-                pacPositionX -= delta * .1f;
+        // freccia giù
+        if (posX>875 && posX<910 && posY>120 && posY<145){
+            if (Mouse.isButtonDown(0)){
+                pacPositionY += 1 * DIM_CASELLA;
+                if (pacPositionY>643) {
+                    pacPositionY -= 1 * DIM_CASELLA;
+                }
             }
         }
 

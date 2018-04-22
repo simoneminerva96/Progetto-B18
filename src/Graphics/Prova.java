@@ -7,7 +7,6 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
-
 public class Prova extends BasicGameState {
     Image torna;
     boolean answered = false;
@@ -52,38 +51,37 @@ public class Prova extends BasicGameState {
         int posY = Mouse.getY();
 
         //System.out.println("x: "+posX+ " y: "+posY);
-
+        // freccia torna indietro
         if (posX>305 && posX<348 && posY>349 && posY<394){
             if (Mouse.isButtonDown(0)){
                 if (answered == true) {
                     stateBasedGame.enterState(1, new FadeOutTransition(), new FadeInTransition());
                 }
-
             }
         }
 
         if (posX>100 && posX<165){
             if (posY<500 && posY>470) {
-                if (Mouse.isButtonDown(0)) {
+                if (Mouse.isButtonDown(0) && answered == false) {
                     end = questionAndAnswers.a.esito;
                     answered = true;
                 }
             }
             if (posY<400 && posY>375) {
-                if (Mouse.isButtonDown(0)) {
+                if (Mouse.isButtonDown(0) && answered == false) {
                     end = questionAndAnswers.a1.esito;
                     answered = true;
                 }
             }
             if (posY<300 && posY>275) {
-                if (Mouse.isButtonDown(0)) {
+                if (Mouse.isButtonDown(0) && answered == false) {
                     end = questionAndAnswers.a2.esito;
                     answered = true;
                 }
             }
 
             if (posY<200 && posY>175) {
-                if (Mouse.isButtonDown(0)){
+                if (Mouse.isButtonDown(0) && answered == false){
                     end = questionAndAnswers.a3.esito;
                     answered = true;
                 }
