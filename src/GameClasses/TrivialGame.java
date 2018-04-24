@@ -10,6 +10,7 @@ public class TrivialGame {
     private ArrayList<Piece> possiblePieces;        //possibili pedine tra cui scegliere
     private Die die;        //dado
     private Board playBoard;        //tabellone di gioco
+    private Turn turn;      //turno attuale
 
     public TrivialGame(){
         players=new ArrayList<Player>();
@@ -134,7 +135,7 @@ public class TrivialGame {
     public void play(){
         Boolean correct=false;
         Integer index=0;
-        Turn turn = new Turn(players.get(index));
+        turn = new Turn(players.get(index));
         do {
             turn.dieLaunch();
             correct = playBoard.getSquares().get(players.get(index).getActualPosition()).goOnIt();  //esegue la domanda corrispondente alla posizione attuale del giocatore
