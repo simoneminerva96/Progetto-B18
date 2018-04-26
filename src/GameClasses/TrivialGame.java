@@ -1,4 +1,6 @@
 package GameClasses;
+import GameClasses.Squares.FinalQuestionSquare;
+
 import java.awt.*;
 import java.util.*;
 
@@ -137,8 +139,9 @@ public class TrivialGame {
         Integer index=0;
         turn = new Turn(players.get(index));
         do {
-            turn.dieLaunch();
+            turn.dieLaunch();// lancio dado e movimentazione pedina
             correct = playBoard.getSquares().get(players.get(index).getActualPosition()).goOnIt();  //esegue la domanda corrispondente alla posizione attuale del giocatore
+            if(correct==true) obtainSlice(players.get(index));  //il metodo aggiunge lo spicchio solo se la casella corrente è una casella di domanda finale
             //da inserire metodo che controlla la possibile vittoria del giocatore
             if(correct==false){
                 System.out.println("risposta errata!\n");
@@ -151,6 +154,17 @@ public class TrivialGame {
                 System.out.println("risposta corretta!\n");
             }
         }while (correct==true);
+    }
 
+    private void obtainSlice(Player playerOnTurn){
+        Square actualSquare=playBoard.getSquares().get(playerOnTurn.getActualPosition());
+        if(actualSquare instanceof FinalQuestionSquare){
+            System.out.println(playerOnTurn.getNickname() + " ha ottenuto lo spicchio di " + ((FinalQuestionSquare)actualSquare).getCategory());
+            playerOnTurn.obtainSlice(((FinalQuestionSquare)actualSquare).getCategory());
+        }
+    }
+
+    public void verifyVictory(Player playerOnTurn){
+        //DA IMPLEMENTARE
     }
 }

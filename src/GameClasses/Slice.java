@@ -5,4 +5,8 @@ public class Slice {
     public Slice(Categories category){
         this.category=category;
     }
+
+    public Categories getCategory() {
+        return category;
+    }
 }

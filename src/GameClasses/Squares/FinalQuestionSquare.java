@@ -8,10 +8,8 @@ public class FinalQuestionSquare extends Square {
         super(index);
         this.category=category;
     }
-    // metodo da implementare con la domanda finale e la conseguente vittoria o meno dello spicchio di categoria
-    @Override
-    public Boolean goOnIt() {
-        System.out.println("da implementare la domanda finale");
-        return false;
+
+    public Categories getCategory() {
+        return category;
     }
 }

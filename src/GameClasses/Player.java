@@ -1,4 +1,7 @@
 package GameClasses;
+
+import java.util.ArrayList;
+
 /*
      classe corrispondente a un singolo giocatore che partecipa alla partita
  */
@@ -7,12 +10,28 @@ public class Player {
     private Piece chosenPiece;
     private int initialRollResult;
     private int actualPosition;
+    private ArrayList<Slice> slicesObtained;
 
     public Player(String nickname){
         this.nickname=nickname;
         chosenPiece=null;        //quando viene istanziato un giocatore esso non ha ancora nessuna pedina associata
         initialRollResult=0;
         actualPosition=0;       //quando viene istanziato un giocatore viene inizializzato sulla casella iniziale(index=0)
+        slicesObtained=new ArrayList<Slice>();
+    }
+    //metodo per ottenere uno spicchio
+    public void obtainSlice(Categories category){
+        //controllo se il gicoatore ha gia ottenuto lo spicchio di quella categoria
+        Boolean check=false;    //variabile che indica se lo spicchio è gia presente
+        for(int i=0;i<slicesObtained.size();i++){
+            if(slicesObtained.get(i).getCategory().equals(category)){
+                System.out.println("il giocatore ha gia ottenuto lo spicchio di questa categoria!\n");
+                check=true;
+            }
+        }
+        if(check==false){
+            slicesObtained.add(new Slice(category));
+        }
     }
 
     public int getInitialRollResult() {

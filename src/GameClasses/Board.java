@@ -42,13 +42,34 @@ public class Board {
                 squares.add(new HistorySquare(i));
                 squares.get(i).setPossibleQuestions(createQuestion("in quale anno è iniziata la prima guerra mondiale?",Categories.Storia,"1894",false,"1904",false,"1914",true,"1924",false));
             }
-            if(i==5)squares.add(new FinalQuestionSquare(i,Categories.Sport));
-            if(i==10)squares.add(new FinalQuestionSquare(i,Categories.ArteLetteratura));
-            if(i==15)squares.add(new FinalQuestionSquare(i,Categories.Spettacolo));
-            if(i==20)squares.add(new FinalQuestionSquare(i,Categories.Attualità));
-            if(i==25)squares.add(new FinalQuestionSquare(i,Categories.Storia));
-            if(i==30)squares.add(new FinalQuestionSquare(i,Categories.Scienze));
-            if(i==35)squares.add(new FinalQuestionSquare(i,Categories.Geografia));
+            if(i==5){
+                squares.add(new FinalQuestionSquare(i,Categories.Sport));
+                squares.get(i).setPossibleQuestions(createQuestion("DOMANDA FINALE: quale squadra ha vinto gli ultimi mondiali di calcio?",Categories.Sport,"Italia",false,"Spagna",false,"Germania",true,"Brasile",false));
+            }
+            if(i==10){
+                squares.add(new FinalQuestionSquare(i,Categories.ArteLetteratura));
+                squares.get(i).setPossibleQuestions(createQuestion("DOMANDA FINALE: chi ha scritto la divina commedia?",Categories.ArteLetteratura,"Boccaccio",false,"Manzoni",false,"Dante Alighieri",true,"Foscolo",false));
+            }
+            if(i==15){
+                squares.add(new FinalQuestionSquare(i,Categories.Spettacolo));
+                squares.get(i).setPossibleQuestions(createQuestion("DOMANDA FINALE: quale film ha vinto l'ultima edizione degli Oscar come miglior film?",Categories.Spettacolo,"la forma dell'acqua",true,"call me be your name",false,"l'ora piu buia",false,"dunkirk",false));
+            }
+            if(i==20){
+                squares.add(new FinalQuestionSquare(i,Categories.Attualità));
+                squares.get(i).setPossibleQuestions(createQuestion("DOMANDA FINALE: chi è l'attuale presidente degli USA?",Categories.Attualità,"Bush",false,"Obama",false,"Clinton",false,"Trump",true));
+            }
+            if(i==25){
+                squares.add(new FinalQuestionSquare(i,Categories.Storia));
+                squares.get(i).setPossibleQuestions(createQuestion("DOMANDA FINALE: in quale anno è iniziata la prima guerra mondiale?",Categories.Storia,"1894",false,"1904",false,"1914",true,"1924",false));
+            }
+            if(i==30){
+                squares.add(new FinalQuestionSquare(i,Categories.Scienze));
+                squares.get(i).setPossibleQuestions(createQuestion("DOMANDA FINALE: cosa ha scoperto Newton?",Categories.Scienze,"gravitazione" ,true,"elettricità",false,"teoria della relatività",false,"moto dei pianeti",false));
+            }
+            if(i==35){
+                squares.add(new FinalQuestionSquare(i,Categories.Geografia));
+                squares.get(i).setPossibleQuestions(createQuestion("DOMANDA FINALE: qual'è la capitale dell'italia?",Categories.Geografia,"milano",false,"roma",true,"firenze",false,"torino",false));
+            }
             if(i==7)squares.add(new BonusMalusSquare(i,"malus1"));
             if(i==13)squares.add(new BonusMalusSquare(i,"bonus1"));
             if(i==23)squares.add(new BonusMalusSquare(i,"bonus2"));
