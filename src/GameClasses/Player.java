@@ -1,6 +1,7 @@
 package GameClasses;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /*
      classe corrispondente a un singolo giocatore che partecipa alla partita
@@ -60,5 +61,19 @@ public class Player {
 
     public void setActualPosition(int actualPosition) {
         this.actualPosition = actualPosition;
+    }
+
+    public ArrayList<Slice> getSlicesObtained() {
+        return slicesObtained;
+    }
+
+    public void removeSlice(){
+        if(slicesObtained.size()!=0){
+            Random random=new Random();
+            int max=slicesObtained.size() -1 ; // numero massimo
+            int range = max + 1;
+            int index= random.nextInt(range);
+            slicesObtained.remove(index);
+        }
     }
 }

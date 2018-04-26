@@ -1,4 +1,5 @@
 package GameClasses;
+import GameClasses.Squares.BonusMalusSquare;
 import GameClasses.Squares.FinalQuestionSquare;
 
 import java.awt.*;
@@ -140,11 +141,18 @@ public class TrivialGame {
         turn = new Turn(players.get(index));
         do {
             turn.dieLaunch();// lancio dado e movimentazione pedina
+            // se la casella è bonus/malus eseguo il bonus malus prima
+            if(playBoard.getSquares().get(players.get(index).getActualPosition()) instanceof BonusMalusSquare){
+                ((BonusMalusSquare) playBoard.getSquares().get(players.get(index).getActualPosition())).executeBonusMalus(players.get(index));
+            }
             correct = playBoard.getSquares().get(players.get(index).getActualPosition()).goOnIt();  //esegue la domanda corrispondente alla posizione attuale del giocatore
             if(correct==true) obtainSlice(players.get(index));  //il metodo aggiunge lo spicchio solo se la casella corrente è una casella di domanda finale
-            //da inserire metodo che controlla la possibile vittoria del giocatore
+            if(verifyVictory(players.get(index))==true){
+                System.out.println("CONGRATULAZIONI " + players.get(index).getNickname() + "! HAI VINTO!");
+                break;
+            };
             if(correct==false){
-                System.out.println("risposta errata!\n");
+                if(players.get(index).getActualPosition() != 7) System.out.println("risposta errata!\n");
                 index++;
                 if(index==players.size() ) index=0;
                 turn.setPlayerOnTurn(players.get(index));
@@ -153,7 +161,7 @@ public class TrivialGame {
             else{
                 System.out.println("risposta corretta!\n");
             }
-        }while (correct==true);
+        } while (correct==true);
     }
 
     private void obtainSlice(Player playerOnTurn){
@@ -164,7 +172,10 @@ public class TrivialGame {
         }
     }
 
-    public void verifyVictory(Player playerOnTurn){
-        //DA IMPLEMENTARE
+    public Boolean verifyVictory(Player playerOnTurn){
+        if(playerOnTurn.getSlicesObtained().size() == 7 && playerOnTurn.getActualPosition() ==0){
+            return true;
+        }
+        else return false;
     }
 }

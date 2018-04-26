@@ -1,11 +1,11 @@
 package Graphics;
 
+
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.*;
-import org.newdawn.slick.state.*;
+import org.newdawn.slick.state.BasicGameState;
+import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.BlobbyTransition;
-import org.newdawn.slick.state.transition.HorizontalSplitTransition;
-import org.newdawn.slick.state.transition.RotateTransition;
 
 public class Menu extends BasicGameState {
     Image playNow;
