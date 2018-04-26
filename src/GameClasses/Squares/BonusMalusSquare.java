@@ -47,7 +47,7 @@ public class BonusMalusSquare extends Square {
             //che ritorna falso in ogni caso
         }
         else{
-            System.out.println("CASELLA MALUS! PERDI UNO SPICCHIO");
+            System.out.println("CASELLA MALUS! PERDI UNO SPICCHIO!");
             playerOnTurn.removeSlice();
         }
     }
