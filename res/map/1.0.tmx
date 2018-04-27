@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="1.1.4" orientation="orthogonal" renderorder="right-down" width="11" height="11" tilewidth="64" tileheight="64" infinite="0" nextobjectid="1">
+ <tileset firstgid="1" source="base_out_atlas.tsx"/>
+ <tileset firstgid="1025" source="marginless_ani32.tsx"/>
+ <layer name="Livello tile 1" width="11" height="11">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACpNgYWCQJAJLAbE+EP9mZWD4gwf/BWJDqFohNgaGciC/AguuBGIRNlS1fUCxl1jwhGGgdilQbBkWvBxNrSaQrYUHa0PVugGxOxHYA4gBMcNS6eQBAAA=
+  </data>
+ </layer>
+ <layer name="Livello tile 2" width="11" height="11">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACmNgoD14ysrA4MWCwE9Ycau1AMp5QtV5A7H5AKlNAKpJBOIkAmrvAeU7WBFYCY9aEJjPisD0AgD61Z8t5AEAAA==
+  </data>
+ </layer>
+ <layer name="Livello tile 3" width="11" height="11">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACmNgoA+wY2FgcABiRxbCakOBasKAOIIItTlANblAnE+E2gdANY9YIDQjK251ikA5Cyg2B2IFPGqHAgAALKNfDOQBAAA=
+  </data>
+ </layer>
+</map>
