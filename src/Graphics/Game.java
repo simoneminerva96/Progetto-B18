@@ -7,12 +7,15 @@ public class Game extends StateBasedGame{
     public static final int menu = 0;
     public static final int play = 1;
     public static final int prova = 2;
+    public static final int trivia = 3;
 
-    public Game(String gameName) {
+
+    public Game(String gameName) throws Exception {
         super(gameName);
         this.addState(new Menu(menu));
         this.addState(new Play(play));
         this.addState(new Prova(prova));
+        this.addState(new Trivia(trivia));
     }
 
     /*
@@ -23,10 +26,11 @@ public class Game extends StateBasedGame{
         this.getState(menu).init(gc,this); // Inizializzo Menu iniziale del gioco
         this.getState(play).init(gc, this); // Inizializzo lo screen del gioco
         this.getState(prova).init(gc,this);
-        this.enterState(menu); // qual è il primo screen che devo mostrare allo user?
+        this.getState(trivia).init(gc,this);
+        this.enterState(trivia); // qual è il primo screen che devo mostrare allo user?
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         AppGameContainer appgc; // the window for the game
         try {
             //a windows that contains a game named gameName

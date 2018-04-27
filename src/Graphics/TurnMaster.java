@@ -8,9 +8,15 @@ public class TurnMaster {
         list=new Player[n];
     }
 
-    public void addPlayer(Player p)throws Exception{
-        list[index]=p;
-        index++;
+    public void addPlayer(Player p)throws Exception {
+        list[index] = p;
+        if (index == 3) {
+            System.out.println("NON");
+        }else{
+            index++;
+        }
+
+
     }
 
     public int nextPlayer(int n){
@@ -21,6 +27,7 @@ public class TurnMaster {
 
         return n;
     }
+
 
 
 }

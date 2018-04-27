@@ -30,13 +30,13 @@ public class Trivia extends BasicGameState {
     }
 
     public int getID() {
-        return 1;
+        return 3;
     }
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
 
-        map=new Map(22,22,"res/Tiled/1.0.png",32);
+        map=new Map(22,22,"res/map/1.0.png",32);
         p=new Player("ONE",1,map,new SpriteSheet("res/char/FFIV/Palom/palomdx.png",32,32));
         p.addMvdwn("res/char/FFIV/Palom/palomdwn.png",32,32);
         p.addMvlft("res/char/FFIV/Palom/palomsx.png",32,32);
@@ -82,7 +82,7 @@ public class Trivia extends BasicGameState {
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
 
-       Image map=new Image("res/Tiled/1.0.png");
+       Image map=new Image("res/map/1.0.png");
        graphics.drawImage(map,0,0);
 
         for(int i=0;i<4;i++){
