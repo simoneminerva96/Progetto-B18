@@ -9,9 +9,11 @@ public class Play extends BasicGameState {
     Animation pacman, movingUp, movingDown, movingLeft, movingRight;
     Image worldMap, freccia, freccia2, freccia3, freccia4;
     boolean quit = false;
+    boolean q = false;
     int [] duration = {200,200};
     float pacPositionX = 770;
     float pacPositionY = 608;
+    Prova p = new Prova(2);
 
     public Play (int state) {
     }
@@ -37,6 +39,7 @@ public class Play extends BasicGameState {
         movingLeft = new Animation(walkLeft, duration, true);
         movingRight = new Animation(walkRight, duration, true);
         pacman = movingDown;
+        p.init(gc,sbg);
     }
 
     @Override
@@ -56,6 +59,10 @@ public class Play extends BasicGameState {
            if (quit == false)
                g.clear();
        }
+
+       if (q == true){
+           p.render(gc,sbg,g);
+       }
     }
 
     @Override
@@ -69,6 +76,9 @@ public class Play extends BasicGameState {
             if (questionAndAnswers.isAnswered() == false) {
                 sbg.enterState(2);
             }
+        }
+        if (input.isKeyDown(Input.KEY_G)){
+            q = true;
         }
 
         // freccia sinistra
