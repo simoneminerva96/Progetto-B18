@@ -1,4 +1,4 @@
-package javagame;
+package Graphics;
 
 public class TurnMaster {
     int index=0,turn=0;

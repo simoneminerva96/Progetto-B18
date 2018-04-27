@@ -1,4 +1,4 @@
-package javagame.com.menu;
+package Graphics.com.menu;
 
 import javagame.com.sticky.aem.sticky.button.SimpleButton;
 import org.lwjgl.input.Mouse;
@@ -10,13 +10,32 @@ import org.newdawn.slick.state.StateBasedGame;
 import java.awt.event.MouseListener;
 
 public class MainMenu extends BasicGameState {
+    @Override
+    public int getID() {
+        return 0;
+    }
 
-    public String mouse= "No input";
+    @Override
+    public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
+
+    }
+
+    @Override
+    public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
+
+    }
+
+    @Override
+    public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
+
+    }
+
+  /*  public String mouse= "No input";
 
     Boolean clicked=false;
 
 
-    SimpleButton b;
+    /SimpleButton b;
     int xb=100,yb=100;
 
     private SpriteSheet MoveLeft; // initate a SprtieSheet
@@ -76,5 +95,5 @@ public class MainMenu extends BasicGameState {
 
         mouse="Mouse position x:"+Mouse.getX()+ " y: "+Mouse.getY();
 
-    }
+    }*/
 }

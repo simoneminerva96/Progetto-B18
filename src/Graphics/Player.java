@@ -1,4 +1,4 @@
-package javagame;
+package Graphics;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.SlickException;

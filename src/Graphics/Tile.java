@@ -1,4 +1,4 @@
-package javagame;
+package Graphics;
 
 public class Tile {
     public Player tempPlayer=null;
