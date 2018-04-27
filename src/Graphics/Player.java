@@ -23,26 +23,35 @@ public class Player{
         mx=map.getXmax();
         my=map.getYmax();
 
-        if(id==1){
-            minx=0;
-            miny=0;
-            maxx=map.xmax-2;
-            maxy=map.ymax-2;
-        }else if(id==2){
-            minx=0;
-            miny=1;
-            maxx=map.xmax-2;
-            maxy=map.ymax-1;
-        }else if(id==3){
-            minx=1;
-            miny=0;
-            maxx=map.xmax-1;
-            maxy=map.ymax-2;
-        }else if(id==4){
-            minx=1;
-            miny=1;
-            maxx=map.xmax-1;
-            maxy=map.ymax-1;
+        switch (id){
+            case 1:{
+                minx=0;
+                miny=0;
+                maxx=map.xmax-2;
+                maxy=map.ymax-2;
+                break;
+            }
+            case 2:{
+                minx=0;
+                miny=1;
+                maxx=map.xmax-2;
+                maxy=map.ymax-1;
+                break;
+            }
+            case 3:{
+                minx=1;
+                miny=0;
+                maxx=map.xmax-1;
+                maxy=map.ymax-2;
+                break;
+            }
+            case 4:{
+                minx=1;
+                miny=1;
+                maxx=map.xmax-1;
+                maxy=map.ymax-1;
+                break;
+            }
         }
         x=minx; //switch + x y da rinominare
         y=miny;
@@ -79,29 +88,8 @@ public class Player{
         this.x = x;
     }
 
-    public String getName() {
-        return name;
-    }
-
     public void setY(int y) {
         this.y = y;
-
-    }
-
-    public int getMinx() {
-        return minx;
-    }
-
-    public int getMiny() {
-        return miny;
-    }
-
-    public int getMaxx() {
-        return maxx;
-    }
-
-    public int getMaxy() {
-        return maxy;
     }
 
     public void update(int die){
@@ -124,7 +112,6 @@ public class Player{
                 tempy=tempy-maxy;
                 x-=tempy;
                 y=maxy;
-
                 playerGUI=new Animation(mvlft,150);
             }else{
                 y+=2*die;

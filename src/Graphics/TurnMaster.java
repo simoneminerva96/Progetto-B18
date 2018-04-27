@@ -1,7 +1,7 @@
 package Graphics;
 
 public class TurnMaster {
-    int index=0,turn=0;
+    int index=0;
     Player[]list;
 
     public TurnMaster(int n){

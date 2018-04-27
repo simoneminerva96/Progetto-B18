@@ -1,5 +1,6 @@
 package Graphics;
 
+import GameClasses.Die;
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
@@ -11,16 +12,12 @@ import javax.swing.*;
 public class Trivia extends BasicGameState {
 
     Map map;
-    Player p,o,w,q,temp;
-
-    int counter=0;
+    Player p,o,w,q;
 
     private SpriteSheet MoveLeft; // initate a SprtieSheet
     private Animation MoveLeftAni; // initate a Animation
 
     Die die=new Die();
-
-
     private Animation currentImage;
 
     public String mouse= "No input";
@@ -80,8 +77,6 @@ public class Trivia extends BasicGameState {
         }catch (Exception e){
             e.printStackTrace();
         }
-
-
     }
 
     @Override
@@ -89,7 +84,6 @@ public class Trivia extends BasicGameState {
 
        Image map=new Image("res/Tiled/1.0.png");
        graphics.drawImage(map,0,0);
-
 
         for(int i=0;i<4;i++){
             master.list[i].playerGUI.draw(master.list[i].xGUItemp,master.list[i].yGUItemp);
@@ -138,7 +132,6 @@ public class Trivia extends BasicGameState {
                     }
                 }
 
-
             }else if(master.list[j].yGUItemp<master.list[j].yGUI){
                 master.list[j].yGUItemp+=0.1*i;
                 if(master.list[j].yGUItemp>=master.list[j].yGUI){
@@ -161,39 +154,5 @@ public class Trivia extends BasicGameState {
                 b=false;
             }
         }
-
-
-
-    /*    if(b){
-
-
-          if(x<p.xGUI){
-              x+=0.1*i;
-              if(x>=p.xGUI){
-                  x=p.xGUI;
-              }
-          }else if(y<p.yGUI){
-              y+=0.1*i;
-              if(y>=p.yGUI){
-                  y=p.yGUI;
-              }
-          }else if(x>p.xGUI){
-              x-=0.1*i;
-              if(x<=p.xGUI){
-                  x=p.xGUI;
-              }
-          }else if(y>p.yGUI){
-              y-=0.1*i;
-              if(y<=p.yGUI){
-                  y=p.yGUI;
-              }
-          }else{
-              System.out.println("Here");
-              b=false;
-          }
-        }
-
-        //System.out.println(b);
-        */
     }
 }

@@ -4,11 +4,10 @@ import GameClasses.Board;
 import GameClasses.Die;
 import GameClasses.TrivialGame;
 import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
-
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.*;
+
 
 class TrivialGameTest {
     @Test
