@@ -33,9 +33,4 @@ public class Map {
         return ymax;
     }
 
-    public int returnIdTile(int x, int y){
-        return matrix[x][y].getId();
-    }
-
-
 }
