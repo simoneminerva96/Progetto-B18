@@ -10,7 +10,7 @@ import org.newdawn.slick.tiled.TiledMap;
 import javax.swing.*;
 
 public class Trivia extends BasicGameState {
-
+    static final int NUM_PLAYERS = 4;
     Map map;
     Player p,o,w,q;
 
@@ -21,9 +21,8 @@ public class Trivia extends BasicGameState {
     private Animation currentImage;
 
     public String mouse= "No input";
-    float x,y;
     Boolean b=false;
-    TurnMaster master=new TurnMaster(4);
+    TurnMaster master = new TurnMaster(NUM_PLAYERS);
     int j=0;
 
     public Trivia(int id) throws Exception {
@@ -85,7 +84,7 @@ public class Trivia extends BasicGameState {
        Image map=new Image("res/map/1.0.png");
        graphics.drawImage(map,0,0);
 
-        for(int i=0;i<4;i++){
+        for(int i=0;i<NUM_PLAYERS;i++){
             master.list[i].playerGUI.draw(master.list[i].xGUItemp,master.list[i].yGUItemp);
         }
         graphics.drawString(mouse,0,0);
@@ -107,7 +106,6 @@ public class Trivia extends BasicGameState {
             System.out.println("GIOCATORE "+j);
             int diceN=die.Launch();
             System.out.println("DADO "+diceN);
-
 
             master.list[j].update(diceN);
             master.list[j].playerGUI.start();

@@ -15,8 +15,6 @@ public class TurnMaster {
         }else{
             index++;
         }
-
-
     }
 
     public int nextPlayer(int n){

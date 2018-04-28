@@ -28,7 +28,6 @@ public class Map {
     public int getXmax() {
         return xmax;
     }
-
     public int getYmax() {
         return ymax;
     }
