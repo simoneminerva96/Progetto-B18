@@ -1,4 +1,4 @@
-package javagame.com.sticky.aem.sticky;
+package Graphics.com.sticky;
 
 import java.util.LinkedList;
 import java.util.List;

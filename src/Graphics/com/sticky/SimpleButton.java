@@ -1,4 +1,4 @@
-package javagame.com.sticky.aem.sticky.button;
+package Graphics.com.sticky;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -6,7 +6,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.Sound;
 import org.newdawn.slick.geom.Shape;
 
-import javagame.com.sticky.aem.sticky.button.events.*;
+import Graphics.com.sticky.events.*;
 
 
 /**
@@ -56,9 +56,16 @@ public class SimpleButton extends ButtonSkeleton implements ButtonListener,
     }
 
     public void onClick(Button clicked, float mx, float my) {
-        clickListener.onClick(this, mx, my);
-       // click.play();
-        current=press;
+        float minx =shape.getX();
+        float miny=shape.getY();
+        float maxx=shape.getMaxX();
+        float maxy=shape.getMaxY();
+
+        if(mx>=minx&&mx<=maxx&&my>=miny&&my<=maxy) {
+            clickListener.onClick(this, mx, my);
+            // click.play();
+            current = press;
+        }
     }
 
     public void onDoubleClick(Button clicked, float mx, float my) {
@@ -71,9 +78,19 @@ public class SimpleButton extends ButtonSkeleton implements ButtonListener,
         click.play();
     }
 
-    public void onMouseEnter(Button b) {
-        buttonListener.onMouseEnter(this);
-        current = down;
+    public void onMouseEnter(Button b,float mx, float my) {
+        float minx =shape.getX();
+        float miny=shape.getY();
+        float maxx=shape.getMaxX();
+        float maxy=shape.getMaxY();
+
+        if(mx>=minx&&mx<=maxx&&my>=miny&&my<=maxy) {
+            buttonListener.onMouseEnter(this,mx,my);
+            // click.play();
+            current = down;
+        }else{
+            current=up;
+        }
     }
 
     public void onMouseExit(Button b) {

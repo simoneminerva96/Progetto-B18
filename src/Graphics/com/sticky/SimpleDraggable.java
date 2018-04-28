@@ -1,9 +1,9 @@
-package javagame.com.sticky.aem.sticky.button;
+package Graphics.com.sticky;
 
 import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Vector2f;
 
-import javagame.com.sticky.aem.sticky.button.events.*;
+import Graphics.com.sticky.events.*;
 
 
 /**

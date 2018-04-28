@@ -1,11 +1,11 @@
-package javagame.com.sticky.aem.sticky.button;
+package Graphics.com.sticky;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.geom.Shape;
 
-import javagame.com.sticky.aem.sticky.button.events.*;
+import Graphics.com.sticky.events.*;
 
 
 /**
@@ -110,7 +110,7 @@ public class ButtonSkeleton implements Button {
     private void testForEnter() {
         if (!occupied) {
             occupied = true;
-            buttonListener.onMouseEnter(this);
+           // buttonListener.onMouseEnter(this);
         }
     }
 

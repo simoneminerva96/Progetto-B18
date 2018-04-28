@@ -1,4 +1,4 @@
-package javagame.com.sticky.aem.sticky;
+package Graphics.com.sticky;
 
 /**
  * @author Alexander Schearer <aschearer@gmail.com>

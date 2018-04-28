@@ -1,6 +1,6 @@
-package javagame.com.sticky.aem.sticky.button.events;
+package Graphics.com.sticky.events;
 
-import javagame.com.sticky.aem.sticky.button.Button;
+import Graphics.com.sticky.Button;
 
 /**
  * @author Alexander Schearer <aschearer@gmail.com>

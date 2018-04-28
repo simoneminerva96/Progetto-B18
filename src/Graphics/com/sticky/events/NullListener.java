@@ -1,6 +1,6 @@
-package javagame.com.sticky.aem.sticky.button.events;
+package Graphics.com.sticky.events;
 
-import javagame.com.sticky.aem.sticky.button.Button;
+import Graphics.com.sticky.Button;
 
 /**
  * Instance of the null-pattern to simplify things in buttons.
@@ -31,7 +31,7 @@ public class NullListener implements ButtonListener, ClickListener,
         return instance;
     }
 
-    public void onMouseEnter(Button b) {
+    public void onMouseEnter(Button b,float mx, float my) {
         // null listener doesn't do anything
     }
 

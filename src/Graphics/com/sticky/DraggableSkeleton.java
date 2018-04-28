@@ -1,11 +1,11 @@
-package javagame.com.sticky.aem.sticky.button;
+package Graphics.com.sticky;
 
 import org.newdawn.slick.Input;
 import org.newdawn.slick.geom.Shape;
 
-import javagame.com.sticky.aem.sticky.button.*;
 
-import javagame.com.sticky.aem.sticky.button.events.*;
+
+import Graphics.com.sticky.events.*;
 
 
 /**

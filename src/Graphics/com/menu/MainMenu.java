@@ -1,69 +1,82 @@
 package Graphics.com.menu;
 
-import javagame.com.sticky.aem.sticky.button.SimpleButton;
+import Graphics.com.sticky.SimpleButton;
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.*;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.util.ResourceLoader;
 
-import java.awt.event.MouseListener;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class MainMenu extends BasicGameState {
-    @Override
-    public int getID() {
-        return 0;
-    }
 
-    @Override
-    public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
 
-    }
-
-    @Override
-    public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
-
-    }
-
-    @Override
-    public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
-
-    }
-
-  /*  public String mouse= "No input";
+    public String mouse= "No input";
 
     Boolean clicked=false;
 
 
-    /SimpleButton b;
+    SimpleButton b;
     int xb=100,yb=100;
 
-    private SpriteSheet MoveLeft; // initate a SprtieSheet
-    private Animation MoveLeftAni; // initate a Animation
+
+    private SpriteSheet currentSprite;
     private Animation currentImage;
 
-    public MainMenu(int i){
+
+    private Image background;
+
+    TrueTypeFont font;
+    private String gameName;
+
+    private SimpleButton play;
+
+    public MainMenu(int i) throws SlickException {
     }
 
     @Override
     public int getID() {
-        return 0;
+        return 3;
     }
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
+        background=new Image("res/backgrounds/green_landscape_ridim.png");
+        gameName="Trivial Pursuit";
+        try {
+        InputStream inputStream	= ResourceLoader.getResourceAsStream("res/fonts/Silkscreen/slkscr.ttf");
+        java.awt.Font awtFont= java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT,inputStream);
+        awtFont=awtFont.deriveFont(32f);
+        font=new TrueTypeFont(awtFont,false);
+        } catch (FontFormatException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        b=new SimpleButton(new Rectangle(xb,yb,190,49),new Image("res/menu/buttons/blue_button00.png"),new Image("res/menu/buttons/blue_button01.png"),new Image("res/menu/buttons/yellow_button01.png"),null);
-        MoveLeft = new SpriteSheet("res/map/particleg.png",60,62);
-        MoveLeftAni=new Animation(MoveLeft,90);
-        currentImage=MoveLeftAni;
+        play=new SimpleButton(new Rectangle(550,325,190,49),new Image("res/buttons/yellow_button03.png"),new Image("res/buttons/blue_button03.png"),new Image("res/buttons/yellow_button03.png"),null);
+
     }
 
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
-            b.render(gameContainer,graphics);
-            graphics.drawString(mouse,100,100);
-            currentImage.draw(200,200);
+            graphics.drawImage(background,0,0);
+            font.drawString(400,200,"TRIVIAL PURSUIT RELOADED", Color.white);
+
+            play.render(gameContainer,graphics);
+            font.drawString(600,330,"PLAY", Color.white);
+
+
+
 
     }
 
@@ -71,7 +84,12 @@ public class MainMenu extends BasicGameState {
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
         Input r=gameContainer.getInput();
 
-        if(clicked==true){
+        if(r.isMousePressed(0)) {
+            play.onClick(play, r.getMouseX(), r.getMouseY());
+        }
+
+        play.onMouseEnter(play,r.getMouseX(),r.getMouseY());
+    /*    if(clicked==true){
             b.onClick(b, Mouse.getX(), 720 - Mouse.getY());
 
         }else {
@@ -94,6 +112,6 @@ public class MainMenu extends BasicGameState {
         }
 
         mouse="Mouse position x:"+Mouse.getX()+ " y: "+Mouse.getY();
-
-    }*/
+        */
+    }
 }
