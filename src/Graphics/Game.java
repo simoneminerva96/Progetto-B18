@@ -27,7 +27,7 @@ public class Game extends StateBasedGame{
         this.getState(play).init(gc, this); // Inizializzo lo screen del gioco
         this.getState(prova).init(gc,this);
         this.getState(trivia).init(gc,this);
-        this.enterState(trivia); // qual è il primo screen che devo mostrare allo user?
+        this.enterState(play); // qual è il primo screen che devo mostrare allo user?
     }
 
     public static void main(String[] args) throws Exception {

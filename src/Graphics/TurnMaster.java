@@ -1,14 +1,14 @@
 package Graphics;
 
 public class TurnMaster {
-    int index=0;
-    Player[]list;
+    int index = 0;
+    Player[] list;
 
     public TurnMaster(int n){
-        list=new Player[n];
+        list = new Player[n];
     }
 
-    public void addPlayer(Player p)throws Exception {
+    public void addPlayer(Player p) {
         list[index] = p;
         if (index == 3) {
             System.out.println("NON");
@@ -22,10 +22,6 @@ public class TurnMaster {
         if(n>=list.length){
             n=0;
         }
-
         return n;
     }
-
-
-
 }

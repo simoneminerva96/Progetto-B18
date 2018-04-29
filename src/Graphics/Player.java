@@ -90,14 +90,28 @@ public class Player {
         this.currentX = x;
     }
 
-    public void setY(int y) {
-        this.currentY = y;
-    }
+    public void setY(int y) { this.currentY = y; }
 
     public void update(int die) {
         int tempx, tempy;
 
         if (currentY == minPlayerY) {
+            currentX += 2 * die;
+        }
+        if (currentX == maxPLayerX) {
+            currentY += 2*die;
+            playerGUI = new Animation(mvdwn, 150);
+        }
+        if (currentX == minPlayerX) {
+            currentY -= 2*die;
+            playerGUI = new Animation(mvup, 150);
+        }
+        if (currentY == maxPlayerY) {
+            currentX -= 2*die;
+            playerGUI = new Animation(mvlft, 150);
+        }
+
+        /*if (currentY == minPlayerY) {
             isOnleft = false;
             tempx = currentX + 2*die;
             if (tempx > maxPLayerX) {
@@ -148,7 +162,7 @@ public class Player {
                     currentY -= 2 * die;
                     playerGUI = new Animation(mvup, 150);
                 }
-            }
+            }*/
             xGUI = (currentX * mulsize) - 5;
             yGUI = (currentY * mulsize) - 5;
 

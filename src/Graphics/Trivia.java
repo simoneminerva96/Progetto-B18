@@ -13,7 +13,7 @@ public class Trivia extends BasicGameState {
     static final int NUM_PLAYERS = 4;
     Map map;
     Player p,o,w,q;
-
+    boolean add = false;
     private SpriteSheet MoveLeft; // initate a SprtieSheet
     private Animation MoveLeftAni; // initate a Animation
 
@@ -25,8 +25,7 @@ public class Trivia extends BasicGameState {
     TurnMaster master = new TurnMaster(NUM_PLAYERS);
     int j=0;
 
-    public Trivia(int id) throws Exception {
-    }
+    public Trivia(int id){ }
 
     public int getID() {
         return 3;
@@ -69,10 +68,13 @@ public class Trivia extends BasicGameState {
         w.playerGUI.stop();
         q.playerGUI.stop();
         try {
-            master.addPlayer(p);
-            master.addPlayer(o);
-            master.addPlayer(q);
-            master.addPlayer(w);
+            if (add == false) {
+                master.addPlayer(p);
+                master.addPlayer(o);
+                master.addPlayer(q);
+                master.addPlayer(w);
+                add = true;
+            }
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -116,7 +118,7 @@ public class Trivia extends BasicGameState {
         }
 
         if(b){
-            if(master.list[j].xGUItemp<master.list[j].xGUI){
+            if(master.list[j].xGUItemp < master.list[j].xGUI){
                 if(master.list[j].isOnleft==false) {
                     master.list[j].xGUItemp += 0.1 * i;
                     if(master.list[j].xGUItemp>=master.list[j].xGUI){
