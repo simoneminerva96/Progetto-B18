@@ -12,8 +12,6 @@ public class Player{
 
     public SpriteSheet mvup,mvdwn,mvlft,mvrght;
     public Animation playerGUI;
-    public int placeOnBoard=1;
-
     boolean direction=true;
     boolean isOnLeft=false,isOnRight=false;
 
@@ -100,11 +98,10 @@ public class Player{
     public boolean getDirection(){return direction;}
 
     public void update(int die,boolean direction) {
-        this.direction=direction;
-        if (this.direction){ //va avanti
-            if (y == miny) {
+        this.direction=direction; //direction==true spostamento in avanti; altrimenti indietro
+        if (y == miny) {
+            if(this.direction){
                 isOnLeft=false;
-                placeOnBoard=1;
                 int tempx = x + (2 * die);
                 if (tempx > maxx) {
                     tempx = tempx - maxx;
@@ -113,8 +110,19 @@ public class Player{
                 } else {
                     x += 2 * die;
                 }
-            } else if (x == maxx) {
-                placeOnBoard=2;
+            }else{
+                int tempx = x - (2 * die);
+                if (tempx < minx) {
+                    tempx = minx - tempx;
+                    x = minx;
+                    y += tempx;
+                } else {
+                    x -= 2 * die;
+                }
+            }
+
+        } else if (x == maxx) {
+            if(this.direction){
                 int tempy = y + (2 * die);
                 if (tempy > maxy) {
                     tempy = tempy - maxy;
@@ -123,62 +131,7 @@ public class Player{
                 } else {
                     y += 2 * die;
                 }
-            } else if (y == maxy) {
-                placeOnBoard=3;
-                int tempx = x - (2 * die);
-                if (tempx < minx) {
-                    tempx = minx - tempx;
-                    x = minx;
-                    y -= tempx;
-                } else {
-                    x -= 2 * die;
-                }
-            } else if (x == minx) {
-                int tempy = y - (2 * die);
-                placeOnBoard=4;
-                isOnLeft=true;
-
-                if (tempy < miny) {
-                    tempy = miny - tempy;
-                    x += tempy;
-                    y = miny;
-                } else {
-                    y -= 2 * die;
-                }
-            }
-        }else{  //spostamento indietro
-            if (y == miny) {
-                placeOnBoard=1;
-                int tempx = x - (2 * die);
-                if (tempx < minx) {
-                    tempx = minx - tempx;
-                    x = minx;
-                    y += tempx;
-                } else {
-                    x -= 2 * die;
-                }
-            }else if (x == minx) {
-                int tempy = y + (2 * die);
-                placeOnBoard=4;
-                if (tempy > maxy) {
-                    tempy = tempy-maxy;
-                    x += tempy;
-                    y = maxy;
-                } else {
-                    y += 2 * die;
-                }
-            }else if (y == maxy) {
-                placeOnBoard = 3;
-                int tempx = x + (2 * die);
-                if (tempx > maxx) {
-                    tempx = tempx - maxx;
-                    x = maxx;
-                    y -= tempx;
-                } else {
-                    x += 2 * die;
-                }
-            }else if (x == maxx) {
-                placeOnBoard=2;
+            }else{
                 isOnRight=true;
                 int tempy = y - (2 * die);
                 if (tempy < miny) {
@@ -189,6 +142,51 @@ public class Player{
                     y -= 2 * die;
                 }
             }
+
+        } else if (y == maxy) {
+            if(this.direction){
+                int tempx = x - (2 * die);
+                if (tempx < minx) {
+                    tempx = minx - tempx;
+                    x = minx;
+                    y -= tempx;
+                } else {
+                    x -= 2 * die;
+                }
+            }else{
+                int tempx = x + (2 * die);
+                if (tempx > maxx) {
+                    tempx = tempx - maxx;
+                    x = maxx;
+                    y -= tempx;
+                } else {
+                    x += 2 * die;
+                }
+            }
+
+        } else if (x == minx) {
+            if(this.direction){
+                int tempy = y - (2 * die);
+                isOnLeft=true;
+
+                if (tempy < miny) {
+                    tempy = miny - tempy;
+                    x += tempy;
+                    y = miny;
+                } else {
+                    y -= 2 * die;
+                }
+            }else{
+                int tempy = y + (2 * die);
+                if (tempy > maxy) {
+                    tempy = tempy-maxy;
+                    x += tempy;
+                    y = maxy;
+                } else {
+                    y += 2 * die;
+                }
+            }
+
         }
         System.out.println("X: "+x+" Y:"+y);
     }

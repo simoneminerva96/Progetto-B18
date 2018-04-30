@@ -36,7 +36,7 @@ public class Trivia extends BasicGameState {
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
 
         map=new Map(22,22,"res/map/1.0.png",32);
-        p=new Player("ONE",2,map);
+        p=new Player("ONE",3,map);
         String dwn="res/char/FFIV/Palom/palomdwn.png";
         String lft="res/char/FFIV/Palom/palomsx.png";
         String rght="res/char/FFIV/Palom/palomdx.png";
@@ -55,7 +55,7 @@ public class Trivia extends BasicGameState {
 
         Image map=new Image("res/map/1.0.png");
         graphics.drawImage(map,0,0);
-        pGUI.piece.getCurrentImage().draw(pGUI.getxUpdate(),pGUI.getyUpdate());
+        pGUI.getPedina().getCurrentImage().draw(pGUI.getxUpdate(),pGUI.getyUpdate());
     }
 
     @Override
@@ -69,20 +69,20 @@ public class Trivia extends BasicGameState {
         if(input.isKeyPressed(Input.KEY_W)){//vai indietro
             b=true;
             int diceN=die.Launch();
-            System.out.println(diceN);
+            System.out.println("DADO: "+diceN);
             p.update(diceN,false);
             pGUI.updateCoordinates();
         }
         if(input.isKeyPressed(Input.KEY_S)){ //vai avanti
             b=true;
             int diceN=die.Launch();
-            System.out.println(diceN);
+            System.out.println("DADO: "+diceN);
             p.update(diceN,true);
             pGUI.updateCoordinates();
         }
-        if(b){
+
             pGUI.updateOnEachFrame(i);
-        }
+
 
 
 
