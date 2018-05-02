@@ -12,8 +12,9 @@ public class Player{
 
     public SpriteSheet mvup,mvdwn,mvlft,mvrght;
     public Animation playerGUI;
-    boolean direction=true;
-    boolean isOnLeft=false,isOnRight=false;
+    Direction direction=Direction.FORWARD;
+    
+    boolean isOnLeft=false,isOnRight=false,isOnUp=false,isOnDown=false;
     int mx,my;
 
     public Player(String name,int id,Map map){
@@ -94,14 +95,14 @@ public class Player{
         return maxy;
     }
 
-    public boolean getDirection(){return direction;}
+    public Direction getDirection(){return direction;}
 
-    public void update(int die,boolean direction) {
+    public void update(int die,Direction direction) {
         int tempx, tempy; 
-        this.direction = direction; //direction==true spostamento in avanti; altrimenti indietro
+        this.direction=direction;//direction==true spostamento in avanti; altrimenti indietro
         if (y == miny) {
-            switch (this.direction) {
-                case true: { 
+            switch (direction) {
+                case FORWARD: { 
                     isOnLeft=false;
                     tempx = x + (2 * die);
                     if (tempx > maxx) {
@@ -112,8 +113,9 @@ public class Player{
                         x = tempx;
                     break;
                 }
-                case false: {        
+                case BACK: {        
                     tempx = x - (2 * die);
+                    isOnUp=true;
                     if (tempx < minx) {
                         tempx = minx - tempx;
                         x = minx;
@@ -125,7 +127,7 @@ public class Player{
             }
          } else if (x == maxx) {
             switch(this.direction){
-                case true: {
+                case FORWARD: {
                     tempy = y + (2 * die);
                     if (tempy > maxy) {
                         tempy = tempy - maxy;
@@ -135,7 +137,7 @@ public class Player{
                         y = tempy;
                     break; 
                 }
-                case false: {
+                case BACK: {
                     isOnRight=true;
                     tempy = y - (2 * die);
                     if (tempy < miny) {
@@ -148,8 +150,8 @@ public class Player{
                 }
             }
         } else if (y == maxy) {
-            siwtch(this.direction){
-                case true: {
+            switch(this.direction){
+                case FORWARD: {
                     tempx = x - (2 * die);
                     if (tempx < minx) {
                         tempx = minx - tempx;
@@ -159,7 +161,8 @@ public class Player{
                         x = tempx;
                     break;
                 }
-                case false: {
+                case BACK: {
+
                     tempx = x + (2 * die);
                     if (tempx > maxx) {
                         tempx = tempx - maxx;
@@ -172,7 +175,7 @@ public class Player{
             }
         } else if (x == minx) {
             switch(this.direction){
-                case true: {
+                case FORWARD: {
                     tempy = y - (2 * die);
                     isOnLeft=true;
                     if (tempy < miny) {
@@ -183,7 +186,8 @@ public class Player{
                         y = tempy;
                     break;
                 }
-                case false: {
+                case BACK: {
+                    isOnDown=true;
                     tempy = y + (2 * die);
                     if (tempy > maxy) {
                         tempy = tempy-maxy;

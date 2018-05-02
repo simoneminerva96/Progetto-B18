@@ -22,84 +22,94 @@ public class PlayerGUI {
     //il metodo aggiorna le coordinate xUpdate e yUpdate (di +- 0.1) finchè non raggiungono i valori delle coordinate x e y .
     //il modo in cui vengono aggiornati dipende dalla direzione di spostamento (p.getDirection==true spostamento in avanti)
     public void updateOnEachFrame(int F) { //F è il delta del metodo update di SLICK2D.(Guardare metodo update() in Trivia variabile int i)
-        if (this.p.getDirection()) {
-            if (xUpdate < x) {  //in alto
-                if (p.isOnLeft == false) {
-                    piece.setMvdx();
-                    xUpdate += 0.1 * F;
-                    if (xUpdate >= x) {
-                        xUpdate = x;
+                if (xUpdate < x) {
+                    if(this.p.getDirection()==Direction.FORWARD){
+                        if (p.isOnLeft == false) {
+                            piece.setMvdx();
+                            xUpdate += 0.1 * F;
+                            if (xUpdate >= x) {
+                                xUpdate = x;
+                            }
+                        } else {
+                            piece.setMvup();
+                            yUpdate -= 0.1 * F;
+                            if (yUpdate <= y) {
+                                yUpdate = y;
+                                p.isOnLeft = false;
+                            }
+                        }
+                    }else {
+                        if(p.isOnDown==false){
+                            piece.setMvdx();
+                            xUpdate += 0.1 * F;
+                            if (xUpdate >= x) {
+                                xUpdate = x;
+                            }
+                        }else{
+                            piece.setMvdwn();
+                            yUpdate+=0.1*F;
+                            if(yUpdate>=y){
+                                yUpdate=y;
+                                p.isOnDown=false;
+                            }
+                        }
+
                     }
-                } else {
+                } else if (yUpdate < y) {//a destra
+                    if(p.getDirection()==Direction.BACK){
+                        if(p.isOnUp==false){
+                            piece.setMvdwn();
+                            yUpdate += 0.1 * F;
+                            if (yUpdate >= y) {
+                                yUpdate = y;
+                            }
+                        }else{
+                            piece.setMvsx();
+                            xUpdate-=0.1*F;
+                            if(xUpdate<=x){
+                                xUpdate=x;
+                                p.isOnUp=false;
+                            }
+                        }
+                    }else{
+                        piece.setMvdwn();
+                        yUpdate += 0.1 * F;
+                        if (yUpdate >= y) {
+                            yUpdate = y;
+                        }
+                    }
+                } else if (xUpdate > x) {//in
+                    if(p.getDirection()==Direction.FORWARD){
+                        piece.setMvsx();
+                        xUpdate -= 0.1 * F;
+                        if (xUpdate <= x) {
+                            xUpdate = x;
+                        }
+                    }else{
+                        if (p.isOnRight == false) {
+                            piece.setMvsx();
+                            xUpdate -= 0.1 * F;
+                            if (xUpdate <= x) {
+                                xUpdate = x;
+                            }
+                        } else {
+                            piece.setMvup();
+                            yUpdate -= 0.1 * F;
+                            if (yUpdate <= y) {
+                                yUpdate = y;
+                                p.isOnRight = false;
+                            }
+                        }
+                    }
+                } else if (yUpdate > y) {//a sinistra
                     piece.setMvup();
                     yUpdate -= 0.1 * F;
                     if (yUpdate <= y) {
                         yUpdate = y;
-                        p.isOnLeft = false;
-                    }
-                }
-
-            } else if (yUpdate < y) {//a destra
-                piece.setMvdwn();
-                yUpdate += 0.1 * F;
-                if (yUpdate >= y) {
-                    yUpdate = y;
-                }
-
-            } else if (xUpdate > x) {//in basso
-                piece.setMvsx();
-                xUpdate -= 0.1 * F;
-                if (xUpdate <= x) {
-                    xUpdate = x;
-                }
-            } else if (yUpdate > y) {//a sinistra
-                piece.setMvup();
-                yUpdate -= 0.1 * F;
-                if (yUpdate <= y) {
-                    yUpdate = y;
-                }
-            }
-            else {
-                piece.getCurrentImage().stop(); //altrimenti ferma animazione
-            }
-        } else { //direzione indietro
-            if (xUpdate > x) {//in alto
-                if (p.isOnRight == false) {
-                    piece.setMvsx();
-                    xUpdate -= 0.1 * F;
-                    if (xUpdate <= x) {
-                        xUpdate = x;
                     }
                 } else {
-                    piece.setMvup();
-                    yUpdate -= 0.1 * F;
-                    if (yUpdate <= y) {
-                        yUpdate = y;
-                        p.isOnRight = false;
-                    }
+                    piece.getCurrentImage().stop(); //altrimenti ferma animazione
                 }
-            }else if (yUpdate < y) {//a sinistra
-                piece.setMvdwn();
-                yUpdate += 0.1 * F;
-                if (yUpdate >= y) {
-                    yUpdate = y;
-                }
-            }else if (xUpdate < x) {//in basso
-                piece.setMvdx();
-                xUpdate += 0.1 * F;
-                if (xUpdate >= x) {
-                    xUpdate = x;
-                }
-            } else if (yUpdate > y) {// a destra
-                piece.setMvup();
-                yUpdate -= 0.1 * F;
-                if (yUpdate <= y) {
-                    yUpdate = y;
-                }
-            }else {
-                piece.getCurrentImage().stop(); //altrimenti ferma animazione
-            }
-        }
     }
 
     public float getxUpdate() {

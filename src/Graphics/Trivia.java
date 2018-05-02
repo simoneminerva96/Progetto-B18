@@ -44,7 +44,7 @@ public class Trivia extends BasicGameState {
 
         piece=new Pedina(up,dwn,lft,rght,32,32);
         pGUI=new PlayerGUI(p,piece);
-        piece.currentImage.stop();
+        pGUI.getPedina().getCurrentImage().stop();
 
 
 
@@ -70,14 +70,14 @@ public class Trivia extends BasicGameState {
             b=true;
             int diceN=die.Launch();
             System.out.println("DADO: "+diceN);
-            p.update(diceN,false);
+            p.update(diceN,Direction.BACK);
             pGUI.updateCoordinates();
         }
         if(input.isKeyPressed(Input.KEY_S)){ //vai avanti
             b=true;
             int diceN=die.Launch();
             System.out.println("DADO: "+diceN);
-            p.update(diceN,true);
+            p.update(diceN,Direction.FORWARD);
             pGUI.updateCoordinates();
         }
 
