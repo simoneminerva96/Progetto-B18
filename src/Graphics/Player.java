@@ -14,7 +14,6 @@ public class Player{
     public Animation playerGUI;
     boolean direction=true;
     boolean isOnLeft=false,isOnRight=false;
-
     int mx,my;
 
     public Player(String name,int id,Map map){
@@ -98,95 +97,103 @@ public class Player{
     public boolean getDirection(){return direction;}
 
     public void update(int die,boolean direction) {
-        this.direction=direction; //direction==true spostamento in avanti; altrimenti indietro
+        int tempx, tempy; 
+        this.direction = direction; //direction==true spostamento in avanti; altrimenti indietro
         if (y == miny) {
-            if(this.direction){
-                isOnLeft=false;
-                int tempx = x + (2 * die);
-                if (tempx > maxx) {
-                    tempx = tempx - maxx;
-                    x = maxx;
-                    y += tempx;
-                } else {
-                    x += 2 * die;
+            switch (this.direction) {
+                case true: { 
+                    isOnLeft=false;
+                    tempx = x + (2 * die);
+                    if (tempx > maxx) {
+                        tempx = tempx - maxx;
+                        x = maxx;
+                        y += tempx;
+                    } else 
+                        x = tempx;
+                    break;
                 }
-            }else{
-                int tempx = x - (2 * die);
-                if (tempx < minx) {
-                    tempx = minx - tempx;
-                    x = minx;
-                    y += tempx;
-                } else {
-                    x -= 2 * die;
+                case false: {        
+                    tempx = x - (2 * die);
+                    if (tempx < minx) {
+                        tempx = minx - tempx;
+                        x = minx;
+                        y += tempx;
+                    } else 
+                        x = tempx;
+                    break;
+               }
+            }
+         } else if (x == maxx) {
+            switch(this.direction){
+                case true: {
+                    tempy = y + (2 * die);
+                    if (tempy > maxy) {
+                        tempy = tempy - maxy;
+                        x -= tempy;
+                        y = maxy;
+                    } else 
+                        y = tempy;
+                    break; 
+                }
+                case false: {
+                    isOnRight=true;
+                    tempy = y - (2 * die);
+                    if (tempy < miny) {
+                        tempy = miny - tempy;
+                        x -= tempy;
+                        y = miny;
+                    } else
+                        y = tempy;
+                    break;
                 }
             }
-
-        } else if (x == maxx) {
-            if(this.direction){
-                int tempy = y + (2 * die);
-                if (tempy > maxy) {
-                    tempy = tempy - maxy;
-                    x -= tempy;
-                    y = maxy;
-                } else {
-                    y += 2 * die;
-                }
-            }else{
-                isOnRight=true;
-                int tempy = y - (2 * die);
-                if (tempy < miny) {
-                    tempy = miny-tempy;
-                    x -= tempy;
-                    y = miny;
-                } else {
-                    y -= 2 * die;
-                }
-            }
-
         } else if (y == maxy) {
-            if(this.direction){
-                int tempx = x - (2 * die);
-                if (tempx < minx) {
-                    tempx = minx - tempx;
-                    x = minx;
-                    y -= tempx;
-                } else {
-                    x -= 2 * die;
+            siwtch(this.direction){
+                case true: {
+                    tempx = x - (2 * die);
+                    if (tempx < minx) {
+                        tempx = minx - tempx;
+                        x = minx;
+                        y -= tempx;
+                    } else
+                        x = tempx;
+                    break;
                 }
-            }else{
-                int tempx = x + (2 * die);
-                if (tempx > maxx) {
-                    tempx = tempx - maxx;
-                    x = maxx;
-                    y -= tempx;
-                } else {
-                    x += 2 * die;
+                case false: {
+                    tempx = x + (2 * die);
+                    if (tempx > maxx) {
+                        tempx = tempx - maxx;
+                        x = maxx;
+                        y -= tempx;
+                    } else
+                        x = tempx;
+                    break;
                 }
             }
-
         } else if (x == minx) {
-            if(this.direction){
-                int tempy = y - (2 * die);
-                isOnLeft=true;
-
-                if (tempy < miny) {
-                    tempy = miny - tempy;
-                    x += tempy;
-                    y = miny;
-                } else {
-                    y -= 2 * die;
+            switch(this.direction){
+                case true: {
+                    tempy = y - (2 * die);
+                    isOnLeft=true;
+                    if (tempy < miny) {
+                        tempy = miny - tempy;
+                        x += tempy;
+                        y = miny;
+                    } else
+                        y = tempy;
+                    break;
                 }
-            }else{
-                int tempy = y + (2 * die);
-                if (tempy > maxy) {
-                    tempy = tempy-maxy;
-                    x += tempy;
-                    y = maxy;
-                } else {
-                    y += 2 * die;
+                case false: {
+                    tempy = y + (2 * die);
+                    if (tempy > maxy) {
+                        tempy = tempy-maxy;
+                        x += tempy;
+                        y = maxy;
+                    } else
+                        y = tempy;
+                    break;
                 }
             }
-
         }
         System.out.println("X: "+x+" Y:"+y);
     }
