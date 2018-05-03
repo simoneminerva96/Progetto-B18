@@ -1,4 +1,3 @@
-package javagame;
 import javax.xml.transform.Result;
 import java.sql.*;
 import java.io.IOException;
@@ -6,7 +5,7 @@ import java.util.Scanner;
 
 
 public class ConnectionDB {
-    /*public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) throws SQLException {
         Connection cn; //connessionea al db
         Statement st; //permette di costruire le query
         ResultSet rs; //permette di ottenere il risultato della query
@@ -37,10 +36,10 @@ public class ConnectionDB {
         cn.close(); // chiusura connessione
 
 
-    }// fine main*/
+    }// fine main
 
 
-    public static void main(String[] args) throws SQLException  {
+    /*public static void main(String[] args) throws SQLException  {
         String NAME;
         String PASS;
         Scanner scanner = new Scanner(System.in);
@@ -295,7 +294,7 @@ public class ConnectionDB {
 
 
 
-    }
+    }*/
 
 
 }
