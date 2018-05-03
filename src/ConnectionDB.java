@@ -1,43 +1,77 @@
+import GameClasses.Answer;
+import GameClasses.Question;
+
 import javax.xml.transform.Result;
 import java.sql.*;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 
 public class ConnectionDB {
-    public static void main(String[] args) throws SQLException {
-        Connection cn; //connessionea al db
-        Statement st; //permette di costruire le query
-        ResultSet rs; //permette di ottenere il risultato della query
-        String sql; //stringa contenete la query
-        // ________________________________connessione
+    private Connection cn; //connessionea al db
+    private Statement st; //permette di costruire le query
+    private ResultSet rs; //permette di ottenere il risultato della query
+    private String sql; //stringa contenete la query
+
+    public ConnectionDB()  {
+
+    }
 
 
+    public ArrayList<Question> getQuestion (String cod) throws SQLException {
 
         cn = DriverManager.getConnection("jdbc:mysql://localhost:3306/trivial?user=root&password=root");
-            //trivial è il nome del database
-
-
-
-
-        sql = "SELECT * FROM domande;";
+        sql = "select ID_QUEST, DESCRIZIONE, RISPOSTA, VALUE from domande join risposte on ID_QUEST = ID_DOMANDA where ID_QUEST = \"" + cod + "\"";
         // ________________________________query
 
         try {
             st = cn.createStatement(); //creo un statement sulla connessione
             rs = st.executeQuery(sql); //faccio la query sullo statement
+            ArrayList<Question> questions=new ArrayList<Question>();
+            Integer i=1;
+            ArrayList<Answer> answers=new ArrayList<Answer>();
             while (rs.next() == true)
-                System.out.println(rs.getString("ID_QUEST") + "\t" + rs.getString("DESCRIZIONE"));
+                if(i%4!=0){
+                    //System.out.println(rs.getString("ID_QUEST") + "\t" + rs.getString("DESCRIZIONE"));
+                    boolean correct=false;
+                    if(rs.getString("VALUE").equalsIgnoreCase("Y")){
+                        correct=true;
+                    }
+                    answers.add(new Answer(rs.getString("RISPOSTA"),correct));
+                    i++;
+                }
+                else {
+                    boolean correct=false;
+                    if(rs.getString("VALUE").equalsIgnoreCase("Y")){
+                        correct=true;
+                    }
+                    answers.add(new Answer(rs.getString("RISPOSTA"),correct));
+                    i++;
+                    questions.add(new Question(rs.getString("DESCRIZIONE"),null,answers));//LA CATEGORIA VA SETTATA QUANDO CHIAMO IL METODO NEL COSTRUTTORE DEL TABELLONE
+                    answers.clear();
+                }
+
+
         } catch (SQLException e) {
             System.out.println("errore:" + e.getMessage());
         } // fine try-catch
 
+        finally {
+            cn.close(); // chiusura connessione
+            return null;
+        }
 
-        cn.close(); // chiusura connessione
 
 
-    }// fine main
+    }
 
+
+    
+    public static void main(String[] args) throws SQLException {
+        ConnectionDB connectionDB=new ConnectionDB();
+        ArrayList<Question> prova= connectionDB.getQuestion("GEO1");
+    }
 
     /*public static void main(String[] args) throws SQLException  {
         String NAME;
