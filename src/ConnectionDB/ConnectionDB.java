@@ -1,3 +1,5 @@
+package ConnectionDB;
+
 import GameClasses.Answer;
 import GameClasses.Question;
 
@@ -66,12 +68,6 @@ public class ConnectionDB {
 
     }
 
-
-    
-    public static void main(String[] args) throws SQLException {
-        ConnectionDB connectionDB=new ConnectionDB();
-        ArrayList<Question> prova= connectionDB.getQuestion("GEO1");
-    }
 
     /*public static void main(String[] args) throws SQLException  {
         String NAME;

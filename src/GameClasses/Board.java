@@ -1,16 +1,17 @@
 package GameClasses;
 
 import GameClasses.Squares.*;
-
+import ConnectionDB.ConnectionDB;
 import java.util.ArrayList;
 /*
     classe che corrisponde al tabellone di gioco
  */
-
 public class Board {
     private ArrayList<Square> squares;
+    private ConnectionDB connectionDB;
     // ci aggiungo anche domande di prova a ogni casella
     public Board(){
+        connectionDB=new ConnectionDB();
         squares=new ArrayList<Square>();
         for(int i=0;i<40;i++){
             if(i==0) squares.add(new InitialSquare(i)); //casella start
