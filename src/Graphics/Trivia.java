@@ -15,11 +15,9 @@ public class Trivia extends BasicGameState {
     Player p;
     PlayerGUI pGUI;
     Pedina piece;
-
+    boolean moved = false;
     Die die=new Die();
-
-
-
+    Prova prova = new Prova(2);
 
     public String mouse= "No input";
     float x=100,y=100;
@@ -42,24 +40,29 @@ public class Trivia extends BasicGameState {
         String rght="res/char/FFIV/Palom/palomdx.png";
         String up="res/char/FFIV/Palom/palomup.png";
 
-        piece=new Pedina(up,dwn,lft,rght,32,32);
+        piece=new Pedina(up,dwn,lft,rght,40,40);
         pGUI=new PlayerGUI(p,piece);
         pGUI.getPedina().getCurrentImage().stop();
 
-
+        prova.init(gameContainer, stateBasedGame);
 
     }
 
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
-
+        graphics.drawString(mouse, 1100, 800);
         Image map=new Image("res/map/1.0.png");
         graphics.drawImage(map,0,0);
         pGUI.getPedina().getCurrentImage().draw(pGUI.getxUpdate(),pGUI.getyUpdate());
+
+        if(pGUI.ready){
+            prova.render(gameContainer, stateBasedGame, graphics);
+
+        }
     }
 
     @Override
-    public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
+    public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) {
         float xpos=Mouse.getX();
         float ypos=Mouse.getY();
 
@@ -67,6 +70,7 @@ public class Trivia extends BasicGameState {
         Input input=gameContainer.getInput();
 
         if(input.isKeyPressed(Input.KEY_W)){//vai indietro
+            pGUI.clicked=true;
             b=true;
             int diceN=die.Launch();
             System.out.println("DADO: "+diceN);
@@ -74,6 +78,7 @@ public class Trivia extends BasicGameState {
             pGUI.updateCoordinates();
         }
         if(input.isKeyPressed(Input.KEY_S)){ //vai avanti
+            moved = true;
             b=true;
             int diceN=die.Launch();
             System.out.println("DADO: "+diceN);
@@ -81,7 +86,13 @@ public class Trivia extends BasicGameState {
             pGUI.updateCoordinates();
         }
 
-            pGUI.updateOnEachFrame(i);
+
+        try {
+            prova.update(gameContainer, stateBasedGame, i);
+        } catch (SlickException e) {
+            e.printStackTrace();
+        }
+        pGUI.updateOnEachFrame(i);
 
 
 

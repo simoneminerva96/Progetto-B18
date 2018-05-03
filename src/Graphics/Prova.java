@@ -27,12 +27,12 @@ public class Prova extends BasicGameState {
 
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
-            graphics.drawString(questionAndAnswers.question, 100, 100);
-            graphics.drawString(questionAndAnswers.a.answer, 100, 200);
-            graphics.drawString(questionAndAnswers.a1.answer, 100, 300);
-            graphics.drawString(questionAndAnswers.a2.answer, 100, 400);
-            graphics.drawString(questionAndAnswers.a3.answer, 100, 500);
-            torna.draw(300,300);
+            graphics.drawString(questionAndAnswers.question, 1100, 350);
+            graphics.drawString(questionAndAnswers.a.answer, 1100, 450);
+            graphics.drawString(questionAndAnswers.a1.answer, 1100, 500);
+            graphics.drawString(questionAndAnswers.a2.answer, 1100, 550);
+            graphics.drawString(questionAndAnswers.a3.answer, 1100, 600);
+            //torna.draw(900,400);
 
             if (answered == true) {
                 questionAndAnswers.setAnswered(true);
@@ -60,27 +60,27 @@ public class Prova extends BasicGameState {
             }
         }
 
-        if (posX>100 && posX<165){
-            if (posY<500 && posY>470) {
+        if (posX>1100 && posX<1150){
+            if (posY<538 && posY>502) {
                 if (Mouse.isButtonDown(0) && answered == false) {
                     end = questionAndAnswers.a.esito;
                     answered = true;
                 }
             }
-            if (posY<400 && posY>375) {
+            if (posY<510 && posY>452) {
                 if (Mouse.isButtonDown(0) && answered == false) {
                     end = questionAndAnswers.a1.esito;
                     answered = true;
                 }
             }
-            if (posY<300 && posY>275) {
+            if (posY<455 && posY>400) {
                 if (Mouse.isButtonDown(0) && answered == false) {
                     end = questionAndAnswers.a2.esito;
                     answered = true;
                 }
             }
 
-            if (posY<200 && posY>175) {
+            if (posY<410 && posY>349) {
                 if (Mouse.isButtonDown(0) && answered == false){
                     end = questionAndAnswers.a3.esito;
                     answered = true;
