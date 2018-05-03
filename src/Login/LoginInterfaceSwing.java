@@ -1,3 +1,5 @@
+package Login;
+
 import javafx.scene.control.PasswordField;
 
 import javax.swing.*;
@@ -11,13 +13,13 @@ import java.awt.*;
  */
 import static java.awt.BorderLayout.*;
 
-public class InterfacciaLogin extends JFrame{
+public class LoginInterfaceSwing extends JFrame{
     public static final int LUNGHEZZA=400;    //lunghezza finestra
     public static final int ALTEZZA=500;      //altezza finestra
     public static final Color color=Color.white;        //colore sfondo finestra
     public JPanel superiorPAnel,centralPanel,inferiorPanel;     //3 pannelli di cui si compone la finestra
 
-    public InterfacciaLogin() {
+    public LoginInterfaceSwing() {
         setSize(LUNGHEZZA, ALTEZZA);
         setBackground(color);
         setLayout(new BorderLayout());

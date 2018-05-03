@@ -3,12 +3,11 @@ package Test;
 import GameClasses.Board;
 import GameClasses.Die;
 import GameClasses.TrivialGame;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-
-import static junit.framework.TestCase.assertNotNull;
-import static junit.framework.TestCase.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 class TrivialGameTest {
