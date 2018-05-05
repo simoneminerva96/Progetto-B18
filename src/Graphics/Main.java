@@ -1,5 +1,6 @@
 package Graphics;
 import Graphics.com.menu.MainMenu;
+import org.lwjgl.opengl.Display;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.*;
 
@@ -32,7 +33,9 @@ public class Main extends StateBasedGame{
         try {
             //a windows that contains a game named gameName
             appgc = new AppGameContainer(new Main(gameName));
-            appgc.setDisplayMode(1700,980, false);
+            appgc.setAlwaysRender(true);
+            appgc.setDisplayMode(1280, 680, false);
+            appgc.setShowFPS(false);
             appgc.start();
         } catch (SlickException e) {
             e.printStackTrace();

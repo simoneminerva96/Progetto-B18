@@ -5,9 +5,6 @@ import org.lwjgl.input.Mouse;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
-import org.newdawn.slick.tiled.TiledMap;
-
-import javax.swing.*;
 
 public class Trivia extends BasicGameState {
 
@@ -32,7 +29,6 @@ public class Trivia extends BasicGameState {
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-
         map=new Map(22,22,"res/map/1.0.png",32);
         p=new Player("ONE",3,map);
         String dwn="res/char/FFIV/Palom/palomdwn.png";
@@ -51,13 +47,12 @@ public class Trivia extends BasicGameState {
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
         graphics.drawString(mouse, 1100, 800);
-        Image map=new Image("res/map/1.0.png");
+        Image map=new Image("Immagini/Tabella3.png");
         graphics.drawImage(map,0,0);
         pGUI.getPedina().getCurrentImage().draw(pGUI.getxUpdate(),pGUI.getyUpdate());
 
         if(pGUI.ready){
             prova.render(gameContainer, stateBasedGame, graphics);
-
         }
     }
 
@@ -93,9 +88,6 @@ public class Trivia extends BasicGameState {
             e.printStackTrace();
         }
         pGUI.updateOnEachFrame(i);
-
-
-
 
     }
 }

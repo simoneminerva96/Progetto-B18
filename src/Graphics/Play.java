@@ -81,6 +81,14 @@ public class Play extends BasicGameState {
             q = true;
         }
 
+        if (input.isKeyDown(Input.KEY_W)){
+            pacPositionX -= .1f * delta;
+            if (pacPositionX<=200){
+                pacPositionX = 200;
+                pacPositionY -= .1f * delta;
+            }
+        }
+
         // freccia sinistra
         if (posX>858 && posX<885 && posY>160 && posY<190){
             if (Mouse.isButtonDown(0)){
