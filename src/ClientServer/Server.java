@@ -17,16 +17,18 @@ public class Server {
         //usata per accettare la richiesta ad s1 da parte el client
         Socket ss =  s1.accept();
 
-        //prende il numero dalla richiesta del client
-        Scanner sc = new Scanner(ss.getInputStream());
-        int number = sc.nextInt();
+        for(;;) {
+            //prende il numero dalla richiesta del client
+            Scanner sc = new Scanner(ss.getInputStream());
+            int number = sc.nextInt();
 
 
-        int temp = number*2;
+            int temp = number * 2;
 
-        //bisogna ora ripassare il risultato al client
-        PrintStream p = new PrintStream(ss.getOutputStream());
-        p.println(temp);
+            //bisogna ora ripassare il risultato al client
+            PrintStream p = new PrintStream(ss.getOutputStream());
+            p.println(temp);
+        }
 
     }
 }

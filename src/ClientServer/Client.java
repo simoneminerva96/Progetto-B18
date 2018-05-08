@@ -17,16 +17,18 @@ public class Client {
         //prende l'output dal server
         Scanner sc1 = new Scanner(s.getInputStream());
 
-        System.out.println("Enter any number");
-        int number = sc.nextInt();
+        for(;;) {
+            System.out.println("Enter any number");
+            int number = sc.nextInt();
 
-        //gli passo il numero al server appena letto
-        PrintStream p = new PrintStream(s.getOutputStream());
-        p.println(number);
+            //gli passo il numero al server appena letto
+            PrintStream p = new PrintStream(s.getOutputStream());
+            p.println(number);
 
-        //metto il risulato letto dal server nella variabile temp e la stampo
-        int temp = sc1.nextInt();
-        System.out.println(temp);
+            //metto il risulato letto dal server nella variabile temp e la stampo
+            int temp = sc1.nextInt();
+            System.out.println(temp);
+        }
 
     }
 }
