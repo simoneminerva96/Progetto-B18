@@ -3,6 +3,7 @@ import GameClasses.Squares.BonusMalusSquare;
 import GameClasses.Squares.FinalQuestionSquare;
 
 import java.awt.*;
+import java.sql.SQLException;
 import java.util.*;
 
 /*
@@ -19,7 +20,13 @@ public class TrivialGame {
         players=new ArrayList<Player>();
         possiblePieces=new ArrayList<Piece>();
         die=new Die();
-        playBoard=new Board();
+        try{
+            playBoard=new Board();
+        }
+        catch (SQLException e){
+            System.out.println(e.getMessage());
+            System.exit(1);
+        }
     }
 
     public ArrayList<Player> getPlayers() {
@@ -138,9 +145,9 @@ public class TrivialGame {
     public void play(){
         Boolean correct=false;
         Integer index=0;
-        turn = new Turn(players.get(index));
+        turn = new Turn(players.get(index));    //PASSO A TURN IL GIOCATORE CHE è DI TURNO
         do {
-            turn.dieLaunch();// lancio dado e movimentazione pedina
+            turn.dieLaunch();// LANCIA IL DADO E MUOVE LA PEDINA DEL GIOCATORE
             // se la casella è bonus/malus eseguo il bonus malus prima
             if(playBoard.getSquares().get(players.get(index).getActualPosition()) instanceof BonusMalusSquare){
                 ((BonusMalusSquare) playBoard.getSquares().get(players.get(index).getActualPosition())).executeBonusMalus(players.get(index));
@@ -153,9 +160,9 @@ public class TrivialGame {
             };
             if(correct==false){
                 if(players.get(index).getActualPosition() != 7) System.out.println("risposta errata!\n");
-                index++;
+                index++;    //L'INDICE PUNTA AL GIOCATORE SUCCESSIVO
                 if(index==players.size() ) index=0;
-                turn.setPlayerOnTurn(players.get(index));
+                turn.setPlayerOnTurn(players.get(index));// setto come giocatore di turno il giocatore successivo
                 correct=true;
             }
             else{

@@ -1,6 +1,7 @@
 package ConnectionDB;
 
 import GameClasses.Answer;
+import GameClasses.Categories;
 import GameClasses.Question;
 
 import javax.naming.CommunicationException;
@@ -21,11 +22,13 @@ public class ConnectionDB {
 
     }
 
-
+    /*
+        metodo che ritorna l'arraylist delle domande corrispondenti al codice passato
+     */
     public ArrayList<Question> getQuestion (String cod) throws SQLException{
 
         cn = DriverManager.getConnection("jdbc:mysql://10.87.144.91:3306/trivial?user=root&password=root");
-        sql = "select ID_QUEST, DESCRIZIONE, RISPOSTA, VALUE from domande join risposte on ID_QUEST = ID_DOMANDA where ID_QUEST = \"" + cod + "\"";
+        sql = "select ID_QUEST, DESCRIZIONE, RISPOSTA, VALUE from domande join risposte on ID_QUEST = ID_DOMANDA where ID_QUEST LIKE \"" + cod + "%\"";
         // ________________________________query
         ArrayList<Question> questions=new ArrayList<Question>();
         try {
@@ -44,7 +47,7 @@ public class ConnectionDB {
                     boolean correct=conversionDB(rs.getString("VALUE"));
                     answers.add(new Answer(rs.getString("RISPOSTA"),correct));
                     i++;
-                    questions.add(new Question(rs.getString("DESCRIZIONE"),null,answers));//LA CATEGORIA VA SETTATA QUANDO CHIAMO IL METODO NEL COSTRUTTORE DEL TABELLONE
+                    questions.add(new Question(rs.getString("DESCRIZIONE"),conversionCode(cod),answers));//LA CATEGORIA VA SETTATA QUANDO CHIAMO IL METODO NEL COSTRUTTORE DEL TABELLONE
                     answers.clear();
                 }
 
@@ -56,19 +59,39 @@ public class ConnectionDB {
         return questions;
     }
 
+    private Categories conversionCode(String cod){
+        Categories category=null;
+        switch (cod){
+            case "GEO":
+                category= Categories.Geografia;
+                break;
+            case "STO":
+                category= Categories.Storia;
+                break;
+            case "SPO":
+                category= Categories.Sport;
+                break;
+            case "SPE":
+                category= Categories.Spettacolo;
+                break;
+            case "ART":
+                category= Categories.ArteLetteratura;
+                break;
+            case "SCI":
+                category= Categories.Scienze;
+                break;
+            case "ATT":
+                category= Categories.Attualità;
+                break;
+        }
+        return category;
+    }
     // metodo che converte y/n in true e false
     private static Boolean conversionDB(String input){
         if(input.equalsIgnoreCase("y")){
             return true;
         }
         else return false;
-    }
-    //MAIN DI PROVA
-    public static void main(String[] args) throws SQLException {
-        ConnectionDB connectionDB = new ConnectionDB();
-        ArrayList<Question> d=new ArrayList<Question>();
-        d.addAll(connectionDB.getQuestion("GEO15"));
-        System.out.println(d.get(0).getQuestion());
     }
 
    /* public static void main(String[] args) throws SQLException  {
