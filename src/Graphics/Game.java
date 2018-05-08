@@ -35,7 +35,7 @@ public class Game extends StateBasedGame{
         try {
             //a windows that contains a game named gameName
             appgc = new AppGameContainer(new Game(gameName));
-            appgc.setDisplayMode(1024,700, false);
+            appgc.setDisplayMode(1500,00, false);
             appgc.start();
         } catch (SlickException e) {
             e.printStackTrace();

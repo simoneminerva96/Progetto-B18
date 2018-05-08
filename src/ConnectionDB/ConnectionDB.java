@@ -3,6 +3,7 @@ package ConnectionDB;
 import GameClasses.Answer;
 import GameClasses.Question;
 
+import javax.naming.CommunicationException;
 import javax.xml.transform.Result;
 import java.sql.*;
 import java.io.IOException;
@@ -21,33 +22,26 @@ public class ConnectionDB {
     }
 
 
-    public ArrayList<Question> getQuestion (String cod) throws SQLException {
+    public ArrayList<Question> getQuestion (String cod) throws SQLException{
 
-        cn = DriverManager.getConnection("jdbc:mysql://localhost:3306/trivial?user=root&password=root");
+        cn = DriverManager.getConnection("jdbc:mysql://10.87.144.91:3306/trivial?user=root&password=root");
         sql = "select ID_QUEST, DESCRIZIONE, RISPOSTA, VALUE from domande join risposte on ID_QUEST = ID_DOMANDA where ID_QUEST = \"" + cod + "\"";
         // ________________________________query
-
+        ArrayList<Question> questions=new ArrayList<Question>();
         try {
             st = cn.createStatement(); //creo un statement sulla connessione
             rs = st.executeQuery(sql); //faccio la query sullo statement
-            ArrayList<Question> questions=new ArrayList<Question>();
             Integer i=1;
             ArrayList<Answer> answers=new ArrayList<Answer>();
             while (rs.next() == true)
                 if(i%4!=0){
                     //System.out.println(rs.getString("ID_QUEST") + "\t" + rs.getString("DESCRIZIONE"));
-                    boolean correct=false;
-                    if(rs.getString("VALUE").equalsIgnoreCase("Y")){
-                        correct=true;
-                    }
+                    Boolean correct=conversionDB(rs.getString("VALUE"));
                     answers.add(new Answer(rs.getString("RISPOSTA"),correct));
                     i++;
                 }
                 else {
-                    boolean correct=false;
-                    if(rs.getString("VALUE").equalsIgnoreCase("Y")){
-                        correct=true;
-                    }
+                    boolean correct=conversionDB(rs.getString("VALUE"));
                     answers.add(new Answer(rs.getString("RISPOSTA"),correct));
                     i++;
                     questions.add(new Question(rs.getString("DESCRIZIONE"),null,answers));//LA CATEGORIA VA SETTATA QUANDO CHIAMO IL METODO NEL COSTRUTTORE DEL TABELLONE
@@ -58,18 +52,26 @@ public class ConnectionDB {
         } catch (SQLException e) {
             System.out.println("errore:" + e.getMessage());
         } // fine try-catch
-
-        finally {
-            cn.close(); // chiusura connessione
-            return null;
-        }
-
-
-
+        cn.close(); // chiusura connessione
+        return questions;
     }
 
+    // metodo che converte y/n in true e false
+    private static Boolean conversionDB(String input){
+        if(input.equalsIgnoreCase("y")){
+            return true;
+        }
+        else return false;
+    }
+    //MAIN DI PROVA
+    public static void main(String[] args) throws SQLException {
+        ConnectionDB connectionDB = new ConnectionDB();
+        ArrayList<Question> d=new ArrayList<Question>();
+        d.addAll(connectionDB.getQuestion("GEO15"));
+        System.out.println(d.get(0).getQuestion());
+    }
 
-    /*public static void main(String[] args) throws SQLException  {
+   /* public static void main(String[] args) throws SQLException  {
         String NAME;
         String PASS;
         Scanner scanner = new Scanner(System.in);

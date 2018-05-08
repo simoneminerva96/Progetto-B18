@@ -9,7 +9,8 @@ import java.util.ArrayList;
 public class Board {
     private ArrayList<Square> squares;
     private ConnectionDB connectionDB;
-    // ci aggiungo anche domande di prova a ogni casella
+    // inserire le domande tramite il metodo della classe connesione db
+    // inserendo il codice corrispondente alla categoria e settando la categoria
     public Board(){
         connectionDB=new ConnectionDB();
         squares=new ArrayList<Square>();
