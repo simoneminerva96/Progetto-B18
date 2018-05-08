@@ -20,7 +20,7 @@ public class Registration {
         this.nicknameInserted=nicknameInserted;
         this.passwordInserted=passwordInserted;
         boolean check=false;
-        //effettuare il controllo sui dati inseriti
+        //effettuare il controllo sui dati inseriti, se consentiti effettuare la reg senno mess. di errore
         return check;
     }
 }
