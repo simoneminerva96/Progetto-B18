@@ -27,7 +27,7 @@ public class ConnectionDB {
      */
     public ArrayList<Question> getQuestion (String cod) throws SQLException{
 
-        cn = DriverManager.getConnection("jdbc:mysql://10.87.144.91:3306/trivial?user=root&password=root");
+        cn = DriverManager.getConnection("jdbc:mysql://93.42.44.12:3306/trivial?user=root&password=root");
         sql = "select ID_QUEST, DESCRIZIONE, RISPOSTA, VALUE from domande join risposte on ID_QUEST = ID_DOMANDA where ID_QUEST LIKE \"" + cod + "%\"";
         // ________________________________query
         ArrayList<Question> questions=new ArrayList<Question>();
@@ -58,7 +58,7 @@ public class ConnectionDB {
         cn.close(); // chiusura connessione
         return questions;
     }
-
+    //metodo che converte il codice corrispondente nella categoria della domanda
     private Categories conversionCode(String cod){
         Categories category=null;
         switch (cod){
