@@ -1,20 +1,22 @@
 package Graphics;
 
 import org.lwjgl.input.Mouse;
-import org.newdawn.slick.*;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
-public class Prova extends BasicGameState {
-    //Image torna;
+public class Domanda extends BasicGameState {
     boolean answered = false;
     boolean end = false;
 
-    public Prova (int state){
-
+    public Domanda(int state) {
     }
+
     @Override
     public int getID() {
         return 2;
@@ -22,26 +24,25 @@ public class Prova extends BasicGameState {
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-        //torna = new Image ("Immagini/freccia.png");
+
     }
 
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
-            graphics.drawString(questionAndAnswers.question, 1100, 350);
-            graphics.drawString(questionAndAnswers.a.answer, 1100, 450);
-            graphics.drawString(questionAndAnswers.a1.answer, 1100, 500);
-            graphics.drawString(questionAndAnswers.a2.answer, 1100, 550);
-            graphics.drawString(questionAndAnswers.a3.answer, 1100, 600);
-            //torna.draw(900,400);
+        graphics.drawString(questionAndAnswers.question, 1100, 350);
+        graphics.drawString(questionAndAnswers.a.answer, 1100, 450);
+        graphics.drawString(questionAndAnswers.a1.answer, 1100, 500);
+        graphics.drawString(questionAndAnswers.a2.answer, 1100, 550);
+        graphics.drawString(questionAndAnswers.a3.answer, 1100, 600);
 
-            if (answered == true) {
-                questionAndAnswers.setAnswered(true);
-                if (end == true) {
-                    graphics.drawString("Risposta esatta!!", 500, 500);
-                } else {
-                    graphics.drawString("Risposta sbagliata buuu", 500, 500);
-                }
+        if (answered == true) {
+            questionAndAnswers.setAnswered(true);
+            if (end == true) {
+                graphics.drawString("Risposta esatta!!", 500, 500);
+            } else {
+                graphics.drawString("Risposta sbagliata buuu", 500, 500);
             }
+        }
     }
 
     @Override
@@ -89,4 +90,5 @@ public class Prova extends BasicGameState {
         }
 
     }
+
 }

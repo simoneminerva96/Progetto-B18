@@ -13,12 +13,11 @@ public class Trivia extends BasicGameState {
     PlayerGUI pGUI;
     Pedina piece;
     boolean moved = false;
-    Prova prova = new Prova(2);
-    Image g;
+    Domanda prova = new Domanda(2);
     public String mouse= "No input";
     Boolean b=false;
 
-    public Trivia(int id) throws Exception {
+    public Trivia(int id) {
     }
 
     public int getID() {
@@ -39,20 +38,17 @@ public class Trivia extends BasicGameState {
         piece=new Pedina(up,dwn,lft,rght,35,35);
         pGUI=new PlayerGUI(p,piece);
         pGUI.getPedina().getCurrentImage().stop();
-        g = new Image("res/buttons/blue_button02.png");
         prova.init(gameContainer, stateBasedGame);
 
     }
 
     @Override
-    public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
+    public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
         graphics.drawString(mouse, 1100, 800);
-        //backgroundMap=backgroundMap.getScaledCopy(gameContainer.getHeight(),gameContainer.getHeight()); //ridimensiona l'immagine a seconda della dim dello schermo
         graphics.drawImage(backgroundMap,0,0);
         pGUI.getPedina().getCurrentImage().draw(pGUI.getxUpdate(),pGUI.getyUpdate());
         currentDie.draw(1000,500);
-        g.draw(1000,500);
-        //d.getCurrentDie().draw(1000,500);
+
         /*if(pGUI.ready){
             prova.render(gameContainer, stateBasedGame, graphics);
         }*/

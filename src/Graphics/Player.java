@@ -61,10 +61,6 @@ public class Player{
         this.x = x;
     }
 
-    public String getName() {
-        return name;
-    }
-
     public void setY(int y) {
         this.y = y;
 

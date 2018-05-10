@@ -13,7 +13,7 @@ public class Play extends BasicGameState {
     int [] duration = {200,200};
     float pacPositionX = 770;
     float pacPositionY = 608;
-    Prova p = new Prova(2);
+    Domanda p = new Domanda(2);
 
     public Play (int state) {
     }
