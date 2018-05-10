@@ -7,19 +7,19 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
-import org.newdawn.slick.state.transition.FadeInTransition;
-import org.newdawn.slick.state.transition.FadeOutTransition;
+
 
 public class Domanda extends BasicGameState {
     boolean answered = false;
-    boolean end = false;
+    boolean esito = false;
+    QuestionAndAnswers q = new QuestionAndAnswers();
 
     public Domanda(int state) {
     }
 
     @Override
     public int getID() {
-        return 2;
+        return 3;
     }
 
     @Override
@@ -29,15 +29,15 @@ public class Domanda extends BasicGameState {
 
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
-        graphics.drawString(questionAndAnswers.question, 1100, 350);
-        graphics.drawString(questionAndAnswers.a.answer, 1100, 450);
-        graphics.drawString(questionAndAnswers.a1.answer, 1100, 500);
-        graphics.drawString(questionAndAnswers.a2.answer, 1100, 550);
-        graphics.drawString(questionAndAnswers.a3.answer, 1100, 600);
+        graphics.drawString(q.question, 850, 250);
+        graphics.drawString(q.a.answer, 900, 300);
+        graphics.drawString(q.a1.answer, 900, 350);
+        graphics.drawString(q.a2.answer, 900, 400);
+        graphics.drawString(q.a3.answer, 900, 450);
 
         if (answered == true) {
-            questionAndAnswers.setAnswered(true);
-            if (end == true) {
+            q.setAnswered(true);
+            if (esito == true) {
                 graphics.drawString("Risposta esatta!!", 500, 500);
             } else {
                 graphics.drawString("Risposta sbagliata buuu", 500, 500);
@@ -52,38 +52,30 @@ public class Domanda extends BasicGameState {
         int posY = Mouse.getY();
 
         //System.out.println("x: "+posX+ " y: "+posY);
-        // freccia torna indietro
-        if (posX>305 && posX<348 && posY>349 && posY<394){
-            if (Mouse.isButtonDown(0)){
-                if (answered == true) {
-                    stateBasedGame.enterState(1, new FadeOutTransition(), new FadeInTransition());
-                }
-            }
-        }
 
-        if (posX>1100 && posX<1150){
-            if (posY<538 && posY>502) {
+        if (posX>850 && posX<1135){
+            if (posY<414 && posY>373) {
                 if (Mouse.isButtonDown(0) && answered == false) {
-                    end = questionAndAnswers.a.esito;
+                    esito = q.a.esito;
                     answered = true;
                 }
             }
-            if (posY<510 && posY>452) {
+            if (posY<360 && posY>325) {
                 if (Mouse.isButtonDown(0) && answered == false) {
-                    end = questionAndAnswers.a1.esito;
+                    esito = q.a1.esito;
                     answered = true;
                 }
             }
-            if (posY<455 && posY>400) {
+            if (posY<305 && posY>275) {
                 if (Mouse.isButtonDown(0) && answered == false) {
-                    end = questionAndAnswers.a2.esito;
+                    esito = q.a2.esito;
                     answered = true;
                 }
             }
 
-            if (posY<410 && posY>349) {
+            if (posY<260 && posY>230) {
                 if (Mouse.isButtonDown(0) && answered == false){
-                    end = questionAndAnswers.a3.esito;
+                    esito = q.a3.esito;
                     answered = true;
                 }
             }

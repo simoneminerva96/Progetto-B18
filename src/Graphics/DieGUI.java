@@ -1,5 +1,6 @@
 package Graphics;
 
+import GameClasses.Die;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 

@@ -31,6 +31,7 @@ public class LoginScreen extends BasicGameState {
     StateButton back;
     FormButton enter;
 
+    Music music;
 
     public LoginScreen(int state)
     {
@@ -38,6 +39,8 @@ public class LoginScreen extends BasicGameState {
     }
 
     public void init(GameContainer gc , StateBasedGame sbg) throws SlickException {
+        music = new Music("res/music/Wallpaper.wav");
+        music.loop();
         font = getNewFont("Arial" , 18);
         background=new Image("res/backgrounds/green_landscape_ridim.png");
         loginback=new Image("res/backgrounds/Windows_09p.png");
@@ -87,7 +90,7 @@ public class LoginScreen extends BasicGameState {
 
     public int getID()
     {
-        return 4;
+        return 1;
     }
 
     public void enter(GameContainer gc , StateBasedGame sbg) throws SlickException {
