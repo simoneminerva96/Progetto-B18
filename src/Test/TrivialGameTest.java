@@ -7,10 +7,8 @@ import GameClasses.TrivialGame;
 
 import java.util.ArrayList;
 
-import static junit.framework.TestCase.assertNotNull;
-import static junit.framework.TestCase.assertTrue;
-//import static org.junit.jupiter.api.Assertions.assertNotNull;
-//import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 class TrivialGameTest {
@@ -63,11 +61,6 @@ class TrivialGameTest {
         for(int i=0;i<match.getPlayers().size() -1 ;i++){
             assertTrue(match.getPlayers().get(i).getInitialRollResult() > match.getPlayers().get(i+1).getInitialRollResult());
         }
-    }
-    //@Test
-    public void InitializeBoard(){
-        Board prova= new Board();
-        for(int i=0;i<40;i++) assertNotNull(prova.getSquares().get(i));
     }
 
 }

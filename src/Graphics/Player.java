@@ -1,17 +1,9 @@
 package Graphics;
 
-import org.newdawn.slick.Animation;
-import org.newdawn.slick.SlickException;
-import org.newdawn.slick.SpriteSheet;
-
 public class Player{
     int x,y,id,minx,miny,maxx,maxy;
     String name;
     int mulsize;
-    float xGUI=0,yGUI=0,xGUItemp=0,yGUItemp=0;
-
-    public SpriteSheet mvup,mvdwn,mvlft,mvrght;
-    public Animation playerGUI;
     Direction direction=Direction.FORWARD;
     
     boolean isOnLeft=false,isOnRight=false,isOnUp=false,isOnDown=false;
@@ -19,7 +11,6 @@ public class Player{
 
     public Player(String name,int id,Map map){
         this.id=id;
-        this.mvlft=mvlft;
         mulsize=map.tilesize;
         mx=map.getXmax();
         my=map.getYmax();
@@ -77,22 +68,6 @@ public class Player{
     public void setY(int y) {
         this.y = y;
 
-    }
-
-    public int getMinx() {
-        return minx;
-    }
-
-    public int getMiny() {
-        return miny;
-    }
-
-    public int getMaxx() {
-        return maxx;
-    }
-
-    public int getMaxy() {
-        return maxy;
     }
 
     public Direction getDirection(){return direction;}

@@ -6,19 +6,19 @@ public class PlayerGUI {
     Player p;
     Pedina piece;
     boolean ready = false, clicked=false;
-
+    static final int minMovement = 35;
 
     public PlayerGUI(Player p,Pedina piece){
         this.p=p;
         this.piece=piece;
-        x=xUpdate=(p.getX()*40)-5;
-        y=yUpdate=(p.getY()*40)-5;
+        x=xUpdate=(p.getX()*minMovement)-5;
+        y=yUpdate=(p.getY()*minMovement)-5;
 
     }
     public void updateCoordinates(){ //coordinate a cui xUpdate e yUpdate devono raggiungere che vengon aggiornate ogni volta che viene
         //eseguito il metodo update di player.
-        x=(p.getX()*40)-5;
-        y=(p.getY()*40)-5;
+        x=(p.getX()*minMovement)-5;
+        y=(p.getY()*minMovement)-5;
     }
 
     //il metodo aggiorna le coordinate xUpdate e yUpdate (di +- 0.1) finchè non raggiungono i valori delle coordinate x e y .
@@ -55,7 +55,6 @@ public class PlayerGUI {
                                 p.isOnDown=false;
                             }
                         }
-
                     }
                 } else if (yUpdate < y) {//a destra
                     if(p.getDirection()==Direction.BACK){
@@ -123,12 +122,6 @@ public class PlayerGUI {
 
     public float getyUpdate() {
         return yUpdate;
-    }
-
-
-
-    public Player getPlayer(){
-        return p;
     }
 
     public Pedina getPedina(){

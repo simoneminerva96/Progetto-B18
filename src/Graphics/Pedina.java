@@ -18,7 +18,7 @@ public class Pedina {
             dwn=new Animation(mvdwn,100);
             sx=new Animation(mvlft,100);
             dx=new Animation(mvrght,100);
-            currentImage=dx;
+            currentImage=sx;
         } catch (SlickException e) {
             e.printStackTrace();
         }

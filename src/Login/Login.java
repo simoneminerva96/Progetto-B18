@@ -1,5 +1,7 @@
 package Login;
 
+import ConnectionDB.ConnectionDB;
+
 import javax.swing.*;
 
 /*
@@ -8,5 +10,24 @@ import javax.swing.*;
     viene effettuato,ecc..
 */
 public class Login {
+    private String nicknameInserted,passwordInserted;
+    private ConnectionDB connection;
+
+    public Login(){
+        nicknameInserted=null;
+        passwordInserted=null;
+        connection=new ConnectionDB();
+    }
+    /*
+        metodo da chiamare quando l'utente preme il tasto login sull'interfaccia
+        prende i dati inseriti ed effettua il login
+     */
+    public boolean Login(String nicknameInserted,String passwordInserted){
+        this.nicknameInserted=nicknameInserted;
+        this.passwordInserted=passwordInserted;
+        boolean check=false;
+        //effettuare il controllo sui dati inseriti, se corretti loggarsi, se non corrispondono dare mess di errore
+        return check;
+    }
 
 }
