@@ -34,7 +34,8 @@ public class Main extends StateBasedGame{
             //a windows that contains a game named gameName
             appgc = new AppGameContainer(new Main(gameName));
             appgc.setAlwaysRender(true);
-            appgc.setDisplayMode(1280, 900, false);
+            //dimensione della finestra proporzionata alla dimensione dello schermo
+            appgc.setDisplayMode(90* appgc.getScreenWidth()/100, 91*appgc.getScreenHeight()/100, false);
             appgc.setShowFPS(false);
             appgc.start();
         } catch (SlickException e) {

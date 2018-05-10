@@ -1,10 +1,13 @@
 package Graphics;
 
 import GameClasses.Die;
+import javafx.stage.Screen;
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+
+import static javax.swing.text.html.HTML.Tag.I;
 
 public class Trivia extends BasicGameState {
 
@@ -29,8 +32,8 @@ public class Trivia extends BasicGameState {
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-        map=new Map(20,20,"res/map/1.0.png",32);
-        map=new Map(22,22,"Immagini/Tab2.png",32);
+        //map=new Map(20,20,"res/map/1.0.png",32);
+        map=new Map(22,22,"Immagini/Tabella3.png",32);
 
         p=new Player("ONE",3,map);
         String dwn="res/char/FFIV/Palom/palomdwn.png";
@@ -49,7 +52,8 @@ public class Trivia extends BasicGameState {
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
         graphics.drawString(mouse, 1100, 800);
-        Image map=new Image("res/map/tabella3.png");
+        Image map=new Image("Immagini/Tabella3.png");
+        map=map.getScaledCopy(gameContainer.getHeight(),gameContainer.getHeight()); //ridimensiona l'immagine a seconda della dim dello schermo
         graphics.drawImage(map,0,0);
         pGUI.getPedina().getCurrentImage().draw(pGUI.getxUpdate(),pGUI.getyUpdate());
 
