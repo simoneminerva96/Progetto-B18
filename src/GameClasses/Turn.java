@@ -7,6 +7,7 @@ import java.util.Scanner;
  */
 
 public class Turn {
+    private final static int NSQUARES=36;
     private Player playerOnTurn;        //giocatore di turno
     private Die die;        //dado per determinare di quanto spostarsi
 
@@ -39,8 +40,8 @@ public class Turn {
         }
         System.out.println("posizione di partenza : " + playerOnTurn.getActualPosition());
         if(direction.equalsIgnoreCase("cw")){
-            if(playerOnTurn.getActualPosition() + resultOfDieRoll >= 40){
-                Integer position=playerOnTurn.getActualPosition() + resultOfDieRoll -40;
+            if(playerOnTurn.getActualPosition() + resultOfDieRoll >= NSQUARES){
+                Integer position=playerOnTurn.getActualPosition() + resultOfDieRoll -NSQUARES;
                 playerOnTurn.setActualPosition(position);
             }
             else playerOnTurn.setActualPosition(playerOnTurn.getActualPosition() + resultOfDieRoll);
@@ -48,7 +49,7 @@ public class Turn {
         if(direction.equalsIgnoreCase("ccw")){
             if(playerOnTurn.getActualPosition() - resultOfDieRoll < 0){
                 Integer excess= -1*(playerOnTurn.getActualPosition() - resultOfDieRoll);
-                playerOnTurn.setActualPosition(40-excess);
+                playerOnTurn.setActualPosition(NSQUARES-excess);
             }
             else playerOnTurn.setActualPosition(playerOnTurn.getActualPosition() - resultOfDieRoll);
         }

@@ -9,6 +9,7 @@ import java.util.ArrayList;
     classe che corrisponde al tabellone di gioco
  */
 public class Board {
+    private final static int NSQUARES=36;   //NUMERO TOT DI CASELLE
     private ArrayList<Square> squares;
     private ConnectionDB connectionDB;
     // inserire le domande tramite il metodo della classe connesione db
@@ -16,45 +17,39 @@ public class Board {
     public Board() throws SQLException{
         connectionDB=new ConnectionDB();
         squares=new ArrayList<Square>();
-        for(int i=0;i<40;i++){
+        for(int i=0;i<NSQUARES;i++){
             if(i==0) squares.add(new InitialSquare(i)); //casella start
-            if(i==1 || i==11 || i==21 || i==31){
+            if(i==1 || i==10 || i==19 || i==28){
                 squares.add(new GeographySquare(i));
                 ArrayList<Question> possibleQuestionGeo=new ArrayList<Question>();
                 possibleQuestionGeo.addAll(connectionDB.getQuestion("GEO"));
                 squares.get(i).setPossibleQuestions(possibleQuestionGeo);
             }
-            if(i==2 || i==12 || i==22 || i==32){
+            if(i==2 || i==11 || i==20|| i==29){
                 squares.add(new ArtLicteratureSquare(i));
                 ArrayList<Question> possibleQuestionArt=new ArrayList<Question>();
                 possibleQuestionArt.addAll(connectionDB.getQuestion("ART"));
                 squares.get(i).setPossibleQuestions(possibleQuestionArt);
             }
-            if(i==3 || i==14 || i==24 || i==34) {
+            if(i==3 || i==13 || i==22|| i==31) {
                 squares.add(new ScienceSquare(i));
                 ArrayList<Question> possibleQuestionSci=new ArrayList<Question>();
                 possibleQuestionSci.addAll(connectionDB.getQuestion("SCI"));
                 squares.get(i).setPossibleQuestions(possibleQuestionSci);
             }
-            if(i==4 || i==16 || i==27 || i==36) {
-                squares.add(new ActualitySquare(i));
-                ArrayList<Question> possibleQuestionAtt=new ArrayList<Question>();
-                possibleQuestionAtt.addAll(connectionDB.getQuestion("ATT"));
-                squares.get(i).setPossibleQuestions(possibleQuestionAtt);
-            }
-            if(i==8 || i==18 || i==28 || i==38){
+            if(i==7 || i==16 || i==25|| i==34){
                 squares.add(new SportSquare(i));
                 ArrayList<Question> possibleQuestionSpo=new ArrayList<Question>();
                 possibleQuestionSpo.addAll(connectionDB.getQuestion("SPO"));
                 squares.get(i).setPossibleQuestions(possibleQuestionSpo);
             }
-            if(i==6|| i==17 || i==26 || i==37) {
+            if(i==4|| i==15 || i==24 || i==33) {
                 squares.add(new ShowSquare(i));
                 ArrayList<Question> possibleQuestionSpe=new ArrayList<Question>();
                 possibleQuestionSpe.addAll(connectionDB.getQuestion("SPE"));
                 squares.get(i).setPossibleQuestions(possibleQuestionSpe);
             }
-            if(i==9 || i==19|| i==29 || i==39){
+            if(i==8|| i==17|| i==26 || i==35){
                 squares.add(new HistorySquare(i));
                 ArrayList<Question> possibleQuestionSto=new ArrayList<Question>();
                 possibleQuestionSto.addAll(connectionDB.getQuestion("STO"));
@@ -63,28 +58,26 @@ public class Board {
             if(i==5){
                 squares.add(new FinalQuestionSquare(i,Categories.Sport));
             }
-            if(i==10){
+            if(i==9){
                 squares.add(new FinalQuestionSquare(i,Categories.ArteLetteratura));
             }
-            if(i==15){
+            if(i==14){
                 squares.add(new FinalQuestionSquare(i,Categories.Spettacolo));
             }
-            if(i==20){
-                squares.add(new FinalQuestionSquare(i,Categories.Attualità));
-            }
-            if(i==25){
+            if(i==23){
                 squares.add(new FinalQuestionSquare(i,Categories.Storia));
             }
-            if(i==30){
+            if(i==27){
                 squares.add(new FinalQuestionSquare(i,Categories.Scienze));
             }
-            if(i==35){
+            if(i==32){
                 squares.add(new FinalQuestionSquare(i,Categories.Geografia));
             }
-            if(i==7)squares.add(new BonusMalusSquare(i,"malus1"));
-            if(i==13)squares.add(new BonusMalusSquare(i,"bonus1"));
-            if(i==23)squares.add(new BonusMalusSquare(i,"bonus2"));
-            if(i==33)squares.add(new BonusMalusSquare(i,"malus2"));
+            if(i==6)squares.add(new BonusMalusSquare(i,"malus1"));
+            if(i==12)squares.add(new BonusMalusSquare(i,"bonus1"));
+            if(i==18)squares.add(new BonusMalusSquare(i,"random"));
+            if(i==21)squares.add(new BonusMalusSquare(i,"bonus2"));
+            if(i==30)squares.add(new BonusMalusSquare(i,"malus2"));
         }
     }
     //metodo che crea una domanda

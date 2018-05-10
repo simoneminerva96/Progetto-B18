@@ -80,9 +80,6 @@ public class ConnectionDB {
             case "SCI":
                 category= Categories.Scienze;
                 break;
-            case "ATT":
-                category= Categories.Attualità;
-                break;
         }
         return category;
     }
