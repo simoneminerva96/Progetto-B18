@@ -26,7 +26,7 @@ public class Main extends StateBasedGame{
         this.getState(menu).init(gc,this); // Inizializzo Menu iniziale del gioco
         this.getState(trivia).init(gc,this);
         this.getState(login).init(gc,this);
-        this.enterState(menu);
+        this.enterState(trivia);
 
     }
 
