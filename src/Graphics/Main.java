@@ -1,6 +1,5 @@
 package Graphics;
 import Graphics.com.menu.MainMenu;
-import org.lwjgl.opengl.Display;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.*;
 
@@ -8,7 +7,6 @@ public class Main extends StateBasedGame{
     public static final String gameName = "Trivial Pursuit";
     public static final int menu = 3;
     public static final int trivia = 1;
-
 
 
     public Main(String gameName) throws Exception {
@@ -34,8 +32,7 @@ public class Main extends StateBasedGame{
             //a windows that contains a game named gameName
             appgc = new AppGameContainer(new Main(gameName));
             appgc.setAlwaysRender(true);
-            //dimensione della finestra proporzionata alla dimensione dello schermo
-            appgc.setDisplayMode(90* appgc.getScreenWidth()/100, 91*appgc.getScreenHeight()/100, false);
+            appgc.setDisplayMode(1300, 700, false);
             appgc.setShowFPS(false);
             appgc.start();
         } catch (SlickException e) {

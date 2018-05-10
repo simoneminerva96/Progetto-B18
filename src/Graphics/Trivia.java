@@ -1,16 +1,13 @@
 package Graphics;
 
 import GameClasses.Die;
-import javafx.stage.Screen;
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-import static javax.swing.text.html.HTML.Tag.I;
-
 public class Trivia extends BasicGameState {
-
+    Image backgroundMap;
     Map map;
     Player p;
     PlayerGUI pGUI;
@@ -20,7 +17,6 @@ public class Trivia extends BasicGameState {
     Prova prova = new Prova(2);
 
     public String mouse= "No input";
-    float x=100,y=100;
     Boolean b=false;
 
     public Trivia(int id) throws Exception {
@@ -32,16 +28,15 @@ public class Trivia extends BasicGameState {
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-        //map=new Map(20,20,"res/map/1.0.png",32);
-        map=new Map(22,22,"Immagini/Tabella3.png",32);
-
+        map=new Map(20,20,35);
+        backgroundMap = new Image("Immagini/Tabella3.png");
         p=new Player("ONE",3,map);
         String dwn="res/char/FFIV/Palom/palomdwn.png";
         String lft="res/char/FFIV/Palom/palomsx.png";
         String rght="res/char/FFIV/Palom/palomdx.png";
         String up="res/char/FFIV/Palom/palomup.png";
 
-        piece=new Pedina(up,dwn,lft,rght,40,40);
+        piece=new Pedina(up,dwn,lft,rght,35,35);
         pGUI=new PlayerGUI(p,piece);
         pGUI.getPedina().getCurrentImage().stop();
 
@@ -52,9 +47,8 @@ public class Trivia extends BasicGameState {
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
         graphics.drawString(mouse, 1100, 800);
-        Image map=new Image("Immagini/Tabella3.png");
-        map=map.getScaledCopy(gameContainer.getHeight(),gameContainer.getHeight()); //ridimensiona l'immagine a seconda della dim dello schermo
-        graphics.drawImage(map,0,0);
+        //backgroundMap=backgroundMap.getScaledCopy(gameContainer.getHeight(),gameContainer.getHeight()); //ridimensiona l'immagine a seconda della dim dello schermo
+        graphics.drawImage(backgroundMap,0,0);
         pGUI.getPedina().getCurrentImage().draw(pGUI.getxUpdate(),pGUI.getyUpdate());
 
         if(pGUI.ready){
@@ -86,7 +80,6 @@ public class Trivia extends BasicGameState {
             p.update(diceN,Direction.FORWARD);
             pGUI.updateCoordinates();
         }
-
 
         try {
             prova.update(gameContainer, stateBasedGame, i);
