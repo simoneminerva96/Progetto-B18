@@ -11,10 +11,10 @@ import Graphics.com.sticky.events.*;
 
 /**
  * A button with graphics and sound effects which reacts to the mouse.
- * 
+ *
  * @author Alexander Schearer <aschearer@gmail.com>
  */
-public class SimpleButton extends ButtonSkeleton implements ButtonListener,
+public class FormButton extends ButtonSkeleton implements ButtonListener,
         ClickListener {
 
     private ClickListener clickListener;
@@ -24,7 +24,7 @@ public class SimpleButton extends ButtonSkeleton implements ButtonListener,
     private Image current, up, down,press;
     private Sound click;
 
-    public SimpleButton(Shape s, Image up, Image down,Image press, Sound click) {
+    public FormButton(Shape s, Image up, Image down,Image press, Sound click) {
         shape = s;
         setShape(s);
         this.up = up;
@@ -68,14 +68,24 @@ public class SimpleButton extends ButtonSkeleton implements ButtonListener,
 
     }
 
+    public void onClickForm(Button clicked,float mx,float my,String username,String password){
+        float minx =shape.getX();
+        float miny=shape.getY();
+        float maxx=shape.getMaxX();
+        float maxy=shape.getMaxY();
+
+        if(mx>=minx&&mx<=maxx&&my>=miny&&my<=maxy) {
+            current = press;
+            System.out.println(username);
+            System.out.println(password);
+        }
+
+    }
     public void onDoubleClick(Button clicked, float mx, float my) {
-        clickListener.onDoubleClick(this, mx, my);
-        click.play();
+
     }
 
     public void onRightClick(Button clicked, float mx, float my) {
-        clickListener.onRightClick(this, mx, my);
-        click.play();
     }
 
     public void onMouseEnter(Button b,float mx, float my) {

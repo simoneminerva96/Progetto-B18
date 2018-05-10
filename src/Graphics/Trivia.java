@@ -30,7 +30,7 @@ public class Trivia extends BasicGameState {
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         map=new Map(20,20,"res/map/1.0.png",32);
-        map=new Map(22,22,"Immagini/Tab2.png",32);
+       // map=new Map(20,20,"Immagini/Tab2.png",32);
 
         p=new Player("ONE",3,map);
         String dwn="res/char/FFIV/Palom/palomdwn.png";
