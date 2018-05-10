@@ -33,6 +33,7 @@ public class SimpleButton extends ButtonSkeleton implements ButtonListener,
 
         current = up;
         this.click = click;
+
         clickListener = NullListener.getSingleton();
         buttonListener = NullListener.getSingleton();
         super.addListener((ButtonListener) this);
@@ -62,10 +63,9 @@ public class SimpleButton extends ButtonSkeleton implements ButtonListener,
         float maxy=shape.getMaxY();
 
         if(mx>=minx&&mx<=maxx&&my>=miny&&my<=maxy) {
-            clickListener.onClick(this, mx, my);
-            // click.play();
             current = press;
         }
+
     }
 
     public void onDoubleClick(Button clicked, float mx, float my) {

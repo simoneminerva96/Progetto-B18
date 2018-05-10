@@ -1,21 +1,30 @@
 package Graphics.com.menu;
 
 import Graphics.com.sticky.SimpleButton;
+import Graphics.com.sticky.StateButton;
+import Graphics.com.sticky.TestButton;
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.font.effects.ColorEffect;
 import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.gui.TextField;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.util.ResourceLoader;
+import org.newdawn.slick.UnicodeFont;
+import org.newdawn.slick.gui.ComponentListener;
 
 import java.awt.*;
+import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.io.InputStream;
+
+import Graphics.*;
 
 public class MainMenu extends BasicGameState {
 
@@ -38,7 +47,18 @@ public class MainMenu extends BasicGameState {
     TrueTypeFont font;
     private String gameName;
 
-    private SimpleButton play;
+
+    private StateButton play;
+
+    private TextField textField;
+    UnicodeFont fonx;
+
+    //STATES
+    LoginScreen loginScreen=new LoginScreen(4);
+
+    //BOOLEAN 4 STATES
+
+    boolean loginEnter=false,loginUpdateEnter=false,loginRenderEnter=false;
 
     public MainMenu(int i) throws SlickException {
     }
@@ -50,30 +70,33 @@ public class MainMenu extends BasicGameState {
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-        background=new Image("res/backgrounds/green_landscape_ridim.png");
-        gameName="Trivial Pursuit";
-        try {
-        InputStream inputStream	= ResourceLoader.getResourceAsStream("res/fonts/Silkscreen/slkscr.ttf");
-        java.awt.Font awtFont= java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT,inputStream);
-        awtFont=awtFont.deriveFont(32f);
-        font=new TrueTypeFont(awtFont,false);
-        } catch (FontFormatException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            background=new Image("res/backgrounds/green_landscape_ridim.png");
+            gameName="Trivial Pursuit";
+            try {
+            InputStream inputStream	= ResourceLoader.getResourceAsStream("res/fonts/Silkscreen/slkscr.ttf");
+            java.awt.Font awtFont= java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT,inputStream);
+            awtFont=awtFont.deriveFont(32f);
+            font=new TrueTypeFont(awtFont,false);
+            } catch (FontFormatException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
-        play=new SimpleButton(new Rectangle(550,325,190,49),new Image("res/buttons/yellow_button03.png"),new Image("res/buttons/blue_button03.png"),new Image("res/buttons/yellow_button03.png"),null);
+            play=new StateButton(new Rectangle(550,325,190,49),new Image("res/buttons/fantasy/Button_05.png"),new Image("res/buttons/fantasy/Button_06.png"),new Image("res/buttons/fantasy/Button_07.png"),null);
 
+            fonx = getNewFont("Arial" , 16);
     }
 
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
             graphics.drawImage(background,0,0);
-            font.drawString(400,200,"TRIVIAL PURSUIT RELOADED", Color.white);
+            font.drawString(400,25,"TRIVIAL PURSUIT RELOADED", Color.white);
 
             play.render(gameContainer,graphics);
-            font.drawString(600,330,"PLAY", Color.white);
+           // font.drawString(600,330,"PLAY", Color.white);
+         //   textField.render(gameContainer,graphics);
+         //   graphics.setFont(fonx);
 
 
 
@@ -85,33 +108,23 @@ public class MainMenu extends BasicGameState {
         Input r=gameContainer.getInput();
 
         if(r.isMousePressed(0)) {
-            play.onClick(play, r.getMouseX(), r.getMouseY());
+            play.onClickState(play,r.getMouseX(),r.getMouseY(),stateBasedGame,4);
         }
 
         play.onMouseEnter(play,r.getMouseX(),r.getMouseY());
-    /*    if(clicked==true){
-            b.onClick(b, Mouse.getX(), 720 - Mouse.getY());
-
-        }else {
 
 
-        }
-        if (Mouse.getX() >= xb && Mouse.getX() <= xb + 190 && 720 - Mouse.getY() >= yb && 720 - Mouse.getY() <= yb + 49) {
-            b.onMouseEnter(b);
-        } else {
-            b.onMouseExit(b);
-            clicked = false;
+    }
 
-        }
+    public void enter(GameContainer gameContainer,StateBasedGame stateBasedGame)throws SlickException{
+        textField=new TextField(gameContainer,fonx,550,600,200,35);
+    }
 
-
-        if(r.isMousePressed(0)){
-            if(Mouse.getX()>=xb&&Mouse.getX()<=xb+190&&720-Mouse.getY()>=yb&&720-Mouse.getY()<=yb+49) {
-                clicked=true;
-            }
-        }
-
-        mouse="Mouse position x:"+Mouse.getX()+ " y: "+Mouse.getY();
-        */
+    public UnicodeFont getNewFont(String fontName , int fontSize)
+    {
+        fonx = new UnicodeFont(new Font(fontName , Font.PLAIN , fontSize));
+        fonx.addGlyphs("@");
+        fonx.getEffects().add(new ColorEffect(java.awt.Color.white));
+        return (fonx);
     }
 }

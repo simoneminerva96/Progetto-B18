@@ -8,7 +8,7 @@ import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
 public class Prova extends BasicGameState {
-    Image torna;
+    //Image torna;
     boolean answered = false;
     boolean end = false;
 
@@ -22,7 +22,7 @@ public class Prova extends BasicGameState {
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-        torna = new Image ("Immagini/freccia.png");
+        //torna = new Image ("Immagini/freccia.png");
     }
 
     @Override
