@@ -38,9 +38,9 @@ public class Domanda extends BasicGameState {
         if (answered == true) {
             q.setAnswered(true);
             if (esito == true) {
-                graphics.drawString("Risposta esatta!!", 500, 500);
+                graphics.drawString("Risposta esatta!!", 200, 500);
             } else {
-                graphics.drawString("Risposta sbagliata buuu", 500, 500);
+                graphics.drawString("Risposta sbagliata buuu", 200, 500);
             }
         }
     }

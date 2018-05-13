@@ -12,7 +12,7 @@ public class DieGUI {
     public DieGUI() {
         for (int i=0; i<6; i++){
             try {
-                die[i] = new Image("res/die/dado"+(i+1)+".png");
+                die[i] = new Image("res/die/Dado"+(i+1)+".png");
             } catch (SlickException e) {
                 e.printStackTrace();
             }

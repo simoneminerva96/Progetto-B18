@@ -110,8 +110,8 @@ public class PlayerGUI {
                     }
                 } else {
                     piece.getCurrentImage().stop(); //altrimenti ferma animazione
-                    if(clicked){
-                        ready=true;
+                    if(clicked) {
+                        ready = true;
                     }
                 }
     }

@@ -8,10 +8,6 @@ public class QuestionAndAnswers {
     Answers a3 = new Answers("Napoli", false);
     boolean answered = false;
 
-    public boolean isAnswered() {
-        return answered;
-    }
-
     public void setAnswered(boolean answered) {
         this.answered = answered;
     }

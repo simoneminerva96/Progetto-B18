@@ -17,6 +17,7 @@ public class Trivia extends BasicGameState {
     public String mouse= "No input";
     Boolean b=false;
 
+
     public Trivia(int id) {
     }
 
@@ -29,10 +30,10 @@ public class Trivia extends BasicGameState {
         map=new Map(20,20,35);
         backgroundMap = new Image("res/map/Tabella3.png");
         p=new Player("ONE",3,map);
-        String dwn="res/char/FFIV/Palom/palomdwn.png";
-        String lft="res/char/FFIV/Palom/palomsx.png";
-        String rght="res/char/FFIV/Palom/palomdx.png";
-        String up="res/char/FFIV/Palom/palomup.png";
+        String dwn="res/char/FFIV/Rydia/Rydiadwn.png";
+        String lft="res/char/FFIV/Rydia/rydiasx.png";
+        String rght="res/char/FFIV/Rydia/rydiadx.png";
+        String up="res/char/FFIV/Rydia/rydiaup.png";
         back = new Image("res/buttons/Freccia1.png");
         forward = new Image("res/buttons/Freccia2.png");
         d = new DieGUI();
@@ -41,12 +42,11 @@ public class Trivia extends BasicGameState {
         pGUI=new PlayerGUI(p,piece);
         pGUI.getPedina().getCurrentImage().stop();
         prova.init(gameContainer, stateBasedGame);
-
     }
 
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
-        graphics.drawString(mouse, 900, 650);
+        //graphics.drawString(mouse, 900, 650);
         graphics.drawImage(backgroundMap,0,0);
         pGUI.getPedina().getCurrentImage().draw(pGUI.getxUpdate(),pGUI.getyUpdate());
         currentDie.draw(1100,550);
@@ -55,6 +55,9 @@ public class Trivia extends BasicGameState {
         if(pGUI.ready){
             try {
                 prova.render(gameContainer, stateBasedGame, graphics);
+                if (prova.caso){
+                    pGUI.ready = false;
+                }
             } catch (SlickException e) {
                 e.printStackTrace();
             }
@@ -69,7 +72,7 @@ public class Trivia extends BasicGameState {
         mouse="Mouse position x:"+xpos+ " y: "+ypos;
         Input input=gameContainer.getInput();
 
-            if (xpos>815 && xpos<880 && ypos>48 && ypos<147) {
+            if (xpos>916 && xpos<983 && ypos>48 && ypos<147) {
                 if (input.isMousePressed(0)) { //vai indietro
                     pGUI.clicked = true;
                     b = true;
@@ -77,16 +80,18 @@ public class Trivia extends BasicGameState {
                     currentDie = d.getCurrentDie();
                     p.update(diceN, Direction.BACK);
                     pGUI.updateCoordinates();
+
                 }
             }
-            if (xpos>916 && xpos<983 && ypos>48 && ypos<147) { //vai avanti
+            if (xpos>815 && xpos<880 && ypos>48 && ypos<147) { //vai avanti
                 if (input.isMousePressed(0)) {
-                        moved = true;
-                        b = true;
-                        int diceN = d.setCurrentDie();
-                        currentDie = d.getCurrentDie();
-                        p.update(diceN, Direction.FORWARD);
-                        pGUI.updateCoordinates();
+                    pGUI.clicked = true;
+                    moved = true;
+                    b = true;
+                    int diceN = d.setCurrentDie();
+                    currentDie = d.getCurrentDie();
+                    p.update(diceN, Direction.FORWARD);
+                    pGUI.updateCoordinates();
                 }
             }
 

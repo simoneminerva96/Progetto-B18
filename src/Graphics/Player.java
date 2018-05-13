@@ -57,20 +57,11 @@ public class Player{
         return y;
     }
 
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-
-    }
-
     public Direction getDirection(){return direction;}
 
     public void update(int die,Direction direction) {
         int tempx, tempy; 
-        this.direction=direction;//direction==true spostamento in avanti; altrimenti indietro
+        this.direction=direction;
         if (y == miny) {
             switch (direction) {
                 case FORWARD: { 
