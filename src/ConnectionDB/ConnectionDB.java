@@ -146,7 +146,7 @@ public class ConnectionDB {
 
             rs = stmt.executeQuery();
             while (rs.next()) {
-                 returnMessage = rs.getString("choose"); //Il risultato viene inserito in una stringa
+                 returnMessage = rs.getString(1); //Il risultato viene inserito in una stringa
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
