@@ -40,7 +40,7 @@ public class Login {
     //MAIN DI PROVA
     public static void main(String[] args) {
         Login l=new Login();
-        l.Login("rita","ok");
+        l.Login("rita","okok");
     }
 
 }

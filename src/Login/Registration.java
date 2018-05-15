@@ -35,6 +35,6 @@ public class Registration {
     //MAIN DI PROVA PER TESTAR LA CLASSE da eliminare
     public static void main(String[] args) {
         Registration registration=new Registration();
-        registration.Registration("stefano","stefano");
+        registration.Registration("jacopo","jacopo");
     }
 }
