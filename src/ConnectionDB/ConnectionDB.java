@@ -154,10 +154,12 @@ public class ConnectionDB {
         return returnMessage;
     }
 
-    public static void ExistsPlayer(String IDNAME, String PW) { //Funzione per fare ritornare il messaggio di avvenuto login o errore
+    //Funzione per fare ritornare il messaggio di avvenuto login o errore
+    public String ExistsPlayer(String IDNAME, String PW) {
         //
         String query = "{ ?=call PLAYER_EXIST(?,?) }";
         ResultSet rs;
+        String returnMess="";
 
         try (Connection conn = DriverManager.getConnection("jdbc:mysql://10.87.144.91:3306/trivial?user=root&password=root");
              CallableStatement stmt = conn.prepareCall(query)) {
@@ -169,15 +171,13 @@ public class ConnectionDB {
             rs = stmt.executeQuery();
 
             while (rs.next()) {
-                System.out.println( rs.getString(1));
-
+                returnMess=rs.getString(1);
             }
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-
-
+       return returnMess;
     }
 /*
     public static String ChooseCOD(String COD) { //Funzione per fare ritornare il messaggio di avvenuto login o errore

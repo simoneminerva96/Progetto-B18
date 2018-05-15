@@ -28,11 +28,19 @@ public class Login {
         this.passwordInserted=passwordInserted;
         boolean check=false;
         //effettuare il controllo sui dati inseriti, se corretti loggarsi, se non corrispondono dare mess di errore
+        String mess=connection.ExistsPlayer(nicknameInserted,passwordInserted);
+        //se il messaggio corrisponde a quello di avvenuto login, il login è stato effettuato ==> ritorna true
+        if(mess.equalsIgnoreCase("benvenuto!!")){
+            check=true;
+        }
+        System.out.println(mess);
         return check;
     }
+
     //MAIN DI PROVA
     public static void main(String[] args) {
-
+        Login l=new Login();
+        l.Login("rita","ok");
     }
 
 }
