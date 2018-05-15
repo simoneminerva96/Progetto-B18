@@ -10,8 +10,11 @@ import org.newdawn.slick.state.StateBasedGame;
 
 
 public class Domanda extends BasicGameState {
+    String risposta1 = "risposta esatta";
+    String risposta2 = "risposta sbagliata";
     boolean answered = false;
     boolean esito = false;
+    boolean caso = false;
     QuestionAndAnswers q = new QuestionAndAnswers();
 
     public Domanda(int state) {
@@ -38,10 +41,11 @@ public class Domanda extends BasicGameState {
         if (answered == true) {
             q.setAnswered(true);
             if (esito == true) {
-                graphics.drawString("Risposta esatta!!", 200, 500);
+                graphics.drawString(risposta1, 200, 500);
             } else {
-                graphics.drawString("Risposta sbagliata buuu", 200, 500);
+                graphics.drawString(risposta2, 200, 500);
             }
+            caso = true;
         }
     }
 
