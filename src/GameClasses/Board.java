@@ -55,23 +55,42 @@ public class Board {
                 possibleQuestionSto.addAll(connectionDB.getQuestion("STO"));
                 squares.get(i).setPossibleQuestions(possibleQuestionSto);
             }
+            //DA RIMPIRE CON I CODICI DELLE DOMANDE FINALI DI OGNI CATEGORIA
             if(i==5){
                 squares.add(new FinalQuestionSquare(i,Categories.Sport));
+                ArrayList<Question> possibleQuestionSpoFinal=new ArrayList<Question>();
+                possibleQuestionSpoFinal.addAll(connectionDB.getQuestion("SPOF"));
+                squares.get(i).setPossibleQuestions(possibleQuestionSpoFinal);
             }
             if(i==9){
                 squares.add(new FinalQuestionSquare(i,Categories.ArteLetteratura));
+                ArrayList<Question> possibleQuestionArtFinal=new ArrayList<Question>();
+                possibleQuestionArtFinal.addAll(connectionDB.getQuestion("ARTF"));
+                squares.get(i).setPossibleQuestions(possibleQuestionArtFinal);
             }
             if(i==14){
                 squares.add(new FinalQuestionSquare(i,Categories.Spettacolo));
+                ArrayList<Question> possibleQuestionShowFinal=new ArrayList<Question>();
+                possibleQuestionShowFinal.addAll(connectionDB.getQuestion("SPEF"));
+                squares.get(i).setPossibleQuestions(possibleQuestionShowFinal);
             }
             if(i==23){
                 squares.add(new FinalQuestionSquare(i,Categories.Storia));
+                ArrayList<Question> possibleQuestionStoFinal=new ArrayList<Question>();
+                possibleQuestionStoFinal.addAll(connectionDB.getQuestion("STOF"));
+                squares.get(i).setPossibleQuestions(possibleQuestionStoFinal);
             }
             if(i==27){
                 squares.add(new FinalQuestionSquare(i,Categories.Scienze));
+                ArrayList<Question> possibleQuestionScieFinal=new ArrayList<Question>();
+                possibleQuestionScieFinal.addAll(connectionDB.getQuestion("SCIF"));
+                squares.get(i).setPossibleQuestions(possibleQuestionScieFinal);
             }
             if(i==32){
                 squares.add(new FinalQuestionSquare(i,Categories.Geografia));
+                ArrayList<Question> possibleQuestionGeofinal=new ArrayList<Question>();
+                possibleQuestionGeofinal.addAll(connectionDB.getQuestion("GEOF"));
+                squares.get(i).setPossibleQuestions(possibleQuestionGeofinal);
             }
             if(i==6)squares.add(new BonusMalusSquare(i,"malus1"));
             if(i==12)squares.add(new BonusMalusSquare(i,"bonus1"));
@@ -79,16 +98,6 @@ public class Board {
             if(i==21)squares.add(new BonusMalusSquare(i,"bonus2"));
             if(i==30)squares.add(new BonusMalusSquare(i,"malus2"));
         }
-    }
-    //metodo che crea una domanda
-    private Question createQuestion(String question,Categories category,String answ1,Boolean correct1,String answ2,Boolean correct2,String answ3,Boolean correct3,String answ4,Boolean correct4){
-        ArrayList<Answer> answers=new ArrayList<Answer>();
-        answers.add(new Answer(answ1,correct1));
-        answers.add(new Answer(answ2,correct2));
-        answers.add(new Answer(answ3,correct3));
-        answers.add(new Answer(answ4,correct4));
-        Question q=new Question(question,category,answers);
-        return q;
     }
     public ArrayList<Square> getSquares() {
         return squares;

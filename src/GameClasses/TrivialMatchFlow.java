@@ -2,9 +2,11 @@ package GameClasses;
 
 import java.util.ArrayList;
 
-/*
-        classe che serve a eseguire i metodi della classe partita TrivialMatch seguendo il flusso di gioco corretto
-     */
+/**
+ * CLASSE CHE ESEGUE IL FLUSSO CORRETTO DI GIOCO
+ * ESEGUENDO I METODI DI TrivialGame
+ * @author Ansaldi Jacopo <jacopo.ansaldi01@universitadipavia.it>
+ */
 public class TrivialMatchFlow {
     private TrivialGame match;
     private ArrayList<String> gamingPlayers;

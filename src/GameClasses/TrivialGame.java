@@ -6,9 +6,10 @@ import java.awt.*;
 import java.sql.SQLException;
 import java.util.*;
 
-/*
-        classe a cui corrisponde una singola partita effettiva
-    */
+/**
+ * CLASSE A CUI CORRISPONDE UNA SINGOLA PARTITA DI GIOCO
+ * @author Ansaldi Jacopo <jacopo.ansaldi01@universitadipavia.it>
+ */
 public class TrivialGame {
     private ArrayList<Player> players;      //giccatori partecipanti
     private ArrayList<Piece> possiblePieces;        //possibili pedine tra cui scegliere
@@ -34,7 +35,9 @@ public class TrivialGame {
     }
 
 
-    //metodo che crea i giocatori che parteciperanno alla partita, riceve in ingresso la lista dei nickname
+    /**
+     * metodo che crea i giocatori che parteciperanno alla partita, riceve in ingresso la lista dei nickname
+     */
     public void initializePlayers(ArrayList<String> nicknames){
         for(int i=0;i<nicknames.size();i++){
             players.add(new Player(nicknames.get(i)));
@@ -159,7 +162,7 @@ public class TrivialGame {
                 break;
             };
             if(correct==false){
-                if(players.get(index).getActualPosition() != 7) System.out.println("risposta errata!\n");
+                if(players.get(index).getActualPosition() != 6 && players.get(index).getActualPosition() != 0) System.out.println("risposta errata!\n");
                 index++;    //L'INDICE PUNTA AL GIOCATORE SUCCESSIVO
                 if(index==players.size() ) index=0;
                 turn.setPlayerOnTurn(players.get(index));// setto come giocatore di turno il giocatore successivo

@@ -28,6 +28,7 @@ public class BonusMalusSquare extends Square {
 
     public void executeBonusMalus(Player playerOnTurn){
         String typeBonusMalus=bonusMalusType;
+        // se esce il "random" la casella avrà l'effetto di uno dei 4 bonus/malus a caso
         if(typeBonusMalus.equalsIgnoreCase("random"))
         {
             Random generator=new Random();
