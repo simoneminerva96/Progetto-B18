@@ -120,7 +120,7 @@ public class ConnectionDB {
         ChooseCOD("MAT"); //A seconda del codice passato, il metodo chiamato fa tornare una domanda casuale con le relative risposte
 
 
-    }
+    }*/
 
 
     public static String getPlayer(String IDNAME, String PW) {  //Procedura per l'inserimento delle credenziali utente nel DB
@@ -174,7 +174,7 @@ public class ConnectionDB {
 
 
     }
-
+/*
     public static String ChooseCOD(String COD) { //Funzione per fare ritornare il messaggio di avvenuto login o errore
         //
         String query = "{ ?=call CHOOSE_IDQUEST(?) }";
