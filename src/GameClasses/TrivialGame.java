@@ -162,7 +162,9 @@ public class TrivialGame {
                 break;
             };
             if(correct==false){
-                if(players.get(index).getActualPosition() != 6 && players.get(index).getActualPosition() != 0) System.out.println("risposta errata!\n");
+                if(players.get(index).getActualPosition() != 6 && players.get(index).getActualPosition() != 0 && players.get(index).getActualPosition() != 18 || players.get(index).getActualPosition() != 30) {
+                    System.out.println("risposta errata!\n");
+                }
                 index++;    //L'INDICE PUNTA AL GIOCATORE SUCCESSIVO
                 if(index==players.size() ) index=0;
                 turn.setPlayerOnTurn(players.get(index));// setto come giocatore di turno il giocatore successivo

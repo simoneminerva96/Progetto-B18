@@ -4,10 +4,11 @@ import ConnectionDB.ConnectionDB;
 
 import javax.swing.*;
 
-/*
-    classe che prende i dati in ingresso dall'interfaccia grafica di login(Login_interface)
-    ed effettua gli opportuni controlli, aggiorna il database in caso di registrazione,controlla se il login
-    viene effettuato,ecc..
+/**
+ * classe che prende i dati in ingresso dall'interfaccia grafica di login(Login_interface)
+ * ed effettua gli opportuni controlli,controlla se il login
+ * viene effettuato,ecc..
+ * @author Ansaldi Jacopo <jacopo.ansaldi01@universitadipavia.it>
 */
 public class Login {
     private String nicknameInserted,passwordInserted;
@@ -28,6 +29,10 @@ public class Login {
         boolean check=false;
         //effettuare il controllo sui dati inseriti, se corretti loggarsi, se non corrispondono dare mess di errore
         return check;
+    }
+    //MAIN DI PROVA
+    public static void main(String[] args) {
+
     }
 
 }

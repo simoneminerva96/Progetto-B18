@@ -2,8 +2,9 @@ package GameClasses;
 
 import java.util.ArrayList;
 import java.util.Scanner;
-/*
-    CLASSE CHE CORRISPONDE A UN TURNO DI GIOCO
+/**
+ * CLASSE CHE CORRISPONDE A UN TURNO DI GIOCO, effettua la movimentazione delle pedine sul tabellone
+ * @author Ansaldi Jacopo <jacopo.ansaldi01@universitadipavia.it>
  */
 
 public class Turn {

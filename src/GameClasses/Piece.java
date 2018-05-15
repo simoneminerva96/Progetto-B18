@@ -1,8 +1,9 @@
 package GameClasses;
 
 import java.awt.*;
-/*
-    classe corrispondente a una pedina
+/**
+ * classe corrispondente a una pedina
+ * @author Ansaldi Jacopo <jacopo.ansaldi01@universitadipavia.it>
  */
 
 public class Piece {

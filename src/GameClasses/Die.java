@@ -1,8 +1,9 @@
 package GameClasses;
 
 import java.util.Random;
-/*
-    classe corrispondente a un dado
+/**
+ * classe corrispondente a un dado
+ * @author Ansaldi Jacopo <jacopo.ansaldi01@universitadipavia.it>
  */
 public class Die {
     private Random generator;

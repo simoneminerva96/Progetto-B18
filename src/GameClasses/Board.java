@@ -5,8 +5,9 @@ import ConnectionDB.ConnectionDB;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-/*
-    classe che corrisponde al tabellone di gioco
+/**
+ * classe che corrisponde al tabellone di gioco
+ * @author Ansaldi Jacopo <jacopo.ansaldi01@universitadipavia.it>
  */
 public class Board {
     private final static int NSQUARES=36;   //NUMERO TOT DI CASELLE
@@ -59,37 +60,37 @@ public class Board {
             if(i==5){
                 squares.add(new FinalQuestionSquare(i,Categories.Sport));
                 ArrayList<Question> possibleQuestionSpoFinal=new ArrayList<Question>();
-                possibleQuestionSpoFinal.addAll(connectionDB.getQuestion("SPOF"));
+                possibleQuestionSpoFinal.addAll(connectionDB.getQuestion("FSPO"));
                 squares.get(i).setPossibleQuestions(possibleQuestionSpoFinal);
             }
             if(i==9){
                 squares.add(new FinalQuestionSquare(i,Categories.ArteLetteratura));
                 ArrayList<Question> possibleQuestionArtFinal=new ArrayList<Question>();
-                possibleQuestionArtFinal.addAll(connectionDB.getQuestion("ARTF"));
+                possibleQuestionArtFinal.addAll(connectionDB.getQuestion("FART"));
                 squares.get(i).setPossibleQuestions(possibleQuestionArtFinal);
             }
             if(i==14){
                 squares.add(new FinalQuestionSquare(i,Categories.Spettacolo));
                 ArrayList<Question> possibleQuestionShowFinal=new ArrayList<Question>();
-                possibleQuestionShowFinal.addAll(connectionDB.getQuestion("SPEF"));
+                possibleQuestionShowFinal.addAll(connectionDB.getQuestion("FSPE"));
                 squares.get(i).setPossibleQuestions(possibleQuestionShowFinal);
             }
             if(i==23){
                 squares.add(new FinalQuestionSquare(i,Categories.Storia));
                 ArrayList<Question> possibleQuestionStoFinal=new ArrayList<Question>();
-                possibleQuestionStoFinal.addAll(connectionDB.getQuestion("STOF"));
+                possibleQuestionStoFinal.addAll(connectionDB.getQuestion("FSTO"));
                 squares.get(i).setPossibleQuestions(possibleQuestionStoFinal);
             }
             if(i==27){
                 squares.add(new FinalQuestionSquare(i,Categories.Scienze));
                 ArrayList<Question> possibleQuestionScieFinal=new ArrayList<Question>();
-                possibleQuestionScieFinal.addAll(connectionDB.getQuestion("SCIF"));
+                possibleQuestionScieFinal.addAll(connectionDB.getQuestion("FSCI"));
                 squares.get(i).setPossibleQuestions(possibleQuestionScieFinal);
             }
             if(i==32){
                 squares.add(new FinalQuestionSquare(i,Categories.Geografia));
                 ArrayList<Question> possibleQuestionGeofinal=new ArrayList<Question>();
-                possibleQuestionGeofinal.addAll(connectionDB.getQuestion("GEOF"));
+                possibleQuestionGeofinal.addAll(connectionDB.getQuestion("FGEO"));
                 squares.get(i).setPossibleQuestions(possibleQuestionGeofinal);
             }
             if(i==6)squares.add(new BonusMalusSquare(i,"malus1"));

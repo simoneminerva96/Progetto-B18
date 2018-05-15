@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
-/*
-    Classe che corrisponde a una singola casella di gioco
+/**
+ *  Classe che corrisponde a una singola casella di gioco
+ *  @author Ansaldi Jacopo <jacopo.ansaldi01@universitadipavia.it>
  */
 public class Square {
     private Integer index;      //indice che identifica ogni casella, da 0 a 40, partendo dallo start(0) conteggiati in senso orario
@@ -30,7 +31,7 @@ public class Square {
         Random questionChooser=new Random();
         //genero un numero casuale compreso tra 0 e il numero di domande disponibili
         int max=possibleQuestions.size() -1 ; // numero massimo
-        int range = ((max-0) + 1);
+        int range = ((max) + 1);
         int indexOfQuestion =questionChooser.nextInt(range);
         // il numero generato corrisponderà all'indice della domanda da effettuare
         System.out.println("domanda di " + possibleQuestions.get(indexOfQuestion).getCategory() + ":");

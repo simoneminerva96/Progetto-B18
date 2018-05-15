@@ -1,5 +1,9 @@
 package GameClasses;
 
+/**
+ * classe che corrisponde a una possibile risposta a una domanda
+ * @author Ansaldi Jacopo <jacopo.ansaldi01@universitadipavia.it>
+ */
 public class Answer {
     private String answer;
     private Boolean correct;

@@ -11,6 +11,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * classe che effettua la connesione al database delle domande e dei giocatori
+ * @author Mattia Nichetti <mattia.nichetti01@universitadipavia.it>
+ */
 
 public class ConnectionDB {
     private Connection cn; //connessionea al db
@@ -18,9 +22,7 @@ public class ConnectionDB {
     private ResultSet rs; //permette di ottenere il risultato della query
     private String sql; //stringa contenete la query
 
-    public ConnectionDB()  {
-
-    }
+    public ConnectionDB()  { }
 
     /*
         metodo che ritorna l'arraylist delle domande corrispondenti al codice passato
@@ -63,27 +65,27 @@ public class ConnectionDB {
         Categories category=null;
         switch (cod){
             case "GEO":
-            case "GEOF":
+            case "FGEO":
                 category= Categories.Geografia;
                 break;
             case "STO":
-            case "STOF":
+            case "FSTO":
                 category= Categories.Storia;
                 break;
             case "SPO":
-            case "SPOF":
+            case "FSPO":
                 category= Categories.Sport;
                 break;
             case "SPE":
-            case "SPEF":
+            case "FSPE":
                 category= Categories.Spettacolo;
                 break;
             case "ART":
-            case "ARTF":
+            case "FART":
                 category= Categories.ArteLetteratura;
                 break;
             case "SCI":
-            case "SCIF":
+            case "FSCI":
                 category= Categories.Scienze;
                 break;
         }
@@ -96,6 +98,7 @@ public class ConnectionDB {
         }
         else return false;
     }
+
 
    /* public static void main(String[] args) throws SQLException  {
         String NAME;
@@ -128,31 +131,26 @@ public class ConnectionDB {
 
     }*/
 
-
-    public static String getPlayer(String IDNAME, String PW) {  //Procedura per l'inserimento delle credenziali utente nel DB
+    //Procedura per l'inserimento delle credenziali utente nel DB(registrazione)
+    public String getPlayer(String IDNAME, String PW) {
         //
         String query = "{ call ADD_PLAYER(?,?) }";
         ResultSet rs;
-
-        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/trivial?user=root&password=root");
+        String returnMessage="";
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://10.87.144.91:3306/trivial?user=root&password=root");
              CallableStatement stmt = conn.prepareCall(query)) {
 
             stmt.setString(1, IDNAME);
             stmt.setString(2, PW);
 
             rs = stmt.executeQuery();
-
             while (rs.next()) {
-                String r = rs.getString("msg"); //Il risultato viene inserito in una stringa
-                System.out.println( rs.getString("msg"));
-                return r;
+                 returnMessage = rs.getString("msg"); //Il risultato viene inserito in una stringa
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-
-
-        return query;
+        return returnMessage;
     }
 
     public static void ExistsPlayer(String IDNAME, String PW) { //Funzione per fare ritornare il messaggio di avvenuto login o errore
@@ -160,7 +158,7 @@ public class ConnectionDB {
         String query = "{ ?=call PLAYER_EXIST(?,?) }";
         ResultSet rs;
 
-        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/trivial?user=root&password=root");
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://10.87.144.91:3306/trivial?user=root&password=root");
              CallableStatement stmt = conn.prepareCall(query)) {
 
             stmt.registerOutParameter(1, Types.VARCHAR);

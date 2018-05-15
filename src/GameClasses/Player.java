@@ -3,8 +3,9 @@ package GameClasses;
 import java.util.ArrayList;
 import java.util.Random;
 
-/*
-     classe corrispondente a un singolo giocatore che partecipa alla partita
+/**
+ * classe corrispondente a un singolo giocatore che partecipa alla partita
+ * @author Ansaldi Jacopo <jacopo.ansaldi01@universitadipavia.it>
  */
 public class Player {
     private String nickname;
