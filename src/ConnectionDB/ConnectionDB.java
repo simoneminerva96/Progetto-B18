@@ -63,21 +63,27 @@ public class ConnectionDB {
         Categories category=null;
         switch (cod){
             case "GEO":
+            case "GEOF":
                 category= Categories.Geografia;
                 break;
             case "STO":
+            case "STOF":
                 category= Categories.Storia;
                 break;
             case "SPO":
+            case "SPOF":
                 category= Categories.Sport;
                 break;
             case "SPE":
+            case "SPEF":
                 category= Categories.Spettacolo;
                 break;
             case "ART":
+            case "ARTF":
                 category= Categories.ArteLetteratura;
                 break;
             case "SCI":
+            case "SCIF":
                 category= Categories.Scienze;
                 break;
         }
