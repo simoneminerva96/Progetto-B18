@@ -80,7 +80,8 @@ public class Trivia extends BasicGameState {
                     currentDie = d.getCurrentDie();
                     p.update(diceN, Direction.BACK);
                     pGUI.updateCoordinates();
-
+                    prova.answered = false;
+                    prova.esito = false;
                 }
             }
             if (xpos>815 && xpos<880 && ypos>48 && ypos<147) { //vai avanti
@@ -92,6 +93,8 @@ public class Trivia extends BasicGameState {
                     currentDie = d.getCurrentDie();
                     p.update(diceN, Direction.FORWARD);
                     pGUI.updateCoordinates();
+                    prova.answered = false;
+                    prova.esito = false;
                 }
             }
 
