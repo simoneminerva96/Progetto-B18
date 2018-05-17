@@ -7,7 +7,7 @@ import org.newdawn.slick.Sound;
 import org.newdawn.slick.geom.Shape;
 
 import Graphics.com.sticky.events.*;
-
+import Login.Login;
 
 /**
  * A button with graphics and sound effects which reacts to the mouse.
@@ -68,7 +68,7 @@ public class FormButton extends ButtonSkeleton implements ButtonListener,
 
     }
 
-    public void onClickForm(Button clicked,float mx,float my,String username,String password){
+    public void onClickForm(Button clicked,float mx,float my,String username,String password,Login login){
         float minx =shape.getX();
         float miny=shape.getY();
         float maxx=shape.getMaxX();
@@ -76,8 +76,9 @@ public class FormButton extends ButtonSkeleton implements ButtonListener,
 
         if(mx>=minx&&mx<=maxx&&my>=miny&&my<=maxy) {
             current = press;
-            System.out.println(username);
-            System.out.println(password);
+            //System.out.println(username);
+            //System.out.println(password);
+            login.Login(username,password);
         }
 
     }

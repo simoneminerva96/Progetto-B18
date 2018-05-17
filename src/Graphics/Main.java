@@ -1,6 +1,7 @@
 package Graphics;
 import Graphics.OfflineMenu.OfflineSelection;
 import Graphics.com.menu.MainMenu;
+import Login.LoginInterface;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.*;
 
@@ -25,7 +26,7 @@ public class Main extends StateBasedGame{
         this.getState(mainmenu).init(gc,this);
         this.enterState(mainmenu);*/
         this.addState(new MainMenu(mainmenu));
-        this.addState(new LoginScreen(login));
+        this.addState(new LoginInterface(login));
         this.addState(new Trivia(trivia));
         this.addState(new OfflineSelection(offlineSel));
 

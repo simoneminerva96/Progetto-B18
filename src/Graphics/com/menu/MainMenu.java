@@ -52,13 +52,6 @@ public class MainMenu extends BasicGameState {
     private TextField textField;
     UnicodeFont fonx;
 
-    //STATES
-    LoginScreen loginScreen=new LoginScreen(4);
-
-    //BOOLEAN 4 STATES
-
-    boolean loginEnter=false,loginUpdateEnter=false,loginRenderEnter=false;
-
     public MainMenu(int i) throws SlickException {
     }
 
