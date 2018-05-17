@@ -24,16 +24,12 @@ public class LoginInterface extends BasicGameState {
     TextField usrname;
     TextFieldTest psw;
     UnicodeFont font;
-
     TrueTypeFont fonx, fonx1;
     Image background;
     Image loginback;
-
     StateButton back;
     FormButton enter;
-    TextFieldTest txfs;
 
-    JTextField hi = new JTextField();
     Music music;
     private Login login;
 
