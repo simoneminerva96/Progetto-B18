@@ -109,7 +109,7 @@ public class OfflineSelection extends BasicGameState {
         Input r=gameContainer.getInput();
 
         if(r.isMousePressed(0)) {
-            play.onClickState(play,r.getMouseX(),r.getMouseY(),gameContainer,stateBasedGame,2);
+            play.onClickState(r.getMouseX(),r.getMouseY(),stateBasedGame,2);
             stateBasedGame.addState(nextScreen);
             stateBasedGame.getState(6).init(gameContainer,stateBasedGame);
             stateBasedGame.enterState(6);

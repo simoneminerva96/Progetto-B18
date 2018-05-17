@@ -2,9 +2,7 @@ package Graphics.com.sticky;
 
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Shape;
-
 import Graphics.com.sticky.events.*;
-import org.newdawn.slick.state.GameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 
@@ -22,6 +20,7 @@ public class StateButton extends ButtonSkeleton implements ButtonListener,
     private Shape shape;
     private Image current, up, down,press;
     private Sound click;
+    float minx, maxx, maxy, miny;
 
     public StateButton(Shape s, Image up, Image down,Image press, Sound click) {
         shape = s;
@@ -37,7 +36,10 @@ public class StateButton extends ButtonSkeleton implements ButtonListener,
         buttonListener = NullListener.getSingleton();
         super.addListener((ButtonListener) this);
         super.addListener((ClickListener) this);
-
+        minx = shape.getX();
+        maxx = shape.getMaxX();
+        miny = shape.getY();
+        maxy = shape.getMaxY();
     }
 
     @Override
@@ -56,17 +58,10 @@ public class StateButton extends ButtonSkeleton implements ButtonListener,
     }
 
     public void onClick(Button clicked, float mx, float my) {}
-    public void onClickState(Button clicked, float mx, float my,GameContainer gameContainer ,StateBasedGame stateBasedGame,int i) throws SlickException {
-        float minx =shape.getX();
-        float miny=shape.getY();
-        float maxx=shape.getMaxX();
-        float maxy=shape.getMaxY();
+    public void onClickState(float mx, float my,StateBasedGame stateBasedGame,int i) throws SlickException {
 
         if(mx>=minx&&mx<=maxx&&my>=miny&&my<=maxy) {
             current = press;
-           // GameState bgs=stateBasedGame.getState(i);
-          //  stateBasedGame.initStatesList(gameContainer);
-          //  stateBasedGame.addState(bgs);
             stateBasedGame.enterState(i);
         }
 
@@ -77,14 +72,9 @@ public class StateButton extends ButtonSkeleton implements ButtonListener,
     public void onRightClick(Button clicked, float mx, float my) {}
 
     public void onMouseEnter(Button b,float mx, float my) {
-        float minx =shape.getX();
-        float miny=shape.getY();
-        float maxx=shape.getMaxX();
-        float maxy=shape.getMaxY();
 
         if(mx>=minx&&mx<=maxx&&my>=miny&&my<=maxy) {
             buttonListener.onMouseEnter(this,mx,my);
-            // click.play();
             current = down;
         }else{
             current=up;

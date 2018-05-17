@@ -2,8 +2,6 @@ package Login;
 
 import ConnectionDB.ConnectionDB;
 
-import javax.swing.*;
-
 /**
  * classe che prende i dati in ingresso dall'interfaccia grafica di login(Login_interface)
  * ed effettua gli opportuni controlli,controlla se il login
@@ -35,12 +33,6 @@ public class Login {
         }
         System.out.println(mess);
         return check;
-    }
-
-    //MAIN DI PROVA
-    public static void main(String[] args) {
-        Login l=new Login();
-        l.Login("rita","okok");
     }
 
 }

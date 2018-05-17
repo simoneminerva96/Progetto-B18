@@ -101,8 +101,8 @@ public class MainMenu extends BasicGameState {
         Input r=gameContainer.getInput();
 
         if(r.isMousePressed(0)) {
-            play.onClickState(play,r.getMouseX(),r.getMouseY(),gameContainer,stateBasedGame,2);
-            offline.onClickState(offline,r.getMouseX(),r.getMouseY(),gameContainer,stateBasedGame,3);
+            play.onClickState(r.getMouseX(),r.getMouseY(),stateBasedGame,2);
+            offline.onClickState(r.getMouseX(),r.getMouseY(),stateBasedGame,3);
         }
 
         play.onMouseEnter(play,r.getMouseX(),r.getMouseY());

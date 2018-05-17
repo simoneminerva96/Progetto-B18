@@ -17,9 +17,7 @@ import java.awt.Font;
 import java.io.IOException;
 import java.io.InputStream;
 
-/*
-    interfaccia di registrazione finale
- */
+
 public class RegistrationInterface extends BasicGameState {
 
     TextField usrname;
@@ -28,16 +26,18 @@ public class RegistrationInterface extends BasicGameState {
     TrueTypeFont fonx,fonx1;
     Image background, registrationback;
     StateButton back;
-    FormButton enter;
+    FormButton enter, logs;
 
     Registration reg;
+    Login login;
 
     public RegistrationInterface(int n){
         this.reg = new Registration();
+        this.login = new Login();
     }
 
     @Override
-    public int getID() { return 3; }
+    public int getID() { return 2; }
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
@@ -46,6 +46,7 @@ public class RegistrationInterface extends BasicGameState {
         registrationback =new Image("res/backgrounds/Windows_09p.png");
         back = new StateButton(new Rectangle(421,460,90,91),new Image("res/buttons/fantasy/back_03.png"),new Image("res/buttons/fantasy/back_02.png"),new Image("res/buttons/fantasy/back_01.png"),null);
         enter = new FormButton(new Rectangle(675,460,185,91),new Image("res/buttons/fantasy/Button_Login_01.png"),new Image("res/buttons/fantasy/Button_Login_02.png"),new Image("res/buttons/fantasy/Button_Login_01.png"),null);
+        logs = new FormButton(new Rectangle(675,560,185,91),new Image("res/buttons/fantasy/Button_Login_01.png"),new Image("res/buttons/fantasy/Button_Login_02.png"),new Image("res/buttons/fantasy/Button_Login_01.png"),null);
         try {
             InputStream inputStream	= ResourceLoader.getResourceAsStream("res/fonts/Silkscreen/slkscr.ttf");
             java.awt.Font awtFont= java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT,inputStream);
@@ -57,7 +58,10 @@ public class RegistrationInterface extends BasicGameState {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        usrname =new TextField(gameContainer , gameContainer.getDefaultFont() , 540 , 245 , 200 , 35);
+        psw = new TextFieldTest(gameContainer , gameContainer.getDefaultFont() , 540 , 340 , 200 , 35);
+        psw.setBackgroundColor(org.newdawn.slick.Color.lightGray);
+        psw.setMaskEnabled(true);
     }
 
     @Override
@@ -68,24 +72,27 @@ public class RegistrationInterface extends BasicGameState {
         psw.render(gameContainer,graphics);
         back.render(gameContainer,graphics);
         enter.render(gameContainer,graphics);
-
+        logs.render(gameContainer,graphics);
         fonx1.drawString(510,205,"INSERISCI NICKNAME", org.newdawn.slick.Color.white);
         fonx1.drawString(510,300,"INSERISCI PASSWORD", org.newdawn.slick.Color.white);
     }
 
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
-
+        font.loadGlyphs();
         Input r = gameContainer.getInput();
 
         if(r.isMousePressed(0)) {
-            back.onClickState(back, r.getMouseX(), r.getMouseY(),gameContainer,stateBasedGame,1);
+            back.onClickState(r.getMouseX(), r.getMouseY(),stateBasedGame,1);
 
-        }else if(r.isMousePressed(0)){
+        }
+        if (r.isMousePressed(1)){
             enter.onClickFormRegistration(r.getMouseX(),r.getMouseY(),usrname.getText(),psw.getText(), reg);
+            logs.onClickFormLogin(r.getMouseX(),r.getMouseY(),usrname.getText(),psw.getText(), login);
         }
         back.onMouseEnter(back,r.getMouseX(),r.getMouseY());
         enter.onMouseEnter(enter,r.getMouseX(),r.getMouseY());
+        logs.onMouseEnter(logs, r.getMouseX(), r.getMouseY());
     }
 
     public UnicodeFont getNewFont(String fontName , int fontSize) {
@@ -98,10 +105,7 @@ public class RegistrationInterface extends BasicGameState {
     }
 
     public void enter(GameContainer gc, StateBasedGame sbg) throws SlickException {
-        usrname=new TextField(gc , fonx1 , 540 , 245 , 200 , 35);
-        psw = new TextFieldTest(gc , fonx1 , 540 , 340 , 200 , 35);
-        psw.setBackgroundColor(org.newdawn.slick.Color.lightGray);
-        psw.setMaskEnabled(true);
+
     }
 
 }

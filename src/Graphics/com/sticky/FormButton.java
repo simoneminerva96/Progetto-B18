@@ -14,15 +14,14 @@ import Login.*;
  *
  * @author Alexander Schearer <aschearer@gmail.com>
  */
-public class FormButton extends ButtonSkeleton implements ButtonListener,
-        ClickListener {
+public class FormButton extends ButtonSkeleton implements ButtonListener, ClickListener {
 
     private ClickListener clickListener;
     private ButtonListener buttonListener;
-
     private Shape shape;
     private Image current, up, down,press;
     private Sound click;
+    float minx, maxx, miny, maxy;
 
     public FormButton(Shape s, Image up, Image down,Image press, Sound click) {
         shape = s;
@@ -39,6 +38,10 @@ public class FormButton extends ButtonSkeleton implements ButtonListener,
         super.addListener((ButtonListener) this);
         super.addListener((ClickListener) this);
 
+        minx = shape.getX();
+        miny = shape.getY();
+        maxx = shape.getMaxX();
+        maxy = shape.getMaxY();
     }
 
     @Override
@@ -57,22 +60,14 @@ public class FormButton extends ButtonSkeleton implements ButtonListener,
     }
 
     public void onClick(Button clicked, float mx, float my) {
-        float minx =shape.getX();
-        float miny=shape.getY();
-        float maxx=shape.getMaxX();
-        float maxy=shape.getMaxY();
 
-        if(mx>=minx&&mx<=maxx&&my>=miny&&my<=maxy) {
+        if(mx>=minx && mx<=maxx && my>=miny && my<=maxy) {
             current = press;
         }
 
     }
 
     public void onClickFormLogin(float mx,float my,String username,String password,Login login) {
-        float minx = shape.getX();
-        float miny = shape.getY();
-        float maxx = shape.getMaxX();
-        float maxy = shape.getMaxY();
 
         if (mx >= minx && mx <= maxx && my >= miny && my <= maxy) {
             current = press;
@@ -81,10 +76,6 @@ public class FormButton extends ButtonSkeleton implements ButtonListener,
     }
 
     public void onClickFormRegistration(float mx, float my, String username, String password, Registration r){
-            float minx =shape.getX();
-            float miny=shape.getY();
-            float maxx=shape.getMaxX();
-            float maxy=shape.getMaxY();
 
             if(mx>=minx&&mx<=maxx&&my>=miny&&my<=maxy) {
                 current = press;
@@ -100,14 +91,9 @@ public class FormButton extends ButtonSkeleton implements ButtonListener,
     }
 
     public void onMouseEnter(Button b,float mx, float my) {
-        float minx =shape.getX();
-        float miny=shape.getY();
-        float maxx=shape.getMaxX();
-        float maxy=shape.getMaxY();
 
         if(mx>=minx&&mx<=maxx&&my>=miny&&my<=maxy) {
             buttonListener.onMouseEnter(this,mx,my);
-            // click.play();
             current = down;
         }else{
             current=up;
