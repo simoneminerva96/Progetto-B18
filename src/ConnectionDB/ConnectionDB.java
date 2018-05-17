@@ -161,7 +161,7 @@ public class ConnectionDB {
         ResultSet rs;
         String returnMess="";
 
-        try (Connection conn = DriverManager.getConnection("jdbc:mysql://10.87.144.91:3306/trivial?user=root&password=root");
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://10.87.144.91:3306/trivial?useSSL=false", "root", "root");
              CallableStatement stmt = conn.prepareCall(query)) {
 
             stmt.registerOutParameter(1, Types.VARCHAR);
