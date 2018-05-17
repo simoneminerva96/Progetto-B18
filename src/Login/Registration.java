@@ -32,9 +32,4 @@ public class Registration {
         return check;
     }
 
-    //MAIN DI PROVA PER TESTAR LA CLASSE da eliminare
-    public static void main(String[] args) {
-        Registration registration=new Registration();
-        registration.Registration("jacopo","jacopo");
-    }
 }

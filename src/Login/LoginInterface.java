@@ -94,7 +94,7 @@ public class LoginInterface extends BasicGameState {
 
 
         } else if (r.isMousePressed(1)) {
-            enter.onClickForm(enter, r.getMouseX(), r.getMouseY(), usrname.getText(), psw.getText(),login);
+            enter.onClickFormLogin(r.getMouseX(), r.getMouseY(), usrname.getText(), psw.getText(),login);
         }
         back.onMouseEnter(back, r.getMouseX(), r.getMouseY());
         enter.onMouseEnter(enter, r.getMouseX(), r.getMouseY());

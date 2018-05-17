@@ -22,7 +22,7 @@ public class Domanda extends BasicGameState {
 
     @Override
     public int getID() {
-        return 3;
+        return 6;
     }
 
     @Override

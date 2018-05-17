@@ -6,29 +6,29 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class Trivia extends BasicGameState {
-    Image backgroundMap, currentDie, back, forward;
+    Image backgroundMap, currentDie, back, forward, rydia, d6;
     DieGUI d;
     Map map;
     Player p;
     PlayerGUI pGUI;
     Pedina piece;
     boolean moved = false;
-    Domanda prova = new Domanda(3);
+    Domanda prova = new Domanda(6);
     public String mouse= "No input";
     Boolean b=false;
-
+    String nome = "rita";
 
     public Trivia(int id) {
     }
 
     public int getID() {
-        return 3;
+        return 5;
     }
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         map=new Map(20,20,35);
-        backgroundMap = new Image("res/map/Tabella3.png");
+        backgroundMap = new Image("res/map/Tabella.png");
         p=new Player("ONE",3,map);
         String dwn="res/char/FFIV/Rydia/Rydiadwn.png";
         String lft="res/char/FFIV/Rydia/rydiasx.png";
@@ -42,6 +42,8 @@ public class Trivia extends BasicGameState {
         pGUI=new PlayerGUI(p,piece);
         pGUI.getPedina().getCurrentImage().stop();
         prova.init(gameContainer, stateBasedGame);
+        rydia = new Image ("res/char/rydia.png");
+        d6 = new Image("res/diamonds/d6.png");
     }
 
     @Override
@@ -62,6 +64,9 @@ public class Trivia extends BasicGameState {
                 e.printStackTrace();
             }
         }
+        rydia.draw(900,300);
+        graphics.drawString(nome, 970,300);
+        d6.draw(950, 320);
     }
 
     @Override

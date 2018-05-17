@@ -66,7 +66,7 @@ public class OfflineSelection extends BasicGameState {
 
     @Override
     public int getID() {
-        return 5;
+        return 4;
     }
 
     @Override
