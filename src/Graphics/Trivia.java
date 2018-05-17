@@ -22,7 +22,7 @@ public class Trivia extends BasicGameState {
     }
 
     public int getID() {
-        return 2;
+        return 3;
     }
 
     @Override

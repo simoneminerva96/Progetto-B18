@@ -1,12 +1,10 @@
 package Graphics.com.sticky;
 
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.Sound;
+import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Shape;
 
 import Graphics.com.sticky.events.*;
+import org.newdawn.slick.state.GameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 
@@ -58,7 +56,7 @@ public class StateButton extends ButtonSkeleton implements ButtonListener,
     }
 
     public void onClick(Button clicked, float mx, float my) {}
-    public void onClickState(Button clicked, float mx, float my, StateBasedGame stateBasedGame,int i) {
+    public void onClickState(Button clicked, float mx, float my,GameContainer gameContainer ,StateBasedGame stateBasedGame,int i) throws SlickException {
         float minx =shape.getX();
         float miny=shape.getY();
         float maxx=shape.getMaxX();
@@ -66,6 +64,9 @@ public class StateButton extends ButtonSkeleton implements ButtonListener,
 
         if(mx>=minx&&mx<=maxx&&my>=miny&&my<=maxy) {
             current = press;
+           // GameState bgs=stateBasedGame.getState(i);
+          //  stateBasedGame.initStatesList(gameContainer);
+          //  stateBasedGame.addState(bgs);
             stateBasedGame.enterState(i);
         }
 

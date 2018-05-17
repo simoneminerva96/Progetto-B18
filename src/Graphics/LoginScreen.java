@@ -20,8 +20,11 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.util.ResourceLoader;
 
+import javax.swing.*;
+
 public class LoginScreen extends BasicGameState {
-    TextField usrname,psw;
+    TextField usrname;
+    TextFieldTest psw;
     UnicodeFont font;
 
     TrueTypeFont fonx,fonx1;
@@ -30,6 +33,10 @@ public class LoginScreen extends BasicGameState {
 
     StateButton back;
     FormButton enter;
+    TextFieldTest txfs;
+
+    JTextField hi=new JTextField();
+
 
     Music music;
 
@@ -57,6 +64,13 @@ public class LoginScreen extends BasicGameState {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        usrname=new TextField(gc , fonx1 , 540 , 245 , 200 , 35);
+        psw = new TextFieldTest(gc , fonx1 , 540 , 340 , 200 , 35);
+        psw.setBackgroundColor(org.newdawn.slick.Color.lightGray);
+
+        psw.setMaskEnabled(true);
+
+
 
     }
 
@@ -64,9 +78,11 @@ public class LoginScreen extends BasicGameState {
         g.drawImage(background,0,0);
         g.drawImage(loginback,421,135);
         usrname.render(gc,g);
+        //txfs.render(gc,g);
         psw.render(gc,g);
         back.render(gc,g);
         enter.render(gc,g);
+
 
         fonx1.drawString(510,205,"INSERISCI NICKNAME", org.newdawn.slick.Color.white);
         fonx1.drawString(510,300,"INSERISCI PASSWORD", org.newdawn.slick.Color.white);
@@ -79,9 +95,12 @@ public class LoginScreen extends BasicGameState {
         Input r=gc.getInput();
 
         if(r.isMousePressed(0)) {
-            back.onClick(back, r.getMouseX(), r.getMouseY());
-            enter.onClickForm(enter,r.getMouseX(),r.getMouseY(),usrname.getText(),psw.getText());
+            back.onClickState(back, r.getMouseX(), r.getMouseY(),gc,sbg,1);
 
+
+
+        }else if(r.isMousePressed(1)){
+            enter.onClickForm(enter,r.getMouseX(),r.getMouseY(),usrname.getText(),psw.getText());
         }
         back.onMouseEnter(back,r.getMouseX(),r.getMouseY());
         enter.onMouseEnter(enter,r.getMouseX(),r.getMouseY());
@@ -90,14 +109,15 @@ public class LoginScreen extends BasicGameState {
 
     public int getID()
     {
-        return 1;
+        return 2 ;
     }
 
     public void enter(GameContainer gc , StateBasedGame sbg) throws SlickException {
-        usrname = new TextField(gc , font , 540 , 245 , 200 , 35);
-        usrname.setBackgroundColor(org.newdawn.slick.Color.lightGray);
+        /*usrname = new TextField(gc , font , 540 , 245 , 200 , 35);
+        usrname.setBackgroundColor(org.newdawn.slick.Color.lightGray);*/
+        /*txfs=new TextFieldTest(gc , font , 540 , 245 , 200 , 35);
         psw = new TextField(gc , font , 540 , 340 , 200 , 35);
-        psw.setBackgroundColor(org.newdawn.slick.Color.lightGray);
+        psw.setBackgroundColor(org.newdawn.slick.Color.lightGray);*/
     }
 
     public UnicodeFont getNewFont(String fontName , int fontSize) {

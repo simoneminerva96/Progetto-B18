@@ -1,4 +1,6 @@
-package Graphics.com.menu;
+package Graphics.OfflineMenu;
+
+
 
 import Graphics.com.sticky.SimpleButton;
 import Graphics.com.sticky.StateButton;
@@ -26,7 +28,7 @@ import java.io.InputStream;
 
 import Graphics.*;
 
-public class MainMenu extends BasicGameState {
+public class OfflineSelection extends BasicGameState {
 
 
     public String mouse= "No input";
@@ -47,56 +49,55 @@ public class MainMenu extends BasicGameState {
     TrueTypeFont font;    private String gameName;
 
 
-    private StateButton play,offline;
+    private StateButton play;
 
     private TextField textField;
     UnicodeFont fonx;
 
     //STATES
-    LoginScreen loginScreen=new LoginScreen(4);
+    OfflineCharacterSelection nextScreen=new OfflineCharacterSelection(6);
 
     //BOOLEAN 4 STATES
 
     boolean loginEnter=false,loginUpdateEnter=false,loginRenderEnter=false;
 
-    public MainMenu(int i) throws SlickException {
+    public OfflineSelection(int i) throws SlickException {
     }
 
     @Override
     public int getID() {
-        return 1;
+        return 5;
     }
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-            background=new Image("res/backgrounds/green_landscape_ridim.png");
-            gameName="Trivial Pursuit";
-            try {
+        background=new Image("res/backgrounds/green_landscape_ridim.png");
+        gameName="Trivial Pursuit";
+        try {
             InputStream inputStream	= ResourceLoader.getResourceAsStream("res/fonts/Silkscreen/slkscr.ttf");
             java.awt.Font awtFont= java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT,inputStream);
             awtFont=awtFont.deriveFont(32f);
             font=new TrueTypeFont(awtFont,false);
-            } catch (FontFormatException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        } catch (FontFormatException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-            play=new StateButton(new Rectangle(550,325,190,49),new Image("res/buttons/fantasy/Button_Login_01.png"),new Image("res/buttons/fantasy/Button_Login_02.png"),new Image("res/buttons/fantasy/Button_Login_01.png"),null);
-            offline=new StateButton(new Rectangle(550,450,190,49),new Image("res/buttons/fantasy/Button_Login_01.png"),new Image("res/buttons/fantasy/Button_Login_02.png"),new Image("res/buttons/fantasy/Button_Login_01.png"),null);
-            fonx = getNewFont("Arial" , 16);
+        play=new StateButton(new Rectangle(550,325,190,49),new Image("res/buttons/fantasy/Button_Login_01.png"),new Image("res/buttons/fantasy/Button_Login_02.png"),new Image("res/buttons/fantasy/Button_Login_01.png"),null);
+
+        fonx = getNewFont("Arial" , 16);
     }
 
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
-            graphics.drawImage(background,0,0);
-            font.drawString(400,25,"TRIVIAL PURSUIT RELOADED", Color.white);
+        graphics.drawImage(background,0,0);
+        font.drawString(400,25,"TRIVIAL PURSUIT RELOADED", Color.white);
 
-            play.render(gameContainer,graphics);
-            offline.render(gameContainer,graphics);
-           // font.drawString(600,330,"PLAY", Color.white);
-         //   textField.render(gameContainer,graphics);
-         //   graphics.setFont(fonx);
+        play.render(gameContainer,graphics);
+        // font.drawString(600,330,"PLAY", Color.white);
+        //   textField.render(gameContainer,graphics);
+        //   graphics.setFont(fonx);
 
 
 
@@ -109,11 +110,12 @@ public class MainMenu extends BasicGameState {
 
         if(r.isMousePressed(0)) {
             play.onClickState(play,r.getMouseX(),r.getMouseY(),gameContainer,stateBasedGame,2);
-            offline.onClickState(offline,r.getMouseX(),r.getMouseY(),gameContainer,stateBasedGame,5);
+            stateBasedGame.addState(nextScreen);
+            stateBasedGame.getState(6).init(gameContainer,stateBasedGame);
+            stateBasedGame.enterState(6);
         }
 
         play.onMouseEnter(play,r.getMouseX(),r.getMouseY());
-        offline.onMouseEnter(offline,r.getMouseX(),r.getMouseY());
 
 
     }
@@ -130,3 +132,4 @@ public class MainMenu extends BasicGameState {
         return (fonx);
     }
 }
+
