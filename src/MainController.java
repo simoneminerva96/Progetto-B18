@@ -15,6 +15,7 @@ public class MainController {
     private LoginInterface loginInterface;
     private RegistrationInterface registrationInterface;
 
-    public static void main(String[] args) throws Exception{
+    public static void main(String[] args) {
+
     }
 }

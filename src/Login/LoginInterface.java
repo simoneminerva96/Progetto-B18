@@ -1,6 +1,6 @@
 package Login;
-/*
-    interfaccia finale di login
+/**
+ * interfaccia di login
  */
 import java.awt.*;
 import java.awt.Font;
