@@ -6,17 +6,15 @@ import Login.RegistrationInterface;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.*;
 
-public class Main extends StateBasedGame{
+public class MainGrapichs extends StateBasedGame{
     public static final String gameName = "Trivial Pursuit";
     public static final int trivia = 5;
     public static final int login = 2;
     public static final int mainmenu=1;
-    public static final int offlineSel=4;
     public static final int registration = 3;
 
-    public Main(String gameName) throws Exception {
+    public MainGrapichs(String gameName) throws Exception {
         super(gameName);
-
     }
 
     @Override
@@ -31,11 +29,12 @@ public class Main extends StateBasedGame{
         this.addState(new RegistrationInterface(registration));
     }
 
-    public static void main(String[] args) throws Exception {
+    //metodo da chiamare per avviare la classe
+    public void Run() throws Exception{
         AppGameContainer appgc; // the window for the game
         try {
             //a windows that contains a game named gameName
-            appgc = new AppGameContainer(new Main(gameName));
+            appgc = new AppGameContainer(new MainGrapichs(gameName));
             appgc.setAlwaysRender(true);
             appgc.setDisplayMode(1300, 700, false);
             appgc.setShowFPS(false);
