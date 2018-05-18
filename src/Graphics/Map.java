@@ -1,13 +1,11 @@
 package Graphics;
 
-import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.tiled.TiledMap;
 
 public class Map {
-    public Tile[][] matrix;
-    public int xmax,ymax,counter=0;
-    public int tilesize;
+    private Tile[][] matrix;
+    private int xmax,ymax,counter=0;
+    private int tilesize;
 
     public Map(int xmax,int ymax,int size) throws SlickException {
         this.xmax=xmax;
@@ -20,7 +18,6 @@ public class Map {
                 counter++;
             }
         }
-        //  mapGUI=new TiledMap(path);
     }
 
     public int getXmax() {
@@ -30,4 +27,7 @@ public class Map {
         return ymax;
     }
 
+    public int getTilesize() {
+        return tilesize;
+    }
 }

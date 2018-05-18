@@ -5,8 +5,8 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
 public class Pedina {
-    public SpriteSheet mvup,mvdwn,mvlft,mvrght;
-    public Animation currentImage,up,dwn,sx,dx;
+    private SpriteSheet mvup,mvdwn,mvlft,mvrght;
+    private Animation currentImage,up,dwn,sx,dx;
 
     public Pedina(String pathup,String pathdwn,String pathsx,String pathdx,int height,int width){
         try {

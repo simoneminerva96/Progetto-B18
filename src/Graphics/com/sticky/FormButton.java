@@ -8,6 +8,7 @@ import org.newdawn.slick.geom.Shape;
 
 import Graphics.com.sticky.events.*;
 import Login.*;
+import org.newdawn.slick.state.StateBasedGame;
 
 /**
  * A button with graphics and sound effects which reacts to the mouse.
@@ -67,11 +68,12 @@ public class FormButton extends ButtonSkeleton implements ButtonListener, ClickL
 
     }
 
-    public void onClickFormLogin(float mx,float my,String username,String password,Login login) {
+    public void onClickFormLogin(float mx, float my, String username, String password, Login login, StateBasedGame stateBasedGame, int i) {
 
         if (mx >= minx && mx <= maxx && my >= miny && my <= maxy) {
             current = press;
             login.Login(username, password);
+            stateBasedGame.enterState(i);
         }
     }
 

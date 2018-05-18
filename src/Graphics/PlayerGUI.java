@@ -1,12 +1,12 @@
 package Graphics;
 
 public class PlayerGUI {
-    float x,y;
-    float xUpdate,yUpdate;//coordinate x e y aggiornate ogni frame di gioco
-    Player p;
-    Pedina piece;
-    boolean ready = false, clicked=false;
-    static final int minMovement = 35;
+    private float x,y;
+    private float xUpdate,yUpdate;//coordinate x e y aggiornate ogni frame di gioco
+    private Player p;
+    private Pedina piece;
+    private boolean ready = false, clicked=false;
+    private static final int minMovement = 35;
 
     public PlayerGUI(Player p,Pedina piece){
         this.p=p;
@@ -126,5 +126,17 @@ public class PlayerGUI {
 
     public Pedina getPedina(){
         return piece;
+    }
+
+    public boolean isReady() {
+        return ready;
+    }
+
+    public void setReady(boolean ready) {
+        this.ready = ready;
+    }
+
+    public void setClicked(boolean clicked) {
+        this.clicked = clicked;
     }
 }

@@ -1,17 +1,17 @@
 package Graphics;
 
 public class Player{
-    int x,y,id,minx,miny,maxx,maxy;
-    String name;
-    int mulsize;
-    Direction direction=Direction.FORWARD;
+    private int x,y,id,minx,miny,maxx,maxy;
+    private String name;
+    private int mulsize;
+    private Direction direction=Direction.FORWARD;
     
     boolean isOnLeft=false,isOnRight=false,isOnUp=false,isOnDown=false;
     int mx,my;
 
     public Player(String name,int id,Map map){
         this.id=id;
-        mulsize=map.tilesize;
+        mulsize=map.getTilesize();
         mx=map.getXmax();
         my=map.getYmax();
 
@@ -19,29 +19,29 @@ public class Player{
             case 1:
                 minx=0;
                 miny=0;
-                maxx=map.xmax-2;
-                maxy=map.ymax-2;
+                maxx=map.getXmax()-2;
+                maxy=map.getYmax()-2;
                 break;
 
             case 2:
                 minx=0;
                 miny=1;
-                maxx=map.xmax-2;
-                maxy=map.ymax-1;
+                maxx=map.getXmax()-2;
+                maxy=map.getYmax()-1;
                 break;
 
             case 3:
                 minx=1;
                 miny=0;
-                maxx=map.xmax-1;
-                maxy=map.ymax-2;
+                maxx=map.getXmax()-1;
+                maxy=map.getYmax()-2;
                 break;
 
             case 4:
                 minx=1;
                 miny=1;
-                maxx=map.xmax-1;
-                maxy=map.ymax-1;
+                maxx=map.getXmax()-1;
+                maxy=map.getYmax()-1;
                 break;
         }
         x=maxx;
@@ -162,5 +162,9 @@ public class Player{
             }
         }
         System.out.println("X: "+x+" Y:"+y);
+    }
+
+    public String getName() {
+        return name;
     }
 }

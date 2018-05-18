@@ -2,7 +2,6 @@ package Login;
 
 import Graphics.TextFieldTest;
 import Graphics.com.sticky.FormButton;
-import Graphics.com.sticky.StateButton;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -20,16 +19,15 @@ import java.io.InputStream;
 
 public class RegistrationInterface extends BasicGameState {
 
-    TextField usrname;
-    TextFieldTest psw;
-    UnicodeFont font;
-    TrueTypeFont fonx,fonx1;
-    Image background, registrationback;
-    StateButton back;
-    FormButton enter, logs;
+    private TextField usrname;
+    private TextFieldTest psw;
+    private UnicodeFont font;
+    private TrueTypeFont fonx,fonx1;
+    private Image background, registrationback;
+    private FormButton regButton, logButton;
 
-    Registration reg;
-    Login login;
+    private Registration reg;
+    private Login login;
 
     public RegistrationInterface(int n){
         this.reg = new Registration();
@@ -37,16 +35,15 @@ public class RegistrationInterface extends BasicGameState {
     }
 
     @Override
-    public int getID() { return 2; }
+    public int getID() { return 1; }
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         font = getNewFont("Arial" , 18);
         background =new Image("res/backgrounds/green_landscape_ridim.png");
         registrationback =new Image("res/backgrounds/Windows_09p.png");
-        back = new StateButton(new Rectangle(421,460,90,91),new Image("res/buttons/fantasy/back_03.png"),new Image("res/buttons/fantasy/back_02.png"),new Image("res/buttons/fantasy/back_01.png"),null);
-        enter = new FormButton(new Rectangle(675,460,185,91),new Image("res/buttons/fantasy/Button_Login_01.png"),new Image("res/buttons/fantasy/Button_Login_02.png"),new Image("res/buttons/fantasy/Button_Login_01.png"),null);
-        logs = new FormButton(new Rectangle(675,560,185,91),new Image("res/buttons/fantasy/Button_Login_01.png"),new Image("res/buttons/fantasy/Button_Login_02.png"),new Image("res/buttons/fantasy/Button_Login_01.png"),null);
+        regButton = new FormButton(new Rectangle(375,460,185,91),new Image("res/buttons/Button_SignUp/Button_SignUp_01.png"),new Image("res/buttons/Button_SignUp/Button_SignUp_02.png"),new Image("res/buttons/Button_SignUp/Button_SignUp_01.png"),null);
+        logButton = new FormButton(new Rectangle(675,460,185,91),new Image("res/buttons/Button_SignIn/Button_SignIn_01.png"),new Image("res/buttons/Button_SignIn/Button_SignIn_02.png"),new Image("res/buttons/Button_SignIn/Button_SignIn_01.png"),null);
         try {
             InputStream inputStream	= ResourceLoader.getResourceAsStream("res/fonts/Silkscreen/slkscr.ttf");
             java.awt.Font awtFont= java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT,inputStream);
@@ -58,8 +55,8 @@ public class RegistrationInterface extends BasicGameState {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        usrname =new TextField(gameContainer , gameContainer.getDefaultFont() , 540 , 245 , 200 , 35);
-        psw = new TextFieldTest(gameContainer , gameContainer.getDefaultFont() , 540 , 340 , 200 , 35);
+        usrname =new TextField(gameContainer , fonx1 , 540 , 245 , 200 , 35);
+        psw = new TextFieldTest(gameContainer , fonx1 , 540 , 340 , 200 , 35);
         psw.setBackgroundColor(org.newdawn.slick.Color.lightGray);
         psw.setMaskEnabled(true);
     }
@@ -70,9 +67,8 @@ public class RegistrationInterface extends BasicGameState {
         graphics.drawImage(registrationback,421,135);
         usrname.render(gameContainer,graphics);
         psw.render(gameContainer,graphics);
-        back.render(gameContainer,graphics);
-        enter.render(gameContainer,graphics);
-        logs.render(gameContainer,graphics);
+        regButton.render(gameContainer,graphics);
+        logButton.render(gameContainer,graphics);
         fonx1.drawString(510,205,"INSERISCI NICKNAME", org.newdawn.slick.Color.white);
         fonx1.drawString(510,300,"INSERISCI PASSWORD", org.newdawn.slick.Color.white);
     }
@@ -80,23 +76,18 @@ public class RegistrationInterface extends BasicGameState {
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
         font.loadGlyphs();
-        Input r = gameContainer.getInput();
-
-        if(r.isMousePressed(0)) {
-            back.onClickState(r.getMouseX(), r.getMouseY(),stateBasedGame,1);
-
+        Input in = gameContainer.getInput();
+        
+        if (in.isMousePressed(0)){
+            regButton.onClickFormRegistration(in.getMouseX(),in.getMouseY(),usrname.getText(),psw.getText(), reg);
+            logButton.onClickFormLogin(in.getMouseX(),in.getMouseY(),usrname.getText(),psw.getText(), login, stateBasedGame, 2);
         }
-        if (r.isMousePressed(1)){
-            enter.onClickFormRegistration(r.getMouseX(),r.getMouseY(),usrname.getText(),psw.getText(), reg);
-            logs.onClickFormLogin(r.getMouseX(),r.getMouseY(),usrname.getText(),psw.getText(), login);
-        }
-        back.onMouseEnter(back,r.getMouseX(),r.getMouseY());
-        enter.onMouseEnter(enter,r.getMouseX(),r.getMouseY());
-        logs.onMouseEnter(logs, r.getMouseX(), r.getMouseY());
+        regButton.onMouseEnter(regButton,in.getMouseX(),in.getMouseY());
+        logButton.onMouseEnter(logButton, in.getMouseX(), in.getMouseY());
     }
 
     public UnicodeFont getNewFont(String fontName , int fontSize) {
-        System.out.println("GETNEWFONT");
+        //System.out.println("GETNEWFONT");
         font = new UnicodeFont(new Font(fontName , Font.PLAIN , fontSize));
         font.addGlyphs("@");
         font.getEffects().add(new ColorEffect(java.awt.Color.white));

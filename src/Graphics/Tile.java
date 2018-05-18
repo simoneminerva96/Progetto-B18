@@ -1,8 +1,8 @@
 package Graphics;
 
 public class Tile {
-    public int id;
-    public Tile(int counter){
+    private int id;
+    Tile(int counter){
         id=counter;
     }
 

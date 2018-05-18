@@ -10,12 +10,12 @@ import org.newdawn.slick.state.StateBasedGame;
 
 
 public class Domanda extends BasicGameState {
-    String risposta1 = "risposta esatta";
-    String risposta2 = "risposta sbagliata";
-    boolean answered = false;
-    boolean esito = false;
-    boolean caso = false;
-    QuestionAndAnswers q = new QuestionAndAnswers();
+    private String risposta1 = "risposta esatta";
+    private String risposta2 = "risposta sbagliata";
+    private boolean answered = false;
+    private boolean esito = false;
+    private boolean caso = false;
+    private QuestionAndAnswers q = new QuestionAndAnswers();
 
     public Domanda(int state) {
     }
@@ -32,11 +32,11 @@ public class Domanda extends BasicGameState {
 
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
-        graphics.drawString(q.question, 850, 250);
-        graphics.drawString(q.a.answer, 900, 300);
-        graphics.drawString(q.a1.answer, 900, 350);
-        graphics.drawString(q.a2.answer, 900, 400);
-        graphics.drawString(q.a3.answer, 900, 450);
+        graphics.drawString(q.getQuestion(), 850, 250);
+        graphics.drawString(q.getA().getAnswer(), 900, 300);
+        graphics.drawString(q.getA1().getAnswer(), 900, 350);
+        graphics.drawString(q.getA2().getAnswer(), 900, 400);
+        graphics.drawString(q.getA3().getAnswer(), 900, 450);
 
         if (answered == true) {
             q.setAnswered(true);
@@ -60,31 +60,44 @@ public class Domanda extends BasicGameState {
         if (posX>850 && posX<1135){
             if (posY<414 && posY>373) {
                 if (Mouse.isButtonDown(0) && answered == false) {
-                    esito = q.a.esito;
+                    esito = q.getA().isEsito();
                     answered = true;
                 }
             }
             if (posY<360 && posY>325) {
                 if (Mouse.isButtonDown(0) && answered == false) {
-                    esito = q.a1.esito;
+                    esito = q.getA1().isEsito();
                     answered = true;
                 }
             }
             if (posY<305 && posY>275) {
                 if (Mouse.isButtonDown(0) && answered == false) {
-                    esito = q.a2.esito;
+                    esito = q.getA2().isEsito();
                     answered = true;
                 }
             }
 
             if (posY<260 && posY>230) {
                 if (Mouse.isButtonDown(0) && answered == false){
-                    esito = q.a3.esito;
+                    esito = q.getA3().isEsito();
                     answered = true;
                 }
             }
         }
 
     }
+
+    public boolean isCaso() {
+        return caso;
+    }
+
+    public void setAnswered(boolean answered) {
+        this.answered = answered;
+    }
+
+    public void setEsito(boolean esito) {
+        this.esito = esito;
+    }
+
 
 }

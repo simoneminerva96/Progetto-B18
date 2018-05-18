@@ -5,9 +5,9 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
 public class DieGUI {
-    Image[] die = new Image[6];
-    Image currentDie;
-    Die d = new Die();
+    private Image[] die = new Image[6];
+    private Image currentDie;
+    private Die d = new Die();
 
     public DieGUI() {
         for (int i=0; i<6; i++){
