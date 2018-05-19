@@ -48,7 +48,7 @@ public class MainMenu extends BasicGameState {
                 e.printStackTrace();
             }
 
-            play=new StateButton(new Rectangle(550,325,190,49),new Image("res/buttons/Button_Play/Button_Play_01.png"),new Image("res/buttons/Button_Play/Button_Play_02.png"),new Image("res/buttons/Button_Play/Button_Play_01.png"),null);
+            //play=new StateButton(new Rectangle(550,325,190,49),new Image("res/buttons/Button_Play/Button_Play_01.png"),new Image("res/buttons/Button_Play/Button_Play_02.png"),new Image("res/buttons/Button_Play/Button_Play_01.png"),null);
             options=new StateButton(new Rectangle(550,450,190,49),new Image("res/buttons/Button_Options/Button_Options_01.png"),new Image("res/buttons/Button_Options/Button_Options_02.png"),new Image("res/buttons/Button_Options/Button_Options_01.png"),null);
             fonx = getNewFont("Arial" , 16);
     }
@@ -58,7 +58,7 @@ public class MainMenu extends BasicGameState {
             graphics.drawImage(background,0,0);
             font.drawString(400,25,"TRIVIAL PURSUIT RELOADED", Color.white);
 
-            play.render(gameContainer,graphics);
+            //play.render(gameContainer,graphics);
             options.render(gameContainer,graphics);
     }
 
