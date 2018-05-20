@@ -61,7 +61,9 @@ public class Trivia extends BasicGameState {
         background.draw(0,0);
         backgroundMap.draw(0,0);
         pGUI.getPedina().getCurrentImage().draw(pGUI.getxUpdate(),pGUI.getyUpdate());
-        currentDie.draw(1200,575);
+        if (launched) {
+            currentDie.draw(1200,575);
+        }
         back.draw(750,575);
         forward.draw(850,575);
         if(pGUI.isReady()){
@@ -112,7 +114,6 @@ public class Trivia extends BasicGameState {
                         pGUI.setClicked(true);
                         p.update(diceN, Direction.BACK);
                         pGUI.updateCoordinates();
-
                     }
                 }
             }
