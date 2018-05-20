@@ -1,27 +1,37 @@
 package Graphics;
 
-public class TurnMaster {
-    int index = 0;
-    Player[] list;
+import java.util.ArrayList;
 
-    public TurnMaster(int n){
-        list = new Player[n];
+public class TurnMaster {
+    ArrayList<Player> playerList;
+    int index = 0;
+    //Player[] list;
+
+    public TurnMaster(){
+        playerList = new ArrayList<>();
+        playerList.clear();
+        //list = new Player[n];
     }
 
     public void addPlayer(Player p) {
-        list[index] = p;
+        playerList.add(p);
+        /*list[index] = p;
         if (index == 3) {
             System.out.println("NON");
         }else{
             index++;
-        }
+        }*/
     }
 
-    public int nextPlayer(int n){
-        n++;
+    public void nextPlayer(int n, int diceN, PlayerGUI pl, Direction d){
+        pl.setClicked(true);
+        playerList.get(n).update(diceN,d);
+        pl.updateCoordinates();
+
+        /*n++;
         if(n>=list.length){
             n=0;
-        }
-        return n;
+        }*/
+        //return n;
     }
 }

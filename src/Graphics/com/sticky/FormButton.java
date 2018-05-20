@@ -5,7 +5,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Sound;
 import org.newdawn.slick.geom.Shape;
-import Graphics.DieGUI;
+import Graphics.Escape;
 import Graphics.com.sticky.events.*;
 import Login.*;
 import org.newdawn.slick.state.StateBasedGame;
@@ -64,6 +64,26 @@ public class FormButton extends ButtonSkeleton implements ButtonListener, ClickL
 
         if(mx>=minx && mx<=maxx && my>=miny && my<=maxy) {
             current = press;
+        }
+    }
+    public void onCLickFormExit (float mx, float my) {
+        if (mx >= minx && mx <= maxx && my >= miny && my <= maxy) {
+            current = press;
+            System.exit(0);
+        }
+    }
+
+    public void onClickFormMenu (float mx, float my, StateBasedGame stateBasedGame, int n) {
+        if (mx >= minx && mx <= maxx && my >= miny && my <= maxy) {
+            current = press;
+            stateBasedGame.enterState(n);
+        }
+    }
+
+    public void onClickFormResume (float mx, float my, Escape esc){
+        if (mx >= minx && mx <= maxx && my >= miny && my <= maxy) {
+            current = press;
+            esc.setQuit(false);
         }
     }
 
