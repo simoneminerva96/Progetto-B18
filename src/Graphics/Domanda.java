@@ -99,5 +99,11 @@ public class Domanda extends BasicGameState {
         this.esito = esito;
     }
 
+    public boolean isAnswered() {
+        return answered;
+    }
 
+    public void setCaso(boolean caso) {
+        this.caso = caso;
+    }
 }

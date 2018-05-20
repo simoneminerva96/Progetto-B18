@@ -14,14 +14,15 @@ public class Trivia extends BasicGameState {
     private Player p;
     private PlayerGUI pGUI;
     private Pedina piece;
-    private boolean moved = false;
     private Domanda prova = new Domanda(6);
     private String mouse= "No input";
-    private Boolean b=false;
-    String dwn="res/char/FFIV/Rydia/Rydiadwn.png";
-    String lft="res/char/FFIV/Rydia/rydiasx.png";
-    String rght="res/char/FFIV/Rydia/rydiadx.png";
-    String up="res/char/FFIV/Rydia/rydiaup.png";
+    private String dwn="res/char/FFIV/Rydia/Rydiadwn.png";
+    private String lft="res/char/FFIV/Rydia/rydiasx.png";
+    private String rght="res/char/FFIV/Rydia/rydiadx.png";
+    private String up="res/char/FFIV/Rydia/rydiaup.png";
+    private Image launch;
+    private boolean launched = false;
+    int diceN = 0;
 
     public Trivia(int id) { }
 
@@ -51,22 +52,24 @@ public class Trivia extends BasicGameState {
         kain = new Image("res/char/kain.png");
         luca = new Image("res/char/luca.png");
         background = new Image("res/backgrounds/green_landscape.png");
+        launch = new Image("res/buttons/Button_Launch/Button_Login_02.png");
     }
 
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
         //graphics.drawString(mouse, 900, 650);
-        graphics.drawImage(background, 0,0);
-        graphics.drawImage(backgroundMap,0,0);
+        background.draw(0,0);
+        backgroundMap.draw(0,0);
         pGUI.getPedina().getCurrentImage().draw(pGUI.getxUpdate(),pGUI.getyUpdate());
-        currentDie.draw(1100,550);
-        back.draw(800,550);
-        forward.draw(900,550);
+        currentDie.draw(1200,575);
+        back.draw(750,575);
+        forward.draw(850,575);
         if(pGUI.isReady()){
             try {
                 prova.render(gameContainer, stateBasedGame, graphics);
                 if (prova.isCaso()){
                     pGUI.setReady(false);
+                    launched = false;
                 }
             } catch (SlickException e) {
                 e.printStackTrace();
@@ -81,6 +84,7 @@ public class Trivia extends BasicGameState {
         kain.draw(750,130);
         luca.draw(1050,130);
         graphics.drawString(p.getName(), 800,30);
+        launch.draw(990,580);
     }
 
     @Override
@@ -91,29 +95,34 @@ public class Trivia extends BasicGameState {
         mouse="Mouse position x:"+xpos+ " y: "+ypos;
         Input input=gameContainer.getInput();
 
-            if (xpos>916 && xpos<983 && ypos>48 && ypos<147) {
-                if (input.isMousePressed(0)) { //vai indietro
-                    pGUI.setReady(true);
-                    b = true;
-                    int diceN = d.setCurrentDie();
-                    currentDie = d.getCurrentDie();
-                    p.update(diceN, Direction.BACK);
-                    pGUI.updateCoordinates();
-                    prova.setAnswered(false);
-                    prova.setEsito(false);
+        if (xpos>990 && xpos<1130 && ypos>55 && ypos<120){
+            if(input.isMousePressed(0)) {
+                diceN = d.setCurrentDie();
+                currentDie = d.getCurrentDie();
+                launched = true;
+                prova.setAnswered(false);
+                prova.setEsito(false);
+                pGUI.setClicked(false);
+            }
+        }
+
+        if (xpos>870 && xpos<930 && ypos>46 && ypos<109) {
+            if (input.isMousePressed(0)) { //vai indietro
+                if (launched) {
+                        pGUI.setClicked(true);
+                        p.update(diceN, Direction.BACK);
+                        pGUI.updateCoordinates();
+
+                    }
                 }
             }
-            if (xpos>815 && xpos<880 && ypos>48 && ypos<147) { //vai avanti
+            if (xpos>770 && xpos<830 && ypos>46 && ypos<109) { //vai avanti
                 if (input.isMousePressed(0)) {
-                    pGUI.setClicked(true);
-                    moved = true;
-                    b = true;
-                    int diceN = d.setCurrentDie();
-                    currentDie = d.getCurrentDie();
-                    p.update(diceN, Direction.FORWARD);
-                    pGUI.updateCoordinates();
-                    prova.setAnswered(false);
-                    prova.setEsito(false);
+                    if (launched) {
+                        pGUI.setClicked(true);
+                        p.update(diceN, Direction.FORWARD);
+                        pGUI.updateCoordinates();
+                    }
                 }
             }
 
@@ -123,6 +132,5 @@ public class Trivia extends BasicGameState {
             e.printStackTrace();
         }
         pGUI.updateOnEachFrame(i);
-
     }
 }

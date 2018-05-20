@@ -5,7 +5,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Sound;
 import org.newdawn.slick.geom.Shape;
-
+import Graphics.DieGUI;
 import Graphics.com.sticky.events.*;
 import Login.*;
 import org.newdawn.slick.state.StateBasedGame;
@@ -65,7 +65,6 @@ public class FormButton extends ButtonSkeleton implements ButtonListener, ClickL
         if(mx>=minx && mx<=maxx && my>=miny && my<=maxy) {
             current = press;
         }
-
     }
 
     public void onClickFormLogin(float mx, float my, String username, String password, Login login, StateBasedGame stateBasedGame, int i) {
