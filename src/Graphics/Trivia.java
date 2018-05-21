@@ -23,10 +23,12 @@ public class Trivia extends BasicGameState {
     private int diceN = 0;
     private TurnMaster turn;
     private int index = 0;
-    private Domanda prova = new Domanda(6);
-    private Escape esc = new Escape(7);
+    private Domanda prova; 
+    private Escape esc; 
 
     public Trivia(int id) {
+        prova = = new Domanda(6);
+        esc = new Escape(7);
         turn = new TurnMaster();
         pGUI = new ArrayList<PlayerGUI>();
         pGUI.clear();
@@ -50,7 +52,7 @@ public class Trivia extends BasicGameState {
         forward = new Image("res/buttons/Frecce/freccia2.png");
         d = new DieGUI();
 
-        piece=new Pedina("res/char/FFIV/Rydia/rydiaup.png","res/char/FFIV/Rydia/Rydiadwn.png","res/char/FFIV/Rydia/rydiasx.png","res/char/FFIV/Rydia/rydiadx.png",35,35);
+        piece = new Pedina("res/char/FFIV/Rydia/rydiaup.png","res/char/FFIV/Rydia/Rydiadwn.png","res/char/FFIV/Rydia/rydiasx.png","res/char/FFIV/Rydia/rydiadx.png",35,35);
         piece1 = new Pedina("res/char/FFIV/Ceodore/ced_up.png", "res/char/FFIV/Ceodore/ced_dwn.png", "res/char/FFIV/Ceodore/ced_lft.png", "res/char/FFIV/Ceodore/ced_rht.png", 35,35 );
         piece2 = new Pedina("res/char/FFIV/Kain/kainup.png","res/char/FFIV/Kain/kaindwn.png", "res/char/FFIV/Kain/kainsx.png", "res/char/FFIV/Kain/kaindx.png", 35, 35);
         piece3 = new Pedina("res/char/FFIV/Luca/lucaup.png", "res/char/FFIV/Luca/lucadwn.png", "res/char/FFIV/Luca/lucasx.png", "res/char/FFIV/Luca/lucadx.png", 35, 35);
@@ -133,12 +135,11 @@ public class Trivia extends BasicGameState {
         mouse="Mouse position x:"+xpos+ " y: "+ypos;
         Input input=gameContainer.getInput();
 
-
         if (xpos>990 && xpos<1130 && ypos>55 && ypos<120){
             if(input.isMousePressed(0)) {
                 if(index==3) {
                     first = false;
-                    index =0;
+                    index = 0;
                     for (PlayerGUI p: pGUI){
                         p.setClicked(false);
                     }
