@@ -132,11 +132,11 @@ public class ConnectionDB {
     }*/
 
     //Procedura per l'inserimento delle credenziali utente nel DB(registrazione)
-    public String getPlayer(String IDNAME, String PW) {
+    public Boolean getPlayer(String IDNAME, String PW) {
         //
         String query = "{ ?=call ADD_PLAYER1(?,?) }";
         ResultSet rs;
-        String returnMessage="";
+        Boolean returnMessage = null;
         try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/trivial?useSSL=false", "root", "root");
              CallableStatement stmt = conn.prepareCall(query)) {
 
@@ -146,7 +146,7 @@ public class ConnectionDB {
 
             rs = stmt.executeQuery();
             while (rs.next()) {
-                 returnMessage = rs.getString(1); //Il risultato viene inserito in una stringa
+                 returnMessage = rs.getBoolean(1); //Il risultato viene inserito in una stringa
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());

@@ -27,7 +27,7 @@ public class Registration {
         this.passwordInserted=passwordInserted;
         boolean check=false;
         //effettuare il controllo sui dati inseriti, se consentiti effettuare la reg senno mess. di errore
-        String mess=connection.getPlayer(nicknameInserted,passwordInserted);
+        Boolean mess=connection.getPlayer(nicknameInserted,passwordInserted);
         System.out.println(mess);
         return check;
     }
