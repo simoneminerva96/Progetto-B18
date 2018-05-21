@@ -6,17 +6,24 @@ import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+/**
+ * @author Rita
+ *
+ * La classe Escape rappresenta lo state che andrà renderizzato quando sullo state del tabellone
+ * {@see Trivia} premo Esc.
+ *
+ * - exit: bottone che permette di uscire
+ * - resume: bottone che permette di riprendere a giocare
+ * - menu: bottone che permette di tornare al menu principale
+ */
 public class Escape extends BasicGameState {
     private FormButton exit, resume, menu;
     private boolean quit = false;
 
-    public Escape (int n) {
+    public Escape (int n) { }
 
-    }
     @Override
-    public int getID() {
-        return 7;
-    }
+    public int getID() { return 7; }
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
@@ -54,7 +61,4 @@ public class Escape extends BasicGameState {
         this.quit = quit;
     }
 
-    public FormButton getResume() {
-        return resume;
-    }
 }

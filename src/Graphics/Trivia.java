@@ -7,8 +7,29 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import java.util.ArrayList;
 
+/**
+ * @author Rita, Stefano
+ *
+ * La classe Trivia rappresenta lo state del tabellone.
+ * - backgroundMap: immagine della mappa di gioco, tabellone
+ * - back,forward: immagine freccia che torna indietro e che va avanti
+ * - background: sfondo della schermata
+ * - rydia, ceodore, kain, luca: immagini delle pedine
+ * - d: oggetto di tipo DieGUI utilizzato per visualizzare la faccia del dado ed estrarre il numero
+ * - map: oggetto di tipo Map associato alla matrice e al tabellone
+ * - p,p1,p2,p3: player della partita
+ * - pGUI: arrayList di GUI dei player
+ * - piece1,piece2,piece3,piece4: pedine associate ai player
+ * - launch: bottone per lanciare il dado
+ * - launched: flag che indica se ho tirato il dado o no
+ * - first: flag che indica se ho tirato il dado almeno una volta
+ * - diceN: intero che contiene il numero estratto
+ * - turn: oggetto TurnMaster che gestisce i turni dei player
+ * - prova: oggetto Domanda, state da renderizzare
+ * - esc: oggetto Escape, state da renderizzare
+ */
 public class Trivia extends BasicGameState {
-    private Image backgroundMap, currentDie, back, forward, background;
+    private Image backgroundMap, back, forward, background;
     private Image rydia, ceodore, kain, luca;
     private Image playerBack1, playerBack2, playerBack3, playerBack4;
     private DieGUI d;
@@ -105,12 +126,17 @@ public class Trivia extends BasicGameState {
             p.getPedina().draw(p.getxUpdate(),p.getyUpdate());
         }
 
-        if (launched) { currentDie.draw(1200,575); }
+        if (launched) { d.getCurrentDie().draw(1200,575); }
+
+        /*
+        Se la pedina si è fermata e quindi il flag ready= true allora posso renderizzare la domanda.
+        Se ho risposto e mi è uscita la stringa, allora resetto ready e launched.
+         */
 
         if(pGUI.get(turn.getIndex()).isReady()){
             try {
                 prova.render(gameContainer, stateBasedGame, graphics);
-                if (prova.isCaso()){
+                if (prova.isEnd()){
                     pGUI.get(turn.getIndex()).setReady(false);
                     launched = false;
                 }
@@ -119,6 +145,9 @@ public class Trivia extends BasicGameState {
             }
         }
 
+        /*
+        se il flag quit= true vuol dire che ho premuto Esc e renderizzo lo state esc.
+         */
         if (esc.isQuit()){
             try {
                 esc.render(gameContainer,stateBasedGame,graphics);
@@ -136,6 +165,12 @@ public class Trivia extends BasicGameState {
         mouse="Mouse position x:"+xpos+ " y: "+ypos;
         Input input=gameContainer.getInput();
 
+        /*
+        Se sono nelle coordinate del bottone Launch controllo se l'indice del turno è uguale a 3 per
+        resettarlo e reimpostare i flag clicked e first. Estraggo il numero e rimetto launched a true.
+        richiamo incrementIndex per incrementare l'indice solo nelle condizioni possibili
+        {@see TurnMaster}. resetto answered ed esito a false perchè risponderò ad una nuova domanda.
+         */
         if (xpos>990 && xpos<1130 && ypos>55 && ypos<120){
             if(input.isMousePressed(0)) {
                 if(turn.getIndex()==3) {
@@ -146,7 +181,6 @@ public class Trivia extends BasicGameState {
                     }
                 }
                 diceN = d.setCurrentDie();
-                currentDie = d.getCurrentDie();
                 launched = true;
                 turn.incrementIndex(prova.isEsito(), first, pGUI.get(turn.getIndex()));
                 prova.setAnswered(false);
@@ -154,23 +188,28 @@ public class Trivia extends BasicGameState {
             }
         }
 
-        if (xpos>870 && xpos<930 && ypos>46 && ypos<109) {
-            if (input.isMousePressed(0)) { //vai indietro
-                if (launched) {
-                    turn.nextPlayer( diceN, pGUI.get(turn.getIndex()), Direction.BACK);
-                    if (turn.getIndex()==0) {
-                        first = true;
+        /*
+        se ho lanciato il dado, controllo le coordinate in cui ho cliccato (una delle due frecce).
+        in uno o nell'altro caso, richiamo il metodo nextPlayer per aggiornare le coordinate della GUI.
+        se sono al primo tiro del dado, first = true.
+         */
+
+        if (launched) {
+            if(ypos>46 && ypos<109) {
+                if(xpos>870 && xpos<930){
+                    if(input.isMousePressed(0)){
+                        turn.nextPlayer( diceN, pGUI.get(turn.getIndex()), Direction.BACK);
+                        if (turn.getIndex()==0) {
+                            first = true;
+                        }
                     }
                 }
-            }
-        }
-
-        if (xpos>770 && xpos<830 && ypos>46 && ypos<109) { //vai avanti
-            if (input.isMousePressed(0)) {
-                if (launched) {
-                    turn.nextPlayer(diceN, pGUI.get(turn.getIndex()), Direction.FORWARD);
-                    if (turn.getIndex()==0) {
-                        first = true;
+                if(xpos>770 && xpos<830){
+                    if(input.isMousePressed(0)){
+                        turn.nextPlayer(diceN, pGUI.get(turn.getIndex()), Direction.FORWARD);
+                        if (turn.getIndex()==0) {
+                            first = true;
+                        }
                     }
                 }
             }

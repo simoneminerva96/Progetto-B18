@@ -25,9 +25,15 @@ public class Login {
         this.nicknameInserted=nicknameInserted;
         this.passwordInserted=passwordInserted;
         boolean check=false;
-        //effettuare il controllo sui dati inseriti, se corretti loggarsi, se non corrispondono dare mess di errore
+
+        /*effettuare il controllo sui dati inseriti, se corretti loggarsi, se non corrispondono
+          dare mess di errore*/
+
         String mess=connection.ExistsPlayer(nicknameInserted,passwordInserted);
-        //se il messaggio corrisponde a quello di avvenuto login, il login è stato effettuato ==> ritorna true
+
+        /* se il messaggio corrisponde a quello di avvenuto login, il login è stato effettuato
+        ==> ritorna true*/
+
         if(mess.equalsIgnoreCase("benvenuto!!")){
             check=true;
         }

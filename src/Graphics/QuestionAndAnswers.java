@@ -1,5 +1,13 @@
 package Graphics;
 
+/**
+ * @author Rita
+ *
+ * La classe QuestionAndAnswers contiene:
+ * - question: stringa della domanda
+ * - a, a1, a2, a3: oggetti di tipo risposta {@see Answers}
+ * - answered: flag che indica se ho risposto
+ */
 public class QuestionAndAnswers {
     private String question ="Qual è la capitale dell'Italia?";
     private Answers a = new Answers("Roma", true);
@@ -30,5 +38,9 @@ public class QuestionAndAnswers {
 
     public Answers getA3() {
         return a3;
+    }
+
+    public boolean isAnswered() {
+        return answered;
     }
 }

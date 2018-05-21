@@ -1,52 +1,69 @@
 package Graphics;
 
+/**
+ * @author Stefano
+ *
+ * La classe Player contiene le informazioni relative al singolo giocatore. È caratterizzato da:
+ * - name: nome del giocatore
+ * - x,y: coordinate da raggiungere
+ * - minx, miny, maxx, maxy: ogni player si troverà in una certa porzione della cella della matrice,
+ *                           questi valori rappresentano la posizione in cui si deve trovare per non
+ *                           sovrapporsi agli altri.
+ * - mulsize: dimensione della cella della matrice
+ * - direction: direzione di spostamento
+ * - isOnLeft
+ * - isOnRight
+ * - isOnUp
+ * - isOnDown
+ * - mx: dimensione massima X della matrice
+ * - my: dimensione massima Y della matrice
+ */
 public class Player{
     private int x,y,id,minx,miny,maxx,maxy;
     private String name;
     private int mulsize;
-    private Direction direction=Direction.FORWARD;
-    
+    private Direction direction = Direction.FORWARD;
     boolean isOnLeft=false,isOnRight=false,isOnUp=false,isOnDown=false;
     int mx,my;
 
     public Player(String name,int id,Map map){
-        this.id=id;
-        mulsize=map.getTilesize();
-        mx=map.getXmax();
-        my=map.getYmax();
+        this.id = id;
+        mulsize = map.getTilesize();
+        mx = map.getXmax();
+        my = map.getYmax();
 
         switch(id){
             case 1:
-                minx=0;
-                miny=0;
-                maxx=map.getXmax()-2;
-                maxy=map.getYmax()-2;
+                minx = 0;
+                miny = 0;
+                maxx = map.getXmax()-2;
+                maxy = map.getYmax()-2;
                 break;
 
             case 2:
-                minx=0;
-                miny=1;
-                maxx=map.getXmax()-2;
-                maxy=map.getYmax()-1;
+                minx = 0;
+                miny = 1;
+                maxx = map.getXmax()-2;
+                maxy = map.getYmax()-1;
                 break;
 
             case 3:
-                minx=1;
-                miny=0;
-                maxx=map.getXmax()-1;
-                maxy=map.getYmax()-2;
+                minx = 1;
+                miny = 0;
+                maxx = map.getXmax()-1;
+                maxy = map.getYmax()-2;
                 break;
 
             case 4:
-                minx=1;
-                miny=1;
-                maxx=map.getXmax()-1;
-                maxy=map.getYmax()-1;
+                minx = 1;
+                miny = 1;
+                maxx = map.getXmax()-1;
+                maxy = map.getYmax()-1;
                 break;
         }
-        x=maxx;
-        y=maxy;
-        this.name=name;
+        x = maxx;
+        y = maxy;
+        this.name = name;
     }
 
     public int getX() {
@@ -59,6 +76,11 @@ public class Player{
 
     public Direction getDirection(){return direction;}
 
+    /**
+     * Aggiorna le coordinate del giocatore in base al numero ottenuto dal dado e alla direzione scelta.
+     * @param die numero estratto
+     * @param direction direzione scelta dall'utente
+     */
     public void update(int die,Direction direction) {
         int tempx, tempy; 
         this.direction=direction;

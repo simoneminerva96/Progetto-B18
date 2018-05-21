@@ -4,6 +4,14 @@ import GameClasses.Die;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
+/**
+ * @author Rita
+ * La classe DieGUI rappresenta un'interfaccia tra la classe Die e Trivia.
+ * - Image[] die: vettore di 6 immagini (facce dei dadi)
+ * - Image currentDie: immagine attuale da visualizzare sul tabellone
+ * - Die d: oggetto di tipo dado
+ */
+
 public class DieGUI {
     private Image[] die = new Image[6];
     private Image currentDie;
@@ -23,6 +31,11 @@ public class DieGUI {
     public Image getCurrentDie() {
         return currentDie;
     }
+
+    /**
+     * Metodo che restituisce il numero del dado estratto e imposta currentDie in base a quest'ultimo.
+     * @return result: numero del dado estratto
+     */
 
     public int setCurrentDie() {
         int result;

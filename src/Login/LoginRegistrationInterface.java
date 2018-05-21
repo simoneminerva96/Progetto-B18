@@ -16,8 +16,20 @@ import java.awt.Font;
 import java.io.IOException;
 import java.io.InputStream;
 
+/**
+ * @author Rita, Stefano
+ *
+ *La classe LoginRegistrationInterface rappresenta l'interfaccia in cui avviene sia login che registrazione.
+ * - usrname: textfield in cui inserire usrname
+ * - psw: textfield in cui inserisco la password
+ * - font, fonx, fonx1: font utilizzato
+ * - regButton: bottone per la registrazione
+ * - logButton: bottone per il login
+ * - reg: oggetto di tipo Registration
+ * - login: oggetto di tipo Login
+ */
 
-public class RegistrationInterface extends BasicGameState {
+public class LoginRegistrationInterface extends BasicGameState {
 
     private TextField usrname;
     private TextFieldTest psw;
@@ -25,11 +37,10 @@ public class RegistrationInterface extends BasicGameState {
     private TrueTypeFont fonx,fonx1;
     private Image background, registrationback;
     private FormButton regButton, logButton;
-
     private Registration reg;
     private Login login;
 
-    public RegistrationInterface(int n){
+    public LoginRegistrationInterface(int n){
         this.reg = new Registration();
         this.login = new Login();
     }
@@ -73,6 +84,11 @@ public class RegistrationInterface extends BasicGameState {
         fonx1.drawString(510,300,"INSERISCI PASSWORD", org.newdawn.slick.Color.white);
     }
 
+    /*
+    OnClickFormRegistration preleva ciò che viene inserito e lo salva nel db attraverso il metodo di
+    Registration.
+    OnClickFormLogin preleva ciò che viene inserito ed effettua il login attraverso il metodo di Login.
+     */
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
         font.loadGlyphs();
@@ -87,7 +103,6 @@ public class RegistrationInterface extends BasicGameState {
     }
 
     public UnicodeFont getNewFont(String fontName , int fontSize) {
-        //System.out.println("GETNEWFONT");
         font = new UnicodeFont(new Font(fontName , Font.PLAIN , fontSize));
         font.addGlyphs("@");
         font.getEffects().add(new ColorEffect(java.awt.Color.white));

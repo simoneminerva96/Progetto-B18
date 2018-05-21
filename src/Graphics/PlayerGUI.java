@@ -2,41 +2,62 @@ package Graphics;
 
 import org.newdawn.slick.Animation;
 
+/**
+ * @author Stefano
+ * La classe PlayerGUI rappresenta la grafica relativa a un certo Player, cioè quella che
+ * effettivamente si muoverà sul tabellone.
+ *
+ * - x,y: coordinate da raggiungere
+ * - xUpdate, yUpdate: coordinate x,y da aggiornare ogni frame
+ * - p: oggetto di tipo Player associato alla sua GUI
+ * - piece: oggetto di tipo Pedina associato al Player
+ * - ready: flag che indica se la pedina è ferma ed è possibile visualizzare la domanda
+ * - clicked: flag che indica se l'utente ha cliccato su una freccia per la direzione
+ */
+
 public class PlayerGUI {
     private float x,y;
-    private float xUpdate,yUpdate;//coordinate x e y aggiornate ogni frame di gioco
+    private float xUpdate,yUpdate;
     private Player p;
     private Pedina piece;
     private boolean ready = false, clicked=false;
     private static final int minMovement = 35;
 
     public PlayerGUI(Player p,Pedina piece){
-        this.p=p;
-        this.piece=piece;
-        x=xUpdate=(p.getX()*minMovement)-5;
-        y=yUpdate=(p.getY()*minMovement)-5;
-
-    }
-    public void updateCoordinates(){ //coordinate a cui xUpdate e yUpdate devono raggiungere che vengon aggiornate ogni volta che viene
-        //eseguito il metodo update di player.
-        x=(p.getX()*minMovement)-5;
-        y=(p.getY()*minMovement)-5;
+        this.p = p;
+        this.piece = piece;
+        x = xUpdate = (p.getX()*minMovement)-5;
+        y = yUpdate = (p.getY()*minMovement)-5;
     }
 
-    //il metodo aggiorna le coordinate xUpdate e yUpdate (di +- 0.1) finchè non raggiungono i valori delle coordinate x e y .
-    //il modo in cui vengono aggiornati dipende dalla direzione di spostamento (p.getDirection==true spostamento in avanti)
-    public void updateOnEachFrame(int F) { //F è il delta del metodo update di SLICK2D.(Guardare metodo update() in Trivia variabile int i)
+    /**
+     * Calcolo le coordinate (x,y) che devono essere raggiunte da (xUpdate,yUpdate). Vengono aggiornate
+     * ogni volta che viene eseguito il metodo update di Player.
+     */
+    public void updateCoordinates(){
+        x = (p.getX()*minMovement)-5;
+        y = (p.getY()*minMovement)-5;
+    }
+
+    /**
+     * updateOnEachFrame aggiorna le coordinate (xUpdate,yUpdate) di +- 0.1*delta finchè non
+     * raggiungono i valori delle coordinate (x,y). Il modo con cui vengono aggiornati dipende
+     * dalla direzione di spostamento (BACK o FORWARD).
+     *
+     * @param delta parametro di Slick2D per aggiornare i frame di gioco.
+     **/
+    public void updateOnEachFrame(int delta) {
                 if (xUpdate < x) {
                     if(this.p.getDirection()==Direction.FORWARD){
                         if (p.isOnLeft == false) {
                             piece.setMvdx();
-                            xUpdate += 0.1 * F;
+                            xUpdate += 0.1 * delta;
                             if (xUpdate >= x) {
                                 xUpdate = x;
                             }
                         } else {
                             piece.setMvup();
-                            yUpdate -= 0.1 * F;
+                            yUpdate -= 0.1 * delta;
                             if (yUpdate <= y) {
                                 yUpdate = y;
                                 p.isOnLeft = false;
@@ -45,30 +66,30 @@ public class PlayerGUI {
                     }else {
                         if(p.isOnDown==false){
                             piece.setMvdx();
-                            xUpdate += 0.1 * F;
+                            xUpdate += 0.1 * delta;
                             if (xUpdate >= x) {
                                 xUpdate = x;
                             }
                         }else{
                             piece.setMvdwn();
-                            yUpdate+=0.1*F;
+                            yUpdate+=0.1*delta;
                             if(yUpdate>=y){
                                 yUpdate=y;
                                 p.isOnDown=false;
                             }
                         }
                     }
-                } else if (yUpdate < y) {//a destra
+                } else if (yUpdate < y) {
                     if(p.getDirection()==Direction.BACK){
                         if(p.isOnUp==false){
                             piece.setMvdwn();
-                            yUpdate += 0.1 * F;
+                            yUpdate += 0.1 * delta;
                             if (yUpdate >= y) {
                                 yUpdate = y;
                             }
                         }else{
                             piece.setMvsx();
-                            xUpdate-=0.1*F;
+                            xUpdate-=0.1*delta;
                             if(xUpdate<=x){
                                 xUpdate=x;
                                 p.isOnUp=false;
@@ -76,42 +97,42 @@ public class PlayerGUI {
                         }
                     }else{
                         piece.setMvdwn();
-                        yUpdate += 0.1 * F;
+                        yUpdate += 0.1 * delta;
                         if (yUpdate >= y) {
                             yUpdate = y;
                         }
                     }
-                } else if (xUpdate > x) {//in
+                } else if (xUpdate > x) {
                     if(p.getDirection()==Direction.FORWARD){
                         piece.setMvsx();
-                        xUpdate -= 0.1 * F;
+                        xUpdate -= 0.1 * delta;
                         if (xUpdate <= x) {
                             xUpdate = x;
                         }
                     }else{
                         if (p.isOnRight == false) {
                             piece.setMvsx();
-                            xUpdate -= 0.1 * F;
+                            xUpdate -= 0.1 * delta;
                             if (xUpdate <= x) {
                                 xUpdate = x;
                             }
                         } else {
                             piece.setMvup();
-                            yUpdate -= 0.1 * F;
+                            yUpdate -= 0.1 * delta;
                             if (yUpdate <= y) {
                                 yUpdate = y;
                                 p.isOnRight = false;
                             }
                         }
                     }
-                } else if (yUpdate > y) {//a sinistra
+                } else if (yUpdate > y) {
                     piece.setMvup();
-                    yUpdate -= 0.1 * F;
+                    yUpdate -= 0.1 * delta;
                     if (yUpdate <= y) {
                         yUpdate = y;
                     }
                 } else {
-                    piece.getCurrentImage().stop(); //altrimenti ferma animazione
+                    piece.getCurrentImage().stop();
                     if(clicked) {
                         ready = true;
                     }

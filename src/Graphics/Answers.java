@@ -1,5 +1,12 @@
 package Graphics;
 
+/**
+ * @author Rita
+ * Classe Answer che rappresenta una risposta. E' caratterizzata da:
+ * - answer: la risposta
+ * - esito: true se è la risposta corretta, false se la risposta è sbagliata
+ */
+
 public class Answers {
     private String answer;
     private boolean esito;

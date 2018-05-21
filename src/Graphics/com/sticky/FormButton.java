@@ -91,14 +91,15 @@ public class FormButton extends ButtonSkeleton implements ButtonListener, ClickL
 
         if (mx >= minx && mx <= maxx && my >= miny && my <= maxy) {
             current = press;
-            login.Login(username, password);
-            stateBasedGame.enterState(i);
+            if(login.Login(username, password)){
+                stateBasedGame.enterState(i);
+            }
         }
     }
 
     public void onClickFormRegistration(float mx, float my, String username, String password, Registration r){
 
-            if(mx>=minx&&mx<=maxx&&my>=miny&&my<=maxy) {
+            if(mx>=minx && mx<=maxx && my>=miny && my<=maxy) {
                 current = press;
                 r.Registration(username, password);
             }
@@ -113,7 +114,7 @@ public class FormButton extends ButtonSkeleton implements ButtonListener, ClickL
 
     public void onMouseEnter(Button b,float mx, float my) {
 
-        if(mx>=minx&&mx<=maxx&&my>=miny&&my<=maxy) {
+        if(mx>=minx && mx<=maxx && my>=miny && my<=maxy) {
             buttonListener.onMouseEnter(this,mx,my);
             current = down;
         }else{
