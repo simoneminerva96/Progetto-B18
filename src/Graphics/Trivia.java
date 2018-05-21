@@ -22,12 +22,11 @@ public class Trivia extends BasicGameState {
     private boolean first = false;
     private int diceN = 0;
     private TurnMaster turn;
-    private int index = 0;
     private Domanda prova; 
     private Escape esc; 
 
     public Trivia(int id) {
-        prova = = new Domanda(6);
+        prova = new Domanda(6);
         esc = new Escape(7);
         turn = new TurnMaster();
         pGUI = new ArrayList<PlayerGUI>();
@@ -63,7 +62,7 @@ public class Trivia extends BasicGameState {
         pGUI.add(3, new PlayerGUI(p3, piece3));
 
         for (PlayerGUI p: pGUI) {
-           p.getPedina().getCurrentImage().stop();
+           p.getPedina().stop();
         }
 
         rydia = new Image ("res/char/rydia.png");
@@ -86,24 +85,8 @@ public class Trivia extends BasicGameState {
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
         background.draw(0,0);
         backgroundMap.draw(0,0);
-        for (PlayerGUI p: pGUI){
-            p.getPedina().getCurrentImage().draw(p.getxUpdate(),p.getyUpdate());
-        }
-
-        if (launched) { currentDie.draw(1200,575); }
         back.draw(750,575);
         forward.draw(850,575);
-        if(pGUI.get(index).isReady()){
-            try {
-                prova.render(gameContainer, stateBasedGame, graphics);
-                if (prova.isCaso()){
-                    pGUI.get(index).setReady(false);
-                    launched = false;
-                }
-            } catch (SlickException e) {
-                e.printStackTrace();
-            }
-        }
         graphics.drawImage(playerBack1, 750, 30);
         graphics.drawImage(playerBack2, 1050, 30);
         graphics.drawImage(playerBack3, 750, 130);
@@ -117,6 +100,24 @@ public class Trivia extends BasicGameState {
         graphics.drawString(p2.getName(), 850, 130);
         graphics.drawString(p3.getName(), 1150, 130);
         launch.draw(990,580);
+
+        for (PlayerGUI p: pGUI){
+            p.getPedina().draw(p.getxUpdate(),p.getyUpdate());
+        }
+
+        if (launched) { currentDie.draw(1200,575); }
+
+        if(pGUI.get(turn.getIndex()).isReady()){
+            try {
+                prova.render(gameContainer, stateBasedGame, graphics);
+                if (prova.isCaso()){
+                    pGUI.get(turn.getIndex()).setReady(false);
+                    launched = false;
+                }
+            } catch (SlickException e) {
+                e.printStackTrace();
+            }
+        }
 
         if (esc.isQuit()){
             try {
@@ -137,9 +138,9 @@ public class Trivia extends BasicGameState {
 
         if (xpos>990 && xpos<1130 && ypos>55 && ypos<120){
             if(input.isMousePressed(0)) {
-                if(index==3) {
+                if(turn.getIndex()==3) {
                     first = false;
-                    index = 0;
+                    turn.resetIndex();
                     for (PlayerGUI p: pGUI){
                         p.setClicked(false);
                     }
@@ -147,30 +148,32 @@ public class Trivia extends BasicGameState {
                 diceN = d.setCurrentDie();
                 currentDie = d.getCurrentDie();
                 launched = true;
+                turn.incrementIndex(prova.isEsito(), first, pGUI.get(turn.getIndex()));
                 prova.setAnswered(false);
                 prova.setEsito(false);
-                if (first) {
-                    index++;
-                }
             }
         }
 
         if (xpos>870 && xpos<930 && ypos>46 && ypos<109) {
             if (input.isMousePressed(0)) { //vai indietro
                 if (launched) {
-                    turn.nextPlayer(index, diceN, pGUI.get(index), Direction.BACK);
-                    if (index==0) first = true;
-
+                    turn.nextPlayer( diceN, pGUI.get(turn.getIndex()), Direction.BACK);
+                    if (turn.getIndex()==0) {
+                        first = true;
                     }
                 }
             }
-            if (xpos>770 && xpos<830 && ypos>46 && ypos<109) { //vai avanti
-                if (input.isMousePressed(0)) {
-                    if (launched) {
-                        turn.nextPlayer(index, diceN, pGUI.get(index), Direction.FORWARD);
-                        if (index==0) first = true;
+        }
+
+        if (xpos>770 && xpos<830 && ypos>46 && ypos<109) { //vai avanti
+            if (input.isMousePressed(0)) {
+                if (launched) {
+                    turn.nextPlayer(diceN, pGUI.get(turn.getIndex()), Direction.FORWARD);
+                    if (turn.getIndex()==0) {
+                        first = true;
                     }
                 }
+            }
         }
 
         try {
@@ -179,7 +182,7 @@ public class Trivia extends BasicGameState {
             } catch (SlickException e) {
             e.printStackTrace();
             }
-            pGUI.get(index).updateOnEachFrame(i);
+            pGUI.get(turn.getIndex()).updateOnEachFrame(i);
 
         if (input.isKeyPressed(Input.KEY_ESCAPE)) {
             esc.setQuit(true);

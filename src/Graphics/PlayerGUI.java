@@ -1,5 +1,7 @@
 package Graphics;
 
+import org.newdawn.slick.Animation;
+
 public class PlayerGUI {
     private float x,y;
     private float xUpdate,yUpdate;//coordinate x e y aggiornate ogni frame di gioco
@@ -124,8 +126,8 @@ public class PlayerGUI {
         return yUpdate;
     }
 
-    public Pedina getPedina(){
-        return piece;
+    public Animation getPedina(){
+        return piece.getCurrentImage();
     }
 
     public boolean isReady() {
