@@ -20,7 +20,7 @@ import java.io.InputStream;
 
 
 
-public class OfflineCharacterSelection extends BasicGameState {
+public class CharacterSelection extends BasicGameState {
 
 
     public String mouse= "No input";
@@ -54,7 +54,7 @@ public class OfflineCharacterSelection extends BasicGameState {
 
     boolean loginEnter=false,loginUpdateEnter=false,loginRenderEnter=false;
 
-    public OfflineCharacterSelection(int i) throws SlickException {
+    public CharacterSelection(int i) throws SlickException {
     }
 
     @Override
@@ -66,16 +66,7 @@ public class OfflineCharacterSelection extends BasicGameState {
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         background=new Image("res/backgrounds/green_landscape_ridim.png");
         gameName="Trivial Pursuit";
-        try {
-            InputStream inputStream	= ResourceLoader.getResourceAsStream("res/fonts/Silkscreen/slkscr.ttf");
-            java.awt.Font awtFont= java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT,inputStream);
-            awtFont=awtFont.deriveFont(32f);
-            font=new TrueTypeFont(awtFont,false);
-        } catch (FontFormatException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
 
         play=new StateButton(new Rectangle(550,325,190,49),new Image("res/buttons/fantasy/Button_Login_01.png"),new Image("res/buttons/fantasy/Button_Login_02.png"),new Image("res/buttons/fantasy/Button_Login_01.png"),null);
 
