@@ -64,7 +64,7 @@ public class Server {
 
 
             } while (!letto.toLowerCase().equals("esci"));
-            out.writeBytes("Connessione chiusa" + "\n");
+            System.out.println("Connessione chiusa");
             socketClient.close(); //termino la connesione al client
 
         } catch (IOException e) {
