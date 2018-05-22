@@ -135,4 +135,8 @@ public class FormButton extends ButtonSkeleton implements ButtonListener, ClickL
     public boolean isClicked() {
         return clicked;
     }
+
+    public void setClicked(boolean clicked) {
+        this.clicked = clicked;
+    }
 }
