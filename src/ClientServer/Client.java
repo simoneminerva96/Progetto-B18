@@ -1,34 +1,47 @@
 package ClientServer;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.util.Scanner;
 
 public class Client {
 
+    Socket server = null;
+
+    int porta = 8888; //porta server
+
+    DataInputStream in; //per ricevere da server
+    DataOutputStream out; //per inviare al server
+
+    public Socket connetti(){
+
+        try {
+
+            System.out.println("Provo a connettermi.....");
+            //prova lo connessione con le credenziali date
+            Socket server = new Socket(InetAddress.getLocalHost(),porta);
+
+            System.out.println("Connessione al server effettuata");
+
+            in = new DataInputStream(server.getInputStream());
+            out = new DataOutputStream(server.getOutputStream());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return server;
+
+    }
+
     public static void main(String[] args) throws IOException {
 
-        Scanner sc = new Scanner(System.in);
-
-        //inizializza una socket collegata all'indirizzo localhost e ad un porta qualsiasi, ovviamente libera
-        Socket s = new Socket("127.0.0.1", 1342);
-
-        //prende l'output dal server
-        Scanner sc1 = new Scanner(s.getInputStream());
-
-        for(;;) {
-            System.out.println("Enter any number");
-            int number = sc.nextInt();
-
-            //gli passo il numero al server appena letto
-            PrintStream p = new PrintStream(s.getOutputStream());
-            p.println(number);
-
-            //metto il risulato letto dal server nella variabile temp e la stampo
-            int temp = sc1.nextInt();
-            System.out.println(temp);
-        }
+        Client C = new Client();
+        C.connetti();
 
     }
 }
