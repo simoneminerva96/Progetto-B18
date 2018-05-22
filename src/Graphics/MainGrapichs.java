@@ -1,5 +1,6 @@
 package Graphics;
 
+import Graphics.OfflineMenu.PlayerNumberSelection;
 import Graphics.com.menu.MainMenu;
 import Login.LoginRegistrationInterface;
 import org.newdawn.slick.*;
@@ -16,6 +17,7 @@ public class MainGrapichs extends StateBasedGame{
     public static final int trivia = 5;
     public static final int mainmenu = 2;
     public static final int registration = 1;
+    public static final int playernumbersel=3;
 
     public MainGrapichs(String gameName) throws Exception {
         super(gameName);
@@ -31,8 +33,9 @@ public class MainGrapichs extends StateBasedGame{
 
     @Override
     public void initStatesList(GameContainer gc) throws SlickException {
-        this.addState(new LoginRegistrationInterface(registration));
+        this.addState(new PlayerNumberSelection(playernumbersel));
         this.addState(new Trivia(trivia));
+        this.addState(new LoginRegistrationInterface(registration));
         this.addState(new MainMenu(mainmenu));
     }
 

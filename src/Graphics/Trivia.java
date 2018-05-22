@@ -120,7 +120,7 @@ public class Trivia extends BasicGameState {
         graphics.drawImage(playerBack3, 750, 130);
         graphics.drawImage(playerBack4, 1050, 130);
         rydia.draw(750,30);
-        ceodore.draw(1050,30);
+         ceodore.draw(1050,30);
         kain.draw(750,130);
         luca.draw(1050,130);
         fonx1.drawString(850,30,p.getName(),Color.white);
