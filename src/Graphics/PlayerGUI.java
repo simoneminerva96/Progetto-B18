@@ -162,4 +162,8 @@ public class PlayerGUI {
     public void setClicked(boolean clicked) {
         this.clicked = clicked;
     }
+
+    public String getName() {
+        return p.getName();
+    }
 }

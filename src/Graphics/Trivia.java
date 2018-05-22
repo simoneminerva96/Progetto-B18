@@ -2,9 +2,11 @@ package Graphics;
 
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.*;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
-
 import java.util.ArrayList;
 
 /**
@@ -27,6 +29,7 @@ import java.util.ArrayList;
  * - turn: oggetto TurnMaster che gestisce i turni dei player
  * - prova: oggetto Domanda, state da renderizzare
  * - esc: oggetto Escape, state da renderizzare
+ * - f, fonx1: font utilizzato
  */
 public class Trivia extends BasicGameState {
     private Image backgroundMap, back, forward, background;
@@ -44,7 +47,9 @@ public class Trivia extends BasicGameState {
     private int diceN = 0;
     private TurnMaster turn;
     private Domanda prova; 
-    private Escape esc; 
+    private Escape esc;
+    private TrueTypeFont fonx1;
+    private TriviaFont f;
 
     public Trivia(int id) {
         prova = new Domanda(6);
@@ -52,6 +57,7 @@ public class Trivia extends BasicGameState {
         turn = new TurnMaster();
         pGUI = new ArrayList<PlayerGUI>();
         pGUI.clear();
+        f = new TriviaFont();
     }
 
     public int getID() { return 5; }
@@ -59,7 +65,7 @@ public class Trivia extends BasicGameState {
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         playerBack1 = new Image("res/backgrounds/PlayerBackgrounds/SfondoGiocatore.png");
-        playerBack2 = new Image("res/backgrounds/PlayerBackgrounds/sfondoGiocatore(plus).png");
+        playerBack2 = new Image("res/backgrounds/PlayerBackgrounds/SfondoGiocatore1.png");
         playerBack3 = new Image("res/backgrounds/PlayerBackgrounds/SfondoGiocatore2.png");
         playerBack4 = new Image("res/backgrounds/PlayerBackgrounds/SfondoGiocatore3.png");
         map = new Map(20,20,35);
@@ -100,6 +106,7 @@ public class Trivia extends BasicGameState {
         turn.addPlayer(p1);
         turn.addPlayer(p2);
         turn.addPlayer(p3);
+        fonx1 = new TrueTypeFont(f.getFont().deriveFont(23f),false);
     }
 
     @Override
@@ -116,10 +123,11 @@ public class Trivia extends BasicGameState {
         ceodore.draw(1050,30);
         kain.draw(750,130);
         luca.draw(1050,130);
-        graphics.drawString(p.getName(), 850,30);
-        graphics.drawString(p1.getName(), 1150, 30);
-        graphics.drawString(p2.getName(), 850, 130);
-        graphics.drawString(p3.getName(), 1150, 130);
+        fonx1.drawString(850,30,p.getName(),Color.white);
+        fonx1.drawString(1150,30,p1.getName(),Color.white);
+        fonx1.drawString(850,130,p2.getName(),Color.white);
+        fonx1.drawString(1150,130,p3.getName(),Color.white);
+        fonx1.drawString(870,219, "E' il turno di: "+pGUI.get(turn.getIndex()).getName());
         launch.draw(990,580);
 
         for (PlayerGUI p: pGUI){
@@ -144,7 +152,6 @@ public class Trivia extends BasicGameState {
                 e.printStackTrace();
             }
         }
-
         /*
         se il flag quit= true vuol dire che ho premuto Esc e renderizzo lo state esc.
          */
@@ -226,6 +233,7 @@ public class Trivia extends BasicGameState {
         if (input.isKeyPressed(Input.KEY_ESCAPE)) {
             esc.setQuit(true);
         }
+
     }
 
 }
