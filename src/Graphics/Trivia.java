@@ -179,7 +179,7 @@ public class Trivia extends BasicGameState {
         {@see TurnMaster}. resetto answered ed esito a false perchè risponderò ad una nuova domanda.
          */
         if (xpos>990 && xpos<1130 && ypos>55 && ypos<120){
-            if(input.isMousePressed(0)) {
+            if(input.isMousePressed(0) && launched==false) {
                 if(turn.getIndex()==3) {
                     first = false;
                     turn.resetIndex();
