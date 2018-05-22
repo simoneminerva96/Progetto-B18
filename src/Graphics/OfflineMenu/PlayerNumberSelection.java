@@ -78,10 +78,10 @@ public class PlayerNumberSelection extends BasicGameState {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        one=new NumberButton(new Rectangle(525,180,100,101),new Image("res/buttons/Button_Numbers/Button_10.png"),new Image("res/buttons/Button_Numbers/Button_12.png"),null,1);
-        two=new NumberButton(new Rectangle(675,180,100,101),new Image("res/buttons/Button_Numbers/Button_10.png"),new Image("res/buttons/Button_Numbers/Button_12.png"),null,2);
-        three=new NumberButton(new Rectangle(525,305,100,101),new Image("res/buttons/Button_Numbers/Button_10.png"),new Image("res/buttons/Button_Numbers/Button_12.png"),null,3);
-        four=new NumberButton(new Rectangle(675,305,100,101),new Image("res/buttons/Button_Numbers/Button_10.png"),new Image("res/buttons/Button_Numbers/Button_12.png"),null,4);
+        one=new NumberButton(new Rectangle(525,180,100,101),new Image("res/buttons/Button_Numbers/Button1_0.png"),new Image("res/buttons/Button_Numbers/Button1_1.png"),null,1);
+        two=new NumberButton(new Rectangle(675,180,100,101),new Image("res/buttons/Button_Numbers/Button2_0.png"),new Image("res/buttons/Button_Numbers/Button2_1.png"),null,2);
+        three=new NumberButton(new Rectangle(525,305,100,101),new Image("res/buttons/Button_Numbers/Button3_0.png"),new Image("res/buttons/Button_Numbers/Button3_1.png"),null,3);
+        four=new NumberButton(new Rectangle(675,305,100,101),new Image("res/buttons/Button_Numbers/Button4_0.png"),new Image("res/buttons/Button_Numbers/Button4_1.png"),null,4);
         mf.init(gameContainer,stateBasedGame);
     }
 
