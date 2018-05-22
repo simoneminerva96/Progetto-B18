@@ -1,9 +1,6 @@
 package ClientServer;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.PrintStream;
+import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.util.Scanner;
@@ -16,6 +13,7 @@ public class Client {
 
     DataInputStream in; //per ricevere da server
     DataOutputStream out; //per inviare al server
+    BufferedReader tastiera;
 
     public Socket connetti(){
 
@@ -38,10 +36,35 @@ public class Client {
 
     }
 
+    public void comunica(){
+
+
+        try {
+
+            System.out.print("Messaggio da inviare al server: ");
+            tastiera = new BufferedReader(new InputStreamReader(System.in));
+            String messaggio = tastiera.readLine();
+
+            out.writeBytes(messaggio + "\n");
+
+            System.out.println("In attesa di risposta");
+            String risposta = in.readLine();
+            System.out.println("La risposta è :" + risposta);
+
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
     public static void main(String[] args) throws IOException {
 
         Client C = new Client();
         C.connetti();
+        C.comunica();
 
     }
 }

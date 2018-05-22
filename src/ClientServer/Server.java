@@ -44,11 +44,28 @@ public class Server {
 
     }
 
+    public void comunica(){
+
+        try {
+
+            System.out.println("aspetto un messaggio...");
+            String letto = in.readLine();
+            System.out.println("messaggio ricevuto:" + letto);
+
+            String risposta = "Ok"; //riposta del server
+            out.writeBytes(risposta + "\n");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     //il compito del server è quella di accettare degli input dai client e processi e ridare indietro qualcosa
     public static void main(String[] args) throws IOException {
 
         Server s = new Server();
         s.attendi();
+        s.comunica();
 
     }
 }
