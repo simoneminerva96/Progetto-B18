@@ -26,8 +26,9 @@ public class Registration {
         this.nicknameInserted=nicknameInserted;
         this.passwordInserted=passwordInserted;
         boolean check=false;
+
         //effettuare il controllo sui dati inseriti, se consentiti effettuare la reg senno mess. di errore
-        Boolean mess=connection.getPlayer(nicknameInserted,passwordInserted);
+        check=connection.getPlayer(nicknameInserted,passwordInserted);
         return check;
     }
 

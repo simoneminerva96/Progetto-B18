@@ -31,8 +31,8 @@ public class MainGrapichs extends StateBasedGame{
 
     @Override
     public void initStatesList(GameContainer gc) throws SlickException {
-        this.addState(new Trivia(trivia));
         this.addState(new LoginRegistrationInterface(registration));
+        this.addState(new Trivia(trivia));
         this.addState(new MainMenu(mainmenu));
     }
 
