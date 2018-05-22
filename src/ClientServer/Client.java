@@ -14,6 +14,7 @@ public class Client {
     DataInputStream in; //per ricevere da server
     DataOutputStream out; //per inviare al server
     BufferedReader tastiera;
+    String messaggio;
 
     public Socket connetti(){
 
@@ -41,16 +42,19 @@ public class Client {
 
         try {
 
-            System.out.print("Messaggio da inviare al server: ");
-            tastiera = new BufferedReader(new InputStreamReader(System.in));
-            String messaggio = tastiera.readLine();
+            do {
+                System.out.print("Messaggio da inviare al server: ");
+                tastiera = new BufferedReader(new InputStreamReader(System.in));
+                messaggio = tastiera.readLine();
 
-            out.writeBytes(messaggio + "\n");
+                out.writeBytes(messaggio + "\n");
 
-            System.out.println("In attesa di risposta");
-            String risposta = in.readLine();
-            System.out.println("La risposta è :" + risposta);
+                System.out.println("In attesa di risposta");
+                String risposta = in.readLine();
+                System.out.println("La risposta è :" + risposta);
+                System.out.println("Connessione chiusa");
 
+            } while (!messaggio.toLowerCase().equals("esci"));
 
 
         } catch (IOException e) {

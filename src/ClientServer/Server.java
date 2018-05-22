@@ -15,6 +15,8 @@ public class Server {
     DataInputStream in; //per ricevere da client
     DataOutputStream out; //per inviare al client
 
+    String letto;
+
     public Socket attendi() throws IOException {
 
         try {
@@ -48,12 +50,22 @@ public class Server {
 
         try {
 
-            System.out.println("aspetto un messaggio...");
-            String letto = in.readLine();
-            System.out.println("messaggio ricevuto:" + letto);
+            do {
 
-            String risposta = "Ok"; //riposta del server
-            out.writeBytes(risposta + "\n");
+
+                System.out.println("aspetto un messaggio...");
+                letto = in.readLine();
+
+
+                System.out.println("messaggio ricevuto:" + letto);
+
+                String risposta = "Ok"; //riposta del server
+                out.writeBytes(risposta + "\n");
+
+
+            } while (!letto.toLowerCase().equals("esci"));
+            out.writeBytes("Connessione chiusa" + "\n");
+            socketClient.close(); //termino la connesione al client
 
         } catch (IOException e) {
             e.printStackTrace();
