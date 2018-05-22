@@ -22,7 +22,8 @@ public class FormButton extends ButtonSkeleton implements ButtonListener, ClickL
     private Shape shape;
     private Image current, up, down,press;
     private Sound click;
-    float minx, maxx, miny, maxy;
+    private float minx, maxx, miny, maxy;
+    private boolean clicked = false;
 
     public FormButton(Shape s, Image up, Image down,Image press, Sound click) {
         shape = s;
@@ -97,13 +98,17 @@ public class FormButton extends ButtonSkeleton implements ButtonListener, ClickL
         }
     }
 
-    public void onClickFormRegistration(float mx, float my, String username, String password, Registration r){
+    public boolean onClickFormRegistration(float mx, float my, String username, String password, Registration r){
+        boolean check = false;
 
             if(mx>=minx && mx<=maxx && my>=miny && my<=maxy) {
                 current = press;
-                r.Registration(username, password);
+                clicked = true;
+                if(r.Registration(username, password)) {
+                   check = true;
+                }
             }
-
+        return check;
     }
     public void onDoubleClick(Button clicked, float mx, float my) {
 
@@ -127,4 +132,7 @@ public class FormButton extends ButtonSkeleton implements ButtonListener, ClickL
         current = up;
     }
 
+    public boolean isClicked() {
+        return clicked;
+    }
 }

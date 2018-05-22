@@ -27,6 +27,7 @@ import java.io.InputStream;
  * - logButton: bottone per il login
  * - reg: oggetto di tipo Registration
  * - login: oggetto di tipo Login
+ * - check: flag che indica se la registrazione è andata a buon fine oppure no
  */
 
 public class LoginRegistrationInterface extends BasicGameState {
@@ -39,6 +40,7 @@ public class LoginRegistrationInterface extends BasicGameState {
     private FormButton regButton, logButton;
     private Registration reg;
     private Login login;
+    private boolean check;
 
     public LoginRegistrationInterface(int n){
         this.reg = new Registration();
@@ -82,6 +84,14 @@ public class LoginRegistrationInterface extends BasicGameState {
         logButton.render(gameContainer,graphics);
         fonx1.drawString(510,205,"INSERISCI NICKNAME", org.newdawn.slick.Color.white);
         fonx1.drawString(510,300,"INSERISCI PASSWORD", org.newdawn.slick.Color.white);
+
+        if (regButton.isClicked()) {
+            if (check) {
+                fonx1.drawString(490,100, "Registrazione effettuata con successo", org.newdawn.slick.Color.blue);
+            }
+            else
+                fonx1.drawString(490,100, "Registrazione fallita", org.newdawn.slick.Color.blue);
+        }
     }
 
     /*
@@ -95,7 +105,7 @@ public class LoginRegistrationInterface extends BasicGameState {
         Input in = gameContainer.getInput();
         
         if (in.isMousePressed(0)){
-            regButton.onClickFormRegistration(in.getMouseX(),in.getMouseY(),usrname.getText(),psw.getText(), reg);
+            check = regButton.onClickFormRegistration(in.getMouseX(),in.getMouseY(),usrname.getText(),psw.getText(), reg);
             logButton.onClickFormLogin(in.getMouseX(),in.getMouseY(),usrname.getText(),psw.getText(), login, stateBasedGame, 2);
         }
         regButton.onMouseEnter(regButton,in.getMouseX(),in.getMouseY());
