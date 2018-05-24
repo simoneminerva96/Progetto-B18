@@ -1,5 +1,8 @@
 package GameClasses;
 
+import GameClasses.Squares.BonusMalusSquare;
+import GameClasses.Squares.FinalQuestionSquare;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 /**
@@ -9,12 +12,16 @@ import java.util.Scanner;
 
 public class Turn {
     private final static int NSQUARES=36;
+    private Board playBoard;    //tabellone di gioco
     private Player playerOnTurn;        //giocatore di turno
     private Die die;        //dado per determinare di quanto spostarsi
+    private int dieresult;  //risultato del lancio del dado
 
-    public Turn(Player playerOnTurn){
+    public Turn(Player playerOnTurn,Board playBoard){
         this.playerOnTurn=playerOnTurn;
+        this.playBoard=playBoard;
         die=new Die();
+        dieresult=0;
     }
     //metodo da chiamare nella classe trivialgame per cambiar turno
     public void setPlayerOnTurn(Player playerOnTurn) {
@@ -24,12 +31,12 @@ public class Turn {
     //metodo che effettua il lancio del dado e muove la pedina di conseguenza
     public void dieLaunch(){
         System.out.println("turno di " + playerOnTurn.getNickname());
-        Integer dieRoll=die.Launch();
-        System.out.println("risultato del lancio : " + dieRoll);
-        movePlayer(dieRoll);
+        dieresult=die.Launch();
+        System.out.println("risultato del lancio : " + dieresult);
     }
+
     //metodo che muove la pedina del risultato del dado
-    private void movePlayer(Integer resultOfDieRoll){
+    public void movePlayer(){
         Scanner sc=new Scanner(System.in);
         System.out.println("in che direzione muoversi? cw=senso orario ccw=senso antiorario)");
         String direction="";
@@ -41,20 +48,52 @@ public class Turn {
         }
         System.out.println("posizione di partenza : " + playerOnTurn.getActualPosition());
         if(direction.equalsIgnoreCase("cw")){
-            if(playerOnTurn.getActualPosition() + resultOfDieRoll >= NSQUARES){
-                Integer position=playerOnTurn.getActualPosition() + resultOfDieRoll -NSQUARES;
+            if(playerOnTurn.getActualPosition() + dieresult >= NSQUARES){
+                Integer position=playerOnTurn.getActualPosition() + dieresult -NSQUARES;
                 playerOnTurn.setActualPosition(position);
             }
-            else playerOnTurn.setActualPosition(playerOnTurn.getActualPosition() + resultOfDieRoll);
+            else playerOnTurn.setActualPosition(playerOnTurn.getActualPosition() + dieresult);
         }
         if(direction.equalsIgnoreCase("ccw")){
-            if(playerOnTurn.getActualPosition() - resultOfDieRoll < 0){
-                Integer excess= -1*(playerOnTurn.getActualPosition() - resultOfDieRoll);
+            if(playerOnTurn.getActualPosition() - dieresult < 0){
+                Integer excess= -1*(playerOnTurn.getActualPosition() - dieresult);
                 playerOnTurn.setActualPosition(NSQUARES-excess);
             }
-            else playerOnTurn.setActualPosition(playerOnTurn.getActualPosition() - resultOfDieRoll);
+            else playerOnTurn.setActualPosition(playerOnTurn.getActualPosition() - dieresult);
         }
         System.out.println("posizione attuale: " + playerOnTurn.getActualPosition() + "\n");
     }
 
+    //metodo che esegue il bonus/malus corrispondente alla casella in cui si trova il giocatore
+    public void executeBonusMalus(){
+        int currentPosition=playerOnTurn.getActualPosition();
+        Square currentSquare=playBoard.getSquares().get(currentPosition);
+        if(currentSquare instanceof BonusMalusSquare){
+            ((BonusMalusSquare) currentSquare).executeBonusMalus(this);
+        }
+    }
+    //metodo che visualizza la domanda e permette al giocatore di rispondere
+    public Boolean AnswerQuestion(){
+        Boolean correct=false;
+        int currentPosition=playerOnTurn.getActualPosition();
+        correct=this.playBoard.getSquares().get(currentPosition).goOnIt();
+        return correct;
+    }
+
+    public void obtainSlice(){
+        Square actualSquare=playBoard.getSquares().get(playerOnTurn.getActualPosition());
+        if(actualSquare instanceof FinalQuestionSquare){
+            Categories categoryOfTheSlice=((FinalQuestionSquare)actualSquare).getCategory();
+            System.out.println(playerOnTurn.getNickname() + " ha ottenuto lo spicchio di " +categoryOfTheSlice );
+            playerOnTurn.obtainSlice(categoryOfTheSlice);
+        }
+    }
+
+    public Boolean verifyVictory(){
+        if(playerOnTurn.getSlicesObtained().size() == 6 && playerOnTurn.getActualPosition() ==0){
+
+            return true;
+        }
+        else return false;
+    }
 }

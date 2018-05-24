@@ -60,6 +60,7 @@ public class TrivialGame {
         ArrayList<Integer> launches=new ArrayList<Integer>();
         launches.add(die.Launch());
         Boolean check=false;
+        //ciclo che riempe l'array dei lanci facendo in modo che siano diversi
         for(int i=0;i<players.size() -1;i++){
             Integer actualLaunch = null;
             while (check==false)
@@ -70,7 +71,8 @@ public class TrivialGame {
             launches.add(actualLaunch);
             check=false;
         }
-        for(int i=0;i<players.size();i++) players.get(i).setInitialRollResult(launches.get(i)); // a ogni giocatore viene associato il risultato del suo lancio
+        // a ogni giocatore viene associato il risultato del suo lancio
+        for(int i=0;i<players.size();i++) players.get(i).setInitialRollResult(launches.get(i));
         //STAMPA DEL RISULTATO DEL LANCIO
         System.out.println("risultati del lancio:");
         for(int i=0;i<launches.size();i++) System.out.println("giocatore " + players.get(i).getNickname() + " : " + players.get(i).getInitialRollResult());
@@ -148,20 +150,21 @@ public class TrivialGame {
     public void play(){
         Boolean correct=false;
         Integer index=0;
-        turn = new Turn(players.get(index));    //PASSO A TURN IL GIOCATORE CHE è DI TURNO
+        turn = new Turn(players.get(index),playBoard);    //PASSO A TURN IL GIOCATORE CHE è DI TURNO
         do {
-            turn.dieLaunch();// LANCIA IL DADO E MUOVE LA PEDINA DEL GIOCATORE
+            turn.dieLaunch();// LANCIA IL DADO E visualizza il risultato
+            turn.movePlayer(); //muove il giocatore del risultato ottenuto
             // se la casella è bonus/malus eseguo il bonus malus prima
             if(playBoard.getSquares().get(players.get(index).getActualPosition()) instanceof BonusMalusSquare){
-                ((BonusMalusSquare) playBoard.getSquares().get(players.get(index).getActualPosition())).executeBonusMalus(players.get(index));
+                turn.executeBonusMalus();
             }
-            correct = playBoard.getSquares().get(players.get(index).getActualPosition()).goOnIt();  //esegue la domanda corrispondente alla posizione attuale del giocatore
-            if(correct==true) obtainSlice(players.get(index));  //il metodo aggiunge lo spicchio solo se la casella corrente è una casella di domanda finale
-            if(verifyVictory(players.get(index))==true){
+            correct = turn.AnswerQuestion(); //visualizza la domanda e il giocatore risponde
+            if((correct)) turn.obtainSlice();  //il metodo aggiunge lo spicchio solo se la casella corrente è una casella di domanda finale
+            if(turn.verifyVictory()){
                 System.out.println("CONGRATULAZIONI " + players.get(index).getNickname() + "! HAI VINTO!");
                 break;
-            };
-            if(correct==false){
+            }
+            if(!correct){
                 if(players.get(index).getActualPosition() != 6 && players.get(index).getActualPosition() != 0 && players.get(index).getActualPosition() != 18 || players.get(index).getActualPosition() != 30) {
                     System.out.println("risposta errata!\n");
                 }
@@ -176,18 +179,4 @@ public class TrivialGame {
         } while (correct==true);
     }
 
-    private void obtainSlice(Player playerOnTurn){
-        Square actualSquare=playBoard.getSquares().get(playerOnTurn.getActualPosition());
-        if(actualSquare instanceof FinalQuestionSquare){
-            System.out.println(playerOnTurn.getNickname() + " ha ottenuto lo spicchio di " + ((FinalQuestionSquare)actualSquare).getCategory());
-            playerOnTurn.obtainSlice(((FinalQuestionSquare)actualSquare).getCategory());
-        }
-    }
-
-    public Boolean verifyVictory(Player playerOnTurn){
-        if(playerOnTurn.getSlicesObtained().size() == 7 && playerOnTurn.getActualPosition() ==0){
-            return true;
-        }
-        else return false;
-    }
 }

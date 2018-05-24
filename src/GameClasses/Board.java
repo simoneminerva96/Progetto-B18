@@ -93,11 +93,11 @@ public class Board {
                 possibleQuestionGeofinal.addAll(connectionDB.getQuestion("FGEO"));
                 squares.get(i).setPossibleQuestions(possibleQuestionGeofinal);
             }
-            if(i==6)squares.add(new BonusMalusSquare(i,"malus1"));
-            if(i==12)squares.add(new BonusMalusSquare(i,"bonus1"));
+            if(i==6)squares.add(new BonusMalusSquare(i,"malus"));
+            if(i==12)squares.add(new BonusMalusSquare(i,"bonus"));
             if(i==18)squares.add(new BonusMalusSquare(i,"random"));
-            if(i==21)squares.add(new BonusMalusSquare(i,"bonus2"));
-            if(i==30)squares.add(new BonusMalusSquare(i,"malus2"));
+            if(i==21)squares.add(new BonusMalusSquare(i,"bonus"));
+            if(i==30)squares.add(new BonusMalusSquare(i,"malus"));
         }
     }
     public ArrayList<Square> getSquares() {
