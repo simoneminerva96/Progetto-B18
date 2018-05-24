@@ -159,12 +159,12 @@ public class TrivialGame {
                 turn.executeBonusMalus();
             }
             correct = turn.AnswerQuestion(); //visualizza la domanda e il giocatore risponde
-            if(correct==true) obtainSlice(players.get(index));  //il metodo aggiunge lo spicchio solo se la casella corrente è una casella di domanda finale
-            if(verifyVictory(players.get(index))==true){
+            if((correct)) turn.obtainSlice();  //il metodo aggiunge lo spicchio solo se la casella corrente è una casella di domanda finale
+            if(turn.verifyVictory()){
                 System.out.println("CONGRATULAZIONI " + players.get(index).getNickname() + "! HAI VINTO!");
                 break;
             }
-            if(correct==false){
+            if(!correct){
                 if(players.get(index).getActualPosition() != 6 && players.get(index).getActualPosition() != 0 && players.get(index).getActualPosition() != 18 || players.get(index).getActualPosition() != 30) {
                     System.out.println("risposta errata!\n");
                 }
@@ -179,18 +179,4 @@ public class TrivialGame {
         } while (correct==true);
     }
 
-    private void obtainSlice(Player playerOnTurn){
-        Square actualSquare=playBoard.getSquares().get(playerOnTurn.getActualPosition());
-        if(actualSquare instanceof FinalQuestionSquare){
-            System.out.println(playerOnTurn.getNickname() + " ha ottenuto lo spicchio di " + ((FinalQuestionSquare)actualSquare).getCategory());
-            playerOnTurn.obtainSlice(((FinalQuestionSquare)actualSquare).getCategory());
-        }
-    }
-
-    public Boolean verifyVictory(Player playerOnTurn){
-        if(playerOnTurn.getSlicesObtained().size() == 7 && playerOnTurn.getActualPosition() ==0){
-            return true;
-        }
-        else return false;
-    }
 }

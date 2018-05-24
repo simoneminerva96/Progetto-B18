@@ -1,6 +1,7 @@
 package GameClasses;
 
 import GameClasses.Squares.BonusMalusSquare;
+import GameClasses.Squares.FinalQuestionSquare;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -71,7 +72,7 @@ public class Turn {
             ((BonusMalusSquare) currentSquare).executeBonusMalus(this);
         }
     }
-
+    //metodo che visualizza la domanda e permette al giocatore di rispondere
     public Boolean AnswerQuestion(){
         Boolean correct=false;
         int currentPosition=playerOnTurn.getActualPosition();
@@ -79,4 +80,20 @@ public class Turn {
         return correct;
     }
 
+    public void obtainSlice(){
+        Square actualSquare=playBoard.getSquares().get(playerOnTurn.getActualPosition());
+        if(actualSquare instanceof FinalQuestionSquare){
+            Categories categoryOfTheSlice=((FinalQuestionSquare)actualSquare).getCategory();
+            System.out.println(playerOnTurn.getNickname() + " ha ottenuto lo spicchio di " +categoryOfTheSlice );
+            playerOnTurn.obtainSlice(categoryOfTheSlice);
+        }
+    }
+
+    public Boolean verifyVictory(){
+        if(playerOnTurn.getSlicesObtained().size() == 6 && playerOnTurn.getActualPosition() ==0){
+
+            return true;
+        }
+        else return false;
+    }
 }
