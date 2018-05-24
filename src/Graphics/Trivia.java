@@ -46,13 +46,13 @@ public class Trivia extends BasicGameState {
     private boolean first = false;
     private int diceN = 0;
     private TurnMaster turn;
-    private Domanda prova; 
+    private Domanda domanda;
     private Escape esc;
     private TrueTypeFont fonx1;
     private TriviaFont f;
 
     public Trivia(int id) {
-        prova = new Domanda(6);
+        domanda = new Domanda(6);
         esc = new Escape(7);
         turn = new TurnMaster();
         pGUI = new ArrayList<PlayerGUI>();
@@ -99,7 +99,7 @@ public class Trivia extends BasicGameState {
         background = new Image("res/backgrounds/green_landscape (copia).png");
         launch = new Image("res/buttons/Button_Launch/Button_Login_02.png");
 
-        prova.init(gameContainer, stateBasedGame);
+        domanda.init(gameContainer, stateBasedGame);
         esc.init(gameContainer, stateBasedGame);
 
         turn.addPlayer(p);
@@ -120,7 +120,7 @@ public class Trivia extends BasicGameState {
         graphics.drawImage(playerBack3, 750, 130);
         graphics.drawImage(playerBack4, 1050, 130);
         rydia.draw(750,30);
-         ceodore.draw(1050,30);
+        ceodore.draw(1050,30);
         kain.draw(750,130);
         luca.draw(1050,130);
         fonx1.drawString(850,30,p.getName(),Color.white);
@@ -143,8 +143,8 @@ public class Trivia extends BasicGameState {
 
         if(pGUI.get(turn.getIndex()).isReady()){
             try {
-                prova.render(gameContainer, stateBasedGame, graphics);
-                if (prova.isEnd()){
+                domanda.render(gameContainer, stateBasedGame, graphics);
+                if (domanda.isEnd()){
                     pGUI.get(turn.getIndex()).setReady(false);
                     launched = false;
                 }
@@ -189,9 +189,9 @@ public class Trivia extends BasicGameState {
                 }
                 diceN = d.setCurrentDie();
                 launched = true;
-                turn.incrementIndex(prova.isEsito(), first, pGUI.get(turn.getIndex()));
-                prova.setAnswered(false);
-                prova.setEsito(false);
+                turn.incrementIndex(domanda.isEsito(), first, pGUI.get(turn.getIndex()));
+                domanda.setAnswered(false);
+                domanda.setEsito(false);
             }
         }
 
@@ -223,7 +223,7 @@ public class Trivia extends BasicGameState {
         }
 
         try {
-            prova.update(gameContainer, stateBasedGame, i);
+            domanda.update(gameContainer, stateBasedGame, i);
             esc.update(gameContainer, stateBasedGame, i);
             } catch (SlickException e) {
             e.printStackTrace();
