@@ -158,7 +158,7 @@ public class TrivialGame {
             if(playBoard.getSquares().get(players.get(index).getActualPosition()) instanceof BonusMalusSquare){
                 turn.executeBonusMalus();
             }
-            correct = turn.AnswerQuestion();
+            correct = turn.AnswerQuestion(); //visualizza la domanda e il giocatore risponde
             if(correct==true) obtainSlice(players.get(index));  //il metodo aggiunge lo spicchio solo se la casella corrente è una casella di domanda finale
             if(verifyVictory(players.get(index))==true){
                 System.out.println("CONGRATULAZIONI " + players.get(index).getNickname() + "! HAI VINTO!");
