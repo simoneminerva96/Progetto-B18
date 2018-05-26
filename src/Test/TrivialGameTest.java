@@ -7,7 +7,8 @@ import GameClasses.TrivialGame;
 
 import java.util.ArrayList;
 
-import static junit.framework.TestCase.assertTrue;
+//import static junit.framework.TestCase.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 //import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
