@@ -36,22 +36,28 @@ public class PlayerNumberSelection extends BasicGameState {
     int xb=100,yb=100;
     Boolean clicked=false;
 
+    public static int numbertosend=1;
 
 
-    private Image background, registrationback;
+
+    private Image background, registrationback,menuback;
     private TrueTypeFont fonx,fonx1;
     private UnicodeFont font;
 
     private String gameName;
+   // private int numbertosend=1;
+    private boolean nextStateSendNumber=false;
 
     //BUTTONS
-    private StateButton next;
     private NumberButton one,two,three,four;
+    private StateButton home,back,next,sound;
 
-    private int numbertosend=1;
+
+
 
     //STATE
     MenuFrame mf=new MenuFrame(10);
+    CharacterSelection cr=new CharacterSelection(4);
 
 
     public PlayerNumberSelection(int i) throws SlickException {
@@ -59,37 +65,28 @@ public class PlayerNumberSelection extends BasicGameState {
 
     @Override
     public int getID() {
-        return 3;
+        return 4;
     }
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-        font = getNewFont("Arial" , 18);
+
         background =new Image("res/backgrounds/green_landscape_ridim.png");
         registrationback =new Image("res/backgrounds/Windows_02.png");
-        try {
-            InputStream inputStream	= ResourceLoader.getResourceAsStream("res/fonts/Silkscreen/slkscr.ttf");
-            java.awt.Font awtFont= java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT,inputStream);
-            awtFont=awtFont.deriveFont(32f);
-            fonx=new TrueTypeFont(awtFont,false);
-            fonx1=new TrueTypeFont(awtFont.deriveFont(23f),false);
-        } catch (FontFormatException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
         one=new NumberButton(new Rectangle(525,180,100,101),new Image("res/buttons/Button_Numbers/Button1_0.png"),new Image("res/buttons/Button_Numbers/Button1_1.png"),null,1);
         two=new NumberButton(new Rectangle(675,180,100,101),new Image("res/buttons/Button_Numbers/Button2_0.png"),new Image("res/buttons/Button_Numbers/Button2_1.png"),null,2);
         three=new NumberButton(new Rectangle(525,305,100,101),new Image("res/buttons/Button_Numbers/Button3_0.png"),new Image("res/buttons/Button_Numbers/Button3_1.png"),null,3);
         four=new NumberButton(new Rectangle(675,305,100,101),new Image("res/buttons/Button_Numbers/Button4_0.png"),new Image("res/buttons/Button_Numbers/Button4_1.png"),null,4);
         mf.init(gameContainer,stateBasedGame);
-    }
+        mf.setIsNumberToSend(true);
+        mf.setBackState(2);
+        }
 
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
         graphics.drawImage(background,0,0);
         mf.render(gameContainer,stateBasedGame,graphics);
-        font.drawString(400,25,"TRIVIAL PURSUIT RELOADED", Color.white);
         one.render(gameContainer,graphics);
         two.render(gameContainer,graphics);
         three.render(gameContainer,graphics);
@@ -106,21 +103,33 @@ public class PlayerNumberSelection extends BasicGameState {
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
         Input r=gameContainer.getInput();
 
+        mf.setMouseCoordinates(r.getMouseX(),r.getMouseY());
+
         if(r.isMousePressed(0)) {
+            System.out.println("ENTRO");
+
+            mf.setMouseClicked(true);
             numbertosend=one.onClickGetNumber(r.getMouseX(),r.getMouseY(),numbertosend);
             numbertosend=two.onClickGetNumber(r.getMouseX(),r.getMouseY(),numbertosend);
             numbertosend=three.onClickGetNumber(r.getMouseX(),r.getMouseY(),numbertosend);
             numbertosend=four.onClickGetNumber(r.getMouseX(),r.getMouseY(),numbertosend);
+            mf.setNumbertosend(numbertosend);
+            mf.update(gameContainer,stateBasedGame,i);
 
         }else if(r.isMousePressed(1)){
             System.out.println(numbertosend);
         }
+
+        mf.setMouseClicked(false);
 
         one.onMouseEnter(one,r.getMouseX(),r.getMouseY());
         two.onMouseEnter(two,r.getMouseX(),r.getMouseY());
         three.onMouseEnter(three,r.getMouseX(),r.getMouseY());
         four.onMouseEnter(four,r.getMouseX(),r.getMouseY());
         mf.update(gameContainer,stateBasedGame,i);
+
+
+
 
 
     }
@@ -134,5 +143,6 @@ public class PlayerNumberSelection extends BasicGameState {
         font.getEffects().add(new ColorEffect(java.awt.Color.white));
         return (font);
     }
+
 }
 

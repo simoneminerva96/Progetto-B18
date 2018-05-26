@@ -18,97 +18,74 @@ import java.awt.*;
 import java.io.IOException;
 import java.io.InputStream;
 
+import Graphics.*;
+
 
 
 public class CharacterSelection extends BasicGameState {
 
-
+    //DEBUG
     public String mouse= "No input";
-
     Boolean clicked=false;
-
-
-    SimpleButton b;
     int xb=100,yb=100;
 
 
-    private SpriteSheet currentSprite;
-    private Animation currentImage;
 
 
     private Image background;
-
-    TrueTypeFont font;    private String gameName;
+    TrueTypeFont font;
+    private String gameName;
 
 
     private StateButton play;
 
-    private TextField textField;
+
     UnicodeFont fonx;
 
     int playerN=1;
 
     //STATES
+    MenuFrame mf=new MenuFrame(10);
 
-    //BOOLEAN 4 STATES
 
-    boolean loginEnter=false,loginUpdateEnter=false,loginRenderEnter=false;
 
     public CharacterSelection(int i) throws SlickException {
     }
 
     @Override
     public int getID() {
-        return 6;
+        return 5;
     }
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         background=new Image("res/backgrounds/green_landscape_ridim.png");
         gameName="Trivial Pursuit";
+        mf.init(gameContainer,stateBasedGame);
+        mf.setBackState(4);
 
 
-        play=new StateButton(new Rectangle(550,325,190,49),new Image("res/buttons/fantasy/Button_Login_01.png"),new Image("res/buttons/fantasy/Button_Login_02.png"),new Image("res/buttons/fantasy/Button_Login_01.png"),null);
-
-        fonx = getNewFont("Arial" , 16);
     }
 
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
         graphics.drawImage(background,0,0);
-        font.drawString(400,25,"TRIVIAL PURSUIT RELOADED", Color.white);
-
-       // play.render(gameContainer,graphics);
-        // font.drawString(600,330,"PLAY", Color.white);
-        //   textField.render(gameContainer,graphics);
-        //   graphics.setFont(fonx);
-
-
-
+        mf.render(gameContainer,stateBasedGame,graphics);
 
     }
 
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
         Input r=gameContainer.getInput();
-
+        mf.setMouseCoordinates(r.getMouseX(),r.getMouseY());
         if(r.isMousePressed(0)) {
-
+            mf.setMouseClicked(true);
+            System.out.println(playerN);
+            mf.update(gameContainer,stateBasedGame,i);
         }
+        mf.setMouseClicked(false);
+        mf.update(gameContainer,stateBasedGame,i);
 
-
-    }
-
-    public void enter(GameContainer gameContainer,StateBasedGame stateBasedGame)throws SlickException{
-        textField=new TextField(gameContainer,fonx,550,600,200,35);
-    }
-
-    public UnicodeFont getNewFont(String fontName , int fontSize)
-    {
-        fonx = new UnicodeFont(new java.awt.Font(fontName , java.awt.Font.PLAIN , fontSize));
-        fonx.addGlyphs("@");
-        fonx.getEffects().add(new ColorEffect(java.awt.Color.white));
-        return (fonx);
     }
 
     public void getPlayerNumber(int n){

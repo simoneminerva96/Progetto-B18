@@ -1,5 +1,6 @@
 package Graphics.com.sticky;
 
+import Graphics.OfflineMenu.CharacterSelection;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Shape;
 import Graphics.com.sticky.events.*;
@@ -58,13 +59,25 @@ public class StateButton extends ButtonSkeleton implements ButtonListener,
     }
 
     public void onClick(Button clicked, float mx, float my) {}
-    public void onClickState(float mx, float my,StateBasedGame stateBasedGame,int i) throws SlickException {
+    public boolean onClickState(float mx, float my,StateBasedGame stateBasedGame,int i) throws SlickException {
 
         if(mx>=minx&&mx<=maxx&&my>=miny&&my<=maxy) {
             current = press;
             stateBasedGame.enterState(i);
+            return true;
+        }else{
+            return false;
         }
 
+    }
+
+    public void onClickStateSendNumber(float mx, float my,StateBasedGame stateBasedGame, int i)throws SlickException{
+        if(mx>=minx&&mx<=maxx&&my>=miny&&my<=maxy) {
+            CharacterSelection cr;
+            cr=(CharacterSelection)stateBasedGame.getState(4);
+            cr.getPlayerNumber(i);
+            stateBasedGame.enterState(4);
+        }
     }
 
     public void onDoubleClick(Button clicked, float mx, float my) {}
