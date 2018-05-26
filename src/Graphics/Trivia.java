@@ -1,6 +1,5 @@
 package Graphics;
 
-import GameClasses.TrivialGame;
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Color;

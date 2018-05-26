@@ -77,9 +77,9 @@ public class LoginRegistrationInterface extends BasicGameState {
 
         if (regButton.isClicked()) {
             if (check) {
-                fonx1.drawString(490,100, "Registrazione effettuata con successo", org.newdawn.slick.Color.blue);
+                fonx1.drawString(490,20, "Registrazione effettuata con successo", org.newdawn.slick.Color.blue);
             }
-            else fonx1.drawString(490,100, "Registrazione fallita", org.newdawn.slick.Color.blue);
+            else fonx1.drawString(490,20, "Registrazione fallita", org.newdawn.slick.Color.blue);
 
             }
 
