@@ -52,8 +52,8 @@ public class LoginRegistrationInterface extends BasicGameState {
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         background =new Image("res/backgrounds/green_landscape_ridim.png");
        // registrationback =new Image("res/backgrounds/Windows_09p.png");
-        regButton = new FormButton(new Rectangle(548,502,185,91),new Image("res/buttons/Button_Login/Signup0.png"),new Image("res/buttons/Button_Login/Signup1.png"),new Image("res/buttons/Button_Login/Signup0.png"),null);
-        logButton = new FormButton(new Rectangle(748,502,100,101),new Image("res/buttons/Button_Login/Confirm0.png"),new Image("res/buttons/Button_Login/Confirm1.png"),new Image("res/buttons/Button_Login/Confirm0.png"),null);
+        regButton = new FormButton(new Rectangle(448,502,205,101),new Image("res/buttons/Button_Login/signup0.png"),new Image("res/buttons/Button_Login/signup1.png"),new Image("res/buttons/Button_Login/signup0.png"),null);
+        logButton = new FormButton(new Rectangle(648,502,205,101),new Image("res/buttons/Button_Login/signin0.png"),new Image("res/buttons/Button_Login/signin1.png"),new Image("res/buttons/Button_Login/signin0.png"),null);
         fonx1 = new TrueTypeFont(f.getFont().deriveFont(23f),false);
         usrname =new TextField(gameContainer , fonx1 , 550 , 245 , 200 , 35);
         psw = new TextFieldTest(gameContainer , fonx1 , 550 , 340 , 200 , 35);
