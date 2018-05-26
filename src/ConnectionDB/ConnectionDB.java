@@ -29,7 +29,7 @@ public class ConnectionDB {
      */
     public ArrayList<Question> getQuestion (String cod) throws SQLException{
 
-        cn = DriverManager.getConnection("jdbc:mysql://192.168.1.243:3306/trivial?useSSL=false", "root", "root");
+        cn = DriverManager.getConnection("jdbc:mysql://93.41.247.149:3306/trivial?useSSL=false", "root", "root");
         sql = "select ID_QUEST, DESCRIZIONE, RISPOSTA, VALUE from domande join risposte on ID_QUEST = ID_DOMANDA where ID_QUEST LIKE \"" + cod + "%\"";
         // ________________________________query
         ArrayList<Question> questions=new ArrayList<Question>();
@@ -137,7 +137,7 @@ public class ConnectionDB {
         String query = "{ ?=call ADD_PLAYER1(?,?) }";
         ResultSet rs;
         Boolean returnMessage = null;
-        try (Connection conn = DriverManager.getConnection("jdbc:mysql://192.168.1.243:3306/trivial?useSSL=false", "root", "root");
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://93.41.247.149:3306/trivial?useSSL=false", "root", "root");
              CallableStatement stmt = conn.prepareCall(query)) {
 
             stmt.registerOutParameter(1, Types.VARCHAR);
@@ -161,7 +161,7 @@ public class ConnectionDB {
         ResultSet rs;
         String returnMess="";
 
-        try (Connection conn = DriverManager.getConnection("jdbc:mysql://192.168.1.243:3306/trivial?useSSL=false", "root", "root");
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://93.41.247.149:3306/trivial?useSSL=false", "root", "root");
              CallableStatement stmt = conn.prepareCall(query)) {
 
             stmt.registerOutParameter(1, Types.VARCHAR);
