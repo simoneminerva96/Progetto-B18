@@ -2,6 +2,8 @@ package Graphics.Question;
 
 import Graphics.Question.Answers;
 
+import java.util.ArrayList;
+
 /**
  * @author Rita
  *
@@ -12,11 +14,21 @@ import Graphics.Question.Answers;
  */
 public class QuestionAndAnswers {
     private String question ="Qual è la capitale dell'Italia?";
-    private Answers a = new Answers("Roma", true);
-    private Answers a1 = new Answers("Milano", false);
-    private Answers a2 = new Answers("Firenze", false);
-    private Answers a3 = new Answers("Napoli", false);
+    private ArrayList<Answers> a;
     private boolean answered = false;
+
+    public QuestionAndAnswers() {
+        a = new ArrayList<>();
+        a.clear();
+    }
+
+    public void setAnswer (String answer, boolean esito) {
+        a.add(new Answers(answer,esito));
+    }
+
+    public Answers getAnswer(int index) {
+        return a.get(index);
+    }
 
     public void setAnswered(boolean answered) {
         this.answered = answered;
@@ -26,21 +38,6 @@ public class QuestionAndAnswers {
         return question;
     }
 
-    public Answers getA() {
-        return a;
-    }
-
-    public Answers getA1() {
-        return a1;
-    }
-
-    public Answers getA2() {
-        return a2;
-    }
-
-    public Answers getA3() {
-        return a3;
-    }
 
     public boolean isAnswered() {
         return answered;

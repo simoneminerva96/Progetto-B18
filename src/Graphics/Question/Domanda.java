@@ -25,9 +25,15 @@ public class Domanda extends BasicGameState {
     private String risposta2 = "risposta sbagliata";
     private boolean esito = false;
     private boolean end = false;
-    private QuestionAndAnswers q = new QuestionAndAnswers();
+    private QuestionAndAnswers q;
 
-    public Domanda(int state) { }
+    public Domanda(int state) {
+        q = new QuestionAndAnswers();
+        q.setAnswer("Roma", true);
+        q.setAnswer("Milano", false);
+        q.setAnswer("Napoli", false);
+        q.setAnswer("Firenze", false);
+    }
 
     @Override
     public int getID() { return 6; }
@@ -45,10 +51,10 @@ public class Domanda extends BasicGameState {
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
         graphics.drawString(q.getQuestion(), 850, 250);
-        graphics.drawString(q.getA().getAnswer(), 900, 300);
-        graphics.drawString(q.getA1().getAnswer(), 900, 350);
-        graphics.drawString(q.getA2().getAnswer(), 900, 400);
-        graphics.drawString(q.getA3().getAnswer(), 900, 450);
+        graphics.drawString(q.getAnswer(0).getAnswer(), 900, 300);
+        graphics.drawString(q.getAnswer(1).getAnswer(), 900, 350);
+        graphics.drawString(q.getAnswer(2).getAnswer(), 900, 400);
+        graphics.drawString(q.getAnswer(3).getAnswer(), 900, 450);
 
         if (q.isAnswered()) {
             if (esito == true) {
@@ -76,26 +82,26 @@ public class Domanda extends BasicGameState {
         if (posX>850 && posX<1135){
             if (posY<414 && posY>373) {
                 if (Mouse.isButtonDown(0) && q.isAnswered() == false) {
-                    esito = q.getA().isEsito();
+                    esito = q.getAnswer(0).isEsito();
                     q.setAnswered(true);
                 }
             }
             if (posY<360 && posY>325) {
                 if (Mouse.isButtonDown(0) && q.isAnswered() == false) {
-                    esito = q.getA1().isEsito();
+                    esito = q.getAnswer(1).isEsito();
                     q.setAnswered(true);
                 }
             }
             if (posY<305 && posY>275) {
                 if (Mouse.isButtonDown(0) && q.isAnswered() == false) {
-                    esito = q.getA2().isEsito();
+                    esito = q.getAnswer(2).isEsito();
                     q.setAnswered(true);
                 }
             }
 
             if (posY<260 && posY>230) {
                 if (Mouse.isButtonDown(0) && q.isAnswered() == false){
-                    esito = q.getA3().isEsito();
+                    esito = q.getAnswer(3).isEsito();
                     q.setAnswered(true);
                 }
             }
