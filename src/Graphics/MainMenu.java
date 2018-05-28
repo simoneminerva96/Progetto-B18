@@ -1,4 +1,4 @@
-package Graphics.com.menu;
+package Graphics;
 
 import Graphics.com.sticky.StateButton;
 import org.newdawn.slick.*;

@@ -1,5 +1,8 @@
 package Graphics;
 
+import Graphics.Map.Map;
+import Graphics.Player.*;
+import Graphics.Question.Domanda;
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Color;
@@ -96,7 +99,7 @@ public class Trivia extends BasicGameState {
         ceodore = new Image("res/char/ceodore.png");
         kain = new Image("res/char/kain.png");
         luca = new Image("res/char/luca.png");
-        background = new Image("res/backgrounds/green_landscape (copia).png");
+        background = new Image("res/backgrounds/green_landscape2.png");
         launch = new Image("res/buttons/Button_Launch/Button_Login_02.png");
 
         domanda.init(gameContainer, stateBasedGame);
@@ -111,10 +114,10 @@ public class Trivia extends BasicGameState {
 
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
-        background.draw(0,0);
-        backgroundMap.draw(0,0);
-        back.draw(750,575);
-        forward.draw(850,575);
+        graphics.drawImage(background,0,0);
+        graphics.drawImage(backgroundMap,0,0);
+        graphics.drawImage(back,750,575);
+        graphics.drawImage(forward, 850, 575);
         graphics.drawImage(playerBack1, 750, 30);
         graphics.drawImage(playerBack2, 1050, 30);
         graphics.drawImage(playerBack3, 750, 130);

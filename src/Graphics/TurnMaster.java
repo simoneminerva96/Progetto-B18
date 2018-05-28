@@ -1,5 +1,8 @@
 package Graphics;
 
+import Graphics.Player.Player;
+import Graphics.Player.PlayerGUI;
+
 import java.util.ArrayList;
 
 /**

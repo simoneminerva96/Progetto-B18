@@ -1,4 +1,4 @@
-package Graphics;
+package Graphics.Player;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.SlickException;

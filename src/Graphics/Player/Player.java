@@ -1,4 +1,7 @@
-package Graphics;
+package Graphics.Player;
+
+import Graphics.Direction;
+import Graphics.Map.Map;
 
 /**
  * @author Stefano

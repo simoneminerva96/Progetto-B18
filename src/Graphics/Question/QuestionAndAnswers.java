@@ -1,4 +1,6 @@
-package Graphics;
+package Graphics.Question;
+
+import Graphics.Question.Answers;
 
 /**
  * @author Rita

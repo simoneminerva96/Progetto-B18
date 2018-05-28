@@ -1,4 +1,4 @@
-package Graphics;
+package Graphics.Question;
 
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.GameContainer;

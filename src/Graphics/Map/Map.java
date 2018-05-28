@@ -1,4 +1,4 @@
-package Graphics;
+package Graphics.Map;
 
 import org.newdawn.slick.SlickException;
 

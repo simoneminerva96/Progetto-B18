@@ -1,34 +1,14 @@
 package Graphics;
 
-
-
 import Graphics.OfflineMenu.CharacterSelection;
-import Graphics.com.sticky.NumberButton;
-import Graphics.com.sticky.SimpleButton;
 import Graphics.com.sticky.StateButton;
-import Graphics.com.sticky.TestButton;
-import org.lwjgl.input.Mouse;
 import org.newdawn.slick.*;
-import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.font.effects.ColorEffect;
 import org.newdawn.slick.geom.Rectangle;
-import org.newdawn.slick.gui.TextField;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
-import org.newdawn.slick.util.ResourceLoader;
 import org.newdawn.slick.UnicodeFont;
-import org.newdawn.slick.gui.ComponentListener;
-
-import java.awt.*;
-import java.awt.Font;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.io.IOException;
-import java.io.InputStream;
-
-import Graphics.*;
 
 public class MenuFrame extends BasicGameState {
 
@@ -36,8 +16,6 @@ public class MenuFrame extends BasicGameState {
     public String mouse= "No input";
     int xb=100,yb=100;
     Boolean clicked=false;
-
-
 
     private Image background, menuback;
     private TrueTypeFont fonx,fonx1;

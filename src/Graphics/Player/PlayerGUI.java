@@ -1,5 +1,7 @@
-package Graphics;
+package Graphics.Player;
 
+import Graphics.Direction;
+import Graphics.Player.Player;
 import org.newdawn.slick.Animation;
 
 /**
@@ -23,7 +25,7 @@ public class PlayerGUI {
     private boolean ready = false, clicked=false;
     private static final int minMovement = 35;
 
-    public PlayerGUI(Player p,Pedina piece){
+    public PlayerGUI(Player p, Pedina piece){
         this.p = p;
         this.piece = piece;
         x = xUpdate = (p.getX()*minMovement)-5;

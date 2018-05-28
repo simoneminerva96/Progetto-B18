@@ -46,7 +46,7 @@ public class LoginRegistrationInterface extends BasicGameState {
     }
 
     @Override
-    public int getID() { return 3; }
+    public int getID() { return 1; }
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
