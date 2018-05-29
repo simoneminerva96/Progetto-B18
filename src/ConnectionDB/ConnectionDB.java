@@ -153,6 +153,7 @@ public class ConnectionDB {
         }
         return returnMessage;
     }
+    
 
     //Funzione per fare ritornare il messaggio di avvenuto login o errore
     public String ExistsPlayer(String IDNAME, String PW) {
