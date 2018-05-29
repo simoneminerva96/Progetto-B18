@@ -91,7 +91,6 @@ public class Turn {
 
     public Boolean verifyVictory(){
         if(playerOnTurn.getSlicesObtained().size() == 6 && playerOnTurn.getActualPosition() ==0){
-
             return true;
         }
         else return false;

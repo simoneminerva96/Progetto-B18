@@ -159,7 +159,10 @@ public class TrivialGame {
                 turn.executeBonusMalus();
             }
             correct = turn.AnswerQuestion(); //visualizza la domanda e il giocatore risponde
-            if((correct)) turn.obtainSlice();  //il metodo aggiunge lo spicchio solo se la casella corrente è una casella di domanda finale
+            if((correct)){
+                System.out.println("risposta corretta!\n");
+                turn.obtainSlice();  //il metodo aggiunge lo spicchio solo se la casella corrente è una casella di domanda finale
+            }
             if(turn.verifyVictory()){
                 System.out.println("CONGRATULAZIONI " + players.get(index).getNickname() + "! HAI VINTO!");
                 break;
@@ -173,10 +176,7 @@ public class TrivialGame {
                 turn.setPlayerOnTurn(players.get(index));// setto come giocatore di turno il giocatore successivo
                 correct=true;
             }
-            else{
-                System.out.println("risposta corretta!\n");
-            }
-        } while (correct==true);
+        } while (correct);
     }
 
 }

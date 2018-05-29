@@ -1,5 +1,6 @@
 package Graphics;
 
+import GameClasses.TrivialGame;
 import Graphics.Map.Map;
 import Graphics.Player.*;
 import Graphics.Question.Domanda;
@@ -53,6 +54,7 @@ public class Trivia extends BasicGameState {
     private Escape esc;
     private TrueTypeFont fonx1;
     private TriviaFont f;
+    private TrivialGame game;   //PARTITA ASSOCIATA
 
     public Trivia(int id) {
         domanda = new Domanda(6);
@@ -61,6 +63,17 @@ public class Trivia extends BasicGameState {
         pGUI = new ArrayList<PlayerGUI>();
         pGUI.clear();
         f = new TriviaFont();
+        //INSERISCO GIOCATORI DI PROVA, POI ANDRANNO INSERITI I NICKNAME DEI GIOCATORI PARTECIPANTI PASSANDOLI A QUESTO COSTRUTTORE
+        game=new TrivialGame();
+        ArrayList<String> gamingPlayers=new ArrayList<String>();
+        gamingPlayers.add("Jack");
+        gamingPlayers.add("Rita");
+        gamingPlayers.add("Ste");
+        gamingPlayers.add("tia");
+        game.initializePlayers(gamingPlayers); //inizializzo i giocatori
+        game.InitializePossiblePieces();
+        //DA INSERIRE NELLE ALTRE SCHERMATE I METODI DEL LANCIO INIZIALE E SCELTA PEDINA
+        game.play();
     }
 
     public int getID() { return 5; }
@@ -73,23 +86,42 @@ public class Trivia extends BasicGameState {
         playerBack4 = new Image("res/backgrounds/PlayerBackgrounds/SfondoGiocatore3.png");
         map = new Map(20,20,35);
         backgroundMap = new Image("res/map/Tabella.png");
-        p = new Player("ONE",1,map);
-        p1 = new Player("TWO",2, map);
-        p2 = new Player("THREE", 3, map);
-        p3 = new Player("FOUR", 4, map);
-        back = new Image("res/buttons/Frecce/freccia1.png");
-        forward = new Image("res/buttons/Frecce/freccia2.png");
-        d = new DieGUI();
 
         piece = new Pedina("res/char/FFIV/Rydia/rydiaup.png","res/char/FFIV/Rydia/Rydiadwn.png","res/char/FFIV/Rydia/rydiasx.png","res/char/FFIV/Rydia/rydiadx.png",35,35);
         piece1 = new Pedina("res/char/FFIV/Ceodore/ced_up.png", "res/char/FFIV/Ceodore/ced_dwn.png", "res/char/FFIV/Ceodore/ced_lft.png", "res/char/FFIV/Ceodore/ced_rht.png", 35,35 );
         piece2 = new Pedina("res/char/FFIV/Kain/kainup.png","res/char/FFIV/Kain/kaindwn.png", "res/char/FFIV/Kain/kainsx.png", "res/char/FFIV/Kain/kaindx.png", 35, 35);
         piece3 = new Pedina("res/char/FFIV/Luca/lucaup.png", "res/char/FFIV/Luca/lucadwn.png", "res/char/FFIV/Luca/lucasx.png", "res/char/FFIV/Luca/lucadx.png", 35, 35);
-
+        //inizializzazione dei giocatori
+        for(int i=0;i<game.getPlayers().size();i++){
+            String nicknamePlayer=game.getPlayers().get(i).getNickname();
+            Player p=new Player(nicknamePlayer,i+1,map);
+            if(i==0){
+                pGUI.add(i,new PlayerGUI(p,piece));
+            }
+            if(i==1){
+                pGUI.add(i,new PlayerGUI(p,piece1));
+            }
+            if(i==2){
+                pGUI.add(i,new PlayerGUI(p,piece2));
+            }
+            if (i==3){
+                pGUI.add(i,new PlayerGUI(p,piece3));
+            }
+        }
+        /*
+        p = new Player("ONE",1,map);
+        p1 = new Player("TWO",2, map);
+        p2 = new Player("THREE", 3, map);
+        p3 = new Player("FOUR", 4, map);
         pGUI.add(0, new PlayerGUI(p, piece));
         pGUI.add(1, new PlayerGUI(p1,piece1));
         pGUI.add(2, new PlayerGUI(p2, piece2));
         pGUI.add(3, new PlayerGUI(p3, piece3));
+        */
+        back = new Image("res/buttons/Frecce/freccia1.png");
+        forward = new Image("res/buttons/Frecce/freccia2.png");
+        d = new DieGUI();
+
 
         for (PlayerGUI p: pGUI) {
            p.getPedina().stop();
