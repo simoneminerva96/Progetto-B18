@@ -89,7 +89,7 @@ public class FormButton extends ButtonSkeleton implements ButtonListener, ClickL
     }
 
     public void onClickFormLogin(float mx, float my, String username, String password, Login login, StateBasedGame stateBasedGame, int i) {
-
+        System.out.println(""+i);
         if (mx >= minx && mx <= maxx && my >= miny && my <= maxy) {
             current = press;
             if(login.Login(username, password)){
