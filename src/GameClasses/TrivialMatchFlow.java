@@ -24,7 +24,7 @@ public class TrivialMatchFlow {
         match.InitializePossiblePieces();  //inizializzo le possibili pedine per la scelta
         match.BeginningDieRoll();
         match.pieceChoose();
-        match.play();
+        while (!match.play());
 
     }
 

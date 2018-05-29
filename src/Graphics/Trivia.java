@@ -23,7 +23,6 @@ import java.util.ArrayList;
  * - rydia, ceodore, kain, luca: immagini delle pedine
  * - d: oggetto di tipo DieGUI utilizzato per visualizzare la faccia del dado ed estrarre il numero
  * - map: oggetto di tipo Map associato alla matrice e al tabellone
- * - p,p1,p2,p3: player della partita
  * - pGUI: arrayList di GUI dei player
  * - piece1,piece2,piece3,piece4: pedine associate ai player
  * - launch: bottone per lanciare il dado
@@ -41,7 +40,6 @@ public class Trivia extends BasicGameState {
     private Image playerBack1, playerBack2, playerBack3, playerBack4;
     private DieGUI d;
     private Map map;
-    private Player p, p1, p2, p3;
     private ArrayList<PlayerGUI> pGUI;
     private Pedina piece, piece1, piece2, piece3;
     private String mouse= "No input";
@@ -73,7 +71,6 @@ public class Trivia extends BasicGameState {
         game.initializePlayers(gamingPlayers); //inizializzo i giocatori
         game.InitializePossiblePieces();
         //DA INSERIRE NELLE ALTRE SCHERMATE I METODI DEL LANCIO INIZIALE E SCELTA PEDINA
-        game.play();
     }
 
     public int getID() { return 5; }
@@ -136,11 +133,9 @@ public class Trivia extends BasicGameState {
 
         domanda.init(gameContainer, stateBasedGame);
         esc.init(gameContainer, stateBasedGame);
-
-        turn.addPlayer(p);
-        turn.addPlayer(p1);
-        turn.addPlayer(p2);
-        turn.addPlayer(p3);
+        for(int i=0;i<game.getPlayers().size();i++){
+            turn.addPlayer(pGUI.get(i).getP());
+        }
         fonx1 = new TrueTypeFont(f.getFont().deriveFont(23f),false);
     }
 
@@ -158,10 +153,12 @@ public class Trivia extends BasicGameState {
         ceodore.draw(1050,30);
         kain.draw(750,130);
         luca.draw(1050,130);
-        fonx1.drawString(850,30,p.getName(),Color.white);
-        fonx1.drawString(1150,30,p1.getName(),Color.white);
-        fonx1.drawString(850,130,p2.getName(),Color.white);
-        fonx1.drawString(1150,130,p3.getName(),Color.white);
+        for(int i=0;i<game.getPlayers().size();i++){
+            if(i==0)fonx1.drawString(850,30,pGUI.get(i).getName(),Color.white);
+            if(i==1)fonx1.drawString(1150,30,pGUI.get(i).getName(),Color.white);
+            if(i==2)fonx1.drawString(850,130,pGUI.get(i).getName(),Color.white);
+            if(i==3)fonx1.drawString(1150,130,pGUI.get(i).getName(),Color.white);
+        }
         fonx1.drawString(870,219, "E' il turno di: "+pGUI.get(turn.getIndex()).getName());
         launch.draw(990,580);
 
@@ -222,7 +219,7 @@ public class Trivia extends BasicGameState {
                         p.setClicked(false);
                     }
                 }
-                diceN = d.setCurrentDie();
+                diceN=d.setCurrentDie();
                 launched = true;
                 turn.incrementIndex(domanda.isEsito(), first, pGUI.get(turn.getIndex()));
                 domanda.setAnswered(false);

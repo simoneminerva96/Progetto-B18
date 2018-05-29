@@ -4,6 +4,8 @@ import Graphics.Direction;
 import Graphics.Player.Player;
 import org.newdawn.slick.Animation;
 
+import java.lang.management.PlatformLoggingMXBean;
+
 /**
  * @author Stefano
  * La classe PlayerGUI rappresenta la grafica relativa a un certo Player, cioè quella che
@@ -167,5 +169,10 @@ public class PlayerGUI {
 
     public String getName() {
         return p.getName();
+    }
+
+    //classe player della grafica
+    public Player getP() {
+        return p;
     }
 }

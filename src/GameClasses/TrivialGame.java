@@ -14,15 +14,17 @@ public class TrivialGame {
     private ArrayList<Player> players;      //giccatori partecipanti
     private ArrayList<Piece> possiblePieces;        //possibili pedine tra cui scegliere
     private Die die;        //dado
-    private Board playBoard;        //tabellone di gioco
+    private BoardProva playBoard;        //tabellone di gioco
     private Turn turn;      //turno attuale
+    private Integer index=0; //INDICE CHE SERVE PER TENER IL CONTO DI QUALE GIOCATORE è IL TURNO
 
     public TrivialGame(){
         players=new ArrayList<Player>();
         possiblePieces=new ArrayList<Piece>();
         die=new Die();
+        turn = new Turn(null,playBoard);    //all'inizio non ho alcun giocatore di turno
         try{
-            playBoard=new Board();
+            playBoard=new BoardProva();
         }
         catch (SQLException e){
             System.out.println(e.getMessage());
@@ -34,6 +36,9 @@ public class TrivialGame {
         return players;
     }
 
+    public Turn getTurn() {
+        return turn;
+    }
 
     /**
      * metodo che crea i giocatori che parteciperanno alla partita, riceve in ingresso la lista dei nickname
@@ -146,37 +151,41 @@ public class TrivialGame {
             }
         }
     }
-    //metodo che esegue il flusso dei turni di gioco
-    public void play(){
+
+    public void SetPlayerOnTurn(Player player){
+        turn.setPlayerOnTurn(player);
+    }
+
+    //metodo che esegue un turno di gioco e ritorna falso se un giocatore ha vinto
+    public Boolean play(){
         Boolean correct=false;
-        Integer index=0;
-        turn = new Turn(players.get(index),playBoard);    //PASSO A TURN IL GIOCATORE CHE è DI TURNO
-        do {
-            turn.dieLaunch();// LANCIA IL DADO E visualizza il risultato
-            turn.movePlayer(); //muove il giocatore del risultato ottenuto
-            // se la casella è bonus/malus eseguo il bonus malus prima
-            if(playBoard.getSquares().get(players.get(index).getActualPosition()) instanceof BonusMalusSquare){
-                turn.executeBonusMalus();
+        turn.dieLaunch();// LANCIA IL DADO E visualizza il risultato
+        turn.movePlayer(); //muove il giocatore del risultato ottenuto
+        // se la casella è bonus/malus eseguo il bonus malus prima
+        if(playBoard.getSquares().get(players.get(index).getActualPosition()) instanceof BonusMalusSquare){
+            turn.executeBonusMalus();
+        }
+        correct = turn.AnswerQuestion(); //visualizza la domanda e il giocatore risponde
+        if((correct)){
+            System.out.println("risposta corretta!\n");
+            turn.obtainSlice();  //il metodo aggiunge lo spicchio solo se la casella corrente è una casella di domanda finale
+        }
+        if(!correct){
+            if(players.get(index).getActualPosition() != 6 && players.get(index).getActualPosition() != 0 && players.get(index).getActualPosition() != 18 || players.get(index).getActualPosition() != 30) {
+                System.out.println("risposta errata!\n");
             }
-            correct = turn.AnswerQuestion(); //visualizza la domanda e il giocatore risponde
-            if((correct)){
-                System.out.println("risposta corretta!\n");
-                turn.obtainSlice();  //il metodo aggiunge lo spicchio solo se la casella corrente è una casella di domanda finale
-            }
-            if(turn.verifyVictory()){
-                System.out.println("CONGRATULAZIONI " + players.get(index).getNickname() + "! HAI VINTO!");
-                break;
-            }
-            if(!correct){
-                if(players.get(index).getActualPosition() != 6 && players.get(index).getActualPosition() != 0 && players.get(index).getActualPosition() != 18 || players.get(index).getActualPosition() != 30) {
-                    System.out.println("risposta errata!\n");
-                }
-                index++;    //L'INDICE PUNTA AL GIOCATORE SUCCESSIVO
-                if(index==players.size() ) index=0;
-                turn.setPlayerOnTurn(players.get(index));// setto come giocatore di turno il giocatore successivo
-                correct=true;
-            }
-        } while (correct);
+            index++;    //L'INDICE PUNTA AL GIOCATORE SUCCESSIVO
+            if(index==players.size() ) index=0;
+            turn.setPlayerOnTurn(players.get(index));// setto come giocatore di turno il giocatore successivo
+            //correct=true;
+        }
+        if(turn.verifyVictory()){
+            System.out.println("CONGRATULAZIONI " + players.get(index).getNickname() + "! HAI VINTO!");
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
 }
