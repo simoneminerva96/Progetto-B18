@@ -13,9 +13,8 @@ import java.util.ArrayList;
  *
  * - playerList: arrayList di giocatori
  * - index: indice del Player corrente
- *
- *
  */
+
 public class TurnMaster {
     private ArrayList<Player> playerList;
     private int index;
