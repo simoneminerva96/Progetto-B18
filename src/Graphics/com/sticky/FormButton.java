@@ -1,6 +1,5 @@
 package Graphics.com.sticky;
 
-import Logic.Match;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
