@@ -78,7 +78,7 @@ public class StateButton extends ButtonSkeleton implements ButtonListener,
         }
     }
 
-    public void onClickStateSendNumber(float mx, float my,StateBasedGame stateBasedGame, int i)throws SlickException{
+    public void onClickStateSendNumber(float mx, float my,GameContainer gameContainer,StateBasedGame stateBasedGame, int i)throws SlickException{
         if(mx>=minx&&mx<=maxx&&my>=miny&&my<=maxy) {
             /*CharacterSelection cr;
             cr=(CharacterSelection)stateBasedGame.getState(4);
@@ -87,6 +87,7 @@ public class StateButton extends ButtonSkeleton implements ButtonListener,
             Trivia tr;
             tr = (Trivia)stateBasedGame.getState(5);
             tr.setPlayersNumber(i);
+            //stateBasedGame.getState(5).init(gameContainer,stateBasedGame);
             stateBasedGame.enterState(5);
         }
     }

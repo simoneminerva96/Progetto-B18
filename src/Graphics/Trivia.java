@@ -1,6 +1,5 @@
 package Graphics;
 
-import GameClasses.TrivialGame;
 import Graphics.Map.Map;
 import Graphics.Player.*;
 import Graphics.Question.Domanda;
@@ -54,10 +53,10 @@ public class Trivia extends BasicGameState {
     private Escape esc;
     private TrueTypeFont fonx1;
     private TriviaFont f;
-    private TrivialGame game;   //PARTITA ASSOCIATA
 
     private Controller interm;
     private int nPlayers;
+    private ArrayList<Image> playerBack;
 
     public Trivia(int id) {
         domanda = new Domanda(6);
@@ -66,20 +65,7 @@ public class Trivia extends BasicGameState {
         pGUI = new ArrayList<>();
         pGUI.clear();
         f = new TriviaFont();
-
-        //INSERISCO GIOCATORI DI PROVA, POI ANDRANNO INSERITI I NICKNAME DEI GIOCATORI
-        // PARTECIPANTI PASSANDOLI A QUESTO COSTRUTTORE
-        game = new TrivialGame();
-        ArrayList<String> gamingPlayers = new ArrayList<String>();
-        gamingPlayers.add("Jack");
-        gamingPlayers.add("Rita");
-        gamingPlayers.add("Ste");
-        gamingPlayers.add("Tia");
-        game.initializePlayers(gamingPlayers); //inizializzo i giocatori
-        game.InitializePossiblePieces();
-        //DA INSERIRE NELLE ALTRE SCHERMATE I METODI DEL LANCIO INIZIALE E SCELTA PEDINA
-
-        interm = new Controller();
+        playerBack = new ArrayList<>();
 
     }
 
@@ -89,10 +75,7 @@ public class Trivia extends BasicGameState {
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-        playerBack1 = new Image("res/backgrounds/PlayerBackgrounds/SfondoGiocatore.png");
-        playerBack2 = new Image("res/backgrounds/PlayerBackgrounds/SfondoGiocatore1.png");
-        playerBack3 = new Image("res/backgrounds/PlayerBackgrounds/SfondoGiocatore2.png");
-        playerBack4 = new Image("res/backgrounds/PlayerBackgrounds/SfondoGiocatore3.png");
+
         map = new Map(20, 20, 35);
         backgroundMap = new Image("res/map/Tabella.png");
 
@@ -100,40 +83,10 @@ public class Trivia extends BasicGameState {
         piece1 = new Pedina("res/char/FFIV/Ceodore/ced_up.png", "res/char/FFIV/Ceodore/ced_dwn.png", "res/char/FFIV/Ceodore/ced_lft.png", "res/char/FFIV/Ceodore/ced_rht.png", 35, 35);
         piece2 = new Pedina("res/char/FFIV/Kain/kainup.png", "res/char/FFIV/Kain/kaindwn.png", "res/char/FFIV/Kain/kainsx.png", "res/char/FFIV/Kain/kaindx.png", 35, 35);
         piece3 = new Pedina("res/char/FFIV/Luca/lucaup.png", "res/char/FFIV/Luca/lucadwn.png", "res/char/FFIV/Luca/lucasx.png", "res/char/FFIV/Luca/lucadx.png", 35, 35);
-        //inizializzazione dei giocatori
-        for (int i = 0; i < game.getPlayers().size(); i++) {
-            String nicknamePlayer = game.getPlayers().get(i).getNickname();
-            Player p = new Player(nicknamePlayer, i + 1, map);
-            if (i == 0) {
-                pGUI.add(i, new PlayerGUI(p, piece));
-            }
-            if (i == 1) {
-                pGUI.add(i, new PlayerGUI(p, piece1));
-            }
-            if (i == 2) {
-                pGUI.add(i, new PlayerGUI(p, piece2));
-            }
-            if (i == 3) {
-                pGUI.add(i, new PlayerGUI(p, piece3));
-            }
-        }
-        /*
-        p = new Player("ONE",1,map);
-        p1 = new Player("TWO",2, map);
-        p2 = new Player("THREE", 3, map);
-        p3 = new Player("FOUR", 4, map);
-        pGUI.add(0, new PlayerGUI(p, piece));
-        pGUI.add(1, new PlayerGUI(p1,piece1));
-        pGUI.add(2, new PlayerGUI(p2, piece2));
-        pGUI.add(3, new PlayerGUI(p3, piece3));
-        */
+
         back = new Image("res/buttons/Frecce/freccia1.png");
         forward = new Image("res/buttons/Frecce/freccia2.png");
         d = new DieGUI();
-
-        for (PlayerGUI p : pGUI) {
-            p.getPedina().stop();
-        }
 
         rydia = new Image("res/char/rydia.png");
         ceodore = new Image("res/char/ceodore.png");
@@ -144,32 +97,35 @@ public class Trivia extends BasicGameState {
 
         domanda.init(gameContainer, stateBasedGame);
         esc.init(gameContainer, stateBasedGame);
-        for (int i = 0; i < game.getPlayers().size(); i++) {
-            turn.addPlayer(pGUI.get(i).getP());
-        }
         fonx1 = new TrueTypeFont(f.getFont().deriveFont(23f), false);
+        interm = new Controller();
     }
 
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
+        int x = 750;
+        int y = 30;
+
         graphics.drawImage(background, 0, 0);
         graphics.drawImage(backgroundMap, 0, 0);
         graphics.drawImage(back, 750, 575);
         graphics.drawImage(forward, 850, 575);
-        graphics.drawImage(playerBack1, 750, 30);
-        graphics.drawImage(playerBack2, 1050, 30);
-        graphics.drawImage(playerBack3, 750, 130);
-        graphics.drawImage(playerBack4, 1050, 130);
+
+        for(int i=0; i<nPlayers; i++){
+            if ((i==1) || (i==3)){
+                x = 1050;
+            }
+            if (i==2) {
+                x = 750;
+                y = 130;
+            }
+            playerBack.get(i).draw(x, y);
+            fonx1.drawString((x+80),y,pGUI.get(i).getName(), Color.white);
+        }
         rydia.draw(750, 30);
         ceodore.draw(1050, 30);
         kain.draw(750, 130);
         luca.draw(1050, 130);
-        for (int i = 0; i < game.getPlayers().size(); i++) {
-            if (i == 0) fonx1.drawString(850, 30, pGUI.get(i).getName(), Color.white);
-            if (i == 1) fonx1.drawString(1150, 30, pGUI.get(i).getName(), Color.white);
-            if (i == 2) fonx1.drawString(850, 130, pGUI.get(i).getName(), Color.white);
-            if (i == 3) fonx1.drawString(1150, 130, pGUI.get(i).getName(), Color.white);
-        }
         fonx1.drawString(870, 219, "E' il turno di: " + pGUI.get(turn.getIndex()).getName());
         launch.draw(990, 580);
 
@@ -225,7 +181,7 @@ public class Trivia extends BasicGameState {
          */
         if (xpos > 990 && xpos < 1130 && ypos > 55 && ypos < 120) {
             if (input.isMousePressed(0) && launched == false) {
-                if (turn.getIndex() == 3) {
+                if (turn.getIndex() == nPlayers-1) {
                     first = false;
                     turn.resetIndex();
                     for (PlayerGUI p : pGUI) {
@@ -283,8 +239,35 @@ public class Trivia extends BasicGameState {
         }
     }
 
-    public void setPlayersNumber (int n){
+    public void setPlayersNumber(int n) throws SlickException {
         nPlayers =n;
+        interm.initializePlayers(nPlayers);
+        for (int i = 0; i <nPlayers; i++) {
+            Player p = new Player("prova", i + 1, map);
+            if (i == 0) {
+                pGUI.add(i, new PlayerGUI(p, piece));
+                playerBack.add(new Image("res/backgrounds/PlayerBackgrounds/SfondoGiocatore.png"));
+            }
+            if (i == 1) {
+                pGUI.add(i, new PlayerGUI(p, piece1));
+                playerBack.add(new Image("res/backgrounds/PlayerBackgrounds/SfondoGiocatore1.png"));
+            }
+            if (i == 2) {
+                pGUI.add(i, new PlayerGUI(p, piece2));
+                playerBack.add(new Image("res/backgrounds/PlayerBackgrounds/SfondoGiocatore2.png"));
+            }
+            if (i == 3) {
+                pGUI.add(i, new PlayerGUI(p, piece3));
+                playerBack.add(new Image("res/backgrounds/PlayerBackgrounds/SfondoGiocatore3.png"));
+            }
+        }
+        for (int i = 0; i < nPlayers; i++) {
+            turn.addPlayer(pGUI.get(i).getP());
+        }
+
+        for (PlayerGUI p : pGUI) {
+            p.getPedina().stop();
+        }
     }
 }
 
