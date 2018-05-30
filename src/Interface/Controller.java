@@ -9,6 +9,9 @@ public class Controller {
 
     public Controller(){
         match=new TrivialGame();
+    }
+
+    public void initializePlayers(int nplayers){
         ArrayList<String> gamingPlayers=new ArrayList<String>();
         //INSERISCO GIOCATORI DI PROVA, POI ANDRANNO INSERITI I NICKNAME DEI GIOCATORI PARTECIPANTI PASSANDOLI A QUESTO COSTRUTTORE
         gamingPlayers.add("Jack");
@@ -20,7 +23,6 @@ public class Controller {
         match.InitializePossiblePieces();  //inizializzo le possibili pedine per la scelta
         match.initializePhase();
     }
-
     public int getDiceValue(){
        return match.throwDie();
     }
