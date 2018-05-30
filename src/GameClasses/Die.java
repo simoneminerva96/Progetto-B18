@@ -7,6 +7,8 @@ import java.util.Random;
  */
 public class Die {
     private Random generator;
+    private int extractNumber;
+
     public Die(){
         generator=new Random();
     }
@@ -15,6 +17,7 @@ public class Die {
         int min = 1; // numero minimo
         int max=6 ; // numero massimo
         int range = ((max-min) + 1);
-        return generator.nextInt(range) + min;
+        extractNumber = generator.nextInt(range) + min;
+        return extractNumber;
     }
 }

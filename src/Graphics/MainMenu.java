@@ -20,11 +20,12 @@ import java.io.InputStream;
 public class MainMenu extends BasicGameState {
 
     private Image background;
-    TrueTypeFont font;
+    private TrueTypeFont fonx1;
     private StateButton play, options;
-    UnicodeFont fonx;
+    private TriviaFont f;
 
     public MainMenu(int i) throws SlickException {
+        f = new TriviaFont();
     }
 
     @Override
@@ -35,26 +36,15 @@ public class MainMenu extends BasicGameState {
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
             background =new Image("res/backgrounds/green_landscape_ridim.png");
-            try {
-            InputStream inputStream	= ResourceLoader.getResourceAsStream("res/fonts/Silkscreen/slkscr.ttf");
-            java.awt.Font awtFont= java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT,inputStream);
-            awtFont=awtFont.deriveFont(32f);
-            font=new TrueTypeFont(awtFont,false);
-            } catch (FontFormatException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
+            fonx1 = new TrueTypeFont(f.getFont().deriveFont(23f),false);
             play=new StateButton(new Rectangle(550,325,190,49),new Image("res/buttons/Button_Play/Button_Play_01.png"),new Image("res/buttons/Button_Play/Button_Play_02.png"),new Image("res/buttons/Button_Play/Button_Play_01.png"),null);
             options=new StateButton(new Rectangle(550,450,190,49),new Image("res/buttons/Button_Options/Button_Options_01.png"),new Image("res/buttons/Button_Options/Button_Options_02.png"),new Image("res/buttons/Button_Options/Button_Options_01.png"),null);
-            fonx = getNewFont("Arial" , 16);
     }
 
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
             graphics.drawImage(background,0,0);
-            font.drawString(400,25,"TRIVIAL PURSUIT RELOADED", Color.white);
+            fonx1.drawString(400,25,"TRIVIAL PURSUIT RELOADED", Color.white);
 
             play.render(gameContainer,graphics);
             options.render(gameContainer,graphics);
@@ -76,13 +66,5 @@ public class MainMenu extends BasicGameState {
     }
 
     public void enter(GameContainer gameContainer,StateBasedGame stateBasedGame)throws SlickException{
-    }
-
-    public UnicodeFont getNewFont(String fontName , int fontSize)
-    {
-        fonx = new UnicodeFont(new Font(fontName , Font.PLAIN , fontSize));
-        fonx.addGlyphs("@");
-        fonx.getEffects().add(new ColorEffect(java.awt.Color.white));
-        return (fonx);
     }
 }

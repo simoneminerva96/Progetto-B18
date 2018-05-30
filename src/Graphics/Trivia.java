@@ -4,6 +4,7 @@ import GameClasses.TrivialGame;
 import Graphics.Map.Map;
 import Graphics.Player.*;
 import Graphics.Question.Domanda;
+import Logic.Intermediario;
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Color;
@@ -54,13 +55,16 @@ public class Trivia extends BasicGameState {
     private TriviaFont f;
     private TrivialGame game;   //PARTITA ASSOCIATA
 
+    private Intermediario interm;
+
     public Trivia(int id) {
         domanda = new Domanda(6);
         esc = new Escape(7);
         turn = new TurnMaster();
-        pGUI = new ArrayList<PlayerGUI>();
+        pGUI = new ArrayList<>();
         pGUI.clear();
         f = new TriviaFont();
+
         //INSERISCO GIOCATORI DI PROVA, POI ANDRANNO INSERITI I NICKNAME DEI GIOCATORI PARTECIPANTI PASSANDOLI A QUESTO COSTRUTTORE
         game=new TrivialGame();
         ArrayList<String> gamingPlayers=new ArrayList<String>();
@@ -71,6 +75,8 @@ public class Trivia extends BasicGameState {
         game.initializePlayers(gamingPlayers); //inizializzo i giocatori
         game.InitializePossiblePieces();
         //DA INSERIRE NELLE ALTRE SCHERMATE I METODI DEL LANCIO INIZIALE E SCELTA PEDINA
+
+        interm = new Intermediario();
     }
 
     public int getID() { return 5; }
@@ -118,7 +124,6 @@ public class Trivia extends BasicGameState {
         back = new Image("res/buttons/Frecce/freccia1.png");
         forward = new Image("res/buttons/Frecce/freccia2.png");
         d = new DieGUI();
-
 
         for (PlayerGUI p: pGUI) {
            p.getPedina().stop();
@@ -219,8 +224,10 @@ public class Trivia extends BasicGameState {
                         p.setClicked(false);
                     }
                 }
-                diceN=d.setCurrentDie();
                 launched = true;
+                diceN = interm.generateNumber();
+                d.setCurrentDie(diceN);
+
                 turn.incrementIndex(domanda.isEsito(), first, pGUI.get(turn.getIndex()));
                 domanda.setAnswered(false);
                 domanda.setEsito(false);

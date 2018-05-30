@@ -15,7 +15,7 @@ import org.newdawn.slick.SlickException;
 public class DieGUI {
     private Image[] die = new Image[6];
     private Image currentDie;
-    private Die d = new Die();
+    //private Die d = new Die();
 
     public DieGUI() {
         for (int i=0; i<6; i++){
@@ -37,10 +37,10 @@ public class DieGUI {
      * @return result: numero del dado estratto
      */
 
-    public int setCurrentDie() {
-        int result;
-        result = d.Launch();
+    public void setCurrentDie(int result) {
+        //int result;
+        //result = d.Launch();
         currentDie = die[result-1];
-        return result;
+        //return result;
     }
 }

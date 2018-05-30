@@ -6,6 +6,8 @@ import Graphics.com.sticky.NumberButton;
 import Graphics.com.sticky.SimpleButton;
 import Graphics.com.sticky.StateButton;
 import Graphics.com.sticky.TestButton;
+import Logic.LogicPlayer;
+import Logic.Match;
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Color;
@@ -38,8 +40,6 @@ public class PlayerNumberSelection extends BasicGameState {
 
     public static int numbertosend=1;
 
-
-
     private Image background, registrationback,menuback;
     private TrueTypeFont fonx,fonx1;
     private UnicodeFont font;
@@ -52,13 +52,11 @@ public class PlayerNumberSelection extends BasicGameState {
     private NumberButton one,two,three,four;
     private StateButton home,back,next,sound;
 
-
-
-
     //STATE
     MenuFrame mf=new MenuFrame(10);
     CharacterSelection cr=new CharacterSelection(4);
 
+    static Match m;
 
     public PlayerNumberSelection(int i) throws SlickException {
     }
@@ -92,15 +90,10 @@ public class PlayerNumberSelection extends BasicGameState {
         three.render(gameContainer,graphics);
         four.render(gameContainer,graphics);
 
-
-
-
-
-
     }
 
     @Override
-    public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
+    public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) throws SlickException {
         Input r=gameContainer.getInput();
 
         mf.setMouseCoordinates(r.getMouseX(),r.getMouseY());
@@ -114,7 +107,20 @@ public class PlayerNumberSelection extends BasicGameState {
             numbertosend=three.onClickGetNumber(r.getMouseX(),r.getMouseY(),numbertosend);
             numbertosend=four.onClickGetNumber(r.getMouseX(),r.getMouseY(),numbertosend);
             mf.setNumbertosend(numbertosend);
-            mf.update(gameContainer,stateBasedGame,i);
+            mf.update(gameContainer,stateBasedGame,delta);
+
+            m = new Match(numbertosend);
+            for (int i=0; i<numbertosend; i++) {
+                if (i==1)
+                    m.addLogicPlayer(new LogicPlayer("Rita"));
+                if (i==2)
+                    m.addLogicPlayer(new LogicPlayer("Tia"));
+                if (i==3)
+                    m.addLogicPlayer(new LogicPlayer("Ste"));
+                if (i==4)
+                    m.addLogicPlayer(new LogicPlayer("Jack"));
+
+            }
 
         }else if(r.isMousePressed(1)){
             System.out.println(numbertosend);
@@ -126,22 +132,8 @@ public class PlayerNumberSelection extends BasicGameState {
         two.onMouseEnter(two,r.getMouseX(),r.getMouseY());
         three.onMouseEnter(three,r.getMouseX(),r.getMouseY());
         four.onMouseEnter(four,r.getMouseX(),r.getMouseY());
-        mf.update(gameContainer,stateBasedGame,i);
+        mf.update(gameContainer,stateBasedGame,delta);
 
-
-
-
-
-    }
-
-
-
-    public UnicodeFont getNewFont(String fontName , int fontSize)
-    {
-        font = new UnicodeFont(new Font(fontName , Font.PLAIN , fontSize));
-        font.addGlyphs("@");
-        font.getEffects().add(new ColorEffect(java.awt.Color.white));
-        return (font);
     }
 
 }
