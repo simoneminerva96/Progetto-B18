@@ -36,8 +36,7 @@ public class LoginRegistrationInterface extends BasicGameState {
     private Login login;
     private boolean check;
     private TriviaFont f;
-
-    //MenuFrame mf=new MenuFrame(10);
+    private Music music;
 
     public LoginRegistrationInterface(int n) throws SlickException {
         this.reg = new Registration();
@@ -59,8 +58,8 @@ public class LoginRegistrationInterface extends BasicGameState {
         psw = new TextFieldTest(gameContainer , fonx1 , 550 , 340 , 200 , 35);
         psw.setBackgroundColor(org.newdawn.slick.Color.lightGray);
         psw.setMaskEnabled(true);
-        //mf.init(gameContainer,stateBasedGame);
-        //mf.setBackState(2);
+        music = new Music("res/music/Wallpaper.wav");
+        music.play();
     }
 
     @Override
@@ -92,20 +91,14 @@ public class LoginRegistrationInterface extends BasicGameState {
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
         Input in = gameContainer.getInput();
 
-        //mf.setMouseCoordinates(in.getMouseX(),in.getMouseY());
-        
         if (in.isMousePressed(0)){
-            //mf.setMouseClicked(true);
+
             regButton.setClicked(false);
             check = regButton.onClickFormRegistration(in.getMouseX(),in.getMouseY(),usrname.getText(),psw.getText(), reg);
             logButton.onClickFormLogin(in.getMouseX(),in.getMouseY(),usrname.getText(),psw.getText(), login, stateBasedGame, 2);
-            //mf.update(gameContainer,stateBasedGame,i);
         }
         regButton.onMouseEnter(regButton,in.getMouseX(),in.getMouseY());
         logButton.onMouseEnter(logButton, in.getMouseX(), in.getMouseY());
-
-        //mf.setMouseClicked(false);
-        //mf.update(gameContainer,stateBasedGame,i);
     }
 
     public void enter(GameContainer gc, StateBasedGame sbg) throws SlickException {

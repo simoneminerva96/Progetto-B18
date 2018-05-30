@@ -1,6 +1,5 @@
 package Graphics;
 
-import Graphics.OfflineMenu.CharacterSelection;
 import Graphics.com.sticky.StateButton;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Graphics;
@@ -8,30 +7,18 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
-import org.newdawn.slick.UnicodeFont;
 
 public class MenuFrame extends BasicGameState {
 
-    //DEBUGGING
     public String mouse= "No input";
-    int xb=100,yb=100;
-    Boolean clicked=false;
 
     private Image background, menuback;
-    private TrueTypeFont fonx,fonx1;
-    private UnicodeFont font;
-
-    private String gameName;
 
     //BUTTONS
     private StateButton home,back,next,sound;
     private int backState,nextState;
 
-    //
-    private CharacterSelection cr;
-
     private int numbertosend=1;
-    private boolean nextStateSendNumber=false;
 
     private float mx,my;
     private boolean mouseClicked=false,isNumberToSend=false;
@@ -65,8 +52,6 @@ public class MenuFrame extends BasicGameState {
         back.render(gameContainer,graphics);
         next.render(gameContainer,graphics);
         sound.render(gameContainer,graphics);
-
-
     }
 
     @Override
@@ -78,17 +63,13 @@ public class MenuFrame extends BasicGameState {
                 next.onClickState(mx,my,stateBasedGame,nextState);
 
             back.onClickState(mx,my,stateBasedGame,backState);
+            home.onClickState(mx, my, stateBasedGame, 1);
+            sound.onClickStateSound(mx, my, gameContainer, gameContainer.isMusicOn());
         }
         home.onMouseEnter(home,mx,my);
         back.onMouseEnter(back,mx,my);
         next.onMouseEnter(next,mx,my);
         sound.onMouseEnter(sound,mx,my);
-
-
-    }
-
-    public void nextStateSendNumber(){
-        nextStateSendNumber=true;
     }
 
     public void setNumbertosend(int n){
@@ -99,9 +80,11 @@ public class MenuFrame extends BasicGameState {
         this.mx=mx;
         this.my=my;
     }
+
     public void setMouseClicked(boolean b){
         mouseClicked=b;
     }
+
     public void setIsNumberToSend(boolean b){isNumberToSend=b;}
 
     public void setBackState(int i){backState=i;}

@@ -4,7 +4,7 @@ import GameClasses.TrivialGame;
 import Graphics.Map.Map;
 import Graphics.Player.*;
 import Graphics.Question.Domanda;
-import Logic.Intermediario;
+import Interface.Controller;
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Color;
@@ -35,6 +35,7 @@ import java.util.ArrayList;
  * - esc: oggetto Escape, state da renderizzare
  * - f, fonx1: font utilizzato
  */
+
 public class Trivia extends BasicGameState {
     private Image backgroundMap, back, forward, background;
     private Image rydia, ceodore, kain, luca;
@@ -43,7 +44,7 @@ public class Trivia extends BasicGameState {
     private Map map;
     private ArrayList<PlayerGUI> pGUI;
     private Pedina piece, piece1, piece2, piece3;
-    private String mouse= "No input";
+    private String mouse = "No input";
     private Image launch;
     private boolean launched = false;
     private boolean first = false;
@@ -55,7 +56,8 @@ public class Trivia extends BasicGameState {
     private TriviaFont f;
     private TrivialGame game;   //PARTITA ASSOCIATA
 
-    private Intermediario interm;
+    private Controller interm;
+    private int nPlayers;
 
     public Trivia(int id) {
         domanda = new Domanda(6);
@@ -65,21 +67,25 @@ public class Trivia extends BasicGameState {
         pGUI.clear();
         f = new TriviaFont();
 
-        //INSERISCO GIOCATORI DI PROVA, POI ANDRANNO INSERITI I NICKNAME DEI GIOCATORI PARTECIPANTI PASSANDOLI A QUESTO COSTRUTTORE
-        game=new TrivialGame();
-        ArrayList<String> gamingPlayers=new ArrayList<String>();
+        //INSERISCO GIOCATORI DI PROVA, POI ANDRANNO INSERITI I NICKNAME DEI GIOCATORI
+        // PARTECIPANTI PASSANDOLI A QUESTO COSTRUTTORE
+        game = new TrivialGame();
+        ArrayList<String> gamingPlayers = new ArrayList<String>();
         gamingPlayers.add("Jack");
         gamingPlayers.add("Rita");
         gamingPlayers.add("Ste");
-        gamingPlayers.add("tia");
+        gamingPlayers.add("Tia");
         game.initializePlayers(gamingPlayers); //inizializzo i giocatori
         game.InitializePossiblePieces();
         //DA INSERIRE NELLE ALTRE SCHERMATE I METODI DEL LANCIO INIZIALE E SCELTA PEDINA
 
-        interm = new Intermediario();
+        interm = new Controller();
+
     }
 
-    public int getID() { return 5; }
+    public int getID() {
+        return 5;
+    }
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
@@ -87,28 +93,28 @@ public class Trivia extends BasicGameState {
         playerBack2 = new Image("res/backgrounds/PlayerBackgrounds/SfondoGiocatore1.png");
         playerBack3 = new Image("res/backgrounds/PlayerBackgrounds/SfondoGiocatore2.png");
         playerBack4 = new Image("res/backgrounds/PlayerBackgrounds/SfondoGiocatore3.png");
-        map = new Map(20,20,35);
+        map = new Map(20, 20, 35);
         backgroundMap = new Image("res/map/Tabella.png");
 
-        piece = new Pedina("res/char/FFIV/Rydia/rydiaup.png","res/char/FFIV/Rydia/Rydiadwn.png","res/char/FFIV/Rydia/rydiasx.png","res/char/FFIV/Rydia/rydiadx.png",35,35);
-        piece1 = new Pedina("res/char/FFIV/Ceodore/ced_up.png", "res/char/FFIV/Ceodore/ced_dwn.png", "res/char/FFIV/Ceodore/ced_lft.png", "res/char/FFIV/Ceodore/ced_rht.png", 35,35 );
-        piece2 = new Pedina("res/char/FFIV/Kain/kainup.png","res/char/FFIV/Kain/kaindwn.png", "res/char/FFIV/Kain/kainsx.png", "res/char/FFIV/Kain/kaindx.png", 35, 35);
+        piece = new Pedina("res/char/FFIV/Rydia/rydiaup.png", "res/char/FFIV/Rydia/Rydiadwn.png", "res/char/FFIV/Rydia/rydiasx.png", "res/char/FFIV/Rydia/rydiadx.png", 35, 35);
+        piece1 = new Pedina("res/char/FFIV/Ceodore/ced_up.png", "res/char/FFIV/Ceodore/ced_dwn.png", "res/char/FFIV/Ceodore/ced_lft.png", "res/char/FFIV/Ceodore/ced_rht.png", 35, 35);
+        piece2 = new Pedina("res/char/FFIV/Kain/kainup.png", "res/char/FFIV/Kain/kaindwn.png", "res/char/FFIV/Kain/kainsx.png", "res/char/FFIV/Kain/kaindx.png", 35, 35);
         piece3 = new Pedina("res/char/FFIV/Luca/lucaup.png", "res/char/FFIV/Luca/lucadwn.png", "res/char/FFIV/Luca/lucasx.png", "res/char/FFIV/Luca/lucadx.png", 35, 35);
         //inizializzazione dei giocatori
-        for(int i=0;i<game.getPlayers().size();i++){
-            String nicknamePlayer=game.getPlayers().get(i).getNickname();
-            Player p=new Player(nicknamePlayer,i+1,map);
-            if(i==0){
-                pGUI.add(i,new PlayerGUI(p,piece));
+        for (int i = 0; i < game.getPlayers().size(); i++) {
+            String nicknamePlayer = game.getPlayers().get(i).getNickname();
+            Player p = new Player(nicknamePlayer, i + 1, map);
+            if (i == 0) {
+                pGUI.add(i, new PlayerGUI(p, piece));
             }
-            if(i==1){
-                pGUI.add(i,new PlayerGUI(p,piece1));
+            if (i == 1) {
+                pGUI.add(i, new PlayerGUI(p, piece1));
             }
-            if(i==2){
-                pGUI.add(i,new PlayerGUI(p,piece2));
+            if (i == 2) {
+                pGUI.add(i, new PlayerGUI(p, piece2));
             }
-            if (i==3){
-                pGUI.add(i,new PlayerGUI(p,piece3));
+            if (i == 3) {
+                pGUI.add(i, new PlayerGUI(p, piece3));
             }
         }
         /*
@@ -125,11 +131,11 @@ public class Trivia extends BasicGameState {
         forward = new Image("res/buttons/Frecce/freccia2.png");
         d = new DieGUI();
 
-        for (PlayerGUI p: pGUI) {
-           p.getPedina().stop();
+        for (PlayerGUI p : pGUI) {
+            p.getPedina().stop();
         }
 
-        rydia = new Image ("res/char/rydia.png");
+        rydia = new Image("res/char/rydia.png");
         ceodore = new Image("res/char/ceodore.png");
         kain = new Image("res/char/kain.png");
         luca = new Image("res/char/luca.png");
@@ -138,50 +144,52 @@ public class Trivia extends BasicGameState {
 
         domanda.init(gameContainer, stateBasedGame);
         esc.init(gameContainer, stateBasedGame);
-        for(int i=0;i<game.getPlayers().size();i++){
+        for (int i = 0; i < game.getPlayers().size(); i++) {
             turn.addPlayer(pGUI.get(i).getP());
         }
-        fonx1 = new TrueTypeFont(f.getFont().deriveFont(23f),false);
+        fonx1 = new TrueTypeFont(f.getFont().deriveFont(23f), false);
     }
 
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
-        graphics.drawImage(background,0,0);
-        graphics.drawImage(backgroundMap,0,0);
-        graphics.drawImage(back,750,575);
+        graphics.drawImage(background, 0, 0);
+        graphics.drawImage(backgroundMap, 0, 0);
+        graphics.drawImage(back, 750, 575);
         graphics.drawImage(forward, 850, 575);
         graphics.drawImage(playerBack1, 750, 30);
         graphics.drawImage(playerBack2, 1050, 30);
         graphics.drawImage(playerBack3, 750, 130);
         graphics.drawImage(playerBack4, 1050, 130);
-        rydia.draw(750,30);
-        ceodore.draw(1050,30);
-        kain.draw(750,130);
-        luca.draw(1050,130);
-        for(int i=0;i<game.getPlayers().size();i++){
-            if(i==0)fonx1.drawString(850,30,pGUI.get(i).getName(),Color.white);
-            if(i==1)fonx1.drawString(1150,30,pGUI.get(i).getName(),Color.white);
-            if(i==2)fonx1.drawString(850,130,pGUI.get(i).getName(),Color.white);
-            if(i==3)fonx1.drawString(1150,130,pGUI.get(i).getName(),Color.white);
+        rydia.draw(750, 30);
+        ceodore.draw(1050, 30);
+        kain.draw(750, 130);
+        luca.draw(1050, 130);
+        for (int i = 0; i < game.getPlayers().size(); i++) {
+            if (i == 0) fonx1.drawString(850, 30, pGUI.get(i).getName(), Color.white);
+            if (i == 1) fonx1.drawString(1150, 30, pGUI.get(i).getName(), Color.white);
+            if (i == 2) fonx1.drawString(850, 130, pGUI.get(i).getName(), Color.white);
+            if (i == 3) fonx1.drawString(1150, 130, pGUI.get(i).getName(), Color.white);
         }
-        fonx1.drawString(870,219, "E' il turno di: "+pGUI.get(turn.getIndex()).getName());
-        launch.draw(990,580);
+        fonx1.drawString(870, 219, "E' il turno di: " + pGUI.get(turn.getIndex()).getName());
+        launch.draw(990, 580);
 
-        for (PlayerGUI p: pGUI){
-            p.getPedina().draw(p.getxUpdate(),p.getyUpdate());
+        for (PlayerGUI p : pGUI) {
+            p.getPedina().draw(p.getxUpdate(), p.getyUpdate());
         }
 
-        if (launched) { d.getCurrentDie().draw(1200,575); }
+        if (launched) {
+            d.getCurrentDie().draw(1200, 575);
+        }
 
         /*
         Se la pedina si è fermata e quindi il flag ready= true allora posso renderizzare la domanda.
         Se ho risposto e mi è uscita la stringa, allora resetto ready e launched.
          */
 
-        if(pGUI.get(turn.getIndex()).isReady()){
+        if (pGUI.get(turn.getIndex()).isReady()) {
             try {
                 domanda.render(gameContainer, stateBasedGame, graphics);
-                if (domanda.isEnd()){
+                if (domanda.isEnd()) {
                     pGUI.get(turn.getIndex()).setReady(false);
                     launched = false;
                 }
@@ -192,9 +200,9 @@ public class Trivia extends BasicGameState {
         /*
         se il flag quit= true vuol dire che ho premuto Esc e renderizzo lo state esc.
          */
-        if (esc.isQuit()){
+        if (esc.isQuit()) {
             try {
-                esc.render(gameContainer,stateBasedGame,graphics);
+                esc.render(gameContainer, stateBasedGame, graphics);
             } catch (SlickException e) {
                 e.printStackTrace();
             }
@@ -203,11 +211,11 @@ public class Trivia extends BasicGameState {
 
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) {
-        float xpos=Mouse.getX();
-        float ypos=Mouse.getY();
+        float xpos = Mouse.getX();
+        float ypos = Mouse.getY();
 
-        mouse="Mouse position x:"+xpos+ " y: "+ypos;
-        Input input=gameContainer.getInput();
+        mouse = "Mouse position x:" + xpos + " y: " + ypos;
+        Input input = gameContainer.getInput();
 
         /*
         Se sono nelle coordinate del bottone Launch controllo se l'indice del turno è uguale a 3 per
@@ -215,17 +223,17 @@ public class Trivia extends BasicGameState {
         richiamo incrementIndex per incrementare l'indice solo nelle condizioni possibili
         {@see TurnMaster}. resetto answered ed esito a false perchè risponderò ad una nuova domanda.
          */
-        if (xpos>990 && xpos<1130 && ypos>55 && ypos<120){
-            if(input.isMousePressed(0) && launched==false) {
-                if(turn.getIndex()==3) {
+        if (xpos > 990 && xpos < 1130 && ypos > 55 && ypos < 120) {
+            if (input.isMousePressed(0) && launched == false) {
+                if (turn.getIndex() == 3) {
                     first = false;
                     turn.resetIndex();
-                    for (PlayerGUI p: pGUI){
+                    for (PlayerGUI p : pGUI) {
                         p.setClicked(false);
                     }
                 }
                 launched = true;
-                diceN = interm.generateNumber();
+                diceN = interm.getDiceValue();
                 d.setCurrentDie(diceN);
 
                 turn.incrementIndex(domanda.isEsito(), first, pGUI.get(turn.getIndex()));
@@ -241,19 +249,19 @@ public class Trivia extends BasicGameState {
          */
 
         if (launched) {
-            if(ypos>46 && ypos<109) {
-                if(xpos>870 && xpos<930){
-                    if(input.isMousePressed(0)){
-                        turn.nextPlayer( diceN, pGUI.get(turn.getIndex()), Direction.BACK);
-                        if (turn.getIndex()==0) {
+            if (ypos > 46 && ypos < 109) {
+                if (xpos > 870 && xpos < 930) {
+                    if (input.isMousePressed(0)) {
+                        turn.nextPlayer(diceN, pGUI.get(turn.getIndex()), Direction.BACK);
+                        if (turn.getIndex() == 0) {
                             first = true;
                         }
                     }
                 }
-                if(xpos>770 && xpos<830){
-                    if(input.isMousePressed(0)){
+                if (xpos > 770 && xpos < 830) {
+                    if (input.isMousePressed(0)) {
                         turn.nextPlayer(diceN, pGUI.get(turn.getIndex()), Direction.FORWARD);
-                        if (turn.getIndex()==0) {
+                        if (turn.getIndex() == 0) {
                             first = true;
                         }
                     }
@@ -264,15 +272,19 @@ public class Trivia extends BasicGameState {
         try {
             domanda.update(gameContainer, stateBasedGame, i);
             esc.update(gameContainer, stateBasedGame, i);
-            } catch (SlickException e) {
+        } catch (SlickException e) {
             e.printStackTrace();
-            }
-            pGUI.get(turn.getIndex()).updateOnEachFrame(i);
+        }
+
+        pGUI.get(turn.getIndex()).updateOnEachFrame(i);
 
         if (input.isKeyPressed(Input.KEY_ESCAPE)) {
             esc.setQuit(true);
         }
-
     }
 
+    public void setPlayersNumber (int n){
+        nPlayers =n;
+    }
 }
+
