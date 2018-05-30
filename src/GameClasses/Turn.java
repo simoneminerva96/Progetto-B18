@@ -16,45 +16,44 @@ public class Turn {
     private Player playerOnTurn;        //giocatore di turno
     private Die die;        //dado per determinare di quanto spostarsi
     private int dieresult;  //risultato del lancio del dado
+    private String chosenDirection;
 
     public Turn(Player playerOnTurn,BoardProva playBoard){
         this.playerOnTurn=playerOnTurn;
         this.playBoard=playBoard;
         die=new Die();
         dieresult=0;
+        chosenDirection="";
     }
     //metodo da chiamare nella classe trivialgame per cambiar turno
     public void setPlayerOnTurn(Player playerOnTurn) {
         this.playerOnTurn = playerOnTurn;
     }
 
-    //metodo che effettua il lancio del dado e muove la pedina di conseguenza
-    public void dieLaunch(){
+    //metodo che effettua il lancio del dado
+    public int dieLaunch(){
         System.out.println("turno di " + playerOnTurn.getNickname());
         dieresult=die.Launch();
         System.out.println("risultato del lancio : " + dieresult);
+        return dieresult;
     }
 
-    //metodo che muove la pedina del risultato del dado
+    //setta la direzione scelta dal giocatore
+    public void setChosenDirection(String direction){
+        this.chosenDirection=direction;
+    }
+
+    //metodo che muove la pedina del risultato del dado nella direzione scelta
     public void movePlayer(){
-        Scanner sc=new Scanner(System.in);
-        System.out.println("in che direzione muoversi? cw=senso orario ccw=senso antiorario)");
-        String direction="";
-        while (!(direction.equalsIgnoreCase("ccw") || (direction.equalsIgnoreCase("cw")))){
-            direction=sc.next();
-            if(!(direction.equalsIgnoreCase("ccw") || (direction.equalsIgnoreCase("cw")))) {
-                System.out.println("inserisci cw o ccw");
-            }
-        }
         System.out.println("posizione di partenza : " + playerOnTurn.getActualPosition());
-        if(direction.equalsIgnoreCase("cw")){
+        if(chosenDirection.equalsIgnoreCase("cw")){
             if(playerOnTurn.getActualPosition() + dieresult >= NSQUARES){
                 Integer position=playerOnTurn.getActualPosition() + dieresult -NSQUARES;
                 playerOnTurn.setActualPosition(position);
             }
             else playerOnTurn.setActualPosition(playerOnTurn.getActualPosition() + dieresult);
         }
-        if(direction.equalsIgnoreCase("ccw")){
+        if(chosenDirection.equalsIgnoreCase("ccw")){
             if(playerOnTurn.getActualPosition() - dieresult < 0){
                 Integer excess= -1*(playerOnTurn.getActualPosition() - dieresult);
                 playerOnTurn.setActualPosition(NSQUARES-excess);
@@ -72,21 +71,27 @@ public class Turn {
             ((BonusMalusSquare) currentSquare).executeBonusMalus(this);
         }
     }
-    //metodo che visualizza la domanda e permette al giocatore di rispondere
-    public Boolean AnswerQuestion(){
-        Boolean correct=false;
+
+    public Question visualizeQuestion(){
         int currentPosition=playerOnTurn.getActualPosition();
-        correct=this.playBoard.getSquares().get(currentPosition).goOnIt();
-        return correct;
+        return this.playBoard.getSquares().get(currentPosition).visualizeQuestion();
     }
 
-    public void obtainSlice(){
+    //metodo che permette al giocatore di rispondere
+    public Boolean AnswerQuestion(int indexOfAnswer){
+        int currentPosition=playerOnTurn.getActualPosition();
+        return this.playBoard.getSquares().get(currentPosition).goOnIt(indexOfAnswer);
+    }
+    //RITORNA TRUE SE IL GIOCATORE HA OTTENUTO LO SPICCHIO
+    public boolean obtainSlice(){
         Square actualSquare=playBoard.getSquares().get(playerOnTurn.getActualPosition());
         if(actualSquare instanceof FinalQuestionSquare){
             Categories categoryOfTheSlice=((FinalQuestionSquare)actualSquare).getCategory();
             System.out.println(playerOnTurn.getNickname() + " ha ottenuto lo spicchio di " +categoryOfTheSlice );
             playerOnTurn.obtainSlice(categoryOfTheSlice);
+            return true;
         }
+        else return false;
     }
 
     public Boolean verifyVictory(){

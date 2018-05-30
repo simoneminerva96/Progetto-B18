@@ -9,8 +9,7 @@ public class InitialSquare extends Square {
     }
     //non viene fatta nessuna domanda sulla casella iniziale
     @Override
-    public Boolean goOnIt() {
-        System.out.println("casella iniziale");
+    public Boolean goOnIt(int indexOfAnswer) {
         return false;
     }
 }

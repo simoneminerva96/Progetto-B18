@@ -13,9 +13,4 @@ public class FinalQuestionSquare extends Square {
         return category;
     }
 
-    @Override
-    public Boolean goOnIt() {
-        System.out.println("DOMANDA FINALE!");
-        return super.goOnIt();
-    }
 }

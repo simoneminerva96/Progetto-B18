@@ -5,5 +5,5 @@ package GameClasses;
  * @author Ansaldi Jacopo <jacopo.ansaldi01@universitadipavia.it>
  */
 public enum Categories {
-    Storia,Geografia,ArteLetteratura,Spettacolo,Scienze,Sport,BonusMalus
+    Storia,Geografia,ArteLetteratura,Spettacolo,Scienze,Sport
 }

@@ -16,6 +16,7 @@ public class TrivialGame {
     private Die die;        //dado
     private BoardProva playBoard;        //tabellone di gioco
     private Turn turn;      //turno attuale
+    private TurnPhase turnPhase;
     private Integer index=0; //INDICE CHE SERVE PER TENER IL CONTO DI QUALE GIOCATORE è IL TURNO
 
     public TrivialGame(){
@@ -23,6 +24,7 @@ public class TrivialGame {
         possiblePieces=new ArrayList<Piece>();
         die=new Die();
         turn = new Turn(null,playBoard);    //all'inizio non ho alcun giocatore di turno
+        turnPhase=null;//inizialmente è nullo
         try{
             playBoard=new BoardProva();
         }
@@ -36,9 +38,6 @@ public class TrivialGame {
         return players;
     }
 
-    public Turn getTurn() {
-        return turn;
-    }
 
     /**
      * metodo che crea i giocatori che parteciperanno alla partita, riceve in ingresso la lista dei nickname
@@ -152,10 +151,65 @@ public class TrivialGame {
         }
     }
 
+    //metodi che eseguono le fasi di gioco del turno
+    //fase iniziale, setta il primo giocatore che deve giocare al turno
+    public void initializePhase(){
+        index=0;
+        turnPhase=TurnPhase.Initialize;
+        turn.setPlayerOnTurn(players.get(index));
+    }
+
     public void SetPlayerOnTurn(Player player){
+        index ++;   //L'INDICE PUNTA AL GIOCATORE SUCCESSIVO
+        if(index==players.size()) index=0;
+        turnPhase=TurnPhase.setPlayerOnTurn;
         turn.setPlayerOnTurn(player);
     }
 
+    public int throwDie(){
+        turnPhase=TurnPhase.ThrowDie;
+         return turn.dieLaunch();
+    }
+
+    public void chooseDirection(String direction){
+        //direction cw=senso orario ccw=senso antiorario
+        turnPhase=TurnPhase.chooseDirection;
+        turn.setChosenDirection(direction);
+    }
+
+    public void movePlayer(){
+        turnPhase=TurnPhase.MovePlayer;
+        turn.movePlayer();
+    }
+
+    public void executeBonusMalus(){
+        turnPhase=TurnPhase.executeBonusMalus;
+        if(playBoard.getSquares().get(players.get(index).getActualPosition()) instanceof BonusMalusSquare){
+            turn.executeBonusMalus();
+        }
+    }
+
+    public Question visualizeQuestion(){
+        turnPhase=TurnPhase.visualizeQuestion;
+        return turn.visualizeQuestion();
+    }
+
+    public boolean answerQuestion(int indexOfQuestion){
+        turnPhase=TurnPhase.answer;
+        return turn.AnswerQuestion(indexOfQuestion);
+    }
+
+
+    public Boolean obtainSlice(){
+        turnPhase=TurnPhase.obtainSlice;
+        return turn.obtainSlice();
+    }
+
+    public boolean verifyVictory(){
+        turnPhase=TurnPhase.victory;
+        return turn.verifyVictory();
+    }
+    /*
     //metodo che esegue un turno di gioco e ritorna falso se un giocatore ha vinto
     public Boolean play(){
         Boolean correct=false;
@@ -187,5 +241,6 @@ public class TrivialGame {
             return false;
         }
     }
+    */
 
 }
