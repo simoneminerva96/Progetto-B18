@@ -119,11 +119,11 @@ public class ConnectionDB {
     
 
     //Funzione per fare ritornare il messaggio di avvenuto login o errore
-    public String ExistsPlayer(String IDNAME, String PW) {
+    public Boolean ExistsPlayer(String IDNAME, String PW) {
         //
         String query = "{ ?=call PLAYER_EXIST(?,?) }";
         ResultSet rs;
-        String returnMess="";
+        Boolean returnMess = null;
 
         try (Connection conn = DriverManager.getConnection("jdbc:mysql://93.41.247.149:3306/trivial?useSSL=false", "root", "root");
              CallableStatement stmt = conn.prepareCall(query)) {
@@ -135,7 +135,7 @@ public class ConnectionDB {
             rs = stmt.executeQuery();
 
             while (rs.next()) {
-                returnMess=rs.getString(1);
+                returnMess = rs.getBoolean(1);
             }
 
         } catch (SQLException e) {
