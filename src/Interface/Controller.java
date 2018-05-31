@@ -24,6 +24,9 @@ public class Controller {
         match.initializePhase(); //setto il primo giocatore di turno
     }
 
+    public int getIndex(){
+        return match.getIndex();
+    }
     public int getDiceValue(){
        return match.throwDie();
     }
@@ -35,5 +38,10 @@ public class Controller {
 
     public Question getQuestion(){
         return match.visualizeQuestion();
+    }
+
+    public boolean answerQuestion(int index){
+
+        return match.answerQuestion(index);
     }
 }

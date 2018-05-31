@@ -24,10 +24,10 @@ public class TrivialGame {
         players=new ArrayList<Player>();
         possiblePieces=new ArrayList<Piece>();
         die=new Die();
-        turn = new Turn(null,playBoard);    //all'inizio non ho alcun giocatore di turno
         turnPhase=null;//inizialmente è nullo
         try{
             playBoard=new BoardProva();
+            turn = new Turn(null,playBoard);    //all'inizio non ho alcun giocatore di turno
         }
         catch (SQLException e){
             System.out.println(e.getMessage());
@@ -39,6 +39,9 @@ public class TrivialGame {
         return players;
     }
 
+    public Integer getIndex() {
+        return index;
+    }
 
     /**
      * metodo che crea i giocatori che parteciperanno alla partita, riceve in ingresso la lista dei nickname
@@ -205,7 +208,7 @@ public class TrivialGame {
         return turn.AnswerQuestion(indexOfQuestion);
     }
 
-
+    //da chimare quando il giocatore sceglie la risposta
     public Boolean obtainSlice(){
         turnPhase=TurnPhase.obtainSlice;
         return turn.obtainSlice();
