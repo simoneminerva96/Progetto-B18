@@ -9,12 +9,9 @@ import ConnectionDB.ConnectionDB;
  * @author Ansaldi Jacopo <jacopo.ansaldi01@universitadipavia.it>
 */
 public class Login {
-    private String nicknameInserted,passwordInserted;
     private ConnectionDB connection;
 
     public Login(){
-        nicknameInserted = null;
-        passwordInserted = null;
         connection = new ConnectionDB();
     }
 
@@ -26,13 +23,8 @@ public class Login {
      @return flag di avvenuto login
      */
     public boolean Login(String nicknameInserted,String passwordInserted){
-        this.nicknameInserted = nicknameInserted;
-        this.passwordInserted = passwordInserted;
-        boolean check = false;
 
-        String mess=connection.ExistsPlayer(nicknameInserted,passwordInserted);
-        System.out.println(mess);
-        return check;
+        return connection.ExistsPlayer(nicknameInserted,passwordInserted);
     }
 
 }

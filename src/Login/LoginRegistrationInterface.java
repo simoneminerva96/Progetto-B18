@@ -34,7 +34,7 @@ public class LoginRegistrationInterface extends BasicGameState {
     private FormButton regButton, logButton;
     private Registration reg;
     private Login login;
-    private boolean check;
+    private boolean checkR, checkL;
     private TriviaFont f;
     private Music music;
 
@@ -74,11 +74,20 @@ public class LoginRegistrationInterface extends BasicGameState {
         fonx1.drawString(520,300,"INSERISCI PASSWORD", org.newdawn.slick.Color.white);
 
         if (regButton.isClicked()) {
-            if (check) {
+            if (checkR) {
                 fonx1.drawString(490,20, "Registrazione effettuata con successo", org.newdawn.slick.Color.blue);
             }
             else fonx1.drawString(490,20, "Registrazione fallita", org.newdawn.slick.Color.blue);
+        }
+
+        if(logButton.isClicked()){
+            if (!checkL) {
+                fonx1.drawString(490,20, "Username o password errati", org.newdawn.slick.Color.blue);
             }
+            else {
+                stateBasedGame.enterState(3);
+            }
+        }
     }
 
     /*
@@ -91,10 +100,10 @@ public class LoginRegistrationInterface extends BasicGameState {
         Input in = gameContainer.getInput();
 
         if (in.isMousePressed(0)){
-
             regButton.setClicked(false);
-            check = regButton.onClickFormRegistration(in.getMouseX(),in.getMouseY(),usrname.getText(),psw.getText(), reg);
-            logButton.onClickFormLogin(in.getMouseX(),in.getMouseY(),usrname.getText(),psw.getText(), login, stateBasedGame, 3);
+            logButton.setClicked(false);
+            checkR = regButton.onClickFormRegistration(in.getMouseX(),in.getMouseY(),usrname.getText(),psw.getText(), reg);
+            checkL = logButton.onClickFormLogin(in.getMouseX(),in.getMouseY(),usrname.getText(),psw.getText(), login);
         }
         regButton.onMouseEnter(regButton,in.getMouseX(),in.getMouseY());
         logButton.onMouseEnter(logButton, in.getMouseX(), in.getMouseY());
