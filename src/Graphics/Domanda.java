@@ -5,8 +5,6 @@ import Interface.Controller;
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Input;
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -16,10 +14,11 @@ import org.newdawn.slick.state.StateBasedGame;
  * comprende la domanda e le relative 4 risposte. Inoltre, prevede dei controlli sulla gestione
  * della domanda corretta e di mostrare una stringa che informa se la risposta cliccata è corretta o
  * meno.
- *
  * - esito: flag in cui salvo l'esito della risposta che ho cliccato
- * - end: flag che indica se ho risposto e se ho ricevuto l'esito
- * - q: {@see QuestionAndAnswers} oggetto che contiene le domande e le risposte
+ * - end: flag che indica se ho risposto e ricevuto l'esito
+ * - controller: interfaccia controller con la logica per prelevare le domande
+ * - answered: flag che indica se ho risposto o meno
+ * - question: oggetto di tipo Question che contiene la domanda estratta
  */
 
 public class Domanda extends BasicGameState {
@@ -27,31 +26,17 @@ public class Domanda extends BasicGameState {
     private String risposta2 = "Risposta sbagliata";
     private boolean esito = false;
     private boolean end = false;
-    private Controller controller; //interfaccia controller per prelevare le domande dalla logica
-    private Question question; //domanda estratta
-    //private QuestionAndAnswers q;
-    private boolean Answered=false;     //valore di default per ora
+    private Controller controller;
+    private Question question;
+    private boolean answered = false;
 
-    public Domanda(int state) {
-        /*
-        q = new QuestionAndAnswers();
-        q.setAnswer("Roma", true);
-        q.setAnswer("Milano", false);
-        q.setAnswer("Napoli", false);
-        q.setAnswer("Firenze", false);
-        */
-
-    }
-
-    public void setController(Controller controller) {
-        this.controller = controller;
-    }
+    public Domanda(int state) { }
 
     @Override
     public int getID() { return 6; }
 
     @Override
-    public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
+    public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) {
     }
 
     /**
@@ -60,7 +45,7 @@ public class Domanda extends BasicGameState {
      * risposta2. Se ho risposto e ho visualizzato la stringa, end = true.
      */
     @Override
-    public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
+    public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
         question=controller.getQuestion();
         graphics.drawString(question.getQuestion(), 850, 250);
         graphics.drawString(question.getAnswers().get(0).getAnswer(), 900, 300);
@@ -68,7 +53,7 @@ public class Domanda extends BasicGameState {
         graphics.drawString(question.getAnswers().get(2).getAnswer(), 900, 400);
         graphics.drawString(question.getAnswers().get(3).getAnswer(), 900, 450);
 
-        if (Answered) {
+        if (answered) {
             if (esito == true) {
                 graphics.drawString(risposta1, 200, 500);
             } else {
@@ -81,40 +66,41 @@ public class Domanda extends BasicGameState {
     /**
      * Controllo le coordinate delle risposte in cui l'utente clicca. In ogni caso, posso cliccare solo
      * se premo il tasto sinistro del mouse e se non ho già risposto. Una volta cliccato, aggiorno
-     * il flag answered e mi salvo l'esito della risposta.
+     * il flag answered e mi salvo l'esito della risposta utilizzando l'interfaccia controller.
      */
     @Override
-    public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
-        Input input = gameContainer.getInput();
+    public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) {
         int posX = Mouse.getX();
         int posY = Mouse.getY();
 
-        //System.out.println("x: "+posX+ " y: "+posY);
-
         if (posX>850 && posX<1135){
             if (posY<414 && posY>373) {
-                if (Mouse.isButtonDown(0) && Answered == false) {
+                if (Mouse.isButtonDown(0) && answered == false) {
                     esito = controller.answerQuestion(0);
-                    Answered=true;
+                    answered = true;
+                    controller.sendIndexOfAnswer(0);
                 }
             }
             if (posY<360 && posY>325) {
-                if (Mouse.isButtonDown(0) && Answered == false) {
+                if (Mouse.isButtonDown(0) && answered == false) {
                     esito = controller.answerQuestion(1);
-                    Answered=true;
+                    answered = true;
+                    controller.sendIndexOfAnswer(1);
                 }
             }
             if (posY<305 && posY>275) {
-                if (Mouse.isButtonDown(0) && Answered == false) {
+                if (Mouse.isButtonDown(0) && answered == false) {
                     esito = controller.answerQuestion(2);
-                    Answered=true;
+                    answered = true;
+                    controller.sendIndexOfAnswer(2);
                 }
             }
 
             if (posY<260 && posY>230) {
-                if (Mouse.isButtonDown(0) && Answered == false){
+                if (Mouse.isButtonDown(0) && answered == false){
                     esito = controller.answerQuestion(3);
-                    Answered=true;
+                    answered = true;
+                    controller.sendIndexOfAnswer(3);
                 }
             }
         }
@@ -126,14 +112,15 @@ public class Domanda extends BasicGameState {
     }
 
     public void setAnswered(boolean answered) {
-        Answered=answered;
+        this.answered=answered;
     }
 
     public void setEsito(boolean esito) {
         this.esito = esito;
     }
 
-    public boolean isEsito() {
-        return esito;
+    public void setController(Controller controller) {
+        this.controller = controller;
     }
+
 }

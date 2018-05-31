@@ -2,7 +2,6 @@ package Graphics;
 
 import Graphics.Map.Map;
 import Graphics.Player.*;
-import Domanda;
 import Interface.Controller;
 import Interface.Direction;
 import org.lwjgl.input.Mouse;
@@ -66,7 +65,6 @@ public class Trivia extends BasicGameState {
         pGUI.clear();
         f = new TriviaFont();
         playerBack = new ArrayList<>();
-
     }
 
     public int getID() {
@@ -144,14 +142,10 @@ public class Trivia extends BasicGameState {
          */
 
         if (pGUI.get(interm.getIndex()).isReady()) {
-            try {
-                domanda.render(gameContainer, stateBasedGame, graphics);
-                if (domanda.isEnd()) {
-                    pGUI.get(interm.getIndex()).setReady(false);
-                    launched = false;
-                }
-            } catch (SlickException e) {
-                e.printStackTrace();
+            domanda.render(gameContainer, stateBasedGame, graphics);
+            if (domanda.isEnd()) {
+                pGUI.get(interm.getIndex()).setReady(false);
+                launched = false;
             }
         }
         /*
@@ -181,7 +175,7 @@ public class Trivia extends BasicGameState {
         {@see TurnMaster}. resetto answered ed esito a false perchè risponderò ad una nuova domanda.
          */
         if (xpos > 990 && xpos < 1130 && ypos > 55 && ypos < 120) {
-            if (input.isMousePressed(0) && launched == false) {
+            if (input.isMousePressed(0) && !launched) {
                 if (interm.getIndex() == nPlayers-1) {
                     first = false;
                     //turn.resetIndex();
@@ -189,10 +183,16 @@ public class Trivia extends BasicGameState {
                         p.setClicked(false);
                     }
                 }
+                if (first){
+                    interm.incrementIndex();
+                    pGUI.get(interm.getIndex()).setClicked(false);
+                }
                 launched = true;
                 diceN = interm.getDiceValue();
                 d.setCurrentDie(diceN);
-                pGUI.get(interm.getIndex()).setClicked(false);
+
+
+                //pGUI.get(interm.getIndex()).setClicked(false);
                 //turn.incrementIndex(domanda.isEsito(), first, pGUI.get(interm.getIndex()));
                 domanda.setAnswered(false);
                 domanda.setEsito(false);
@@ -204,7 +204,6 @@ public class Trivia extends BasicGameState {
         in uno o nell'altro caso, richiamo il metodo nextPlayer per aggiornare le coordinate della GUI.
         se sono al primo tiro del dado, first = true.
          */
-
         if (launched) {
             if (ypos > 46 && ypos < 109) {
                 if (xpos > 870 && xpos < 930) {

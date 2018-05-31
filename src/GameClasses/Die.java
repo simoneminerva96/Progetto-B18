@@ -12,11 +12,17 @@ public class Die {
     public Die(){
         generator=new Random();
     }
-    //singolo lancio del dado, ritorna un intero tra 1 e 6
+
+    /**
+     * Singolo lancio del dado
+     * @return un intero compreso tra 1 e 6
+     */
+
     public int Launch(){
-        int min = 1; // numero minimo
-        int max=6 ; // numero massimo
+        int min = 1;
+        int max = 6 ;
         int range = ((max-min) + 1);
+
         extractNumber = generator.nextInt(range) + min;
         return extractNumber;
     }

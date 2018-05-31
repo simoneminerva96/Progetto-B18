@@ -3,7 +3,6 @@ package GameClasses.Squares;
 import GameClasses.Answer;
 import GameClasses.Question;
 import GameClasses.Square;
-
 import java.util.ArrayList;
 
 public class InitialSquare extends Square {
@@ -13,7 +12,7 @@ public class InitialSquare extends Square {
     }
     //non viene fatta nessuna domanda sulla casella iniziale
     @Override
-    public Boolean goOnIt(int indexOfAnswer) {
+    public boolean goOnIt(int indexOfAnswer) {
         return false;
     }
 

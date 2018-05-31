@@ -2,8 +2,6 @@ package GameClasses;
 
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Scanner;
-
 /**
  *  Classe che corrisponde a una singola casella di gioco
  *  @author Ansaldi Jacopo <jacopo.ansaldi01@universitadipavia.it>
@@ -14,28 +12,36 @@ public class Square {
     private Question extractedQuestion;
 
     public Square(Integer index){
-        this.index=index;
-        possibleQuestions=new ArrayList<Question>();
-        this.extractedQuestion=null;
+        this.index = index;
+        possibleQuestions = new ArrayList<>();
+        this.extractedQuestion = null;
     }
 
     public Integer getIndex() {
         return index;
     }
 
-    // metodo per inizializzare le possibili domande ( da prendere dal db quando inizializzo la partita)
+    /**
+     * metodo per inizializzare le possibili domande ( da prendere dal db quando inizializzo la partita)
+     * @param possibleQuestions possibili domande
+     *
+     */
     public void setPossibleQuestions(ArrayList<Question> possibleQuestions){
         this.possibleQuestions.addAll(possibleQuestions);
     }
-    //ritorna la domanda estratta
+
+    /**
+     * Metodo che restituisce la domanda estratta. Genero un numero casuale tra 0 e numero massimo di
+     * domande disponibili. Il numero generato corrisponderà all'indice della domanda da effettuare.
+     * @return
+     */
     public Question visualizeQuestion(){
         Random questionChooser=new Random();
-        //genero un numero casuale compreso tra 0 e il numero di domande disponibili
-        int max=possibleQuestions.size() -1 ; // numero massimo
+        int max=possibleQuestions.size() -1 ;
         int range = ((max) + 1);
-        int indexOfQuestion =questionChooser.nextInt(range);
-        // il numero generato corrisponderà all'indice della domanda da effettuare
-        this.extractedQuestion=possibleQuestions.get(indexOfQuestion);
+        int indexOfQuestion = questionChooser.nextInt(range);
+
+        this.extractedQuestion = possibleQuestions.get(indexOfQuestion);
         return extractedQuestion;
         /*
         System.out.println("domanda di " + possibleQuestions.get(indexOfQuestion).getCategory() + ":");
@@ -47,11 +53,12 @@ public class Square {
         */
     }
 
-    //metodo che permette al giocatore di rispondere e verifica se la rispsota è corretta
-    public Boolean goOnIt(int indexOfAnswer){
-        Boolean check=false;
-        check=extractedQuestion.getAnswers().get(indexOfAnswer).getCorrect();
+    /**
+     * @param indexOfAnswer
+     * @return booleano che indica se la risposta è corretta o no
+     */
+    public boolean goOnIt(int indexOfAnswer){
         //check=possibleQuestions.get(indexOfQuestion).getAnswers().get(intAnswer).getCorrect();
-        return check;
+        return extractedQuestion.getAnswers().get(indexOfAnswer).getCorrect();
     }
 }

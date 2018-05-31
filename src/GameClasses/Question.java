@@ -17,7 +17,7 @@ public class Question {
     public Question(String question,Categories category,ArrayList<Answer> answers) {
         this.question = question;
         this.category = category;
-        this.answers = new ArrayList<Answer>();
+        this.answers = new ArrayList<>();
         this.answers.addAll(answers);
     }
 
