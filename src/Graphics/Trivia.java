@@ -4,6 +4,7 @@ import Graphics.Map.Map;
 import Graphics.Player.*;
 import Graphics.Question.Domanda;
 import Interface.Controller;
+import Interface.Direction;
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Color;

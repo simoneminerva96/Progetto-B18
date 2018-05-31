@@ -5,6 +5,7 @@ import GameClasses.Squares.FinalQuestionSquare;
 import java.awt.*;
 import java.sql.SQLException;
 import java.util.*;
+import Interface.Direction;
 
 /**
  * CLASSE A CUI CORRISPONDE UNA SINGOLA PARTITA DI GIOCO
@@ -171,7 +172,12 @@ public class TrivialGame {
          return turn.dieLaunch();
     }
 
-    public void chooseDirection(String direction){
+    public void chooseDirection(Direction d){
+        String direction="";
+        if(d==Direction.FORWARD){
+            direction="cw";
+        }
+        else direction="ccw";
         //direction cw=senso orario ccw=senso antiorario
         turnPhase=TurnPhase.chooseDirection;
         turn.setChosenDirection(direction);

@@ -32,9 +32,7 @@ public class Turn {
 
     //metodo che effettua il lancio del dado
     public int dieLaunch(){
-        System.out.println("turno di " + playerOnTurn.getNickname());
         dieresult=die.Launch();
-        System.out.println("risultato del lancio : " + dieresult);
         return dieresult;
     }
 

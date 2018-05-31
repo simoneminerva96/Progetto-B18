@@ -1,10 +1,7 @@
 package Graphics.Player;
 
-import Graphics.Direction;
-import Graphics.Player.Player;
+import Interface.Direction;
 import org.newdawn.slick.Animation;
-
-import java.lang.management.PlatformLoggingMXBean;
 
 /**
  * @author Stefano

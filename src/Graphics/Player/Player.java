@@ -1,6 +1,6 @@
 package Graphics.Player;
 
-import Graphics.Direction;
+import Interface.Direction;
 import Graphics.Map.Map;
 
 /**
