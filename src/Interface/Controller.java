@@ -20,7 +20,7 @@ public class Controller {
         //fine giocatori prova
         match.initializePlayers(gamingPlayers); //inizializzo i giocatori
         match.InitializePossiblePieces();  //inizializzo le possibili pedine per la scelta
-        match.initializePhase();
+        match.initializePhase(); //setto il primo giocatore di turno
     }
 
     public int getDiceValue(){
@@ -29,5 +29,6 @@ public class Controller {
 
     public void setDirection(Direction direction){
         match.chooseDirection(direction);
+        match.movePlayer();
     }
 }
