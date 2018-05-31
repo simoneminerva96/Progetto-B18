@@ -209,6 +209,7 @@ public class Trivia extends BasicGameState {
             if (ypos > 46 && ypos < 109) {
                 if (xpos > 870 && xpos < 930) {
                     if (input.isMousePressed(0)) {
+                        interm.setDirection(Direction.BACK);
                         turn.nextPlayer(diceN, pGUI.get(turn.getIndex()), Direction.BACK);
                         if (turn.getIndex() == 0) {
                             first = true;
@@ -217,6 +218,7 @@ public class Trivia extends BasicGameState {
                 }
                 if (xpos > 770 && xpos < 830) {
                     if (input.isMousePressed(0)) {
+                        interm.setDirection(Direction.FORWARD);
                         turn.nextPlayer(diceN, pGUI.get(turn.getIndex()), Direction.FORWARD);
                         if (turn.getIndex() == 0) {
                             first = true;

@@ -3,7 +3,6 @@ package Graphics;
 import Graphics.Player.Player;
 import Graphics.Player.PlayerGUI;
 import Interface.Direction;
-
 import java.util.ArrayList;
 
 /**
