@@ -2,7 +2,6 @@ package GameClasses;
 
 import GameClasses.Squares.*;
 import ConnectionDB.ConnectionDB;
-
 import java.sql.SQLException;
 import java.util.ArrayList;
 /**
@@ -13,11 +12,12 @@ public class Board {
     private final static int NSQUARES=36;   //NUMERO TOT DI CASELLE
     private ArrayList<Square> squares;
     private ConnectionDB connectionDB;
+
     // inserire le domande tramite il metodo della classe connesione db
     //MANCANO DA INSERIRE LE DOMANDE FINALI
     public Board() throws SQLException{
         connectionDB=new ConnectionDB();
-        squares=new ArrayList<Square>();
+        squares=new ArrayList<>();
         for(int i=0;i<NSQUARES;i++){
             if(i==0) squares.add(new InitialSquare(i)); //casella start
             if(i==1 || i==10 || i==19 || i==28){

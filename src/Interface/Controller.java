@@ -27,6 +27,7 @@ public class Controller {
     public int getIndex(){
         return match.getIndex();
     }
+
     public int getDiceValue(){
        return match.throwDie();
     }
