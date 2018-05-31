@@ -66,7 +66,6 @@ public class LoginRegistrationInterface extends BasicGameState {
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
         graphics.drawImage(background,0,0);
         graphics.drawImage(registrationback,421,135);
-        //mf.render(gameContainer,stateBasedGame,graphics);
         usrname.render(gameContainer,graphics);
         psw.render(gameContainer,graphics);
         regButton.render(gameContainer,graphics);
@@ -95,7 +94,7 @@ public class LoginRegistrationInterface extends BasicGameState {
 
             regButton.setClicked(false);
             check = regButton.onClickFormRegistration(in.getMouseX(),in.getMouseY(),usrname.getText(),psw.getText(), reg);
-            logButton.onClickFormLogin(in.getMouseX(),in.getMouseY(),usrname.getText(),psw.getText(), login, stateBasedGame, 2);
+            logButton.onClickFormLogin(in.getMouseX(),in.getMouseY(),usrname.getText(),psw.getText(), login, stateBasedGame, 3);
         }
         regButton.onMouseEnter(regButton,in.getMouseX(),in.getMouseY());
         logButton.onMouseEnter(logButton, in.getMouseX(), in.getMouseY());

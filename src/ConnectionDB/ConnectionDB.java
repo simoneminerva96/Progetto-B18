@@ -3,13 +3,8 @@ package ConnectionDB;
 import GameClasses.Answer;
 import GameClasses.Categories;
 import GameClasses.Question;
-
-import javax.naming.CommunicationException;
-import javax.xml.transform.Result;
 import java.sql.*;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 /**
  * classe che effettua la connesione al database delle domande e dei giocatori
@@ -29,7 +24,7 @@ public class ConnectionDB {
      */
     public ArrayList<Question> getQuestion (String cod) throws SQLException{
 
-        cn = DriverManager.getConnection("jdbc:mysql://10.87.160.10:3306/trivial?useSSL=false", "root", "root");
+        cn = DriverManager.getConnection("jdbc:mysql://93.41.247.149:3306/trivial?useSSL=false", "root", "root");
         sql = "select ID_QUEST, DESCRIZIONE, RISPOSTA, VALUE from domande join risposte on ID_QUEST = ID_DOMANDA where ID_QUEST LIKE \"" + cod + "%\"";
         // ________________________________query
         ArrayList<Question> questions=new ArrayList<Question>();
@@ -99,38 +94,6 @@ public class ConnectionDB {
         else return false;
     }
 
-
-   /* public static void main(String[] args) throws SQLException  {
-        String NAME;
-        String PASS;
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.print("Inserisci il tuo nome: ");
-        NAME = scanner.nextLine();
-                                                                //questo è l'inserimento di un nuovo utente
-        System.out.print("Inserisci la tua password: ");
-        PASS = scanner.nextLine();
-
-        getPlayer(NAME, PASS);
-
-//------------------------------------------------------------------------------
-
-        System.out.print("Inserisci il tuo nome: ");
-        NAME = scanner.nextLine();
-                                                                    //questo è il login
-        System.out.print("Inserisci la tua password: ");
-        PASS = scanner.nextLine();
-
-        ExistsPlayer(NAME, PASS);
-
-//-------------------------------------------------------------------------------
-
-
-        ChooseCOD("MAT"); //A seconda del codice passato, il metodo chiamato fa tornare una domanda casuale con le relative risposte
-
-
-    }*/
-
     //Procedura per l'inserimento delle credenziali utente nel DB(registrazione)
     public Boolean getPlayer(String IDNAME, String PW) {
         //
@@ -180,179 +143,4 @@ public class ConnectionDB {
         }
        return returnMess;
     }
-/*
-    public static String ChooseCOD(String COD) { //Funzione per fare ritornare il messaggio di avvenuto login o errore
-        //
-        String query = "{ ?=call CHOOSE_IDQUEST(?) }";
-        ResultSet rs;
-
-        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/trivial?user=root&password=winchester96");
-             CallableStatement stmt = conn.prepareCall(query)) {
-
-            stmt.registerOutParameter(1, Types.VARCHAR);
-            stmt.setString(2,COD);
-
-            rs = stmt.executeQuery();
-
-            while (rs.next()) {
-                String r =( rs.getString(1));
-                System.out.println( rs.getString(1));
-
-                ChooseQUEST(r);  //Passa il codice generato al metodo per la visaulizzazione della domanda
-
-
-                //Con questi quattro metodi, passa il codice generato ai metodi i quali, generano le quattro risposte corrispondenti
-                ChooseANSWER1(r);
-                ChooseANSWER2(r);
-                ChooseANSWER3(r);
-                ChooseANSWER4(r);
-
-                return r;
-            }
-
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-
-        return  query;
-
-    }
-
-    public static void ChooseQUEST(String QUEST) { //Funzione per fare ritornare il messaggio di avvenuto login o errore
-        //
-        String query = "{ ?=call CHOOSE_QUEST(?) }";
-        ResultSet rs;
-        String re;
-
-        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/trivial?user=winchester96&password=winchester96");
-             CallableStatement stmt = conn.prepareCall(query)) {
-
-            stmt.registerOutParameter(1, Types.VARCHAR);
-            stmt.setString(2,QUEST);
-
-            rs = stmt.executeQuery();
-
-            while (rs.next()) {
-                System.out.println( rs.getString(1));
-
-            }
-
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-
-
-
-    }
-
-    public static void ChooseANSWER1(String QUEST) { //Funzione per fare ritornare il messaggio di avvenuto login o errore
-        //
-        String query = "{ ?=call CHOOSE_ANSWER1(?) }";
-        ResultSet rs;
-        String re;
-
-        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/trivial?user=root&password=winchester96");
-             CallableStatement stmt = conn.prepareCall(query)) {
-
-            stmt.registerOutParameter(1, Types.VARCHAR);
-            stmt.setString(2,QUEST);
-
-            rs = stmt.executeQuery();
-
-            while (rs.next()) {
-                System.out.println( rs.getString(1));
-
-            }
-
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-
-
-
-    }
-
-
-    public static void ChooseANSWER2(String QUEST) { //Funzione per fare ritornare il messaggio di avvenuto login o errore
-        //
-        String query = "{ ?=call CHOOSE_ANSWER2(?) }";
-        ResultSet rs;
-        String re;
-
-        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/trivial?user=root&password=winchester96");
-             CallableStatement stmt = conn.prepareCall(query)) {
-
-            stmt.registerOutParameter(1, Types.VARCHAR);
-            stmt.setString(2,QUEST);
-
-            rs = stmt.executeQuery();
-
-            while (rs.next()) {
-                System.out.println( rs.getString(1));
-
-            }
-
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-
-
-
-    }
-
-    public static void ChooseANSWER3 (String QUEST) { //Funzione per fare ritornare il messaggio di avvenuto login o errore
-        //
-        String query = "{ ?=call CHOOSE_ANSWER3(?) }";
-        ResultSet rs;
-        String re;
-
-        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/trivial?user=root&password=winchester96");
-             CallableStatement stmt = conn.prepareCall(query)) {
-
-            stmt.registerOutParameter(1, Types.VARCHAR);
-            stmt.setString(2,QUEST);
-
-            rs = stmt.executeQuery();
-
-            while (rs.next()) {
-                System.out.println( rs.getString(1));
-
-            }
-
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-
-
-
-    }
-
-    public static void ChooseANSWER4(String QUEST) { //Funzione per fare ritornare il messaggio di avvenuto login o errore
-        //
-        String query = "{ ?=call CHOOSE_ANSWER4(?) }";
-        ResultSet rs;
-        String re;
-
-        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/trivial?user=root&password=winchester96");
-             CallableStatement stmt = conn.prepareCall(query)) {
-
-            stmt.registerOutParameter(1, Types.VARCHAR);
-            stmt.setString(2,QUEST);
-
-            rs = stmt.executeQuery();
-
-            while (rs.next()) {
-                System.out.println( rs.getString(1));
-
-            }
-
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-
-
-
-    }*/
-
-
 }

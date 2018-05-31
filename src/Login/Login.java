@@ -13,30 +13,24 @@ public class Login {
     private ConnectionDB connection;
 
     public Login(){
-        nicknameInserted=null;
-        passwordInserted=null;
-        connection=new ConnectionDB();
+        nicknameInserted = null;
+        passwordInserted = null;
+        connection = new ConnectionDB();
     }
-    /*
-        metodo da chiamare quando l'utente preme il tasto login sull'interfaccia
-        prende i dati inseriti ed effettua il login
+
+    /**
+     Metodo da chiamare quando l'utente preme il tasto login sull'interfaccia. Prende i dati inseriti
+     ed effettua il login se sono corretti, altrimenti segna messaggio di errore.
+     @param nicknameInserted nickname inserito
+     @param passwordInserted password inserita
+     @return flag di avvenuto login
      */
     public boolean Login(String nicknameInserted,String passwordInserted){
-        this.nicknameInserted=nicknameInserted;
-        this.passwordInserted=passwordInserted;
-        boolean check=false;
-
-        /*effettuare il controllo sui dati inseriti, se corretti loggarsi, se non corrispondono
-          dare mess di errore*/
+        this.nicknameInserted = nicknameInserted;
+        this.passwordInserted = passwordInserted;
+        boolean check = false;
 
         String mess=connection.ExistsPlayer(nicknameInserted,passwordInserted);
-
-        /* se il messaggio corrisponde a quello di avvenuto login, il login è stato effettuato
-        ==> ritorna true*/
-
-        if(mess.equalsIgnoreCase("benvenuto!!")){
-            check=true;
-        }
         System.out.println(mess);
         return check;
     }

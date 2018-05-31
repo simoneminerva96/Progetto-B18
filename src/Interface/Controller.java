@@ -13,7 +13,7 @@ public class Controller {
     }
 
     public void initializePlayers(int nplayers){
-        ArrayList<String> gamingPlayers=new ArrayList<String>();
+        ArrayList<String> gamingPlayers=new ArrayList<>();
         //INSERISCO GIOCATORI DI PROVA, POI ANDRANNO INSERITI I NICKNAME DEI GIOCATORI
         // PARTECIPANTI PASSANDOLI A QUESTO COSTRUTTORE
         for(int i=0;i<nplayers;i++){
