@@ -6,7 +6,7 @@ package Graphics.Question;
  * - answer: la risposta
  * - esito: true se è la risposta corretta, false se la risposta è sbagliata
  */
-
+//DA TOGLIERE
 public class Answers {
     private String answer;
     private boolean esito;

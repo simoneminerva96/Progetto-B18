@@ -1,6 +1,7 @@
 package GameClasses.Squares;
 import GameClasses.*;
 
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -60,4 +61,14 @@ public class BonusMalusSquare extends Square {
         }
     }
 
+    @Override
+    public Question visualizeQuestion() {
+        ArrayList<Answer> a=new ArrayList<>();
+        a.add(new Answer("vuota1",false));
+        a.add(new Answer("vuota1",false));
+        a.add(new Answer("vuota1",false));
+        a.add(new Answer("vuota1",false));
+        Question vuota=new Question("CASELLA BONUS/MALUS!",null,a);
+        return vuota;
+    }
 }
