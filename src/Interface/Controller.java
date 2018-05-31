@@ -1,5 +1,6 @@
 package Interface;
 
+import GameClasses.Question;
 import GameClasses.TrivialGame;
 
 import java.util.ArrayList;
@@ -30,5 +31,9 @@ public class Controller {
     public void setDirection(Direction direction){
         match.chooseDirection(direction);
         match.movePlayer();
+    }
+
+    public Question getQuestion(){
+        return match.visualizeQuestion();
     }
 }

@@ -100,6 +100,7 @@ public class Trivia extends BasicGameState {
         esc.init(gameContainer, stateBasedGame);
         fonx1 = new TrueTypeFont(f.getFont().deriveFont(23f), false);
         interm = new Controller();
+        domanda.setController(interm);
     }
 
     @Override

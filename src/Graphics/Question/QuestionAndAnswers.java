@@ -12,6 +12,8 @@ import java.util.ArrayList;
  * - a, a1, a2, a3: oggetti di tipo risposta {@see Answers}
  * - answered: flag che indica se ho risposto
  */
+
+//DA TOGLIERE
 public class QuestionAndAnswers {
     private String question ="Qual è la capitale dell'Italia?";
     private ArrayList<Answers> a;
