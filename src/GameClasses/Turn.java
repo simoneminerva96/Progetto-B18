@@ -12,13 +12,14 @@ import java.util.Scanner;
 
 public class Turn {
     private final static int NSQUARES=36;
-    private BoardProva playBoard;    //tabellone di gioco
+    //private BoardProva playBoard;    //tabellone di gioco di prova
+    private Board playBoard;    //tabellone di gioco connesso al db
     private Player playerOnTurn;        //giocatore di turno
     private Die die;        //dado per determinare di quanto spostarsi
     private int dieresult;  //risultato del lancio del dado
     private String chosenDirection;
 
-    public Turn(Player playerOnTurn,BoardProva playBoard){
+    public Turn(Player playerOnTurn,Board playBoard){
         this.playerOnTurn=playerOnTurn;
         this.playBoard=playBoard;
         die=new Die();

@@ -15,7 +15,8 @@ public class TrivialGame {
     private ArrayList<Player> players;      //giccatori partecipanti
     private ArrayList<Piece> possiblePieces;        //possibili pedine tra cui scegliere
     private Die die;        //dado
-    private BoardProva playBoard;        //tabellone di gioco
+    //private BoardProva playBoard;        //tabellone di gioco di prova
+    private Board playBoard;        //tabellone vero che estrae dal db
     private Turn turn;      //turno attuale
     private TurnPhase turnPhase;
     private Integer index=0; //INDICE CHE SERVE PER TENER IL CONTO DI QUALE GIOCATORE è IL TURNO
@@ -26,7 +27,8 @@ public class TrivialGame {
         die=new Die();
         turnPhase=null;//inizialmente è nullo
         try{
-            playBoard=new BoardProva();
+            playBoard=new Board();
+            //playBoard=new BoardProva();
             turn = new Turn(null,playBoard);    //all'inizio non ho alcun giocatore di turno
         }
         catch (SQLException e){
@@ -205,7 +207,8 @@ public class TrivialGame {
 
     public boolean answerQuestion(int indexOfQuestion){
         turnPhase=TurnPhase.answer;
-        return turn.AnswerQuestion(indexOfQuestion);
+        boolean correct=turn.AnswerQuestion(indexOfQuestion);
+        return correct;
     }
 
     //da chimare quando il giocatore sceglie la risposta
