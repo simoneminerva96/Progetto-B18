@@ -99,8 +99,4 @@ public class Turn {
         else return false;
     }
 
-    public boolean getCorrect(int indexOfAnswer){
-        int currentPosition=playerOnTurn.getActualPosition();
-        return playBoard.getSquares().get(currentPosition).goOnIt(indexOfAnswer);
-    }
 }

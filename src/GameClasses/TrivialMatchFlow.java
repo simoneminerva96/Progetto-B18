@@ -30,7 +30,6 @@ public class TrivialMatchFlow {
     //psvm che poi andrà tolto perche questa classe esegue le operazioni nel costruttore quando viene istanziata
     //verrà quindi istanziata nel main controller
     public static void main(String[] args) {
-
         TrivialMatchFlow prova=new TrivialMatchFlow();
     }
 }

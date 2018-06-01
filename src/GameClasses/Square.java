@@ -43,14 +43,6 @@ public class Square {
 
         this.extractedQuestion = possibleQuestions.get(indexOfQuestion);
         return extractedQuestion;
-        /*
-        System.out.println("domanda di " + possibleQuestions.get(indexOfQuestion).getCategory() + ":");
-        System.out.println(possibleQuestions.get(indexOfQuestion).getQuestion());
-        System.out.println("1) " + possibleQuestions.get(indexOfQuestion).getAnswers().get(0).getAnswer());
-        System.out.println("2) " + possibleQuestions.get(indexOfQuestion).getAnswers().get(1).getAnswer());
-        System.out.println("3) " + possibleQuestions.get(indexOfQuestion).getAnswers().get(2).getAnswer());
-        System.out.println("4) " + possibleQuestions.get(indexOfQuestion).getAnswers().get(3).getAnswer());
-        */
     }
 
     /**
@@ -58,7 +50,6 @@ public class Square {
      * @return booleano che indica se la risposta è corretta o no
      */
     public boolean goOnIt(int indexOfAnswer){
-        //check=possibleQuestions.get(indexOfQuestion).getAnswers().get(intAnswer).getCorrect();
         return extractedQuestion.getAnswers().get(indexOfAnswer).getCorrect();
     }
 }
