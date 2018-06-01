@@ -45,14 +45,12 @@ public class Trivia extends BasicGameState {
     private String mouse = "No input";
     private Image launch;
     private boolean launched = false;
-    private boolean first = false;
+    //private boolean first = false;
     private int diceN = 0;
-    // private TurnMaster turn;
     private Domanda domanda;
     private Escape esc;
     private TrueTypeFont fonx1;
     private TriviaFont f;
-
     private Controller interm;
     private int nPlayers;
     private ArrayList<Image> playerBack;
@@ -60,7 +58,6 @@ public class Trivia extends BasicGameState {
     public Trivia(int id) {
         domanda = new Domanda(6);
         esc = new Escape(7);
-        //turn = new TurnMaster();
         pGUI = new ArrayList<>();
         pGUI.clear();
         f = new TriviaFont();
@@ -148,6 +145,7 @@ public class Trivia extends BasicGameState {
                 launched = false;
             }
         }
+
         /*
         se il flag quit= true vuol dire che ho premuto Esc e renderizzo lo state esc.
          */
@@ -176,26 +174,22 @@ public class Trivia extends BasicGameState {
          */
         if (xpos > 990 && xpos < 1130 && ypos > 55 && ypos < 120) {
             if (input.isMousePressed(0) && !launched) {
-                if (interm.getIndex() == nPlayers-1) {
-                    first = false;
-                    //turn.resetIndex();
+                /*if (interm.getIndex() == nPlayers-1) {
+                    //first = false;
                     for (PlayerGUI p : pGUI) {
                         p.setClicked(false);
                     }
-                }
-                if (first){
-                    //interm.incrementInd()
-                    pGUI.get(interm.getIndex()).setClicked(false);
-                }
+                }*/
+                //if (first){
+
+
+                //}
                 launched = true;
                 diceN = interm.getDiceValue();
                 d.setCurrentDie(diceN);
-
-
-                //pGUI.get(interm.getIndex()).setClicked(false);
-                //turn.incrementIndex(domanda.isEsito(), first, pGUI.get(interm.getIndex()));
                 domanda.setAnswered(false);
                 domanda.setEsito(false);
+                pGUI.get(interm.getIndex()).setClicked(false);
             }
         }
 
@@ -212,10 +206,9 @@ public class Trivia extends BasicGameState {
                         pGUI.get(interm.getIndex()).setClicked(true);
                         pGUI.get(interm.getIndex()).getP().update(diceN, Direction.BACK);
                         pGUI.get(interm.getIndex()).updateCoordinates();
-                        //turn.nextPlayer(diceN, pGUI.get(interm.getIndex()), Direction.BACK);
-                        if (interm.getIndex() == 0) {
+                        /*if (interm.getIndex() == 0) {
                             first = true;
-                        }
+                        }*/
                     }
                 }
                 if (xpos > 770 && xpos < 830) {
@@ -224,10 +217,9 @@ public class Trivia extends BasicGameState {
                         pGUI.get(interm.getIndex()).setClicked(true);
                         pGUI.get(interm.getIndex()).getP().update(diceN, Direction.FORWARD);
                         pGUI.get(interm.getIndex()).updateCoordinates();
-                        //turn.nextPlayer(diceN, pGUI.get(interm.getIndex()), Direction.FORWARD);
-                        if (interm.getIndex() == 0) {
+                        /*if (interm.getIndex() == 0) {
                             first = true;
-                        }
+                        }*/
                     }
                 }
             }
@@ -269,9 +261,6 @@ public class Trivia extends BasicGameState {
                 playerBack.add(new Image("res/backgrounds/PlayerBackgrounds/SfondoGiocatore3.png"));
             }
         }
-        /*for (int i = 0; i < nPlayers; i++) {
-            turn.addPlayer(pGUI.get(i).getP());
-        }*/
 
         for (PlayerGUI p : pGUI) {
             p.getPedina().stop();

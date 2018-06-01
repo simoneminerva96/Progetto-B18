@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 public class Controller {
     private TrivialGame match;
-    private int index;
 
     public Controller(){
         match=new TrivialGame();

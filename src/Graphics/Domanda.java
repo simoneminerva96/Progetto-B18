@@ -54,12 +54,13 @@ public class Domanda extends BasicGameState {
         graphics.drawString(question.getAnswers().get(3).getAnswer(), 900, 450);
 
         if (answered) {
-            if (esito == true) {
+            if (esito) {
                 graphics.drawString(risposta1, 200, 500);
             } else {
                 graphics.drawString(risposta2, 200, 500);
             }
             end = true;
+            
         }
     }
 
@@ -75,36 +76,31 @@ public class Domanda extends BasicGameState {
 
         if (posX>850 && posX<1135){
             if (posY<414 && posY>373) {
-                if (Mouse.isButtonDown(0) && answered == false) {
+                if (Mouse.isButtonDown(0) && !answered) {
                     esito = controller.answerQuestion(0);
                     answered = true;
-                    //controller.sendIndexOfAnswer(0);
                 }
             }
             if (posY<360 && posY>325) {
-                if (Mouse.isButtonDown(0) && answered == false) {
+                if (Mouse.isButtonDown(0) && !answered) {
                     esito = controller.answerQuestion(1);
                     answered = true;
-                    //controller.sendIndexOfAnswer(1);
                 }
             }
             if (posY<305 && posY>275) {
-                if (Mouse.isButtonDown(0) && answered == false) {
+                if (Mouse.isButtonDown(0) && !answered) {
                     esito = controller.answerQuestion(2);
                     answered = true;
-                    //controller.sendIndexOfAnswer(2);
                 }
             }
 
             if (posY<260 && posY>230) {
-                if (Mouse.isButtonDown(0) && answered == false){
+                if (Mouse.isButtonDown(0) && !answered){
                     esito = controller.answerQuestion(3);
                     answered = true;
-                    //controller.sendIndexOfAnswer(3);
                 }
             }
         }
-
     }
 
     public boolean isEnd() {
