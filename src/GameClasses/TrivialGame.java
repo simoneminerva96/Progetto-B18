@@ -203,14 +203,16 @@ public class TrivialGame {
     public boolean answerQuestion(int indexOfQuestion){
         turnPhase=TurnPhase.answer;
         boolean correct=turn.AnswerQuestion(indexOfQuestion);
-        if(!correct){
+        return correct;
+    }
+    //se la risposta data è sbagliata incrementa l'indice e aggiorna il giocatore di turno
+    public void setPlayerOnTurn(){
+        if(!turn.getCorrectAnswer()){
             index ++;   //L'INDICE PUNTA AL GIOCATORE SUCCESSIVO
             if(index==players.size()) index=0;
             turn.setPlayerOnTurn(players.get(index));
         }
-        return correct;
     }
-
     //da chiamare quando il giocatore sceglie la risposta
     public Boolean obtainSlice(){
         turnPhase=TurnPhase.obtainSlice;

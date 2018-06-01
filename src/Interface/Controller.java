@@ -46,6 +46,10 @@ public class Controller {
     public boolean answerQuestion(int index){
         return match.answerQuestion(index);
     }
+    //metodo che aggiorna l'indice corrispondente al giocator di turno se la rispsota data è sbagliata
+    public void setPlayerOnTurn(){
+        match.setPlayerOnTurn();
+    }
 
 
 }

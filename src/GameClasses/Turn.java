@@ -16,6 +16,7 @@ public class Turn {
     private Die die;        //dado per determinare di quanto spostarsi
     private int dieresult;  //risultato del lancio del dado
     private String chosenDirection;
+    private boolean correctAnswer= false; //booleano che mi indica se la risposta data dall'utente è giusta o sbagliata
 
     public Turn(Player playerOnTurn,BoardProva playBoard){
         this.playerOnTurn=playerOnTurn;
@@ -78,7 +79,12 @@ public class Turn {
     //metodo che permette al giocatore di rispondere
     public Boolean AnswerQuestion(int indexOfAnswer){
         int currentPosition=playerOnTurn.getActualPosition();
-        return this.playBoard.getSquares().get(currentPosition).goOnIt(indexOfAnswer);
+        correctAnswer=this.playBoard.getSquares().get(currentPosition).goOnIt(indexOfAnswer);
+        return correctAnswer;
+    }
+
+    public boolean getCorrectAnswer(){
+        return this.correctAnswer;
     }
     //RITORNA TRUE SE IL GIOCATORE HA OTTENUTO LO SPICCHIO
     public boolean obtainSlice(){
