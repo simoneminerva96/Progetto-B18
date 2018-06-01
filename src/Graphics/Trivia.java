@@ -45,7 +45,7 @@ public class Trivia extends BasicGameState {
     private String mouse = "No input";
     private Image launch;
     private boolean launched = false;
-    //private boolean first = false;
+    private boolean first = false;
     private int diceN = 0;
     private Domanda domanda;
     private Escape esc;
@@ -174,22 +174,16 @@ public class Trivia extends BasicGameState {
          */
         if (xpos > 990 && xpos < 1130 && ypos > 55 && ypos < 120) {
             if (input.isMousePressed(0) && !launched) {
-                /*if (interm.getIndex() == nPlayers-1) {
-                    //first = false;
-                    for (PlayerGUI p : pGUI) {
-                        p.setClicked(false);
-                    }
-                }*/
-                //if (first){
-
-
-                //}
+                if (first){
+                    interm.setPlayerOnTurn();
+                    pGUI.get(interm.getIndex()).setClicked(false);
+                }
                 launched = true;
                 diceN = interm.getDiceValue();
                 d.setCurrentDie(diceN);
                 domanda.setAnswered(false);
                 domanda.setEsito(false);
-                pGUI.get(interm.getIndex()).setClicked(false);
+
             }
         }
 
@@ -206,9 +200,9 @@ public class Trivia extends BasicGameState {
                         pGUI.get(interm.getIndex()).setClicked(true);
                         pGUI.get(interm.getIndex()).getP().update(diceN, Direction.BACK);
                         pGUI.get(interm.getIndex()).updateCoordinates();
-                        /*if (interm.getIndex() == 0) {
+                        if (interm.getIndex() == 0) {
                             first = true;
-                        }*/
+                        }
                     }
                 }
                 if (xpos > 770 && xpos < 830) {
@@ -217,9 +211,9 @@ public class Trivia extends BasicGameState {
                         pGUI.get(interm.getIndex()).setClicked(true);
                         pGUI.get(interm.getIndex()).getP().update(diceN, Direction.FORWARD);
                         pGUI.get(interm.getIndex()).updateCoordinates();
-                        /*if (interm.getIndex() == 0) {
+                        if (interm.getIndex() == 0) {
                             first = true;
-                        }*/
+                        }
                     }
                 }
             }
