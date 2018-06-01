@@ -184,7 +184,7 @@ public class Trivia extends BasicGameState {
                     }
                 }
                 if (first){
-                    interm.incrementIndex();
+                    //interm.incrementInd()
                     pGUI.get(interm.getIndex()).setClicked(false);
                 }
                 launched = true;
@@ -251,7 +251,7 @@ public class Trivia extends BasicGameState {
         nPlayers =n;
         interm.initializePlayers(nPlayers);
         for (int i = 0; i <nPlayers; i++) {
-            Player p = new Player("prova", i + 1, map);
+            Player p = new Player("prova" + (i+1), i + 1, map);
             if (i == 0) {
                 pGUI.add(i, new PlayerGUI(p, piece));
                 playerBack.add(new Image("res/backgrounds/PlayerBackgrounds/SfondoGiocatore.png"));

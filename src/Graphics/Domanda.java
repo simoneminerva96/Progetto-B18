@@ -78,21 +78,21 @@ public class Domanda extends BasicGameState {
                 if (Mouse.isButtonDown(0) && answered == false) {
                     esito = controller.answerQuestion(0);
                     answered = true;
-                    controller.sendIndexOfAnswer(0);
+                    //controller.sendIndexOfAnswer(0);
                 }
             }
             if (posY<360 && posY>325) {
                 if (Mouse.isButtonDown(0) && answered == false) {
                     esito = controller.answerQuestion(1);
                     answered = true;
-                    controller.sendIndexOfAnswer(1);
+                    //controller.sendIndexOfAnswer(1);
                 }
             }
             if (posY<305 && posY>275) {
                 if (Mouse.isButtonDown(0) && answered == false) {
                     esito = controller.answerQuestion(2);
                     answered = true;
-                    controller.sendIndexOfAnswer(2);
+                    //controller.sendIndexOfAnswer(2);
                 }
             }
 
@@ -100,7 +100,7 @@ public class Domanda extends BasicGameState {
                 if (Mouse.isButtonDown(0) && answered == false){
                     esito = controller.answerQuestion(3);
                     answered = true;
-                    controller.sendIndexOfAnswer(3);
+                    //controller.sendIndexOfAnswer(3);
                 }
             }
         }

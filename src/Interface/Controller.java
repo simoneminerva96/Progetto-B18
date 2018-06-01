@@ -17,7 +17,7 @@ public class Controller {
         //INSERISCO GIOCATORI DI PROVA, POI ANDRANNO INSERITI I NICKNAME DEI GIOCATORI
         // PARTECIPANTI PASSANDOLI A QUESTO COSTRUTTORE
         for(int i=0;i<nplayers;i++){
-            gamingPlayers.add("prova");
+            gamingPlayers.add("prova" + (i +1));
         }
 
         match.initializePlayers(gamingPlayers); //inizializzo i giocatori
@@ -41,15 +41,11 @@ public class Controller {
         return match.visualizeQuestion();
     }
 
+    //il giocatore dalla grafica seleziona la risposta, il metodo ritorna se è corretta o sbagliata, incrementa l'indice del giocatore
+    //di turno se è sbagliata
     public boolean answerQuestion(int index){
         return match.answerQuestion(index);
     }
 
-    public void sendIndexOfAnswer(int indexOfAnswer){
-        index = indexOfAnswer;
-    }
 
-    public void incrementIndex() {
-        match.incrementIndex(index);
-    }
 }

@@ -19,7 +19,7 @@ public class InitialSquare extends Square {
     @Override
     public Question visualizeQuestion() {
         ArrayList<Answer> a=new ArrayList<>();
-        a.add(new Answer("vuota1",false));
+        a.add(new Answer("vuota1",true));
         a.add(new Answer("vuota1",false));
         a.add(new Answer("vuota1",false));
         a.add(new Answer("vuota1",false));

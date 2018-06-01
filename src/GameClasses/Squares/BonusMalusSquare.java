@@ -64,10 +64,10 @@ public class BonusMalusSquare extends Square {
     @Override
     public Question visualizeQuestion() {
         ArrayList<Answer> a=new ArrayList<>();
-        a.add(new Answer("vuota1",false));
-        a.add(new Answer("vuota1",false));
-        a.add(new Answer("vuota1",false));
-        a.add(new Answer("vuota1",false));
+        a.add(new Answer("vuota1",true));
+        a.add(new Answer("vuota2",false));
+        a.add(new Answer("vuota3",false));
+        a.add(new Answer("vuota4",false));
         Question vuota=new Question("CASELLA BONUS/MALUS!",null,a);
         return vuota;
     }

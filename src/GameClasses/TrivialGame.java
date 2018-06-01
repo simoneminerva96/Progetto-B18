@@ -156,13 +156,6 @@ public class TrivialGame {
         }
     }
 
-    public void incrementIndex(int indexOfAnswer){
-        System.out.println(turn.getCorrect(indexOfAnswer));
-        if (!turn.getCorrect(indexOfAnswer)){
-            index++;
-        }
-    }
-
     //metodi che eseguono le fasi di gioco del turno
 
     /**
@@ -172,13 +165,6 @@ public class TrivialGame {
         index = 0;
         turnPhase = TurnPhase.Initialize;
         turn.setPlayerOnTurn(players.get(index));
-    }
-
-    public void SetPlayerOnTurn(Player player){
-        index ++;   //L'INDICE PUNTA AL GIOCATORE SUCCESSIVO
-        if(index==players.size()) index=0;
-        turnPhase=TurnPhase.setPlayerOnTurn;
-        turn.setPlayerOnTurn(player);
     }
 
     public int throwDie(){
@@ -216,7 +202,13 @@ public class TrivialGame {
 
     public boolean answerQuestion(int indexOfQuestion){
         turnPhase=TurnPhase.answer;
-        return turn.AnswerQuestion(indexOfQuestion);
+        boolean correct=turn.AnswerQuestion(indexOfQuestion);
+        if(!correct){
+            index ++;   //L'INDICE PUNTA AL GIOCATORE SUCCESSIVO
+            if(index==players.size()) index=0;
+            turn.setPlayerOnTurn(players.get(index));
+        }
+        return correct;
     }
 
     //da chiamare quando il giocatore sceglie la risposta
