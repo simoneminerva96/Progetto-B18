@@ -2,7 +2,6 @@ package Graphics;
 
 import Graphics.Map.Map;
 import Graphics.Player.*;
-import Graphics.Question.Domanda;
 import Interface.Controller;
 import Interface.Direction;
 import org.lwjgl.input.Mouse;
@@ -39,7 +38,6 @@ import java.util.ArrayList;
 public class Trivia extends BasicGameState {
     private Image backgroundMap, back, forward, background;
     private Image rydia, ceodore, kain, luca;
-    private Image playerBack1, playerBack2, playerBack3, playerBack4;
     private DieGUI d;
     private Map map;
     private ArrayList<PlayerGUI> pGUI;
@@ -49,7 +47,7 @@ public class Trivia extends BasicGameState {
     private boolean launched = false;
     private boolean first = false;
     private int diceN = 0;
-    private TurnMaster turn;
+    // private TurnMaster turn;
     private Domanda domanda;
     private Escape esc;
     private TrueTypeFont fonx1;
@@ -62,12 +60,11 @@ public class Trivia extends BasicGameState {
     public Trivia(int id) {
         domanda = new Domanda(6);
         esc = new Escape(7);
-        turn = new TurnMaster();
+        //turn = new TurnMaster();
         pGUI = new ArrayList<>();
         pGUI.clear();
         f = new TriviaFont();
         playerBack = new ArrayList<>();
-
     }
 
     public int getID() {
@@ -128,7 +125,7 @@ public class Trivia extends BasicGameState {
         ceodore.draw(1050, 30);
         kain.draw(750, 130);
         luca.draw(1050, 130);
-        fonx1.drawString(870, 219, "E' il turno di: " + pGUI.get(turn.getIndex()).getName());
+        fonx1.drawString(870, 219, "E' il turno di: " + pGUI.get(interm.getIndex()).getName());
         launch.draw(990, 580);
 
         for (PlayerGUI p : pGUI) {
@@ -144,15 +141,11 @@ public class Trivia extends BasicGameState {
         Se ho risposto e mi è uscita la stringa, allora resetto ready e launched.
          */
 
-        if (pGUI.get(turn.getIndex()).isReady()) {
-            try {
-                domanda.render(gameContainer, stateBasedGame, graphics);
-                if (domanda.isEnd()) {
-                    pGUI.get(turn.getIndex()).setReady(false);
-                    launched = false;
-                }
-            } catch (SlickException e) {
-                e.printStackTrace();
+        if (pGUI.get(interm.getIndex()).isReady()) {
+            domanda.render(gameContainer, stateBasedGame, graphics);
+            if (domanda.isEnd()) {
+                pGUI.get(interm.getIndex()).setReady(false);
+                launched = false;
             }
         }
         /*
@@ -182,19 +175,25 @@ public class Trivia extends BasicGameState {
         {@see TurnMaster}. resetto answered ed esito a false perchè risponderò ad una nuova domanda.
          */
         if (xpos > 990 && xpos < 1130 && ypos > 55 && ypos < 120) {
-            if (input.isMousePressed(0) && launched == false) {
-                if (turn.getIndex() == nPlayers-1) {
+            if (input.isMousePressed(0) && !launched) {
+                if (interm.getIndex() == nPlayers-1) {
                     first = false;
-                    turn.resetIndex();
+                    //turn.resetIndex();
                     for (PlayerGUI p : pGUI) {
                         p.setClicked(false);
                     }
+                }
+                if (first){
+                    interm.incrementIndex();
+                    pGUI.get(interm.getIndex()).setClicked(false);
                 }
                 launched = true;
                 diceN = interm.getDiceValue();
                 d.setCurrentDie(diceN);
 
-                turn.incrementIndex(domanda.isEsito(), first, pGUI.get(turn.getIndex()));
+
+                //pGUI.get(interm.getIndex()).setClicked(false);
+                //turn.incrementIndex(domanda.isEsito(), first, pGUI.get(interm.getIndex()));
                 domanda.setAnswered(false);
                 domanda.setEsito(false);
             }
@@ -205,14 +204,16 @@ public class Trivia extends BasicGameState {
         in uno o nell'altro caso, richiamo il metodo nextPlayer per aggiornare le coordinate della GUI.
         se sono al primo tiro del dado, first = true.
          */
-
         if (launched) {
             if (ypos > 46 && ypos < 109) {
                 if (xpos > 870 && xpos < 930) {
                     if (input.isMousePressed(0)) {
                         interm.setDirection(Direction.BACK);
-                        turn.nextPlayer(diceN, pGUI.get(turn.getIndex()), Direction.BACK);
-                        if (turn.getIndex() == 0) {
+                        pGUI.get(interm.getIndex()).setClicked(true);
+                        pGUI.get(interm.getIndex()).getP().update(diceN, Direction.BACK);
+                        pGUI.get(interm.getIndex()).updateCoordinates();
+                        //turn.nextPlayer(diceN, pGUI.get(interm.getIndex()), Direction.BACK);
+                        if (interm.getIndex() == 0) {
                             first = true;
                         }
                     }
@@ -220,8 +221,11 @@ public class Trivia extends BasicGameState {
                 if (xpos > 770 && xpos < 830) {
                     if (input.isMousePressed(0)) {
                         interm.setDirection(Direction.FORWARD);
-                        turn.nextPlayer(diceN, pGUI.get(turn.getIndex()), Direction.FORWARD);
-                        if (turn.getIndex() == 0) {
+                        pGUI.get(interm.getIndex()).setClicked(true);
+                        pGUI.get(interm.getIndex()).getP().update(diceN, Direction.FORWARD);
+                        pGUI.get(interm.getIndex()).updateCoordinates();
+                        //turn.nextPlayer(diceN, pGUI.get(interm.getIndex()), Direction.FORWARD);
+                        if (interm.getIndex() == 0) {
                             first = true;
                         }
                     }
@@ -236,7 +240,7 @@ public class Trivia extends BasicGameState {
             e.printStackTrace();
         }
 
-        pGUI.get(turn.getIndex()).updateOnEachFrame(i);
+        pGUI.get(interm.getIndex()).updateOnEachFrame(i);
 
         if (input.isKeyPressed(Input.KEY_ESCAPE)) {
             esc.setQuit(true);
@@ -265,9 +269,9 @@ public class Trivia extends BasicGameState {
                 playerBack.add(new Image("res/backgrounds/PlayerBackgrounds/SfondoGiocatore3.png"));
             }
         }
-        for (int i = 0; i < nPlayers; i++) {
+        /*for (int i = 0; i < nPlayers; i++) {
             turn.addPlayer(pGUI.get(i).getP());
-        }
+        }*/
 
         for (PlayerGUI p : pGUI) {
             p.getPedina().stop();

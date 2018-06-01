@@ -3,8 +3,6 @@ package GameClasses;
 import GameClasses.Squares.BonusMalusSquare;
 import GameClasses.Squares.FinalQuestionSquare;
 
-import java.util.ArrayList;
-import java.util.Scanner;
 /**
  * CLASSE CHE CORRISPONDE A UN TURNO DI GIOCO, effettua la movimentazione delle pedine sul tabellone
  * @author Ansaldi Jacopo <jacopo.ansaldi01@universitadipavia.it>
@@ -98,5 +96,10 @@ public class Turn {
             return true;
         }
         else return false;
+    }
+
+    public boolean getCorrect(int indexOfAnswer){
+        int currentPosition=playerOnTurn.getActualPosition();
+        return playBoard.getSquares().get(currentPosition).goOnIt(indexOfAnswer);
     }
 }

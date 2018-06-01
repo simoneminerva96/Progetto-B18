@@ -1,7 +1,6 @@
 package GameClasses;
-import GameClasses.Squares.BonusMalusSquare;
-import GameClasses.Squares.FinalQuestionSquare;
 
+import GameClasses.Squares.BonusMalusSquare;
 import java.awt.*;
 import java.sql.SQLException;
 import java.util.*;
@@ -12,23 +11,21 @@ import Interface.Direction;
  * @author Ansaldi Jacopo <jacopo.ansaldi01@universitadipavia.it>
  */
 public class TrivialGame {
-    private ArrayList<Player> players;      //giccatori partecipanti
+    private ArrayList<Player> players;      //giocatori partecipanti
     private ArrayList<Piece> possiblePieces;        //possibili pedine tra cui scegliere
     private Die die;        //dado
-    //private BoardProva playBoard;        //tabellone di gioco di prova
-    private Board playBoard;        //tabellone vero che estrae dal db
+    private BoardProva playBoard;        //tabellone di gioco
     private Turn turn;      //turno attuale
     private TurnPhase turnPhase;
     private Integer index=0; //INDICE CHE SERVE PER TENER IL CONTO DI QUALE GIOCATORE è IL TURNO
 
     public TrivialGame(){
-        players=new ArrayList<Player>();
-        possiblePieces=new ArrayList<Piece>();
-        die=new Die();
-        turnPhase=null;//inizialmente è nullo
+        players = new ArrayList<>();
+        possiblePieces=  new ArrayList<>();
+        die = new Die();
+        turnPhase=null; //inizialmente è nullo
         try{
-            playBoard=new Board();
-            //playBoard=new BoardProva();
+            playBoard = new BoardProva();
             turn = new Turn(null,playBoard);    //all'inizio non ho alcun giocatore di turno
         }
         catch (SQLException e){
@@ -62,14 +59,16 @@ public class TrivialGame {
         possiblePieces.add(new Piece(Color.GREEN));
     }
 
-    /*metodo che esegue il lancio iniziale del dado e che ordina di conseguenza i giocatori nell'ordine in cui giocheranno
-    NB: implementato facendo in modo che i 4 lanci diano risultati diversi tra loro, altrimenti si rischia che questa fase
-        del gioco si prolunghi troppo in caso di continui pareggi
+    /**metodo che esegue il lancio iniziale del dado e che ordina di conseguenza i giocatori nell'ordine
+     * in cui giocheranno
+    NB: implementato facendo in modo che i 4 lanci diano risultati diversi tra loro, altrimenti si rischia
+     che questa fase del gioco si prolunghi troppo in caso di continui pareggi
     */
     public void BeginningDieRoll(){
-        ArrayList<Integer> launches=new ArrayList<Integer>();
+        ArrayList<Integer> launches = new ArrayList<>();
         launches.add(die.Launch());
         Boolean check=false;
+
         //ciclo che riempe l'array dei lanci facendo in modo che siano diversi
         for(int i=0;i<players.size() -1;i++){
             Integer actualLaunch = null;
@@ -119,7 +118,7 @@ public class TrivialGame {
     }
 
     //metodo che viene usato per controllare che i lanci dei giocatori siano diversi tra loro
-    private Boolean checkDifferentLaunches(ArrayList<Integer> previousLaunches, int currentLaunch){
+    private boolean checkDifferentLaunches(ArrayList<Integer> previousLaunches, int currentLaunch){
         Boolean check=true;
         for(int i=0;i<previousLaunches.size();i++){
             if(currentLaunch==previousLaunches.get(i)) check=false;
@@ -127,7 +126,7 @@ public class TrivialGame {
         return check;
     }
 
-    /*
+    /**
         metodo che implementa la scelta iniziale della pedina (per ora con scelta da terminale)
         NB finire con i casi:
         1)in cui un giocatore inserisci un colore corrispondente a una pedina gia scelta
@@ -157,11 +156,21 @@ public class TrivialGame {
         }
     }
 
+    public void incrementIndex(int indexOfAnswer){
+        System.out.println(turn.getCorrect(indexOfAnswer));
+        if (!turn.getCorrect(indexOfAnswer)){
+            index++;
+        }
+    }
+
     //metodi che eseguono le fasi di gioco del turno
-    //fase iniziale, setta il primo giocatore che deve giocare al turno
+
+    /**
+     * Setta il primo giocatore che è di turno
+     */
     public void initializePhase(){
-        index=0;
-        turnPhase=TurnPhase.Initialize;
+        index = 0;
+        turnPhase = TurnPhase.Initialize;
         turn.setPlayerOnTurn(players.get(index));
     }
 
@@ -174,7 +183,7 @@ public class TrivialGame {
 
     public int throwDie(){
         turnPhase=TurnPhase.ThrowDie;
-         return turn.dieLaunch();
+        return turn.dieLaunch();
     }
 
     public void chooseDirection(Direction d){
@@ -207,11 +216,10 @@ public class TrivialGame {
 
     public boolean answerQuestion(int indexOfQuestion){
         turnPhase=TurnPhase.answer;
-        boolean correct=turn.AnswerQuestion(indexOfQuestion);
-        return correct;
+        return turn.AnswerQuestion(indexOfQuestion);
     }
 
-    //da chimare quando il giocatore sceglie la risposta
+    //da chiamare quando il giocatore sceglie la risposta
     public Boolean obtainSlice(){
         turnPhase=TurnPhase.obtainSlice;
         return turn.obtainSlice();

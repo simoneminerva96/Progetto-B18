@@ -6,7 +6,7 @@ package GameClasses;
  */
 public class Answer {
     private String answer;
-    private Boolean correct;
+    private boolean correct;
 
     public Answer(String answer,Boolean correct){
         this.answer=answer;

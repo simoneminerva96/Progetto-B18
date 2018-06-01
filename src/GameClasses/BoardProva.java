@@ -13,6 +13,7 @@ public class BoardProva{
     private final static int NSQUARES=36;   //NUMERO TOT DI CASELLE
     private ArrayList<Square> squares;
     private ConnectionDB connectionDB;
+
     // inserire le domande tramite il metodo della classe connesione db
     //MANCANO DA INSERIRE LE DOMANDE FINALI
     public BoardProva() throws SQLException {

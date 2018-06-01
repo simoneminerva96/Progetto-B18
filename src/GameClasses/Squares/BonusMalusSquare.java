@@ -21,7 +21,7 @@ public class BonusMalusSquare extends Square {
     }
 
     @Override
-    public Boolean goOnIt(int indexofAnswer) {
+    public boolean goOnIt(int indexofAnswer) {
         return false;
     }
 

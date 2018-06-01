@@ -16,16 +16,22 @@ public class Player {
 
     public Player(String nickname){
         this.nickname=nickname;
-        chosenPiece=null;        //quando viene istanziato un giocatore esso non ha ancora nessuna pedina associata
+        chosenPiece=null;   //quando viene istanziato un giocatore esso non ha ancora nessuna pedina associata
         initialRollResult=0;
-        actualPosition=0;       //quando viene istanziato un giocatore viene inizializzato sulla casella iniziale(index=0)
-        slicesObtained=new ArrayList<Slice>();
+        actualPosition=0;   //quando viene istanziato un giocatore viene inizializzato sulla casella iniziale(index=0)
+        slicesObtained=new ArrayList<>();
     }
-    //metodo per ottenere uno spicchio
+
+    /**
+     * Metodo per assegnare uno spicchio di una categoria solo se non è stato già ottenuto.
+     * - check: flag che indica se lo spicchio è già presente
+     * @param category categoria dello spicchio da verificare
+     *
+     */
     public void obtainSlice(Categories category){
-        //controllo se il gicoatore ha gia ottenuto lo spicchio di quella categoria
-        Boolean check=false;    //variabile che indica se lo spicchio è gia presente
-        for(int i=0;i<slicesObtained.size();i++){
+        boolean check=false;
+
+        for(int i=0; i<slicesObtained.size(); i++){
             if(slicesObtained.get(i).getCategory().equals(category)){
                 System.out.println("il giocatore ha gia ottenuto lo spicchio di questa categoria!\n");
                 check=true;

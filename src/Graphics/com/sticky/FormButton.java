@@ -88,14 +88,16 @@ public class FormButton extends ButtonSkeleton implements ButtonListener, ClickL
         }
     }
 
-    public void onClickFormLogin(float mx, float my, String username, String password, Login login, StateBasedGame stateBasedGame, int i) {
-        System.out.println(""+i);
+    public boolean onClickFormLogin(float mx, float my, String username, String password, Login login) {
+        boolean check = false;
         if (mx >= minx && mx <= maxx && my >= miny && my <= maxy) {
             current = press;
+            clicked = true;
             if(login.Login(username, password)){
-                stateBasedGame.enterState(i);
+                check = true;
             }
         }
+        return check;
     }
 
     public boolean onClickFormRegistration(float mx, float my, String username, String password, Registration r){
