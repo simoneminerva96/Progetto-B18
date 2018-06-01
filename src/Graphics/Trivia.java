@@ -138,7 +138,7 @@ public class Trivia extends BasicGameState {
         Se ho risposto e mi è uscita la stringa, allora resetto ready e launched.
          */
 
-        if (pGUI.get(interm.getIndex()).isReady()) {
+        if (pGUI.get(interm.getIndex()).isReady() ) {
             domanda.render(gameContainer, stateBasedGame, graphics);
             if (domanda.isEnd()) {
                 pGUI.get(interm.getIndex()).setReady(false);

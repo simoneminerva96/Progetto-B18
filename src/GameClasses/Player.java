@@ -54,10 +54,6 @@ public class Player {
         return nickname;
     }
 
-    public Piece getChosenPiece() {
-        return chosenPiece;
-    }
-
     public void setChosenPiece(Piece chosenPiece) {
         this.chosenPiece = chosenPiece;
     }
@@ -74,13 +70,4 @@ public class Player {
         return slicesObtained;
     }
 
-    public void removeSlice(){
-        if(slicesObtained.size()!=0){
-            Random random=new Random();
-            int max=slicesObtained.size() -1 ; // numero massimo
-            int range = max + 1;
-            int index= random.nextInt(range);
-            slicesObtained.remove(index);
-        }
-    }
 }
