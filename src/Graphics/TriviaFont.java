@@ -1,16 +1,15 @@
 package Graphics;
 
 import org.newdawn.slick.util.ResourceLoader;
+import java.awt.*;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * @author Rita
  *
  * Classe del font utilizzato nel gioco.
  */
-
-import java.awt.*;
-import java.io.IOException;
-import java.io.InputStream;
 
 public class TriviaFont {
     private InputStream inputStream;

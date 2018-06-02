@@ -22,7 +22,9 @@ import Graphics.*;
  * - logButton: bottone per il login
  * - reg: oggetto di tipo Registration
  * - login: oggetto di tipo Login
- * - check: flag che indica se la registrazione è andata a buon fine oppure no
+ * - checkR: flag che indica se la registrazione è andata a buon fine oppure no
+ * - checkL: flag che indica se la registrazione è andata a buon fine oppure no
+ * - music: oggetto di tipo Music per la musica di gioco
  */
 
 public class LoginRegistrationInterface extends BasicGameState {

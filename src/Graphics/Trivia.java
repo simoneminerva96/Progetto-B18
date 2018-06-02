@@ -29,10 +29,12 @@ import java.util.ArrayList;
  * - launched: flag che indica se ho tirato il dado o no
  * - first: flag che indica se ho tirato il dado almeno una volta
  * - diceN: intero che contiene il numero estratto
- * - turn: oggetto TurnMaster che gestisce i turni dei player
- * - prova: oggetto Domanda, state da renderizzare
+ * - domanda: oggetto Domanda, state da renderizzare
  * - esc: oggetto Escape, state da renderizzare
  * - f, fonx1: font utilizzato
+ * - interm: oggetto di tipo Controller per comunicare con la logica
+ * - nPlayers: numero di giocatori effettivo per la partita
+ * - playerBack: arrayList di sfondi
  */
 
 public class Trivia extends BasicGameState {
@@ -88,7 +90,7 @@ public class Trivia extends BasicGameState {
         kain = new Image("res/char/kain.png");
         luca = new Image("res/char/luca.png");
         background = new Image("res/backgrounds/green_landscape2.png");
-        launch = new Image("res/buttons/Button_Launch/Button_Login_02.png");
+        launch = new Image("res/buttons/Button_Launch/Button_Launch.png");
 
         domanda.init(gameContainer, stateBasedGame);
         esc.init(gameContainer, stateBasedGame);
@@ -167,10 +169,8 @@ public class Trivia extends BasicGameState {
         Input input = gameContainer.getInput();
 
         /*
-        Se sono nelle coordinate del bottone Launch controllo se l'indice del turno è uguale a 3 per
-        resettarlo e reimpostare i flag clicked e first. Estraggo il numero e rimetto launched a true.
-        richiamo incrementIndex per incrementare l'indice solo nelle condizioni possibili
-        {@see TurnMaster}. resetto answered ed esito a false perchè risponderò ad una nuova domanda.
+        Se sono nelle coordinate del bottone Launch, ottengo il numero estratto, metto launched a true e aggiorno la
+        faccia del dado. Resetto answered ed esito a false perchè risponderò ad una domanda.
          */
         if (xpos > 990 && xpos < 1130 && ypos > 55 && ypos < 120) {
             if (input.isMousePressed(0) && !launched) {
@@ -183,14 +183,13 @@ public class Trivia extends BasicGameState {
                 d.setCurrentDie(diceN);
                 domanda.setAnswered(false);
                 domanda.setEsito(false);
-
             }
         }
 
         /*
         se ho lanciato il dado, controllo le coordinate in cui ho cliccato (una delle due frecce).
-        in uno o nell'altro caso, richiamo il metodo nextPlayer per aggiornare le coordinate della GUI.
-        se sono al primo tiro del dado, first = true.
+        in uno o nell'altro caso, informo il controller della direzione presa, aggiorno le coordinate delle gui e
+        controllo se è la prima scelta di direzione con first.
          */
         if (launched) {
             if (ypos > 46 && ypos < 109) {
@@ -238,21 +237,18 @@ public class Trivia extends BasicGameState {
         interm.initializePlayers(nPlayers);
         for (int i = 0; i <nPlayers; i++) {
             Player p = new Player("prova" + (i+1), i + 1, map);
+            playerBack.add(new Image("res/backgrounds/PlayerBackgrounds/SfondoGiocatore"+i+".png"));
             if (i == 0) {
                 pGUI.add(i, new PlayerGUI(p, piece));
-                playerBack.add(new Image("res/backgrounds/PlayerBackgrounds/SfondoGiocatore.png"));
             }
             if (i == 1) {
                 pGUI.add(i, new PlayerGUI(p, piece1));
-                playerBack.add(new Image("res/backgrounds/PlayerBackgrounds/SfondoGiocatore1.png"));
             }
             if (i == 2) {
                 pGUI.add(i, new PlayerGUI(p, piece2));
-                playerBack.add(new Image("res/backgrounds/PlayerBackgrounds/SfondoGiocatore2.png"));
             }
             if (i == 3) {
                 pGUI.add(i, new PlayerGUI(p, piece3));
-                playerBack.add(new Image("res/backgrounds/PlayerBackgrounds/SfondoGiocatore3.png"));
             }
         }
 

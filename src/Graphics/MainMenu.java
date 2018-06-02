@@ -5,17 +5,9 @@ import org.newdawn.slick.*;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.font.effects.ColorEffect;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
-import org.newdawn.slick.UnicodeFont;
-import org.newdawn.slick.util.ResourceLoader;
-
-import java.awt.*;
-import java.awt.Font;
-import java.io.IOException;
-import java.io.InputStream;
 
 public class MainMenu extends BasicGameState {
 
