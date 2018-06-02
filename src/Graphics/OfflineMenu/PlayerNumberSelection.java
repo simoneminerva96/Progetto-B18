@@ -18,6 +18,7 @@ public class PlayerNumberSelection extends BasicGameState {
 
     //BUTTONS
     private NumberButton one,two,three,four;
+    private boolean[]array;
 
     //STATE
     MenuFrame mf=new MenuFrame(10);
@@ -42,6 +43,10 @@ public class PlayerNumberSelection extends BasicGameState {
         mf.init(gameContainer,stateBasedGame);
         mf.setIsNumberToSend(true);
         mf.setBackState(1);
+        array=new boolean[5];
+            for(int j=0;j<array.length;j++){
+                array[j]=false;
+            }
         }
 
     @Override
@@ -65,10 +70,10 @@ public class PlayerNumberSelection extends BasicGameState {
             System.out.println("ENTRO");
 
             mf.setMouseClicked(true);
-            numbertosend=one.onClickGetNumber(r.getMouseX(),r.getMouseY(),numbertosend);
-            numbertosend=two.onClickGetNumber(r.getMouseX(),r.getMouseY(),numbertosend);
-            numbertosend=three.onClickGetNumber(r.getMouseX(),r.getMouseY(),numbertosend);
-            numbertosend=four.onClickGetNumber(r.getMouseX(),r.getMouseY(),numbertosend);
+            numbertosend=one.onClickGetNumber(r.getMouseX(),r.getMouseY(),numbertosend,array);
+            numbertosend=two.onClickGetNumber(r.getMouseX(),r.getMouseY(),numbertosend,array);
+            numbertosend=three.onClickGetNumber(r.getMouseX(),r.getMouseY(),numbertosend,array);
+            numbertosend=four.onClickGetNumber(r.getMouseX(),r.getMouseY(),numbertosend,array);
             mf.setNumbertosend(numbertosend);
             mf.update(gameContainer,stateBasedGame,delta);
 
@@ -79,10 +84,10 @@ public class PlayerNumberSelection extends BasicGameState {
 
         mf.setMouseClicked(false);
 
-        one.onMouseEnter(one,r.getMouseX(),r.getMouseY());
-        two.onMouseEnter(two,r.getMouseX(),r.getMouseY());
-        three.onMouseEnter(three,r.getMouseX(),r.getMouseY());
-        four.onMouseEnter(four,r.getMouseX(),r.getMouseY());
+        one.onMouseEnterAndClick(one,r.getMouseX(),r.getMouseY(),array);
+        two.onMouseEnterAndClick(two,r.getMouseX(),r.getMouseY(),array);
+        three.onMouseEnterAndClick(three,r.getMouseX(),r.getMouseY(),array);
+        four.onMouseEnterAndClick(four,r.getMouseX(),r.getMouseY(),array);
         mf.update(gameContainer,stateBasedGame,delta);
 
     }

@@ -2,12 +2,12 @@
     controller class
  */
 
-import Graphics.MainGrapichs;
+import Graphics.*;
 
 public class MainController {
 
     public static void main(String[] args) throws Exception {
-        MainGrapichs mainGrapichs=new MainGrapichs("trivial");
+        MainGraphics mainGrapichs=new MainGraphics("trivial");
         mainGrapichs.Run();
 
     }

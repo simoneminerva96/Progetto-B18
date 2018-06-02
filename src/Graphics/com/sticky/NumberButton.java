@@ -60,9 +60,17 @@ public class NumberButton extends ButtonSkeleton implements ButtonListener,
     }
 
     public void onClick(Button clicked, float mx, float my) {}
-    public int onClickGetNumber(float mx, float my,int i) throws SlickException {
+    public int onClickGetNumber(float mx, float my,int i,boolean[]array) throws SlickException {
 
         if(mx>=minx&&mx<=maxx&&my>=miny&&my<=maxy) {
+            for(int p=0;p<array.length;p++){
+                if(p!=number){
+                    array[p]=false;
+                }else{
+                    array[p]=true;
+                    current=down;
+                }
+            }
             return number;
         }else{
             return i;
@@ -74,9 +82,11 @@ public class NumberButton extends ButtonSkeleton implements ButtonListener,
 
     public void onRightClick(Button clicked, float mx, float my) {}
 
-    public void onMouseEnter(Button b,float mx, float my) {
+    public void onMouseEnter(Button clicked, float mx, float my) {}
 
-        if(mx>=minx&&mx<=maxx&&my>=miny&&my<=maxy) {
+    public void onMouseEnterAndClick(Button b,float mx, float my,boolean[]array) {
+
+        if(mx>=minx&&mx<=maxx&&my>=miny&&my<=maxy||array[number]==true) {
             buttonListener.onMouseEnter(this,mx,my);
             current = down;
         }else{
