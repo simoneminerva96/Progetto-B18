@@ -16,7 +16,7 @@ public class Turn {
     private Die die;        //dado per determinare di quanto spostarsi
     private int dieresult;  //risultato del lancio del dado
     private String chosenDirection;
-    private boolean correctAnswer= false; //booleano che mi indica se la risposta data dall'utente è giusta o sbagliata
+    private boolean correctAnswer= true; //booleano che mi indica se la risposta data dall'utente è giusta o sbagliata
 
     public Turn(Player playerOnTurn,BoardProva playBoard){
         this.playerOnTurn=playerOnTurn;
