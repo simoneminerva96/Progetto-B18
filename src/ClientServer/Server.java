@@ -3,19 +3,18 @@ package ClientServer;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Scanner;
 
 public class Server {
 
-    ServerSocket server = null;
-    Socket socketClient = null;
+    private ServerSocket server = null;
+    private Socket socketClient = null;
 
-    int porta = 8888; //porta server
+    private int porta = 8888; //porta server
 
-    DataInputStream in; //per ricevere da client
-    DataOutputStream out; //per inviare al client
+    private DataInputStream in; //per ricevere da client
+    private DataOutputStream out; //per inviare al client
 
-    String letto;
+    private String letto;
 
     public Socket attendi() throws IOException {
 
@@ -64,7 +63,7 @@ public class Server {
 
 
             } while (!letto.toLowerCase().equals("esci"));
-            System.out.println("Connessione chiusa");
+            out.writeBytes("Connessione chiusa" + "\n");
             socketClient.close(); //termino la connesione al client
 
         } catch (IOException e) {

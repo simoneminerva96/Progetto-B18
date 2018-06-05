@@ -7,14 +7,14 @@ import java.util.Scanner;
 
 public class Client {
 
-    Socket server = null;
+    private Socket server = null;
 
     int porta = 8888; //porta server
 
-    DataInputStream in; //per ricevere da server
-    DataOutputStream out; //per inviare al server
-    BufferedReader tastiera;
-    String messaggio;
+    private DataInputStream in; //per ricevere da server
+    private DataOutputStream out; //per inviare al server
+    private BufferedReader tastiera;
+    private String messaggio;
 
     public Socket connetti(){
 
@@ -52,9 +52,10 @@ public class Client {
                 System.out.println("In attesa di risposta");
                 String risposta = in.readLine();
                 System.out.println("La risposta è :" + risposta);
+                System.out.println("Connessione chiusa");
 
             } while (!messaggio.toLowerCase().equals("esci"));
-            System.out.println("Connessione chiusa");
+
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -71,3 +72,5 @@ public class Client {
 
     }
 }
+
+
