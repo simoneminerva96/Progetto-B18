@@ -60,7 +60,6 @@ public class Domanda extends BasicGameState {
                 graphics.drawString(risposta2, 200, 500);
             }
             end = true;
-            
         }
     }
 
@@ -119,4 +118,7 @@ public class Domanda extends BasicGameState {
         this.controller = controller;
     }
 
+    public void setEnd(boolean end) {
+        this.end = end;
+    }
 }
