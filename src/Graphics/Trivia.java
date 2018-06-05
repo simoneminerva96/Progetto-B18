@@ -2,8 +2,7 @@ package Graphics;
 
 import Graphics.Map.Map;
 import Graphics.Player.*;
-import Interface.Controller;
-import Interface.Direction;
+import Interface.*;
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Color;
@@ -44,7 +43,6 @@ public class Trivia extends BasicGameState {
     private Map map;
     private ArrayList<PlayerGUI> pGUI;
     private Pedina piece, piece1, piece2, piece3;
-    private String mouse = "No input";
     private Image launch;
     private boolean launched = false;
     private int diceN = 0;
@@ -141,7 +139,21 @@ public class Trivia extends BasicGameState {
 
         if (pGUI.get(interm.getIndex()).isReady() ) {
             if(interm.checkBonusMalus()){
+                switch(interm.checkType()) {
+                    case Bonus: {
+                        fonx1.drawString(200,500, "PUOI RILANCIARE IL DADO!", Color.white);
+                        pGUI.get(interm.getIndex()).setReady(false);
+                        launched = false;
+                        break;
+                    }
+                    case Malus: {
 
+                        pGUI.get(interm.getIndex()).setReady(false);
+                        launched = false;
+                        fonx1.drawString(200, 500, "HAI PERSO IL TURNO!", Color.white);
+                        break;
+                    }
+                }
             }
             else
             {
@@ -170,7 +182,7 @@ public class Trivia extends BasicGameState {
         float xpos = Mouse.getX();
         float ypos = Mouse.getY();
 
-        mouse = "Mouse position x:" + xpos + " y: " + ypos;
+        //System.out.println("X: "+ xpos + "Y: "+ ypos);
         Input input = gameContainer.getInput();
 
         /*

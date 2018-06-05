@@ -50,8 +50,8 @@ public class BonusMalusSquare extends Square {
         switch (effectType){
             case Bonus:
                 System.out.println("CASELLA BONUS! PUOI LANCIARE NUOVAMENTE IL DADO!");
-                t.dieLaunch();
-                t.movePlayer();
+                //t.dieLaunch();
+                //t.movePlayer();
                 break;
             case Malus:
                 System.out.println("CASELLA MALUS! PASSI IL TURNO");
