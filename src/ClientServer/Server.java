@@ -66,7 +66,7 @@ public class Server implements Runnable {
                 letto = in.readLine();
 
 
-                System.out.println("messaggio ricevuto:" + letto);
+                System.out.println("messaggio ricevuto:" + " " + letto);
 
                 String risposta = "Ok"; //riposta del server
                 out.writeBytes(risposta + "\n");
