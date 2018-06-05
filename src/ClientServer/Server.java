@@ -1,52 +1,61 @@
 package ClientServer;
 
-import java.io.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 
-public class Server {
-
-    ServerSocket server = null;
-    Socket socketClient = null;
-
-    int porta = 8888; //porta server
+public class Server implements Runnable {
 
     DataInputStream in; //per ricevere da client
     DataOutputStream out; //per inviare al client
 
     String letto;
+    Socket socketClient ;
 
-    public Socket attendi() throws IOException {
 
-        try {
+    public Server(Socket socketClient){
+        this.socketClient=socketClient;
+    }
 
-            System.out.println("Serve attivo.....");
-            //inizializzazione servizio
-            server = new ServerSocket(porta);
+    //il compito del server è quella di accettare degli input dai client e processi e ridare indietro qualcosa
+    public static void main(String[] args) throws IOException {
 
-            System.out.println("In ascolto sulla porta....");
+        ServerSocket server ;
+        Socket socketClient ;
+        int porta = 8888; //porta server
+
+        //inizializzazione servizio
+        server = new ServerSocket(porta);
+        System.out.println("Connesso..............");
+
+        while(true) {
             //mi metto in ascolto sulla porta aperta
             socketClient = server.accept();
-
-
-            System.out.println("Connessione con client, stabilita....");
-            server.close(); //in questo modo evito connessioni multiple (accetto un solo client)
-
-            in = new DataInputStream(socketClient.getInputStream()); //input da client
-            out = new DataOutputStream(socketClient.getOutputStream()); //output a client
-
-
+            System.out.println("Connesso..............");
+            new Thread(new Server(socketClient)).start();
 
         }
-        catch (IOException e){
-            e.printStackTrace();
-        }
-        return socketClient;
 
     }
 
-    public void comunica(){
+    @Override
+    public void run() {
+
+
+        try {
+            in = new DataInputStream(socketClient.getInputStream()); //input da client
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            out = new DataOutputStream(socketClient.getOutputStream()); //output a client
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 
         try {
 
@@ -70,14 +79,9 @@ public class Server {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
 
-    //il compito del server è quella di accettare degli input dai client e processi e ridare indietro qualcosa
-    public static void main(String[] args) throws IOException {
 
-        Server s = new Server();
-        s.attendi();
-        s.comunica();
+
 
     }
 }
