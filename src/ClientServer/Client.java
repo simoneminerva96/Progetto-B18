@@ -52,9 +52,10 @@ public class Client {
                 System.out.println("In attesa di risposta");
                 String risposta = in.readLine();
                 System.out.println("La risposta è :" + risposta);
+                System.out.println("Connessione chiusa");
 
             } while (!messaggio.toLowerCase().equals("esci"));
-            System.out.println("Connessione chiusa");
+
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -71,3 +72,5 @@ public class Client {
 
     }
 }
+
+

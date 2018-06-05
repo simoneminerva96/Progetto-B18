@@ -3,7 +3,6 @@ package ClientServer;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Scanner;
 
 public class Server {
 
@@ -64,7 +63,7 @@ public class Server {
 
 
             } while (!letto.toLowerCase().equals("esci"));
-            System.out.println("Connessione chiusa");
+            out.writeBytes("Connessione chiusa" + "\n");
             socketClient.close(); //termino la connesione al client
 
         } catch (IOException e) {
