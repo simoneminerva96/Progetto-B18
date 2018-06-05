@@ -192,6 +192,7 @@ public class TrivialGame {
     public boolean checkBonusMalus(){
         return turn.checkBonusMalus();
     }
+
     public void executeBonusMalus(){
         turnPhase=TurnPhase.executeBonusMalus;
         if(playBoard.getSquares().get(players.get(index).getActualPosition()) instanceof BonusMalusSquare){

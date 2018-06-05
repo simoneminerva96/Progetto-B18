@@ -51,7 +51,7 @@ public class Controller {
         match.setPlayerOnTurn();
     }
 
-    //metodo che controlla se la casella attuale è un bonus/malus
+    //metodo che controlla se la casella attuale è un bonus/malus/random
     public boolean checkBonusMalus(){
         return match.checkBonusMalus();
     }

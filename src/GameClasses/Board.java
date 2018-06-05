@@ -2,6 +2,8 @@ package GameClasses;
 
 import GameClasses.Squares.*;
 import ConnectionDB.ConnectionDB;
+import Interface.BonusMalusRandom;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 /**
@@ -92,11 +94,11 @@ public class Board {
                 possibleQuestionGeofinal.addAll(connectionDB.getQuestion("FGEO"));
                 squares.get(i).setPossibleQuestions(possibleQuestionGeofinal);
             }
-            if(i==6)squares.add(new BonusMalusSquare(i,"malus"));
-            if(i==12)squares.add(new BonusMalusSquare(i,"bonus"));
-            if(i==18)squares.add(new BonusMalusSquare(i,"random"));
-            if(i==21)squares.add(new BonusMalusSquare(i,"bonus"));
-            if(i==30)squares.add(new BonusMalusSquare(i,"malus"));
+            if(i==6)squares.add(new BonusMalusSquare(i, BonusMalusRandom.Malus));
+            if(i==12)squares.add(new BonusMalusSquare(i,BonusMalusRandom.Bonus));
+            if(i==18)squares.add(new BonusMalusSquare(i,BonusMalusRandom.Random));
+            if(i==21)squares.add(new BonusMalusSquare(i,BonusMalusRandom.Bonus));
+            if(i==30)squares.add(new BonusMalusSquare(i,BonusMalusRandom.Malus));
         }
     }
     public ArrayList<Square> getSquares() {
