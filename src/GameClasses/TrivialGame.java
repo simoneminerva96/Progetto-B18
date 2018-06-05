@@ -14,7 +14,8 @@ public class TrivialGame {
     private ArrayList<Player> players;      //giocatori partecipanti
     private ArrayList<Piece> possiblePieces;        //possibili pedine tra cui scegliere
     private Die die;        //dado
-    private BoardProva playBoard;        //tabellone di gioco
+    //private Board playBoard;        //tabellone di gioco
+    private BoardProva playBoard;    //tabellone di gioco di prova
     private Turn turn;      //turno attuale
     private TurnPhase turnPhase;
     private Integer index=0; //INDICE CHE SERVE PER TENER IL CONTO DI QUALE GIOCATORE è IL TURNO
@@ -188,6 +189,9 @@ public class TrivialGame {
         turn.movePlayer();
     }
 
+    public boolean checkBonusMalus(){
+        return turn.checkBonusMalus();
+    }
     public void executeBonusMalus(){
         turnPhase=TurnPhase.executeBonusMalus;
         if(playBoard.getSquares().get(players.get(index).getActualPosition()) instanceof BonusMalusSquare){

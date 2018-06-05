@@ -62,7 +62,14 @@ public class Turn {
         System.out.println("posizione attuale: " + playerOnTurn.getActualPosition() + "\n");
     }
 
-    //metodo che esegue il bonus/malus corrispondente alla casella in cui si trova il giocatore
+    public boolean checkBonusMalus(){
+        int currentPosition=playerOnTurn.getActualPosition();
+        Square currentSquare=playBoard.getSquares().get(currentPosition);
+        if(currentSquare instanceof BonusMalusSquare){
+            return true;
+        }
+        else return false;
+    }
     public void executeBonusMalus(){
         int currentPosition=playerOnTurn.getActualPosition();
         Square currentSquare=playBoard.getSquares().get(currentPosition);
