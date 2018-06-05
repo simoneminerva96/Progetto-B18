@@ -1,26 +1,12 @@
 package Graphics.OfflineMenu;
 
-import Graphics.com.sticky.SimpleButton;
 import Graphics.com.sticky.StateButton;
 import org.newdawn.slick.*;
-import org.newdawn.slick.Color;
-import org.newdawn.slick.Font;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.font.effects.ColorEffect;
-import org.newdawn.slick.geom.Rectangle;
-import org.newdawn.slick.gui.TextField;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
-import org.newdawn.slick.util.ResourceLoader;
-
-import java.awt.*;
-import java.io.IOException;
-import java.io.InputStream;
-
 import Graphics.*;
-
-
 
 public class CharacterSelection extends BasicGameState {
 
@@ -29,16 +15,11 @@ public class CharacterSelection extends BasicGameState {
     Boolean clicked=false;
     int xb=100,yb=100;
 
-
-
-
     private Image background;
     TrueTypeFont font;
     private String gameName;
 
-
     private StateButton play;
-
 
     UnicodeFont fonx;
 
@@ -46,8 +27,6 @@ public class CharacterSelection extends BasicGameState {
 
     //STATES
     MenuFrame mf=new MenuFrame(10);
-
-
 
     public CharacterSelection(int i) throws SlickException {
     }

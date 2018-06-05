@@ -110,20 +110,30 @@ public class Trivia extends BasicGameState {
         graphics.drawImage(forward, 850, 575);
 
         for(int i=0; i<nPlayers; i++){
+            if (i==0) {
+                rydia.draw(750, 30);
+            }
             if ((i==1) || (i==3)){
                 x = 1050;
+                if (i==1) {
+                    ceodore.draw(1050, 30);
+                }
+                if (i==3) {
+                    luca.draw(1050, 130);
+                }
             }
             if (i==2) {
                 x = 750;
                 y = 130;
+                kain.draw(750, 130);
             }
             playerBack.get(i).draw(x, y);
             fonx1.drawString((x+80),y,pGUI.get(i).getName(), Color.white);
         }
-        rydia.draw(750, 30);
-        ceodore.draw(1050, 30);
-        kain.draw(750, 130);
-        luca.draw(1050, 130);
+        //rydia.draw(750, 30);
+        //ceodore.draw(1050, 30);
+        //kain.draw(750, 130);
+        //luca.draw(1050, 130);
         fonx1.drawString(870, 219, "E' il turno di: " + pGUI.get(interm.getIndex()).getName());
         launch.draw(990, 580);
 
