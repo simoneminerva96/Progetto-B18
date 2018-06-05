@@ -3,7 +3,6 @@ package ClientServer;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.util.Scanner;
 
 public class Client {
 
@@ -16,7 +15,7 @@ public class Client {
     private BufferedReader tastiera;
     private String messaggio;
 
-    public Socket connetti(){
+    private Socket connetti(){
 
         try {
 

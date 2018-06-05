@@ -4,17 +4,18 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+
 public class Server {
 
-    private ServerSocket server = null;
-    private Socket socketClient = null;
+    ServerSocket server = null;
+    Socket socketClient = null;
 
-    private int porta = 8888; //porta server
+    int porta = 8888; //porta server
 
-    private DataInputStream in; //per ricevere da client
-    private DataOutputStream out; //per inviare al client
+    DataInputStream in; //per ricevere da client
+    DataOutputStream out; //per inviare al client
 
-    private String letto;
+    String letto;
 
     public Socket attendi() throws IOException {
 
