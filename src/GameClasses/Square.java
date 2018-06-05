@@ -40,7 +40,6 @@ public class Square {
         int max=possibleQuestions.size() -1 ;
         int range = ((max) + 1);
         int indexOfQuestion = questionChooser.nextInt(range);
-
         this.extractedQuestion = possibleQuestions.get(indexOfQuestion);
         return extractedQuestion;
     }

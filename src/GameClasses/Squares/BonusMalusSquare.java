@@ -10,7 +10,7 @@ import java.util.Scanner;
  */
 public class BonusMalusSquare extends Square {
     private String bonusMalusType;
-
+    private Question question; //domanda di prova estratta quando vado su casella bonus malus (DA TOGLIERE)
     public BonusMalusSquare(Integer index,String bonusMalusType){
         super(index);
         this.bonusMalusType=bonusMalusType;
@@ -22,7 +22,7 @@ public class BonusMalusSquare extends Square {
 
     @Override
     public boolean goOnIt(int indexofAnswer) {
-        return false;
+        return question.getAnswers().get(indexofAnswer).getCorrect();
     }
 
     //NON USO PATTERN STRATEGY PERCHè NON AVRO NECESSITà DI AGGIUNGERE ALTRI BONUS MALUS
@@ -69,6 +69,7 @@ public class BonusMalusSquare extends Square {
         a.add(new Answer("vuota3",false));
         a.add(new Answer("vuota4",false));
         Question vuota=new Question("CASELLA BONUS/MALUS!",null,a);
-        return vuota;
+        this.question=vuota;
+        return question;
     }
 }
