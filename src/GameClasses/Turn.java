@@ -2,6 +2,7 @@ package GameClasses;
 
 import GameClasses.Squares.BonusMalusSquare;
 import GameClasses.Squares.FinalQuestionSquare;
+import Interface.BonusMalusRandom;
 
 /**
  * CLASSE CHE CORRISPONDE A UN TURNO DI GIOCO, effettua la movimentazione delle pedine sul tabellone
@@ -28,6 +29,10 @@ public class Turn {
     //metodo da chiamare nella classe trivialgame per cambiar turno
     public void setPlayerOnTurn(Player playerOnTurn) {
         this.playerOnTurn = playerOnTurn;
+    }
+
+    public void setCorrectAnswer(boolean correctAnswer) {
+        this.correctAnswer = correctAnswer;
     }
 
     //metodo che effettua il lancio del dado
@@ -62,13 +67,22 @@ public class Turn {
         System.out.println("posizione attuale: " + playerOnTurn.getActualPosition() + "\n");
     }
 
-    //metodo che esegue il bonus/malus corrispondente alla casella in cui si trova il giocatore
-    public void executeBonusMalus(){
+    public boolean checkBonusMalus(){
         int currentPosition=playerOnTurn.getActualPosition();
         Square currentSquare=playBoard.getSquares().get(currentPosition);
         if(currentSquare instanceof BonusMalusSquare){
-            ((BonusMalusSquare) currentSquare).executeBonusMalus(this);
+            return true;
         }
+        else return false;
+    }
+    //ritorna l'effetto che viene eseguito dalla casella
+    public BonusMalusRandom executeBonusMalus(){
+        int currentPosition=playerOnTurn.getActualPosition();
+        Square currentSquare=playBoard.getSquares().get(currentPosition);
+        if(currentSquare instanceof BonusMalusSquare){
+            return ((BonusMalusSquare) currentSquare).executeBonusMalus(this);
+        }
+        else return null;
     }
 
     public Question visualizeQuestion(){

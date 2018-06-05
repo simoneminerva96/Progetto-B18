@@ -32,6 +32,7 @@ public class Controller {
     public int getDiceValue(){
        return match.throwDie();
     }
+
     public void setDirection(Direction direction){
         match.chooseDirection(direction);
         match.movePlayer();
@@ -51,5 +52,12 @@ public class Controller {
         match.setPlayerOnTurn();
     }
 
-
+    //metodo che controlla se la casella attuale è un bonus/malus/random
+    public boolean checkBonusMalus(){
+        return match.checkBonusMalus();
+    }
+    //metodo che esegue il bonus/malus e ritorna l'effetto eseguito
+    public BonusMalusRandom checkType(){
+        return match.executeBonusMalus();
+    }
 }

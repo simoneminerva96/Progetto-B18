@@ -2,8 +2,7 @@ package Graphics;
 
 import Graphics.Map.Map;
 import Graphics.Player.*;
-import Interface.Controller;
-import Interface.Direction;
+import Interface.*;
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Color;
@@ -44,7 +43,6 @@ public class Trivia extends BasicGameState {
     private Map map;
     private ArrayList<PlayerGUI> pGUI;
     private Pedina piece, piece1, piece2, piece3;
-    private String mouse = "No input";
     private Image launch;
     private boolean launched = false;
     private int diceN = 0;
@@ -140,10 +138,29 @@ public class Trivia extends BasicGameState {
          */
 
         if (pGUI.get(interm.getIndex()).isReady() ) {
-            domanda.render(gameContainer, stateBasedGame, graphics);
-            if (domanda.isEnd()) {
-                pGUI.get(interm.getIndex()).setReady(false);
-                launched = false;
+            if(interm.checkBonusMalus()){
+                switch(interm.checkType()) {
+                    case Bonus: {
+                        fonx1.drawString(200,500, "PUOI RILANCIARE IL DADO!", Color.white);
+                        pGUI.get(interm.getIndex()).setReady(false);
+                        launched = false;
+                        break;
+                    }
+                    case Malus: {
+                        fonx1.drawString(200, 500, "HAI PERSO IL TURNO!", Color.white);
+                        pGUI.get(interm.getIndex()).setReady(false);
+                        launched = false;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                domanda.render(gameContainer, stateBasedGame, graphics);
+                if (domanda.isEnd()) {
+                    pGUI.get(interm.getIndex()).setReady(false);
+                    launched = false;
+                }
             }
         }
 
@@ -164,7 +181,7 @@ public class Trivia extends BasicGameState {
         float xpos = Mouse.getX();
         float ypos = Mouse.getY();
 
-        mouse = "Mouse position x:" + xpos + " y: " + ypos;
+        //System.out.println("X: "+ xpos + "Y: "+ ypos);
         Input input = gameContainer.getInput();
 
         /*
@@ -173,14 +190,13 @@ public class Trivia extends BasicGameState {
          */
         if (xpos > 990 && xpos < 1130 && ypos > 55 && ypos < 120) {
             if (input.isMousePressed(0) && !launched) {
-                launched = true;
                 interm.setPlayerOnTurn();
                 pGUI.get(interm.getIndex()).setClicked(false);
+                launched = true;
                 diceN = interm.getDiceValue();
                 d.setCurrentDie(diceN);
                 domanda.setAnswered(false);
                 domanda.setEsito(false);
-                domanda.setEnd(false);
             }
         }
 

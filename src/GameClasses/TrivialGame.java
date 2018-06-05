@@ -4,6 +4,8 @@ import GameClasses.Squares.BonusMalusSquare;
 import java.awt.*;
 import java.sql.SQLException;
 import java.util.*;
+
+import Interface.BonusMalusRandom;
 import Interface.Direction;
 
 /**
@@ -14,7 +16,8 @@ public class TrivialGame {
     private ArrayList<Player> players;      //giocatori partecipanti
     private ArrayList<Piece> possiblePieces;        //possibili pedine tra cui scegliere
     private Die die;        //dado
-    private BoardProva playBoard;        //tabellone di gioco
+    //private Board playBoard;        //tabellone di gioco
+    private BoardProva playBoard;    //tabellone di gioco di prova
     private Turn turn;      //turno attuale
     private TurnPhase turnPhase;
     private Integer index=0; //INDICE CHE SERVE PER TENER IL CONTO DI QUALE GIOCATORE è IL TURNO
@@ -188,11 +191,18 @@ public class TrivialGame {
         turn.movePlayer();
     }
 
-    public void executeBonusMalus(){
+    public boolean checkBonusMalus(){
+        return turn.checkBonusMalus();
+    }
+
+    public BonusMalusRandom executeBonusMalus(){
         turnPhase=TurnPhase.executeBonusMalus;
-        if(playBoard.getSquares().get(players.get(index).getActualPosition()) instanceof BonusMalusSquare){
-            turn.executeBonusMalus();
+        BonusMalusRandom type=turn.executeBonusMalus();
+        if(type.equals(BonusMalusRandom.Malus)){
+            this.setPlayerOnTurn();
+            turn.setCorrectAnswer(true);
         }
+        return type;
     }
 
     public Question visualizeQuestion(){
@@ -205,6 +215,7 @@ public class TrivialGame {
         boolean correct=turn.AnswerQuestion(indexOfQuestion);
         return correct;
     }
+
     //se la risposta data è sbagliata incrementa l'indice e aggiorna il giocatore di turno
     public void setPlayerOnTurn(){
         if(!turn.getCorrectAnswer()){
