@@ -7,14 +7,14 @@ import java.util.Scanner;
 
 public class Client {
 
-    Socket server = null;
+    private Socket server = null;
 
     int porta = 8888; //porta server
 
-    DataInputStream in; //per ricevere da server
-    DataOutputStream out; //per inviare al server
-    BufferedReader tastiera;
-    String messaggio;
+    private DataInputStream in; //per ricevere da server
+    private DataOutputStream out; //per inviare al server
+    private BufferedReader tastiera;
+    private String messaggio;
 
     public Socket connetti(){
 

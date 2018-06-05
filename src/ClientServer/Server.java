@@ -6,15 +6,15 @@ import java.net.Socket;
 
 public class Server {
 
-    ServerSocket server = null;
-    Socket socketClient = null;
+    private ServerSocket server = null;
+    private Socket socketClient = null;
 
-    int porta = 8888; //porta server
+    private int porta = 8888; //porta server
 
-    DataInputStream in; //per ricevere da client
-    DataOutputStream out; //per inviare al client
+    private DataInputStream in; //per ricevere da client
+    private DataOutputStream out; //per inviare al client
 
-    String letto;
+    private String letto;
 
     public Socket attendi() throws IOException {
 
