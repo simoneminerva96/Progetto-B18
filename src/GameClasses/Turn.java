@@ -31,6 +31,10 @@ public class Turn {
         this.playerOnTurn = playerOnTurn;
     }
 
+    public void setCorrectAnswer(boolean correctAnswer) {
+        this.correctAnswer = correctAnswer;
+    }
+
     //metodo che effettua il lancio del dado
     public int dieLaunch(){
         dieresult=die.Launch();

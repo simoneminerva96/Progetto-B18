@@ -147,10 +147,9 @@ public class Trivia extends BasicGameState {
                         break;
                     }
                     case Malus: {
-
+                        fonx1.drawString(200, 500, "HAI PERSO IL TURNO!", Color.white);
                         pGUI.get(interm.getIndex()).setReady(false);
                         launched = false;
-                        fonx1.drawString(200, 500, "HAI PERSO IL TURNO!", Color.white);
                         break;
                     }
                 }

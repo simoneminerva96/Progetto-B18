@@ -50,13 +50,12 @@ public class BonusMalusSquare extends Square {
         switch (effectType){
             case Bonus:
                 System.out.println("CASELLA BONUS! PUOI LANCIARE NUOVAMENTE IL DADO!");
-                //t.dieLaunch();
-                //t.movePlayer();
                 break;
             case Malus:
                 System.out.println("CASELLA MALUS! PASSI IL TURNO");
                 // non fa nulla perchè poi tornando al metodo play verrà chiamato il metodo goOnIt su questa casella
                 //che ritorna falso in ogni caso
+                t.setCorrectAnswer(false); //cosi incremento l'indice e passa il turno
                 break;
         }
         return effectType;

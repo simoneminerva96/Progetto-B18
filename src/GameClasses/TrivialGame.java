@@ -197,7 +197,12 @@ public class TrivialGame {
 
     public BonusMalusRandom executeBonusMalus(){
         turnPhase=TurnPhase.executeBonusMalus;
-        return turn.executeBonusMalus();
+        BonusMalusRandom type=turn.executeBonusMalus();
+        if(type.equals(BonusMalusRandom.Malus)){
+            this.setPlayerOnTurn();
+            turn.setCorrectAnswer(true);
+        }
+        return type;
     }
 
     public Question visualizeQuestion(){
@@ -210,6 +215,7 @@ public class TrivialGame {
         boolean correct=turn.AnswerQuestion(indexOfQuestion);
         return correct;
     }
+
     //se la risposta data è sbagliata incrementa l'indice e aggiorna il giocatore di turno
     public void setPlayerOnTurn(){
         if(!turn.getCorrectAnswer()){

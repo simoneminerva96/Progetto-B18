@@ -32,6 +32,7 @@ public class Controller {
     public int getDiceValue(){
        return match.throwDie();
     }
+
     public void setDirection(Direction direction){
         match.chooseDirection(direction);
         match.movePlayer();
