@@ -23,12 +23,12 @@ public class BonusMalusSquare extends Square {
 
     @Override
     public boolean goOnIt(int indexofAnswer) {
-        return question.getAnswers().get(indexofAnswer).getCorrect();
+        return false;
     }
 
     //NON USO PATTERN STRATEGY PERCHè NON AVRO NECESSITà DI AGGIUNGERE ALTRI BONUS MALUS
 
-    public void executeBonusMalus(Turn t){
+    public BonusMalusRandom executeBonusMalus(Turn t){
         // se esce il "random" la casella avrà l'effetto di uno dei bonus/malus a caso
         if(squareType.equals(BonusMalusRandom.Random))
         {
@@ -59,6 +59,7 @@ public class BonusMalusSquare extends Square {
                 //che ritorna falso in ogni caso
                 break;
         }
+        return effectType;
     }
 
     @Override

@@ -4,6 +4,8 @@ import GameClasses.Squares.BonusMalusSquare;
 import java.awt.*;
 import java.sql.SQLException;
 import java.util.*;
+
+import Interface.BonusMalusRandom;
 import Interface.Direction;
 
 /**
@@ -193,11 +195,9 @@ public class TrivialGame {
         return turn.checkBonusMalus();
     }
 
-    public void executeBonusMalus(){
+    public BonusMalusRandom executeBonusMalus(){
         turnPhase=TurnPhase.executeBonusMalus;
-        if(playBoard.getSquares().get(players.get(index).getActualPosition()) instanceof BonusMalusSquare){
-            turn.executeBonusMalus();
-        }
+        return turn.executeBonusMalus();
     }
 
     public Question visualizeQuestion(){

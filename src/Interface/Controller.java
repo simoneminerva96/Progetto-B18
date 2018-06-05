@@ -55,4 +55,8 @@ public class Controller {
     public boolean checkBonusMalus(){
         return match.checkBonusMalus();
     }
+    //metodo che esegue il bonus/malus e ritorna l'effetto eseguito
+    public BonusMalusRandom checkType(){
+        return match.executeBonusMalus();
+    }
 }

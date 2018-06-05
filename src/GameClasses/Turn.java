@@ -2,6 +2,7 @@ package GameClasses;
 
 import GameClasses.Squares.BonusMalusSquare;
 import GameClasses.Squares.FinalQuestionSquare;
+import Interface.BonusMalusRandom;
 
 /**
  * CLASSE CHE CORRISPONDE A UN TURNO DI GIOCO, effettua la movimentazione delle pedine sul tabellone
@@ -70,12 +71,14 @@ public class Turn {
         }
         else return false;
     }
-    public void executeBonusMalus(){
+    //ritorna l'effetto che viene eseguito dalla casella
+    public BonusMalusRandom executeBonusMalus(){
         int currentPosition=playerOnTurn.getActualPosition();
         Square currentSquare=playBoard.getSquares().get(currentPosition);
         if(currentSquare instanceof BonusMalusSquare){
-            ((BonusMalusSquare) currentSquare).executeBonusMalus(this);
+            return ((BonusMalusSquare) currentSquare).executeBonusMalus(this);
         }
+        else return null;
     }
 
     public Question visualizeQuestion(){
