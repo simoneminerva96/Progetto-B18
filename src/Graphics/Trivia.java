@@ -53,6 +53,8 @@ public class Trivia extends BasicGameState {
     private Controller interm;
     private int nPlayers;
     private ArrayList<Image> playerBack;
+    private boolean check;
+    private BonusMalusRandom b;
 
     public Trivia(int id) {
         domanda = new Domanda(6);
@@ -138,7 +140,8 @@ public class Trivia extends BasicGameState {
          */
 
         if (pGUI.get(interm.getIndex()).isReady() ) {
-            if(interm.checkBonusMalus()){
+            check = interm.checkBonusMalus();
+            if(check){
                 switch(interm.checkType()) {
                     case Bonus: {
                         fonx1.drawString(200,500, "PUOI RILANCIARE IL DADO!", Color.white);
@@ -154,8 +157,7 @@ public class Trivia extends BasicGameState {
                     }
                 }
             }
-            else
-            {
+            else {
                 domanda.render(gameContainer, stateBasedGame, graphics);
                 if (domanda.isEnd()) {
                     pGUI.get(interm.getIndex()).setReady(false);
@@ -197,6 +199,7 @@ public class Trivia extends BasicGameState {
                 d.setCurrentDie(diceN);
                 domanda.setAnswered(false);
                 domanda.setEsito(false);
+                domanda.setEnd(false);
             }
         }
 
@@ -213,6 +216,7 @@ public class Trivia extends BasicGameState {
                         pGUI.get(interm.getIndex()).setClicked(true);
                         pGUI.get(interm.getIndex()).getP().update(diceN, Direction.BACK);
                         pGUI.get(interm.getIndex()).updateCoordinates();
+                        //check = interm.checkBonusMalus();
                     }
                 }
                 if (xpos > 770 && xpos < 830) {
@@ -221,6 +225,7 @@ public class Trivia extends BasicGameState {
                         pGUI.get(interm.getIndex()).setClicked(true);
                         pGUI.get(interm.getIndex()).getP().update(diceN, Direction.FORWARD);
                         pGUI.get(interm.getIndex()).updateCoordinates();
+                        //check = interm.checkBonusMalus();
                     }
                 }
             }
