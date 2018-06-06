@@ -27,7 +27,7 @@ public class MainMenu extends BasicGameState {
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-            background =new Image("res/backgrounds/green_landscape_ridim.png");
+            background =new Image("res/backgrounds/green_landscape.png");
             fonx1 = new TrueTypeFont(f.getFont().deriveFont(23f),false);
             play=new StateButton(new Rectangle(550,325,190,49),new Image("res/buttons/Button_Play/Button_Play_01.png"),new Image("res/buttons/Button_Play/Button_Play_02.png"),new Image("res/buttons/Button_Play/Button_Play_01.png"),null);
             options=new StateButton(new Rectangle(550,450,190,49),new Image("res/buttons/Button_Options/Button_Options_01.png"),new Image("res/buttons/Button_Options/Button_Options_02.png"),new Image("res/buttons/Button_Options/Button_Options_01.png"),null);

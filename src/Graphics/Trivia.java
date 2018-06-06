@@ -46,7 +46,7 @@ public class Trivia extends BasicGameState {
     private Image launch;
     private boolean launched = false;
     private int diceN = 0;
-    private Domanda domanda;
+    //private Domanda domanda;
     private Escape esc;
     private TrueTypeFont fonx1;
     private TriviaFont f;
@@ -57,7 +57,7 @@ public class Trivia extends BasicGameState {
     private BonusMalusRandom b;
 
     public Trivia(int id) {
-        domanda = new Domanda(6);
+        //domanda = new Domanda(6);
         esc = new Escape(7);
         pGUI = new ArrayList<>();
         pGUI.clear();
@@ -72,7 +72,7 @@ public class Trivia extends BasicGameState {
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
 
-        map = new Map(20, 20, 35);
+        map = new Map(20, 20, 50);
         backgroundMap = new Image("res/map/Tabella.png");
 
         piece = new Pedina("res/char/FFIV/Rydia/rydiaup.png", "res/char/FFIV/Rydia/Rydiadwn.png", "res/char/FFIV/Rydia/rydiasx.png", "res/char/FFIV/Rydia/rydiadx.png", 35, 35);
@@ -88,51 +88,49 @@ public class Trivia extends BasicGameState {
         ceodore = new Image("res/char/ceodore.png");
         kain = new Image("res/char/kain.png");
         luca = new Image("res/char/luca.png");
-        background = new Image("res/backgrounds/green_landscape2.png");
+        background = new Image("res/backgrounds/green_landscape.png");
         launch = new Image("res/buttons/Button_Launch/Button_Launch.png");
 
-        domanda.init(gameContainer, stateBasedGame);
+        //domanda.init(gameContainer, stateBasedGame);
         esc.init(gameContainer, stateBasedGame);
         fonx1 = new TrueTypeFont(f.getFont().deriveFont(23f), false);
         interm = new Controller();
-        domanda.setController(interm);
+        //domanda.setController(interm);
     }
 
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
-        int x = 750;
+        int x = 1100;
         int y = 30;
 
         graphics.drawImage(background, 0, 0);
         graphics.drawImage(backgroundMap, 0, 0);
-        graphics.drawImage(back, 750, 575);
-        graphics.drawImage(forward, 850, 575);
+        graphics.drawImage(back, 1050, 840);
+        graphics.drawImage(forward, 1160, 840);
 
         for(int i=0; i<nPlayers; i++){
             if ((i==1) || (i==3)){
-                x = 1050;
+                x = 1400;
             }
             if (i==2) {
-                x = 750;
+                x = 1100;
                 y = 130;
             }
             playerBack.get(i).draw(x, y);
             fonx1.drawString((x+80),y,pGUI.get(i).getName(), Color.white);
         }
-        rydia.draw(750, 30);
-        ceodore.draw(1050, 30);
-        kain.draw(750, 130);
-        luca.draw(1050, 130);
-        fonx1.drawString(870, 219, "E' il turno di: " + pGUI.get(interm.getIndex()).getName());
-        launch.draw(990, 580);
+        //rydia.draw(750, 30);
+        //ceodore.draw(1050, 30);
+        //kain.draw(750, 130);
+        //luca.draw(1050, 130);
+        fonx1.drawString(1190, 230, "E' il turno di: " + pGUI.get(interm.getIndex()).getName());
+        launch.draw(1320, 860);
 
         for (PlayerGUI p : pGUI) {
             p.getPedina().draw(p.getxUpdate(), p.getyUpdate());
         }
 
-        if (launched) {
-            d.getCurrentDie().draw(1200, 575);
-        }
+        if (launched) { d.getCurrentDie().draw(1550, 870); }
 
         /*
         Se la pedina si è fermata e quindi il flag ready= true allora posso renderizzare la domanda.
@@ -157,13 +155,13 @@ public class Trivia extends BasicGameState {
                     }
                 }
             }
-            else {
+            /*else {
                 domanda.render(gameContainer, stateBasedGame, graphics);
                 if (domanda.isEnd()) {
                     pGUI.get(interm.getIndex()).setReady(false);
                     launched = false;
                 }
-            }
+            }*/
         }
 
         /*
@@ -190,16 +188,16 @@ public class Trivia extends BasicGameState {
         Se sono nelle coordinate del bottone Launch, ottengo il numero estratto, metto launched a true e aggiorno la
         faccia del dado. Resetto answered ed esito a false perchè risponderò ad una domanda.
          */
-        if (xpos > 990 && xpos < 1130 && ypos > 55 && ypos < 120) {
+        if (xpos > 1322 && xpos < 1505 && ypos > 57 && ypos < 143) {
             if (input.isMousePressed(0) && !launched) {
                 interm.setPlayerOnTurn();
                 pGUI.get(interm.getIndex()).setClicked(false);
                 launched = true;
                 diceN = interm.getDiceValue();
                 d.setCurrentDie(diceN);
-                domanda.setAnswered(false);
-                domanda.setEsito(false);
-                domanda.setEnd(false);
+                //domanda.setAnswered(false);
+                //domanda.setEsito(false);
+                //domanda.setEnd(false);
             }
         }
 
@@ -232,7 +230,7 @@ public class Trivia extends BasicGameState {
         }
 
         try {
-            domanda.update(gameContainer, stateBasedGame, i);
+            //domanda.update(gameContainer, stateBasedGame, i);
             esc.update(gameContainer, stateBasedGame, i);
         } catch (SlickException e) {
             e.printStackTrace();
@@ -240,9 +238,7 @@ public class Trivia extends BasicGameState {
 
         pGUI.get(interm.getIndex()).updateOnEachFrame(i);
 
-        if (input.isKeyPressed(Input.KEY_ESCAPE)) {
-            esc.setQuit(true);
-        }
+        if (input.isKeyPressed(Input.KEY_ESCAPE)) { esc.setQuit(true); }
     }
 
     public void setPlayersNumber(int n) throws SlickException {

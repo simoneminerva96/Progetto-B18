@@ -22,7 +22,7 @@ public class PlayerGUI {
     private Player p;
     private Pedina piece;
     private boolean ready = false, clicked=false;
-    private static final int minMovement = 35;
+    private static final int minMovement = 50;
 
     public PlayerGUI(Player p, Pedina piece){
         this.p = p;

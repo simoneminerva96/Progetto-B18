@@ -37,7 +37,6 @@ public class Map {
     public int getYmax() {
         return ymax;
     }
-
     public int getTilesize() {
         return tilesize;
     }

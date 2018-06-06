@@ -38,7 +38,7 @@ public class CharacterSelection extends BasicGameState {
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-        background=new Image("res/backgrounds/green_landscape_ridim.png");
+        background=new Image("res/backgrounds/green_landscape.png");
         gameName="Trivial Pursuit";
         mf.init(gameContainer,stateBasedGame);
         mf.setBackState(4);

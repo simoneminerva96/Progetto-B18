@@ -15,13 +15,9 @@ public class PlayerNumberSelection extends BasicGameState {
     public String mouse= "No input";
     public static int numbertosend=1;
     private Image background;
-
-    //BUTTONS
     private NumberButton one,two,three,four;
     private boolean[]array;
-
-    //STATE
-    MenuFrame mf=new MenuFrame(10);
+    private MenuFrame mf=new MenuFrame(10);
 
     public PlayerNumberSelection(int i) throws SlickException {
     }
@@ -33,13 +29,12 @@ public class PlayerNumberSelection extends BasicGameState {
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
+        background =new Image("res/backgrounds/green_landscape.png");
 
-        background =new Image("res/backgrounds/green_landscape_ridim.png");
-
-        one=new NumberButton(new Rectangle(525,180,100,101),new Image("res/buttons/Button_Numbers/Button1_0.png"),new Image("res/buttons/Button_Numbers/Button1_1.png"),null,1);
-        two=new NumberButton(new Rectangle(675,180,100,101),new Image("res/buttons/Button_Numbers/Button2_0.png"),new Image("res/buttons/Button_Numbers/Button2_1.png"),null,2);
-        three=new NumberButton(new Rectangle(525,305,100,101),new Image("res/buttons/Button_Numbers/Button3_0.png"),new Image("res/buttons/Button_Numbers/Button3_1.png"),null,3);
-        four=new NumberButton(new Rectangle(675,305,100,101),new Image("res/buttons/Button_Numbers/Button4_0.png"),new Image("res/buttons/Button_Numbers/Button4_1.png"),null,4);
+        one=new NumberButton(new Rectangle(700,300,100,101),new Image("res/buttons/Button_Numbers/Button1_0.png"),new Image("res/buttons/Button_Numbers/Button1_1.png"),null,1);
+        two=new NumberButton(new Rectangle(900,300,100,101),new Image("res/buttons/Button_Numbers/Button2_0.png"),new Image("res/buttons/Button_Numbers/Button2_1.png"),null,2);
+        three=new NumberButton(new Rectangle(700,420,100,101),new Image("res/buttons/Button_Numbers/Button3_0.png"),new Image("res/buttons/Button_Numbers/Button3_1.png"),null,3);
+        four=new NumberButton(new Rectangle(900,420,100,101),new Image("res/buttons/Button_Numbers/Button4_0.png"),new Image("res/buttons/Button_Numbers/Button4_1.png"),null,4);
         mf.init(gameContainer,stateBasedGame);
         mf.setIsNumberToSend(true);
         mf.setBackState(1);
