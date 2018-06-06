@@ -50,7 +50,7 @@ public class Client2 {
 
                 System.out.println("In attesa di risposta");
                 String risposta = in.readLine();
-                System.out.println("La risposta è :" + risposta);
+                System.out.println("La risposta è :" + " " + risposta);
 
 
             } while (!messaggio.toLowerCase().equals("esci"));
