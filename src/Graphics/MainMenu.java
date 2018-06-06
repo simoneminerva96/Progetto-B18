@@ -1,5 +1,6 @@
 package Graphics;
 
+import Graphics.Fonts.TriviaFont;
 import Graphics.com.sticky.StateButton;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Color;

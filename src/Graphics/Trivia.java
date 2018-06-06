@@ -1,5 +1,6 @@
 package Graphics;
 
+import Graphics.Fonts.TriviaFont;
 import Graphics.Map.Map;
 import Graphics.Player.*;
 import Interface.*;

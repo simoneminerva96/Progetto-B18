@@ -1,6 +1,7 @@
 package Login;
 
-import Graphics.TextFieldTest;
+import Graphics.Fonts.TextFieldTest;
+import Graphics.Fonts.TriviaFont;
 import Graphics.com.sticky.FormButton;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Graphics;
@@ -9,7 +10,6 @@ import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.gui.TextField;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
-import Graphics.*;
 
 /**
  * @author Rita, Stefano

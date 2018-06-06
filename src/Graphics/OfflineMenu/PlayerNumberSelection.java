@@ -1,5 +1,6 @@
 package Graphics.OfflineMenu;
 
+import Graphics.Fonts.MenuFrame;
 import Graphics.com.sticky.NumberButton;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Graphics;
@@ -7,8 +8,6 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
-
-import Graphics.*;
 
 public class PlayerNumberSelection extends BasicGameState {
 

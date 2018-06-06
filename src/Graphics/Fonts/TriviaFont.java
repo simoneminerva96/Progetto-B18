@@ -1,4 +1,4 @@
-package Graphics;
+package Graphics.Fonts;
 
 import org.newdawn.slick.util.ResourceLoader;
 import java.awt.*;

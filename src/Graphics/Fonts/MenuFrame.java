@@ -1,4 +1,4 @@
-package Graphics;
+package Graphics.Fonts;
 
 import Graphics.com.sticky.StateButton;
 import org.newdawn.slick.*;
