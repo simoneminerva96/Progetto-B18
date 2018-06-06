@@ -73,27 +73,27 @@ public class Domanda extends BasicGameState {
         int posX = Mouse.getX();
         int posY = Mouse.getY();
 
-        if (posX>850 && posX<1135){
-            if (posY<414 && posY>373) {
+        if (posX>1204 && posX<1412){
+            if (posY<604 && posY>542) {
                 if (Mouse.isButtonDown(0) && !answered) {
                     esito = controller.answerQuestion(0);
                     answered = true;
                 }
             }
-            if (posY<360 && posY>325) {
+            if (posY<527 && posY>486) {
                 if (Mouse.isButtonDown(0) && !answered) {
                     esito = controller.answerQuestion(1);
                     answered = true;
                 }
             }
-            if (posY<305 && posY>275) {
+            if (posY<472 && posY>430) {
                 if (Mouse.isButtonDown(0) && !answered) {
                     esito = controller.answerQuestion(2);
                     answered = true;
                 }
             }
 
-            if (posY<260 && posY>230) {
+            if (posY<410 && posY>372) {
                 if (Mouse.isButtonDown(0) && !answered){
                     esito = controller.answerQuestion(3);
                     answered = true;

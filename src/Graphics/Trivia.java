@@ -55,7 +55,6 @@ public class Trivia extends BasicGameState {
     private int nPlayers;
     private ArrayList<Image> playerBack;
     private boolean check;
-    private BonusMalusRandom b;
 
     public Trivia(int id) {
         domanda = new Domanda(6);
@@ -182,7 +181,6 @@ public class Trivia extends BasicGameState {
         float xpos = Mouse.getX();
         float ypos = Mouse.getY();
 
-        //System.out.println("X: "+ xpos + "Y: "+ ypos);
         Input input = gameContainer.getInput();
 
         /*
@@ -211,20 +209,21 @@ public class Trivia extends BasicGameState {
             if (ypos > 45 && ypos < 123) {
                 if (xpos > 1081 && xpos < 1156) {
                     if (input.isMousePressed(0)) {
-                        interm.setDirection(Direction.BACK);
+                        interm.setDirection(Direction.FORWARD);
                         pGUI.get(interm.getIndex()).setClicked(true);
-                        pGUI.get(interm.getIndex()).getP().update(diceN, Direction.BACK);
+                        pGUI.get(interm.getIndex()).getP().update(diceN, Direction.FORWARD);
                         pGUI.get(interm.getIndex()).updateCoordinates();
                         check = interm.checkBonusMalus();
                     }
                 }
                 if (xpos > 1188 && xpos < 1270) {
                     if (input.isMousePressed(0)) {
-                        interm.setDirection(Direction.FORWARD);
+                        interm.setDirection(Direction.BACK);
                         pGUI.get(interm.getIndex()).setClicked(true);
-                        pGUI.get(interm.getIndex()).getP().update(diceN, Direction.FORWARD);
+                        pGUI.get(interm.getIndex()).getP().update(diceN, Direction.BACK);
                         pGUI.get(interm.getIndex()).updateCoordinates();
                         check = interm.checkBonusMalus();
+
                     }
                 }
             }
