@@ -27,9 +27,9 @@ public class Escape extends BasicGameState {
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-        exit = new FormButton(new Rectangle(560,400, 185,91), new Image("res/buttons/Button_Exit/Button_Exit_01.png"), new Image("res/buttons/Button_Exit/Button_Exit_02.png"), new Image("res/buttons/Button_Exit/Button_Exit_01.png"), null);
-        resume = new FormButton(new Rectangle(560,200, 185,91), new Image("res/buttons/Button_Resume/Button_Resume_01.png"), new Image("res/buttons/Button_Resume/Button_Resume_02.png"), new Image("res/buttons/Button_Resume/Button_Resume_01.png"), null);
-        menu = new FormButton(new Rectangle(560,300, 185,91), new Image("res/buttons/Button_Menu/Button_Menu_01.png"), new Image("res/buttons/Button_Menu/Button_Menu_02.png"), new Image("res/buttons/Button_Menu/Button_Menu_01.png"), null);
+        exit = new FormButton(new Rectangle(820,500, 185,91), new Image("res/buttons/Button_Exit/Button_Exit_01.png"), new Image("res/buttons/Button_Exit/Button_Exit_02.png"), new Image("res/buttons/Button_Exit/Button_Exit_01.png"), null);
+        resume = new FormButton(new Rectangle(820,400, 185,91), new Image("res/buttons/Button_Resume/Button_Resume_01.png"), new Image("res/buttons/Button_Resume/Button_Resume_02.png"), new Image("res/buttons/Button_Resume/Button_Resume_01.png"), null);
+        menu = new FormButton(new Rectangle(820,600, 185,91), new Image("res/buttons/Button_Menu/Button_Menu_01.png"), new Image("res/buttons/Button_Menu/Button_Menu_02.png"), new Image("res/buttons/Button_Menu/Button_Menu_01.png"), null);
     }
 
     @Override

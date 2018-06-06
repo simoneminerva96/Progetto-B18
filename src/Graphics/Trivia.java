@@ -46,7 +46,7 @@ public class Trivia extends BasicGameState {
     private Image launch;
     private boolean launched = false;
     private int diceN = 0;
-    //private Domanda domanda;
+    private Domanda domanda;
     private Escape esc;
     private TrueTypeFont fonx1;
     private TriviaFont f;
@@ -57,7 +57,7 @@ public class Trivia extends BasicGameState {
     private BonusMalusRandom b;
 
     public Trivia(int id) {
-        //domanda = new Domanda(6);
+        domanda = new Domanda(6);
         esc = new Escape(7);
         pGUI = new ArrayList<>();
         pGUI.clear();
@@ -75,13 +75,13 @@ public class Trivia extends BasicGameState {
         map = new Map(20, 20, 50);
         backgroundMap = new Image("res/map/Tabella.png");
 
-        piece = new Pedina("res/char/FFIV/Rydia/rydiaup.png", "res/char/FFIV/Rydia/Rydiadwn.png", "res/char/FFIV/Rydia/rydiasx.png", "res/char/FFIV/Rydia/rydiadx.png", 35, 35);
-        piece1 = new Pedina("res/char/FFIV/Ceodore/ced_up.png", "res/char/FFIV/Ceodore/ced_dwn.png", "res/char/FFIV/Ceodore/ced_lft.png", "res/char/FFIV/Ceodore/ced_rht.png", 35, 35);
-        piece2 = new Pedina("res/char/FFIV/Kain/kainup.png", "res/char/FFIV/Kain/kaindwn.png", "res/char/FFIV/Kain/kainsx.png", "res/char/FFIV/Kain/kaindx.png", 35, 35);
-        piece3 = new Pedina("res/char/FFIV/Luca/lucaup.png", "res/char/FFIV/Luca/lucadwn.png", "res/char/FFIV/Luca/lucasx.png", "res/char/FFIV/Luca/lucadx.png", 35, 35);
+        piece = new Pedina("res/char/FFIV/Rydia/rydiaup.png", "res/char/FFIV/Rydia/Rydiadwn.png", "res/char/FFIV/Rydia/rydiasx.png", "res/char/FFIV/Rydia/rydiadx.png", 40, 40);
+        piece1 = new Pedina("res/char/FFIV/Ceodore/ced_up.png", "res/char/FFIV/Ceodore/ced_dwn.png", "res/char/FFIV/Ceodore/ced_lft.png", "res/char/FFIV/Ceodore/ced_rht.png", 40, 40);
+        piece2 = new Pedina("res/char/FFIV/Kain/kainup.png", "res/char/FFIV/Kain/kaindwn.png", "res/char/FFIV/Kain/kainsx.png", "res/char/FFIV/Kain/kaindx.png", 40, 40);
+        piece3 = new Pedina("res/char/FFIV/Luca/lucaup.png", "res/char/FFIV/Luca/lucadwn.png", "res/char/FFIV/Luca/lucasx.png", "res/char/FFIV/Luca/lucadx.png", 40, 40);
 
-        back = new Image("res/buttons/Frecce/freccia1.png");
-        forward = new Image("res/buttons/Frecce/freccia2.png");
+        back = new Image("res/buttons/Frecce/back.png");
+        forward = new Image("res/buttons/Frecce/forward.png");
         d = new DieGUI();
 
         rydia = new Image("res/char/rydia.png");
@@ -91,11 +91,11 @@ public class Trivia extends BasicGameState {
         background = new Image("res/backgrounds/green_landscape.png");
         launch = new Image("res/buttons/Button_Launch/Button_Launch.png");
 
-        //domanda.init(gameContainer, stateBasedGame);
+        domanda.init(gameContainer, stateBasedGame);
         esc.init(gameContainer, stateBasedGame);
         fonx1 = new TrueTypeFont(f.getFont().deriveFont(23f), false);
         interm = new Controller();
-        //domanda.setController(interm);
+        domanda.setController(interm);
     }
 
     @Override
@@ -105,8 +105,8 @@ public class Trivia extends BasicGameState {
 
         graphics.drawImage(background, 0, 0);
         graphics.drawImage(backgroundMap, 0, 0);
-        graphics.drawImage(back, 1050, 840);
-        graphics.drawImage(forward, 1160, 840);
+        graphics.drawImage(back, 1160, 840);
+        graphics.drawImage(forward, 1050, 840);
 
         for(int i=0; i<nPlayers; i++){
             if ((i==1) || (i==3)){
@@ -155,13 +155,13 @@ public class Trivia extends BasicGameState {
                     }
                 }
             }
-            /*else {
+            else {
                 domanda.render(gameContainer, stateBasedGame, graphics);
                 if (domanda.isEnd()) {
                     pGUI.get(interm.getIndex()).setReady(false);
                     launched = false;
                 }
-            }*/
+            }
         }
 
         /*
@@ -195,9 +195,9 @@ public class Trivia extends BasicGameState {
                 launched = true;
                 diceN = interm.getDiceValue();
                 d.setCurrentDie(diceN);
-                //domanda.setAnswered(false);
-                //domanda.setEsito(false);
-                //domanda.setEnd(false);
+                domanda.setAnswered(false);
+                domanda.setEsito(false);
+                domanda.setEnd(false);
             }
         }
 
@@ -207,30 +207,30 @@ public class Trivia extends BasicGameState {
         controllo se è la prima scelta di direzione con first.
          */
         if (launched) {
-            if (ypos > 46 && ypos < 109) {
-                if (xpos > 870 && xpos < 930) {
+            if (ypos > 45 && ypos < 123) {
+                if (xpos > 1081 && xpos < 1156) {
                     if (input.isMousePressed(0)) {
                         interm.setDirection(Direction.BACK);
                         pGUI.get(interm.getIndex()).setClicked(true);
                         pGUI.get(interm.getIndex()).getP().update(diceN, Direction.BACK);
                         pGUI.get(interm.getIndex()).updateCoordinates();
-                        //check = interm.checkBonusMalus();
+                        check = interm.checkBonusMalus();
                     }
                 }
-                if (xpos > 770 && xpos < 830) {
+                if (xpos > 1188 && xpos < 1270) {
                     if (input.isMousePressed(0)) {
                         interm.setDirection(Direction.FORWARD);
                         pGUI.get(interm.getIndex()).setClicked(true);
                         pGUI.get(interm.getIndex()).getP().update(diceN, Direction.FORWARD);
                         pGUI.get(interm.getIndex()).updateCoordinates();
-                        //check = interm.checkBonusMalus();
+                        check = interm.checkBonusMalus();
                     }
                 }
             }
         }
 
         try {
-            //domanda.update(gameContainer, stateBasedGame, i);
+            domanda.update(gameContainer, stateBasedGame, i);
             esc.update(gameContainer, stateBasedGame, i);
         } catch (SlickException e) {
             e.printStackTrace();

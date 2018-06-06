@@ -52,7 +52,6 @@ public class BonusMalusSquare extends Square {
         switch (effectType){
             case Bonus: {
                 System.out.println("CASELLA BONUS! PUOI LANCIARE NUOVAMENTE IL DADO!");
-                t.setCorrectAnswer(true);
                 break;
             }
             case Malus: {

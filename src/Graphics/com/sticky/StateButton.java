@@ -1,6 +1,5 @@
 package Graphics.com.sticky;
 
-import Graphics.OfflineMenu.CharacterSelection;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Shape;
 import Graphics.com.sticky.events.*;
@@ -87,7 +86,6 @@ public class StateButton extends ButtonSkeleton implements ButtonListener,
             Trivia tr;
             tr = (Trivia)stateBasedGame.getState(5);
             tr.setPlayersNumber(i);
-            //stateBasedGame.getState(5).init(gameContainer,stateBasedGame);
             stateBasedGame.enterState(5);
         }
     }
