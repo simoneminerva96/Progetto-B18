@@ -1,10 +1,13 @@
 package Graphics;
 
 import GameClasses.Question;
+import Graphics.Fonts.TriviaFont;
 import Interface.Controller;
 import org.lwjgl.input.Mouse;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -29,14 +32,19 @@ public class Domanda extends BasicGameState {
     private Controller controller;
     private Question question;
     private boolean answered = false;
+    private TrueTypeFont fonx1;
+    private TriviaFont f;
 
-    public Domanda(int state) { }
+    public Domanda(int state) {
+        f = new TriviaFont();
+    }
 
     @Override
     public int getID() { return 6; }
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) {
+        fonx1 = new TrueTypeFont(f.getFont().deriveFont(23f), false);
     }
 
     /**
@@ -55,9 +63,9 @@ public class Domanda extends BasicGameState {
 
         if (answered) {
             if (esito) {
-                graphics.drawString(risposta1, 200, 500);
+                fonx1.drawString(500, 700, "RISPOSTA ESATTA!", Color.white);
             } else {
-                graphics.drawString(risposta2, 200, 500);
+                fonx1.drawString(500,700, "RISPOSTA SBAGLIATA!", Color.white);
             }
             end = true;
         }
