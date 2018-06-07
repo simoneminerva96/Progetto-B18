@@ -61,9 +61,9 @@ public class Domanda extends BasicGameState {
 
         if (answered) {
             if (esito) {
-                fonx1.drawString(500, 700, "RISPOSTA ESATTA!", Color.white);
+                fonx1.drawString(1190, 700, "RISPOSTA ESATTA!", Color.black);
             } else {
-                fonx1.drawString(500,700, "RISPOSTA SBAGLIATA!", Color.white);
+                fonx1.drawString(1190,700, "RISPOSTA SBAGLIATA!", Color.black);
             }
             end = true;
         }

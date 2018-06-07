@@ -127,34 +127,34 @@ public class Trivia extends BasicGameState {
                 y = 130;
             }
             playerBack.get(i).draw(x, y);
-            fonx1.drawString((x+80),y,pGUI.get(i).getName(), Color.white);
+            fonx1.drawString((x+80),y,pGUI.get(i).getName(), Color.black);
             ArrayList<Slice> slc = new ArrayList<>();
             slc.addAll(interm.getSliceObtained(i));
             for (int j=0; j<slc.size(); j++){
                 Categories c = slc.get(j).getCategory();
                 switch (c){
                     case Geografia:{
-                        graphics.drawImage(diamanti.get(5),x,y+20 );
+                        graphics.drawImage(diamanti.get(5),x+70,y+40 );
                         break;
                     }
                     case Storia:{
-                        graphics.drawImage(diamanti.get(3), x+10,y+20);
+                        graphics.drawImage(diamanti.get(3), x+100,y+40);
                         break;
                     }
                     case Scienze:{
-                        graphics.drawImage(diamanti.get(4), x+20,y+20);
+                        graphics.drawImage(diamanti.get(4), x+130,y+40);
                         break;
                     }
                     case Spettacolo:{
-                        graphics.drawImage(diamanti.get(2), x+30,y+20);
+                        graphics.drawImage(diamanti.get(2), x+160,y+40);
                         break;
                     }
                     case ArteLetteratura:{
-                        graphics.drawImage(diamanti.get(1), x+40,y+20);
+                        graphics.drawImage(diamanti.get(1), x+190,y+40);
                         break;
                     }
                     case Sport:{
-                        graphics.drawImage(diamanti.get(0), x+50,y+20);
+                        graphics.drawImage(diamanti.get(0), x+210,y+40);
                         break;
                     }
                 }
@@ -165,7 +165,7 @@ public class Trivia extends BasicGameState {
         //ceodore.draw(1050, 30);
         //kain.draw(750, 130);
         //luca.draw(1050, 130);
-        fonx1.drawString(1190, 230, "E' il turno di: " + pGUI.get(interm.getIndex()).getName());
+        fonx1.drawString(1190, 230, "E' il turno di: " + pGUI.get(interm.getIndex()).getName(), Color.black);
         launch.draw(1320, 860);
 
         for (PlayerGUI p : pGUI) {
@@ -184,13 +184,13 @@ public class Trivia extends BasicGameState {
             if(check){
                 switch(interm.checkType()) {
                     case Bonus: {
-                        fonx1.drawString(500,500, "PUOI RILANCIARE IL DADO!", Color.white);
+                        fonx1.drawString(1150,700, "PUOI RILANCIARE IL DADO!", Color.black);
                         pGUI.get(interm.getIndex()).setReady(false);
                         launched = false;
                         break;
                     }
                     case Malus: {
-                        fonx1.drawString(500, 500, "HAI PERSO IL TURNO!", Color.white);
+                        fonx1.drawString(1150, 700, "HAI PERSO IL TURNO!", Color.black);
                         pGUI.get(interm.getIndex()).setReady(false);
                         launched = false;
                         break;
