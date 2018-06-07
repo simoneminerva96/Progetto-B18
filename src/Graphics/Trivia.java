@@ -138,7 +138,7 @@ public class Trivia extends BasicGameState {
          */
 
         if (pGUI.get(interm.getIndex()).isReady() ) {
-            check = interm.checkBonusMalus();
+            check = interm.checkBonusMalus();   //entra se è una bonus/malus o random
             if(check){
                 switch(interm.checkType()) {
                     case Bonus: {

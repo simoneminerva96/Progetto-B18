@@ -198,10 +198,6 @@ public class TrivialGame {
     public BonusMalusRandom executeBonusMalus(){
         turnPhase=TurnPhase.executeBonusMalus;
         BonusMalusRandom type=turn.executeBonusMalus();
-        if(type.equals(BonusMalusRandom.Malus)){
-            this.setPlayerOnTurn();
-            turn.setCorrectAnswer(true);
-        }
         return type;
     }
 

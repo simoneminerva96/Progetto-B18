@@ -53,10 +53,11 @@ public class Controller {
     }
 
     //metodo che controlla se la casella attuale è un bonus/malus/random
-    public boolean checkBonusMalus(){
+    public boolean checkBonusMalus() {
         return match.checkBonusMalus();
     }
-    //metodo che esegue il bonus/malus e ritorna l'effetto eseguito
+
+    //metodo che esegue il bonus/malus e ritorna l'effetto eseguito(nel caso del random l'effetto viene estratto nel metodo moveplayer)
     public BonusMalusRandom checkType(){
         return match.executeBonusMalus();
     }

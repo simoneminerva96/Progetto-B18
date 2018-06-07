@@ -65,6 +65,11 @@ public class Turn {
             else playerOnTurn.setActualPosition(playerOnTurn.getActualPosition() - dieresult);
         }
         System.out.println("posizione attuale: " + playerOnTurn.getActualPosition() + "\n");
+        //se finisco sulla casella random estraggo un effetto
+        if(playerOnTurn.getActualPosition() == 18){
+            BonusMalusSquare currentSquare= (BonusMalusSquare) playBoard.getSquares().get(playerOnTurn.getActualPosition());
+            currentSquare.extractEffectType();
+        }
     }
 
     public boolean checkBonusMalus(){
@@ -75,6 +80,7 @@ public class Turn {
         }
         else return false;
     }
+
     //ritorna l'effetto che viene eseguito dalla casella
     public BonusMalusRandom executeBonusMalus(){
         int currentPosition=playerOnTurn.getActualPosition();
