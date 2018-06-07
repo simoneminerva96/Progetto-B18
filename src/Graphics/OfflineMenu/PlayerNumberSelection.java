@@ -61,7 +61,6 @@ public class PlayerNumberSelection extends BasicGameState {
         mf.setMouseCoordinates(r.getMouseX(),r.getMouseY());
 
         if(r.isMousePressed(0)) {
-            //System.out.println("ENTRO");
 
             mf.setMouseClicked(true);
             numbertosend=one.onClickGetNumber(r.getMouseX(),r.getMouseY(),numbertosend,array);

@@ -77,9 +77,9 @@ public class LoginRegistrationInterface extends BasicGameState {
 
         if (regButton.isClicked()) {
             if (checkR) {
-                fonx1.drawString(490,20, "Registrazione effettuata con successo", org.newdawn.slick.Color.blue);
+                fonx1.drawString(690,100, "Registrazione effettuata con successo", org.newdawn.slick.Color.blue);
             }
-            else fonx1.drawString(490,20, "Registrazione fallita", org.newdawn.slick.Color.blue);
+            else fonx1.drawString(690,100, "Registrazione fallita", org.newdawn.slick.Color.blue);
         }
 
         if(logButton.isClicked()){
@@ -87,7 +87,7 @@ public class LoginRegistrationInterface extends BasicGameState {
                 fonx1.drawString(490,20, "Username o password errati", org.newdawn.slick.Color.blue);
             }
             else {
-                stateBasedGame.enterState(3);
+                stateBasedGame.enterState(2);
             }
         }
     }

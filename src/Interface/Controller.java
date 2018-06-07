@@ -70,4 +70,8 @@ public class Controller {
     public ArrayList<Slice> getSliceObtained(int index){
         return this.match.obtainedSlices(index);
     }
+
+    public boolean verifyVictory(){
+        return this.match.verifyVictory();
+    }
 }

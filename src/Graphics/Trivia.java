@@ -16,6 +16,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Rita, Stefano
@@ -58,7 +59,7 @@ public class Trivia extends BasicGameState {
     private Controller interm;
     private int nPlayers;
     private ArrayList<Image> playerBack;
-    private boolean check;
+    private boolean checkVictory = false;
     private ArrayList<Image> diamanti;
 
     public Trivia(int id) {
@@ -180,8 +181,8 @@ public class Trivia extends BasicGameState {
          */
 
         if (pGUI.get(interm.getIndex()).isReady() ) {
-            check = interm.checkBonusMalus();   //entra se è una bonus/malus o random
-            if(check){
+            //entra se è una bonus/malus o random
+            if(interm.checkBonusMalus()){
                 switch(interm.checkType()) {
                     case Bonus: {
                         fonx1.drawString(1190,700, "PUOI RILANCIARE IL DADO!", Color.black);
@@ -197,6 +198,7 @@ public class Trivia extends BasicGameState {
                     }
                 }
             }
+            // se non sono nella casella iniziale visualizzo una domanda
             else {
                 if (!interm.checkInitialSquare()) {
                     domanda.render(gameContainer, stateBasedGame, graphics);
@@ -205,12 +207,19 @@ public class Trivia extends BasicGameState {
                         launched = false;
                     }
                 }
+                // se sono nella casella iniziale controllo se ho abbastanza spicchi per la vittoria, altrimenti
+                // passa il turno
                 else {
-                    fonx1.drawString(1190,700, "CASELLA INIZIALE, PASSI IL TURNO!",Color.black);
-                    pGUI.get(interm.getIndex()).setReady(false);
-                    launched = false;
+                    if (interm.verifyVictory()) {
+                        fonx1.drawString(1190,700, "HAI VINTO",Color.black);
+                        checkVictory = true;
+                    }
+                    else {
+                        fonx1.drawString(1190,700, "CASELLA INIZIALE, PASSI IL TURNO!",Color.black);
+                        pGUI.get(interm.getIndex()).setReady(false);
+                        launched = false;
+                    }
                 }
-
             }
         }
 
@@ -256,26 +265,25 @@ public class Trivia extends BasicGameState {
         controllo se è la prima scelta di direzione con first.
          */
         if (launched) {
-            if (ypos > 45 && ypos < 130) {
-                if (xpos > 1078 && xpos < 1168) {
-                    if (input.isMousePressed(0)) {
-                        interm.setDirection(Direction.FORWARD);
-                        pGUI.get(interm.getIndex()).setClicked(true);
-                        pGUI.get(interm.getIndex()).getP().update(diceN, Direction.FORWARD);
-                        pGUI.get(interm.getIndex()).updateCoordinates();
-                    }
-                }
-                if (xpos > 1185 && xpos < 1275) {
-                    if (input.isMousePressed(0)) {
+            if (input.isMousePressed(0)) {
+                if (ypos > 45 && ypos < 130) {
+                    if (xpos > 1185 && xpos < 1275) {
                         interm.setDirection(Direction.BACK);
                         pGUI.get(interm.getIndex()).setClicked(true);
                         pGUI.get(interm.getIndex()).getP().update(diceN, Direction.BACK);
                         pGUI.get(interm.getIndex()).updateCoordinates();
                     }
+                    if (xpos > 1078 && xpos < 1168) {
+                        interm.setDirection(Direction.FORWARD);
+                        pGUI.get(interm.getIndex()).setClicked(true);
+                        pGUI.get(interm.getIndex()).getP().update(diceN, Direction.FORWARD);
+                        pGUI.get(interm.getIndex()).updateCoordinates();
+
+                    }
                 }
+
             }
         }
-
         try {
             domanda.update(gameContainer, stateBasedGame, i);
             esc.update(gameContainer, stateBasedGame, i);
@@ -286,6 +294,11 @@ public class Trivia extends BasicGameState {
         pGUI.get(interm.getIndex()).updateOnEachFrame(i);
 
         if (input.isKeyPressed(Input.KEY_ESCAPE)) { esc.setQuit(true); }
+
+        if (checkVictory) {
+            pause();
+            gameContainer.exit();
+        }
     }
 
     public void setPlayersNumber(int n) throws SlickException {
@@ -310,6 +323,16 @@ public class Trivia extends BasicGameState {
 
         for (PlayerGUI p : pGUI) {
             p.getPedina().stop();
+        }
+    }
+
+    private static void pause(){
+        long Time0 = System.currentTimeMillis();
+        long Time1;
+        long runTime = 0;
+        while(runTime<5000){
+            Time1 = System.currentTimeMillis();
+            runTime = Time1 - Time0;
         }
     }
 }
