@@ -18,7 +18,6 @@ import org.newdawn.slick.state.StateBasedGame;
  * della domanda corretta e di mostrare una stringa che informa se la risposta cliccata è corretta o
  * meno.
  * - esito: flag in cui salvo l'esito della risposta che ho cliccato
- * - end: flag che indica se ho risposto e ricevuto l'esito
  * - controller: interfaccia controller con la logica per prelevare le domande
  * - answered: flag che indica se ho risposto o meno
  * - question: oggetto di tipo Question che contiene la domanda estratta
@@ -26,10 +25,9 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class Domanda extends BasicGameState {
     private boolean esito = false;
-    private boolean end = false;
+    private boolean answered = false;
     private Controller controller;
     private Question question;
-    private boolean answered = false;
     private TrueTypeFont fonx1;
     private TriviaFont f;
 
@@ -65,7 +63,6 @@ public class Domanda extends BasicGameState {
             } else {
                 fonx1.drawString(1190,700, "RISPOSTA SBAGLIATA!", Color.black);
             }
-            end = true;
         }
     }
 
@@ -108,23 +105,12 @@ public class Domanda extends BasicGameState {
         }
     }
 
-    public boolean isEnd() {
-        return end;
-    }
-
-    public void setAnswered(boolean answered) {
-        this.answered=answered;
-    }
-
-    public void setEsito(boolean esito) {
-        this.esito = esito;
-    }
-
     public void setController(Controller controller) {
         this.controller = controller;
     }
 
-    public void setEnd(boolean end) {
-        this.end = end;
+    public void reset(){
+        esito = false;
+        answered = false;
     }
 }
