@@ -98,7 +98,7 @@ public class Server implements Runnable {
 
         for(int i = 0; i < clients.size(); ++i){
             //System.out.println(clients.size());
-            
+
         }
 
 
