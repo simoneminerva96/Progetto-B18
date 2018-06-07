@@ -83,6 +83,7 @@ public class Domanda extends BasicGameState {
             if (posY<604 && posY>542) {
                 if (Mouse.isButtonDown(0) && !answered) {
                     esito = controller.answerQuestion(0);
+
                     answered = true;
                 }
             }

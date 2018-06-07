@@ -220,10 +220,9 @@ public class TrivialGame {
             turn.setPlayerOnTurn(players.get(index));
         }
     }
-    //da chiamare quando il giocatore sceglie la risposta
-    public Boolean obtainSlice(){
-        turnPhase=TurnPhase.obtainSlice;
-        return turn.obtainSlice();
+    //metodo che ritorna gli spicchi ottenuti da un giocatore selezionato da index
+    public ArrayList<Slice> obtainedSlices(int index){
+        return players.get(index).getSlicesObtained();
     }
 
     public boolean verifyVictory(){

@@ -1,6 +1,7 @@
 package Interface;
 
 import GameClasses.Question;
+import GameClasses.Slice;
 import GameClasses.TrivialGame;
 import java.util.ArrayList;
 
@@ -60,5 +61,9 @@ public class Controller {
     //metodo che esegue il bonus/malus e ritorna l'effetto eseguito(nel caso del random l'effetto viene estratto nel metodo moveplayer)
     public BonusMalusRandom checkType(){
         return match.executeBonusMalus();
+    }
+
+    public ArrayList<Slice> getSliceObtained(int index){
+        return this.match.obtainedSlices(index);
     }
 }

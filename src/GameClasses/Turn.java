@@ -4,6 +4,8 @@ import GameClasses.Squares.BonusMalusSquare;
 import GameClasses.Squares.FinalQuestionSquare;
 import Interface.BonusMalusRandom;
 
+import java.util.ArrayList;
+
 /**
  * CLASSE CHE CORRISPONDE A UN TURNO DI GIOCO, effettua la movimentazione delle pedine sul tabellone
  * @author Ansaldi Jacopo <jacopo.ansaldi01@universitadipavia.it>
@@ -100,23 +102,26 @@ public class Turn {
     public Boolean AnswerQuestion(int indexOfAnswer){
         int currentPosition=playerOnTurn.getActualPosition();
         correctAnswer=this.playBoard.getSquares().get(currentPosition).goOnIt(indexOfAnswer);
+        if(correctAnswer){
+            this.obtainSlice();//METODO CHE AGGIUNGE AL GIOCATORE LO SPICCHIO DELLA CATEGORIA SE LA DOMANDA è UNA DOM. FINALE
+        }
         return correctAnswer;
     }
 
     public boolean getCorrectAnswer(){
         return this.correctAnswer;
     }
+
     //RITORNA TRUE SE IL GIOCATORE HA OTTENUTO LO SPICCHIO
-    public boolean obtainSlice(){
+    public void obtainSlice(){
         Square actualSquare=playBoard.getSquares().get(playerOnTurn.getActualPosition());
         if(actualSquare instanceof FinalQuestionSquare){
             Categories categoryOfTheSlice=((FinalQuestionSquare)actualSquare).getCategory();
             System.out.println(playerOnTurn.getNickname() + " ha ottenuto lo spicchio di " +categoryOfTheSlice );
             playerOnTurn.obtainSlice(categoryOfTheSlice);
-            return true;
         }
-        else return false;
     }
+
 
     public Boolean verifyVictory(){
         if(playerOnTurn.getSlicesObtained().size() == 6 && playerOnTurn.getActualPosition() ==0){
