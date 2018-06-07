@@ -182,7 +182,7 @@ public class Trivia extends BasicGameState {
         float ypos = Mouse.getY();
 
         Input input = gameContainer.getInput();
-
+        //System.out.println("x: "+xpos+ " Y: " + ypos);
         /*
         Se sono nelle coordinate del bottone Launch, ottengo il numero estratto, metto launched a true e aggiorno la
         faccia del dado. Resetto answered ed esito a false perchè risponderò ad una domanda.
@@ -206,8 +206,8 @@ public class Trivia extends BasicGameState {
         controllo se è la prima scelta di direzione con first.
          */
         if (launched) {
-            if (ypos > 45 && ypos < 123) {
-                if (xpos > 1081 && xpos < 1156) {
+            if (ypos > 45 && ypos < 130) {
+                if (xpos > 1078 && xpos < 1168) {
                     if (input.isMousePressed(0)) {
                         interm.setDirection(Direction.FORWARD);
                         pGUI.get(interm.getIndex()).setClicked(true);
@@ -216,7 +216,7 @@ public class Trivia extends BasicGameState {
                         check = interm.checkBonusMalus();
                     }
                 }
-                if (xpos > 1188 && xpos < 1270) {
+                if (xpos > 1185 && xpos < 1275) {
                     if (input.isMousePressed(0)) {
                         interm.setDirection(Direction.BACK);
                         pGUI.get(interm.getIndex()).setClicked(true);
