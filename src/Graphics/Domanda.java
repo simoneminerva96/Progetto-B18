@@ -53,11 +53,11 @@ public class Domanda extends BasicGameState {
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
         question=controller.getQuestion();
-        graphics.drawString(question.getQuestion(), 1190, 350);
-        graphics.drawString(question.getAnswers().get(0).getAnswer(), 1290, 420);
-        graphics.drawString(question.getAnswers().get(1).getAnswer(), 1290, 480);
-        graphics.drawString(question.getAnswers().get(2).getAnswer(), 1290, 540);
-        graphics.drawString(question.getAnswers().get(3).getAnswer(), 1290, 600);
+        fonx1.drawString( 1190, 350, question.getQuestion(), Color.black);
+        fonx1.drawString(1290,420, question.getAnswers().get(0).getAnswer(), Color.black);
+        fonx1.drawString(1290,480, question.getAnswers().get(1).getAnswer(), Color.black);
+        fonx1.drawString(1290,540, question.getAnswers().get(2).getAnswer(), Color.black);
+        fonx1.drawString(1290,600, question.getAnswers().get(3).getAnswer(), Color.black);
 
         if (answered) {
             if (esito) {

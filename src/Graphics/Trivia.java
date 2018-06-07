@@ -127,7 +127,7 @@ public class Trivia extends BasicGameState {
                 y = 130;
             }
             playerBack.get(i).draw(x, y);
-            fonx1.drawString((x+80),y,pGUI.get(i).getName(), Color.black);
+            fonx1.drawString((x+80),y,pGUI.get(i).getName(), Color.white);
             ArrayList<Slice> slc = new ArrayList<>();
             slc.addAll(interm.getSliceObtained(i));
             for (int j=0; j<slc.size(); j++){
@@ -165,7 +165,7 @@ public class Trivia extends BasicGameState {
         //ceodore.draw(1050, 30);
         //kain.draw(750, 130);
         //luca.draw(1050, 130);
-        fonx1.drawString(1190, 230, "E' il turno di: " + pGUI.get(interm.getIndex()).getName(), Color.black);
+        fonx1.drawString(1190, 250, "E' il turno di: " + pGUI.get(interm.getIndex()).getName(), Color.black);
         launch.draw(1320, 860);
 
         for (PlayerGUI p : pGUI) {
@@ -184,13 +184,13 @@ public class Trivia extends BasicGameState {
             if(check){
                 switch(interm.checkType()) {
                     case Bonus: {
-                        fonx1.drawString(1150,700, "PUOI RILANCIARE IL DADO!", Color.black);
+                        fonx1.drawString(1190,700, "PUOI RILANCIARE IL DADO!", Color.black);
                         pGUI.get(interm.getIndex()).setReady(false);
                         launched = false;
                         break;
                     }
                     case Malus: {
-                        fonx1.drawString(1150, 700, "HAI PERSO IL TURNO!", Color.black);
+                        fonx1.drawString(1190, 700, "HAI PERSO IL TURNO!", Color.black);
                         pGUI.get(interm.getIndex()).setReady(false);
                         launched = false;
                         break;
@@ -198,11 +198,19 @@ public class Trivia extends BasicGameState {
                 }
             }
             else {
-                domanda.render(gameContainer, stateBasedGame, graphics);
-                if (domanda.isEnd()) {
+                if (!interm.checkInitialSquare()) {
+                    domanda.render(gameContainer, stateBasedGame, graphics);
+                    if (domanda.isEnd()) {
+                        pGUI.get(interm.getIndex()).setReady(false);
+                        launched = false;
+                    }
+                }
+                else {
+                    fonx1.drawString(1190,700, "CASELLA INIZIALE, PASSI IL TURNO!",Color.black);
                     pGUI.get(interm.getIndex()).setReady(false);
                     launched = false;
                 }
+
             }
         }
 
@@ -224,7 +232,7 @@ public class Trivia extends BasicGameState {
         float ypos = Mouse.getY();
 
         Input input = gameContainer.getInput();
-        //System.out.println("x: "+xpos+ " Y: " + ypos);
+
         /*
         Se sono nelle coordinate del bottone Launch, ottengo il numero estratto, metto launched a true e aggiorno la
         faccia del dado. Resetto answered ed esito a false perchè risponderò ad una domanda.
@@ -255,7 +263,6 @@ public class Trivia extends BasicGameState {
                         pGUI.get(interm.getIndex()).setClicked(true);
                         pGUI.get(interm.getIndex()).getP().update(diceN, Direction.FORWARD);
                         pGUI.get(interm.getIndex()).updateCoordinates();
-                        //check = interm.checkBonusMalus();
                     }
                 }
                 if (xpos > 1185 && xpos < 1275) {
@@ -264,8 +271,6 @@ public class Trivia extends BasicGameState {
                         pGUI.get(interm.getIndex()).setClicked(true);
                         pGUI.get(interm.getIndex()).getP().update(diceN, Direction.BACK);
                         pGUI.get(interm.getIndex()).updateCoordinates();
-                        //check = interm.checkBonusMalus();
-
                     }
                 }
             }

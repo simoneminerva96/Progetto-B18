@@ -4,9 +4,6 @@ import GameClasses.Squares.BonusMalusSquare;
 import GameClasses.Squares.FinalQuestionSquare;
 import GameClasses.Squares.InitialSquare;
 import Interface.BonusMalusRandom;
-import com.sun.org.apache.xml.internal.security.Init;
-
-import java.util.ArrayList;
 
 /**
  * CLASSE CHE CORRISPONDE A UN TURNO DI GIOCO, effettua la movimentazione delle pedine sul tabellone
