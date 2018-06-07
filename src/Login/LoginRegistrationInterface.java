@@ -60,8 +60,8 @@ public class LoginRegistrationInterface extends BasicGameState {
         psw = new TextFieldTest(gameContainer , fonx1 , 700 , 480 , 250 , 40);
         psw.setBackgroundColor(org.newdawn.slick.Color.lightGray);
         psw.setMaskEnabled(true);
-//        music = new Music("res/music/Wallpaper.wav");
-//        music.play();
+        music = new Music("res/music/Wallpaper.wav");
+        music.play();
     }
 
     @Override

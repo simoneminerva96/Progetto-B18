@@ -25,8 +25,6 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 
 public class Domanda extends BasicGameState {
-    private String risposta1 = "Risposta esatta";
-    private String risposta2 = "Risposta sbagliata";
     private boolean esito = false;
     private boolean end = false;
     private Controller controller;
