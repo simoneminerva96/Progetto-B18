@@ -2,7 +2,9 @@ package GameClasses;
 
 import GameClasses.Squares.BonusMalusSquare;
 import GameClasses.Squares.FinalQuestionSquare;
+import GameClasses.Squares.InitialSquare;
 import Interface.BonusMalusRandom;
+import com.sun.org.apache.xml.internal.security.Init;
 
 import java.util.ArrayList;
 
@@ -74,10 +76,19 @@ public class Turn {
         }
     }
 
+    public boolean checkInitialSquare(){
+        int currentPosition=playerOnTurn.getActualPosition();
+        Square currentSquare=playBoard.getSquares().get(currentPosition);
+        if(currentSquare instanceof InitialSquare){
+            return true;
+        }
+        else return false;
+    }
+
     public boolean checkBonusMalus(){
         int currentPosition=playerOnTurn.getActualPosition();
         Square currentSquare=playBoard.getSquares().get(currentPosition);
-        if(currentSquare instanceof BonusMalusSquare){
+        if(currentSquare instanceof BonusMalusSquare ){
             return true;
         }
         else return false;

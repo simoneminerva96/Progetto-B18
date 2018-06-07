@@ -191,6 +191,12 @@ public class TrivialGame {
         turn.movePlayer();
     }
 
+    public boolean checkInitialSquare(){
+        boolean check=turn.checkInitialSquare();
+        if(check) turn.setCorrectAnswer(false);
+        return check;
+    }
+
     public boolean checkBonusMalus(){
         return turn.checkBonusMalus();
     }

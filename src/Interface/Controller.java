@@ -39,6 +39,10 @@ public class Controller {
         match.movePlayer();
     }
 
+    //metodo che ritorna true se il giocatore finisce nella casella iniziale
+    public boolean checkInitialSquare(){
+        return match.checkInitialSquare();
+    }
     public Question getQuestion(){
         return match.visualizeQuestion();
     }
