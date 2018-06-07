@@ -3,8 +3,12 @@ package ClientServer;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 
 public class Server implements Runnable {
@@ -12,8 +16,11 @@ public class Server implements Runnable {
     DataInputStream in; //per ricevere da client
     DataOutputStream out; //per inviare al client
 
+    PrintWriter pw = null;
+
     String letto;
     Socket socketClient ;
+
 
 
     public Server(Socket socketClient){
@@ -26,17 +33,21 @@ public class Server implements Runnable {
         ServerSocket server ;
         Socket socketClient ;
         int porta = 8888; //porta server
+        List<Thread> clients = new ArrayList<>();
 
         //inizializzazione servizio
         server = new ServerSocket(porta);
-        System.out.println("Connesso..............");
+        System.out.println("SERVER IS READY!!!!");
 
         while(true) {
             //mi metto in ascolto sulla porta aperta
             socketClient = server.accept();
             System.out.println("Connesso..............");
-            new Thread(new Server(socketClient)).start();
-
+            Thread t = new Thread(new Server(socketClient));
+            t.start();
+            clients.add(t);
+            broadcast(clients);
+            //System.out.println(clients.size());
         }
 
     }
@@ -79,9 +90,18 @@ public class Server implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
+    public static void broadcast(List clients) throws IOException {
 
+        String Broadcast = "Si è connesso un nuovo client";
+
+        for(int i = 0; i < clients.size(); ++i){
+            //System.out.println(clients.size());
+
+        }
 
 
     }
+
 }
