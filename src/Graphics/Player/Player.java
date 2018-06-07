@@ -186,7 +186,6 @@ public class Player{
                 }
             }
         }
-        System.out.println("X: "+x+" Y:"+y);
     }
 
     public String getName() {

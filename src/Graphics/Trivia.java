@@ -1,5 +1,7 @@
 package Graphics;
 
+import GameClasses.Categories;
+import GameClasses.Slice;
 import Graphics.Fonts.TriviaFont;
 import Graphics.Map.Map;
 import Graphics.Player.*;
@@ -11,6 +13,8 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -55,6 +59,7 @@ public class Trivia extends BasicGameState {
     private int nPlayers;
     private ArrayList<Image> playerBack;
     private boolean check;
+    private ArrayList<Image> diamanti;
 
     public Trivia(int id) {
         domanda = new Domanda(6);
@@ -63,6 +68,7 @@ public class Trivia extends BasicGameState {
         pGUI.clear();
         f = new TriviaFont();
         playerBack = new ArrayList<>();
+        diamanti = new ArrayList<>();
     }
 
     public int getID() {
@@ -91,6 +97,10 @@ public class Trivia extends BasicGameState {
         background = new Image("res/backgrounds/green_landscape.png");
         launch = new Image("res/buttons/Button_Launch/Button_Launch.png");
 
+        for (int i=1; i<7; i++){
+            diamanti.add(new Image("res/diamonds/d"+i+".png"));
+        }
+
         domanda.init(gameContainer, stateBasedGame);
         esc.init(gameContainer, stateBasedGame);
         fonx1 = new TrueTypeFont(f.getFont().deriveFont(23f), false);
@@ -118,6 +128,38 @@ public class Trivia extends BasicGameState {
             }
             playerBack.get(i).draw(x, y);
             fonx1.drawString((x+80),y,pGUI.get(i).getName(), Color.white);
+            ArrayList<Slice> slc = new ArrayList<>();
+            slc.addAll(interm.getSliceObtained(i));
+            for (int j=0; j<slc.size(); j++){
+                Categories c = slc.get(j).getCategory();
+                switch (c){
+                    case Geografia:{
+                        graphics.drawImage(diamanti.get(5),x,y+20 );
+                        break;
+                    }
+                    case Storia:{
+                        graphics.drawImage(diamanti.get(3), x+10,y+20);
+                        break;
+                    }
+                    case Scienze:{
+                        graphics.drawImage(diamanti.get(4), x+20,y+20);
+                        break;
+                    }
+                    case Spettacolo:{
+                        graphics.drawImage(diamanti.get(2), x+30,y+20);
+                        break;
+                    }
+                    case ArteLetteratura:{
+                        graphics.drawImage(diamanti.get(1), x+40,y+20);
+                        break;
+                    }
+                    case Sport:{
+                        graphics.drawImage(diamanti.get(0), x+50,y+20);
+                        break;
+                    }
+                }
+            }
+            slc.clear();
         }
         //rydia.draw(750, 30);
         //ceodore.draw(1050, 30);
@@ -142,13 +184,13 @@ public class Trivia extends BasicGameState {
             if(check){
                 switch(interm.checkType()) {
                     case Bonus: {
-                        fonx1.drawString(200,500, "PUOI RILANCIARE IL DADO!", Color.white);
+                        fonx1.drawString(500,500, "PUOI RILANCIARE IL DADO!", Color.white);
                         pGUI.get(interm.getIndex()).setReady(false);
                         launched = false;
                         break;
                     }
                     case Malus: {
-                        fonx1.drawString(200, 500, "HAI PERSO IL TURNO!", Color.white);
+                        fonx1.drawString(500, 500, "HAI PERSO IL TURNO!", Color.white);
                         pGUI.get(interm.getIndex()).setReady(false);
                         launched = false;
                         break;
@@ -213,7 +255,7 @@ public class Trivia extends BasicGameState {
                         pGUI.get(interm.getIndex()).setClicked(true);
                         pGUI.get(interm.getIndex()).getP().update(diceN, Direction.FORWARD);
                         pGUI.get(interm.getIndex()).updateCoordinates();
-                        check = interm.checkBonusMalus();
+                        //check = interm.checkBonusMalus();
                     }
                 }
                 if (xpos > 1185 && xpos < 1275) {
@@ -222,7 +264,7 @@ public class Trivia extends BasicGameState {
                         pGUI.get(interm.getIndex()).setClicked(true);
                         pGUI.get(interm.getIndex()).getP().update(diceN, Direction.BACK);
                         pGUI.get(interm.getIndex()).updateCoordinates();
-                        check = interm.checkBonusMalus();
+                        //check = interm.checkBonusMalus();
 
                     }
                 }
