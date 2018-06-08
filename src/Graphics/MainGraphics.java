@@ -38,6 +38,7 @@ public class MainGraphics extends StateBasedGame{
         this.addState(new LoginRegistrationInterface(logininterface));
         this.addState(new MainMenu(mainmenu));
         this.addState(new Trivia(trivia));
+        this.addState(new LoginRegistrationInterface(logininterface));
         this.addState(new CharacterSelection(characterSelection));
     }
 

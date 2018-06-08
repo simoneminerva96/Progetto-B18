@@ -5,6 +5,8 @@ import GameClasses.Squares.FinalQuestionSquare;
 import GameClasses.Squares.InitialSquare;
 import Interface.BonusMalusRandom;
 
+import java.util.ArrayList;
+
 /**
  * CLASSE CHE CORRISPONDE A UN TURNO DI GIOCO, effettua la movimentazione delle pedine sul tabellone
  * @author Ansaldi Jacopo <jacopo.ansaldi01@universitadipavia.it>
