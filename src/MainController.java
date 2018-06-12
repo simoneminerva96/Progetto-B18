@@ -1,7 +1,3 @@
-/*
-    controller class
- */
-
 import Graphics.*;
 
 public class MainController {

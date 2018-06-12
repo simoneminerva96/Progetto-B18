@@ -88,29 +88,20 @@ public class FormButton extends ButtonSkeleton implements ButtonListener, ClickL
         }
     }
 
-    public boolean onClickFormLogin(float mx, float my, String username, String password, Login login) {
-        boolean check = false;
+    public boolean onClickFormLogin(float mx, float my) {
         if (mx >= minx && mx <= maxx && my >= miny && my <= maxy) {
             current = press;
             clicked = true;
-            if(login.Login(username, password)){
-                check = true;
-            }
         }
-        return check;
+        return clicked;
     }
 
-    public boolean onClickFormRegistration(float mx, float my, String username, String password, Registration r){
-        boolean check = false;
-
+    public boolean onClickFormRegistration(float mx, float my){
             if(mx>=minx && mx<=maxx && my>=miny && my<=maxy) {
                 current = press;
                 clicked = true;
-                if(r.Registration(username, password)) {
-                   check = true;
-                }
             }
-        return check;
+        return clicked;
     }
 
     public void onDoubleClick(Button clicked, float mx, float my) {

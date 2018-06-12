@@ -3,6 +3,7 @@ package Login;
 import Graphics.Fonts.TextFieldTest;
 import Graphics.Fonts.TriviaFont;
 import Graphics.com.sticky.FormButton;
+import Interface.ControllerLoginRegistration;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -34,15 +35,17 @@ public class LoginRegistrationInterface extends BasicGameState {
     private TrueTypeFont fonx1;
     private Image background, registrationback;
     private FormButton regButton, logButton;
-    private Registration reg;
-    private Login login;
+    private ControllerLoginRegistration clr;
+    //private Registration reg;
+    //private Login login;
     private boolean checkR, checkL;
     private TriviaFont f;
     private Music music;
 
     public LoginRegistrationInterface(int n) {
-        this.reg = new Registration();
-        this.login = new Login();
+        //this.reg = new Registration();
+        //this.login = new Login();
+        clr = new ControllerLoginRegistration();
         f = new TriviaFont();
     }
 
@@ -103,8 +106,12 @@ public class LoginRegistrationInterface extends BasicGameState {
         if (in.isMousePressed(0)){
             regButton.setClicked(false);
             logButton.setClicked(false);
-            checkR = regButton.onClickFormRegistration(in.getMouseX(),in.getMouseY(),usrname.getText(),psw.getText(), reg);
-            checkL = logButton.onClickFormLogin(in.getMouseX(),in.getMouseY(),usrname.getText(),psw.getText(), login);
+            if(regButton.onClickFormRegistration(in.getMouseX(),in.getMouseY())){
+                checkR = clr.registration(usrname.getText(), psw.getText());
+            }
+            if(logButton.onClickFormLogin(in.getMouseX(),in.getMouseY())){
+                checkL = clr.login(usrname.getText(), psw.getText());
+            }
         }
         regButton.onMouseEnter(regButton,in.getMouseX(),in.getMouseY());
         logButton.onMouseEnter(logButton, in.getMouseX(), in.getMouseY());

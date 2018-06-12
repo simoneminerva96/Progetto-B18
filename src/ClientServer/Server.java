@@ -13,14 +13,11 @@ import java.util.List;
 
 public class Server implements Runnable {
 
-    DataInputStream in; //per ricevere da client
-    DataOutputStream out; //per inviare al client
+    private DataInputStream in; //per ricevere da client
+    private DataOutputStream out; //per inviare al client
 
-    PrintWriter pw = null;
-
-    String letto;
-    Socket socketClient ;
-
+    private String letto;
+    private Socket socketClient ;
 
 
     public Server(Socket socketClient){
@@ -46,15 +43,17 @@ public class Server implements Runnable {
             Thread t = new Thread(new Server(socketClient));
             t.start();
             clients.add(t);
-            broadcast(clients);
+            //broadcast(clients);
             //System.out.println(clients.size());
         }
 
     }
 
+    /**
+     *  Contiene tutto quello che va da server verso client.
+     */
     @Override
     public void run() {
-
 
         try {
             in = new DataInputStream(socketClient.getInputStream()); //input da client
@@ -67,21 +66,15 @@ public class Server implements Runnable {
             e.printStackTrace();
         }
 
-
         try {
-
             do {
-
-
                 System.out.println("aspetto un messaggio...");
                 letto = in.readLine();
-
 
                 System.out.println("messaggio ricevuto:" + " " + letto);
 
                 String risposta = "Ok"; //riposta del server
                 out.writeBytes(risposta + "\n");
-
 
             } while (!letto.toLowerCase().equals("esci"));
             out.writeBytes("Connessione chiusa" + "\n");
@@ -92,16 +85,13 @@ public class Server implements Runnable {
         }
     }
 
-    public static void broadcast(List clients) throws IOException {
+    /*public static void broadcast(List clients) throws IOException {
 
         String Broadcast = "Si è connesso un nuovo client";
 
         for(int i = 0; i < clients.size(); ++i){
             //System.out.println(clients.size());
-
         }
-
-
-    }
+    }*/
 
 }
