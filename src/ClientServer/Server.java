@@ -15,10 +15,8 @@ public class Server implements Runnable {
 
     private DataInputStream in; //per ricevere da client
     private DataOutputStream out; //per inviare al client
-
     private String letto;
     private Socket socketClient ;
-
 
     public Server(Socket socketClient){
         this.socketClient=socketClient;
@@ -44,7 +42,6 @@ public class Server implements Runnable {
             t.start();
             clients.add(t);
         }
-
     }
 
     /**

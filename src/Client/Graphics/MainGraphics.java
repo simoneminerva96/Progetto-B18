@@ -1,7 +1,5 @@
 package Client.Graphics;
 
-import CharacterSelection;
-import PlayerNumberSelection;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.*;
 

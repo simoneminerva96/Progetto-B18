@@ -7,7 +7,6 @@ import org.newdawn.slick.Sound;
 import org.newdawn.slick.geom.Shape;
 import Client.Graphics.Escape;
 import Client.Graphics.com.sticky.events.*;
-import Login.*;
 import org.newdawn.slick.state.StateBasedGame;
 
 /**
