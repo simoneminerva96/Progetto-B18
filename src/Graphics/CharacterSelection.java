@@ -1,4 +1,4 @@
-package Graphics.OfflineMenu;
+package Graphics;
 
 import Graphics.Fonts.MenuFrame;
 import Graphics.com.sticky.StateButton;

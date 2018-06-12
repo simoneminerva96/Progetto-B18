@@ -1,7 +1,7 @@
 package Graphics;
 
-import Graphics.OfflineMenu.CharacterSelection;
-import Graphics.OfflineMenu.PlayerNumberSelection;
+import CharacterSelection;
+import PlayerNumberSelection;
 import Login.LoginRegistrationInterface;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.*;
