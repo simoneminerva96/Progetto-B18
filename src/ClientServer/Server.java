@@ -43,8 +43,6 @@ public class Server implements Runnable {
             Thread t = new Thread(new Server(socketClient));
             t.start();
             clients.add(t);
-            //broadcast(clients);
-            //System.out.println(clients.size());
         }
 
     }
@@ -84,14 +82,4 @@ public class Server implements Runnable {
             e.printStackTrace();
         }
     }
-
-    /*public static void broadcast(List clients) throws IOException {
-
-        String Broadcast = "Si è connesso un nuovo client";
-
-        for(int i = 0; i < clients.size(); ++i){
-            //System.out.println(clients.size());
-        }
-    }*/
-
 }

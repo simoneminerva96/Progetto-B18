@@ -1,4 +1,4 @@
-import Graphics.*;
+import Client.Graphics.*;
 
 public class MainController {
 
