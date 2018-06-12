@@ -3,32 +3,25 @@ package ClientServer;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 
-public class Server implements Runnable {
+public class Server implements Runnable {  // ClientManager
 
-    DataInputStream in; //per ricevere da client
-    DataOutputStream out; //per inviare al client
-
-    PrintWriter pw = null;
-
-    String letto;
-    Socket socketClient ;
-
-
+    private DataInputStream in; //per ricevere da client
+    private DataOutputStream out; //per inviare al client
+    private String letto;
+    private Socket socketClient ;
 
     public Server(Socket socketClient){
         this.socketClient=socketClient;
     }
 
     //il compito del server è quella di accettare degli input dai client e processi e ridare indietro qualcosa
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException {  // Spostarlo in una classe a parte (ServerApplication)
 
         ServerSocket server ;
         Socket socketClient ;
@@ -46,42 +39,31 @@ public class Server implements Runnable {
             Thread t = new Thread(new Server(socketClient));
             t.start();
             clients.add(t);
-            broadcast(clients);
-            //System.out.println(clients.size());
         }
-
     }
 
+    /**
+     *  Contiene tutto quello che va da server verso client.
+     */
     @Override
     public void run() {
 
-
         try {
             in = new DataInputStream(socketClient.getInputStream()); //input da client
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
             out = new DataOutputStream(socketClient.getOutputStream()); //output a client
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-
         try {
-
             do {
-
-
                 System.out.println("aspetto un messaggio...");
                 letto = in.readLine();
-
 
                 System.out.println("messaggio ricevuto:" + " " + letto);
 
                 String risposta = "Ok"; //riposta del server
                 out.writeBytes(risposta + "\n");
-
 
             } while (!letto.toLowerCase().equals("esci"));
             out.writeBytes("Connessione chiusa" + "\n");
@@ -91,17 +73,4 @@ public class Server implements Runnable {
             e.printStackTrace();
         }
     }
-
-    public static void broadcast(List clients) throws IOException {
-
-        String Broadcast = "Si è connesso un nuovo client";
-
-        for(int i = 0; i < clients.size(); ++i){
-            //System.out.println(clients.size());
-
-        }
-
-
-    }
-
 }

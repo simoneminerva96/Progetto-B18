@@ -6,19 +6,14 @@ import java.net.Socket;
 
 public class Client {
 
-    private Socket server = null;
-
-    int porta = 8888; //porta server
-
+    private int porta = 8888; //porta server
     private DataInputStream in; //per ricevere da server
     private DataOutputStream out; //per inviare al server
     private BufferedReader tastiera;
     private String messaggio;
 
-    private Socket connetti(){
-
+    public Client (){
         try {
-
             System.out.println("Provo a connettermi.....");
             //prova lo connessione con le credenziali date
             Socket server = new Socket(InetAddress.getLocalHost(),porta);
@@ -31,16 +26,10 @@ public class Client {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        return server;
-
     }
 
     public void comunica(){
-
-
         try {
-
             do {
                 System.out.print("Messaggio da inviare al server: ");
                 tastiera = new BufferedReader(new InputStreamReader(System.in));
@@ -48,25 +37,17 @@ public class Client {
 
                 out.writeBytes(messaggio + "\n");
 
-                System.out.println("In attesa di risposta");
-                String risposta = in.readLine();
-                System.out.println("La risposta è :" + " " + risposta);
-
-
             } while (!messaggio.toLowerCase().equals("esci"));
             System.out.println("Connessione chiusa");
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
     }
 
     public static void main(String[] args) throws IOException {
 
         Client C = new Client();
-        C.connetti();
         C.comunica();
 
     }

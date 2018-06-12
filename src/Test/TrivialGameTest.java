@@ -1,8 +1,8 @@
 package Test;
 
-import GameClasses.Board;
-import GameClasses.Die;
-import GameClasses.TrivialGame;
+import Server.GameClasses.Board;
+import Server.GameClasses.Die;
+import Server.GameClasses.TrivialGame;
 
 
 import java.util.ArrayList;
