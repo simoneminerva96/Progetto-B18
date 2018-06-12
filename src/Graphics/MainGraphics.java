@@ -17,7 +17,7 @@ public class MainGraphics extends StateBasedGame{
     public static final int trivia = 5;
     public static final int mainmenu = 2;
     public static final int playernumbersel=3;
-    public static final int characterSelection=4;
+    public static final int playerorderassignment=4;
     public static final int logininterface=1;
 
     public MainGraphics(String gameName) throws Exception {
@@ -39,7 +39,7 @@ public class MainGraphics extends StateBasedGame{
         this.addState(new MainMenu(mainmenu));
         this.addState(new Trivia(trivia));
         this.addState(new LoginRegistrationInterface(logininterface));
-        this.addState(new CharacterSelection(characterSelection));
+        this.addState(new PlayerOrderAssignment(playerorderassignment));
     }
 
     /**

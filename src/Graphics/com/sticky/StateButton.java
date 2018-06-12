@@ -83,10 +83,13 @@ public class StateButton extends ButtonSkeleton implements ButtonListener,
             cr=(CharacterSelection)stateBasedGame.getState(4);
             cr.getPlayerNumber(i);
             stateBasedGame.enterState(4);*/
+            PlayerOrderAssignment poa;
+            poa=(PlayerOrderAssignment)stateBasedGame.getState(4);
+            poa.setPlayerNumber(i);
             Trivia tr;
             tr = (Trivia)stateBasedGame.getState(5);
             tr.setPlayersNumber(i);
-            stateBasedGame.enterState(5);
+            stateBasedGame.enterState(4);
         }
     }
 
