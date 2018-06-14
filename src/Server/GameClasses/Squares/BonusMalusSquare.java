@@ -10,7 +10,6 @@ import java.util.Random;
 public class BonusMalusSquare extends Square {
     private BonusMalusRandom squareType;
     private BonusMalusRandom effectType; //indica se verrà eseguito bonus o malus, nel caso del random cambia valore ogni volta
-    private Question question; //domanda di prova estratta quando vado su casella bonus malus (DA TOGLIERE)
 
     public BonusMalusSquare(Integer index,BonusMalusRandom bonusMalusType){
         super(index);

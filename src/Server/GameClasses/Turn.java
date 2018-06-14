@@ -1,9 +1,12 @@
 package Server.GameClasses;
 
+import Server.GameClasses.Interface.Direction;
 import Server.GameClasses.Squares.BonusMalusSquare;
 import Server.GameClasses.Squares.FinalQuestionSquare;
 import Server.GameClasses.Squares.InitialSquare;
 import Server.GameClasses.Interface.BonusMalusRandom;
+
+import java.sql.SQLClientInfoException;
 
 /**
  * CLASSE CHE CORRISPONDE A UN TURNO DI GIOCO, effettua la movimentazione delle pedine sul tabellone
@@ -17,7 +20,7 @@ public class Turn {
     private Player playerOnTurn;        //giocatore di turno
     private Die die;        //dado per determinare di quanto spostarsi
     private int dieresult;  //risultato del lancio del dado
-    private String chosenDirection;
+    private Direction chosenDirection;
     private boolean correctAnswer= true; //booleano che mi indica se la risposta data dall'utente è giusta o sbagliata
 
     public Turn(Player playerOnTurn,BoardProva playBoard){
@@ -25,7 +28,6 @@ public class Turn {
         this.playBoard=playBoard;
         die=new Die();
         dieresult=0;
-        chosenDirection="";
     }
     //metodo da chiamare nella classe trivialgame per cambiar turno
     public void setPlayerOnTurn(Player playerOnTurn) {
@@ -43,39 +45,43 @@ public class Turn {
     }
 
     //setta la direzione scelta dal giocatore
-    public void setChosenDirection(String direction){
+    public void setChosenDirection(Direction direction){
         this.chosenDirection=direction;
     }
 
     //metodo che muove la pedina del risultato del dado nella direzione scelta
     public void movePlayer(){
-        System.out.println("turno di " + playerOnTurn.getNickname());
-        System.out.println("posizione di partenza : " + playerOnTurn.getActualPosition());
-        if(chosenDirection.equalsIgnoreCase("cw")){
+        if(chosenDirection.equals(Direction.FORWARD)){
             if(playerOnTurn.getActualPosition() + dieresult >= NSQUARES){
                 Integer position=playerOnTurn.getActualPosition() + dieresult -NSQUARES;
                 playerOnTurn.setActualPosition(position);
             }
             else playerOnTurn.setActualPosition(playerOnTurn.getActualPosition() + dieresult);
         }
-        if(chosenDirection.equalsIgnoreCase("ccw")){
+        else if(chosenDirection.equals(Direction.BACK)){
             if(playerOnTurn.getActualPosition() - dieresult < 0){
                 Integer excess= -1*(playerOnTurn.getActualPosition() - dieresult);
                 playerOnTurn.setActualPosition(NSQUARES-excess);
             }
             else playerOnTurn.setActualPosition(playerOnTurn.getActualPosition() - dieresult);
         }
-        System.out.println("posizione attuale: " + playerOnTurn.getActualPosition() + "\n");
         //se finisco sulla casella random estraggo un effetto
         if(playerOnTurn.getActualPosition() == 18){
-            BonusMalusSquare currentSquare= (BonusMalusSquare) playBoard.getSquares().get(playerOnTurn.getActualPosition());
-            currentSquare.extractEffectType();
+            extractEffectType();
         }
     }
-
-    public boolean checkInitialSquare(){
+    //metodo che estrae l'effetto che avrà la casella random quando ci finisci sopra
+    public void extractEffectType(){
+        BonusMalusSquare currentSquare= (BonusMalusSquare)getcurrentSquare();
+        currentSquare.extractEffectType();
+    }
+    public Square getcurrentSquare(){
         int currentPosition=playerOnTurn.getActualPosition();
         Square currentSquare=playBoard.getSquares().get(currentPosition);
+        return currentSquare;
+    }
+    public boolean checkInitialSquare(){
+        Square currentSquare=getcurrentSquare();
         if(currentSquare instanceof InitialSquare){
             return true;
         }
@@ -83,8 +89,7 @@ public class Turn {
     }
 
     public boolean checkBonusMalus(){
-        int currentPosition=playerOnTurn.getActualPosition();
-        Square currentSquare=playBoard.getSquares().get(currentPosition);
+        Square currentSquare=getcurrentSquare();
         if(currentSquare instanceof BonusMalusSquare ){
             return true;
         }
@@ -93,8 +98,7 @@ public class Turn {
 
     //ritorna l'effetto che viene eseguito dalla casella
     public BonusMalusRandom executeBonusMalus(){
-        int currentPosition=playerOnTurn.getActualPosition();
-        Square currentSquare=playBoard.getSquares().get(currentPosition);
+        Square currentSquare=getcurrentSquare();
         if(currentSquare instanceof BonusMalusSquare){
             return ((BonusMalusSquare) currentSquare).executeBonusMalus(this);
         }
@@ -102,14 +106,14 @@ public class Turn {
     }
 
     public Question visualizeQuestion(){
-        int currentPosition=playerOnTurn.getActualPosition();
-        return this.playBoard.getSquares().get(currentPosition).visualizeQuestion();
+        Square currentSquare=getcurrentSquare();
+        return currentSquare.visualizeQuestion();
     }
 
     //metodo che permette al giocatore di rispondere
     public Boolean AnswerQuestion(int indexOfAnswer){
-        int currentPosition=playerOnTurn.getActualPosition();
-        correctAnswer=this.playBoard.getSquares().get(currentPosition).goOnIt(indexOfAnswer);
+        Square currentSquare=getcurrentSquare();
+        correctAnswer=currentSquare.goOnIt(indexOfAnswer);
         if(correctAnswer){
             this.obtainSlice();//METODO CHE AGGIUNGE AL GIOCATORE LO SPICCHIO DELLA CATEGORIA SE LA DOMANDA è UNA DOM. FINALE
         }
@@ -122,10 +126,9 @@ public class Turn {
 
     //RITORNA TRUE SE IL GIOCATORE HA OTTENUTO LO SPICCHIO
     public void obtainSlice(){
-        Square actualSquare=playBoard.getSquares().get(playerOnTurn.getActualPosition());
+        Square actualSquare=getcurrentSquare();
         if(actualSquare instanceof FinalQuestionSquare){
             Categories categoryOfTheSlice=((FinalQuestionSquare)actualSquare).getCategory();
-            System.out.println(playerOnTurn.getNickname() + " ha ottenuto lo spicchio di " +categoryOfTheSlice );
             playerOnTurn.obtainSlice(categoryOfTheSlice);
         }
     }
