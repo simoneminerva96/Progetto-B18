@@ -36,15 +36,11 @@ public class LoginRegistrationInterface extends BasicGameState {
     private Image background, registrationback;
     private FormButton regButton, logButton;
     private ControllerLoginRegistration clr;
-    //private Registration reg;
-    //private Login login;
     private boolean checkR, checkL;
     private TriviaFont f;
     private Music music;
 
     public LoginRegistrationInterface(int n) {
-        //this.reg = new Registration();
-        //this.login = new Login();
         clr = new ControllerLoginRegistration();
         f = new TriviaFont();
     }
@@ -80,14 +76,14 @@ public class LoginRegistrationInterface extends BasicGameState {
 
         if (regButton.isClicked()) {
             if (checkR) {
-                fonx1.drawString(690,100, "Registrazione effettuata con successo", org.newdawn.slick.Color.blue);
+                fonx1.drawString(590,100, "Registrazione effettuata con successo", org.newdawn.slick.Color.blue);
             }
-            else fonx1.drawString(690,100, "Registrazione fallita", org.newdawn.slick.Color.blue);
+            else fonx1.drawString(590,100, "Registrazione fallita", org.newdawn.slick.Color.blue);
         }
 
         if(logButton.isClicked()){
             if (!checkL) {
-                fonx1.drawString(490,20, "Username o password errati", org.newdawn.slick.Color.blue);
+                fonx1.drawString(590,20, "Username o password errati", org.newdawn.slick.Color.blue);
             }
             else {
                 stateBasedGame.enterState(2);
@@ -95,10 +91,6 @@ public class LoginRegistrationInterface extends BasicGameState {
         }
     }
 
-    /*
-    OnClickFormRegistration preleva ciò che viene inserito e lo salva nel db attraverso il metodo di Registration.
-    OnClickFormLogin preleva ciò che viene inserito ed effettua il login attraverso il metodo di Login.
-     */
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) {
         Input in = gameContainer.getInput();
@@ -106,10 +98,10 @@ public class LoginRegistrationInterface extends BasicGameState {
         if (in.isMousePressed(0)){
             regButton.setClicked(false);
             logButton.setClicked(false);
-            if(regButton.onClickFormRegistration(in.getMouseX(),in.getMouseY())){
+            if(regButton.onClickForm(in.getMouseX(),in.getMouseY())){
                 checkR = clr.registration(usrname.getText(), psw.getText());
             }
-            if(logButton.onClickFormLogin(in.getMouseX(),in.getMouseY())){
+            if(logButton.onClickForm(in.getMouseX(),in.getMouseY())){
                 checkL = clr.login(usrname.getText(), psw.getText());
             }
         }

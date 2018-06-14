@@ -23,7 +23,6 @@ public class Login {
      @return flag di avvenuto login
      */
     public boolean Login(String nicknameInserted,String passwordInserted){
-
         return connection.ExistsPlayer(nicknameInserted,passwordInserted);
     }
 

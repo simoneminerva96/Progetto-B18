@@ -50,7 +50,7 @@ public class PlayerGUI {
     public void updateOnEachFrame(int delta) {
                 if (xUpdate < x) {
                     if(this.p.getDirection()==Direction.FORWARD){
-                        if (p.isOnLeft == false) {
+                        if (!p.isOnLeft()) {
                             piece.setMvdx();
                             xUpdate += 0.1 * delta;
                             if (xUpdate >= x) {
@@ -61,11 +61,11 @@ public class PlayerGUI {
                             yUpdate -= 0.1 * delta;
                             if (yUpdate <= y) {
                                 yUpdate = y;
-                                p.isOnLeft = false;
+                                p.setOnLeft(false);
                             }
                         }
                     }else {
-                        if(p.isOnDown==false){
+                        if(!p.isOnDown()){
                             piece.setMvdx();
                             xUpdate += 0.1 * delta;
                             if (xUpdate >= x) {
@@ -76,13 +76,13 @@ public class PlayerGUI {
                             yUpdate+=0.1*delta;
                             if(yUpdate>=y){
                                 yUpdate=y;
-                                p.isOnDown=false;
+                                p.setOnDown(false);
                             }
                         }
                     }
                 } else if (yUpdate < y) {
                     if(p.getDirection()==Direction.BACK){
-                        if(p.isOnUp==false){
+                        if(!p.isOnUp()){
                             piece.setMvdwn();
                             yUpdate += 0.1 * delta;
                             if (yUpdate >= y) {
@@ -93,7 +93,7 @@ public class PlayerGUI {
                             xUpdate-=0.1*delta;
                             if(xUpdate<=x){
                                 xUpdate=x;
-                                p.isOnUp=false;
+                                p.setOnUp(false);
                             }
                         }
                     }else{
@@ -111,7 +111,7 @@ public class PlayerGUI {
                             xUpdate = x;
                         }
                     }else{
-                        if (p.isOnRight == false) {
+                        if (!p.isOnRight()) {
                             piece.setMvsx();
                             xUpdate -= 0.1 * delta;
                             if (xUpdate <= x) {
@@ -122,7 +122,7 @@ public class PlayerGUI {
                             yUpdate -= 0.1 * delta;
                             if (yUpdate <= y) {
                                 yUpdate = y;
-                                p.isOnRight = false;
+                                p.setOnRight(false);
                             }
                         }
                     }
