@@ -1,12 +1,10 @@
 package Server.GameClasses;
 
-import java.awt.*;
 import java.sql.SQLException;
 import java.util.*;
 
 import Server.GameClasses.Interface.BonusMalusRandom;
 import Server.GameClasses.Interface.Direction;
-import jdk.javadoc.internal.doclets.toolkit.util.PackageListWriter;
 
 /**
  * CLASSE A CUI CORRISPONDE UNA SINGOLA PARTITA DI GIOCO
