@@ -8,30 +8,20 @@ import Client.Graphics.Map.Map;
  *
  * La classe Player contiene le informazioni relative al singolo giocatore. È caratterizzato da:
  * - name: nome del giocatore
- * - x,y: coordinate da raggiungere
- * - minx, miny, maxx, maxy: ogni player si troverà in una certa porzione della cella della matrice,
- *                           questi valori rappresentano la posizione in cui si deve trovare per non
- *                           sovrapporsi agli altri.
- * - mulsize: dimensione della cella della matrice
+ * - Coordinate minime, massime, finali, matrice
  * - direction: direzione di spostamento
- * - isOnLeft
- * - isOnRight
- * - isOnUp
- * - isOnDown
- * - mx: dimensione massima X della matrice
- * - my: dimensione massima Y della matrice
+ * - isOnLeft, isOnRight, isOnUp, isOnDown
  */
+
 public class Player{
     private Coordinate minime, massime, finali, matrice;
     private int id;
     private String name;
-    private int mulsize;
     private Direction direction = Direction.FORWARD;
     private boolean isOnLeft=false,isOnRight=false,isOnUp=false,isOnDown=false;
 
     public Player(String name,int id,Map map){
         this.id = id;
-        mulsize = map.getTilesize();
         matrice = new Coordinate(map.getXmax(), map.getYmax());
         switch(id){
             case 1:
