@@ -24,7 +24,7 @@ public class ConnectionDB {
      */
     public ArrayList<Question> getQuestion (String cod) throws SQLException{
 
-        cn = DriverManager.getConnection("jdbc:mysql://93.41.247.149:3306/trivial?useSSL=false", "root", "root");
+        cn = DriverManager.getConnection("jdbc:mysql://10.87.144.91:3306/trivial?useSSL=false", "root", "root");
         sql = "select ID_QUEST, DESCRIZIONE, RISPOSTA, VALUE from domande join risposte on ID_QUEST = ID_DOMANDA where ID_QUEST LIKE \"" + cod + "%\"";
         // ________________________________query
         ArrayList<Question> questions=new ArrayList<Question>();
@@ -44,7 +44,7 @@ public class ConnectionDB {
                     boolean correct=conversionDB(rs.getString("VALUE"));
                     answers.add(new Answer(rs.getString("RISPOSTA"),correct));
                     i++;
-                    questions.add(new Question(rs.getString("DESCRIZIONE"),conversionCode(cod),answers));//LA CATEGORIA VA SETTATA QUANDO CHIAMO IL METODO NEL COSTRUTTORE DEL TABELLONE
+                    questions.add(new Question(rs.getString("DESCRIZIONE"),answers));//LA CATEGORIA VA SETTATA QUANDO CHIAMO IL METODO NEL COSTRUTTORE DEL TABELLONE
                     answers.clear();
                 }
 
@@ -54,37 +54,6 @@ public class ConnectionDB {
         } // fine try-catch
         cn.close(); // chiusura connessione
         return questions;
-    }
-    //metodo che converte il codice corrispondente nella categoria della domanda
-    private Categories conversionCode(String cod){
-        Categories category=null;
-        switch (cod){
-            case "GEO":
-            case "FGEO":
-                category= Categories.Geografia;
-                break;
-            case "STO":
-            case "FSTO":
-                category= Categories.Storia;
-                break;
-            case "SPO":
-            case "FSPO":
-                category= Categories.Sport;
-                break;
-            case "SPE":
-            case "FSPE":
-                category= Categories.Spettacolo;
-                break;
-            case "ART":
-            case "FART":
-                category= Categories.ArteLetteratura;
-                break;
-            case "SCI":
-            case "FSCI":
-                category= Categories.Scienze;
-                break;
-        }
-        return category;
     }
     // metodo che converte y/n in true e false
     private static Boolean conversionDB(String input){
@@ -100,7 +69,7 @@ public class ConnectionDB {
         String query = "{ ?=call ADD_PLAYER1(?,?) }";
         ResultSet rs;
         Boolean returnMessage = null;
-        try (Connection conn = DriverManager.getConnection("jdbc:mysql://93.41.247.149:3306/trivial?useSSL=false", "root", "root");
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://10.87.144.91:3306/trivial?useSSL=false", "root", "root");
              CallableStatement stmt = conn.prepareCall(query)) {
 
             stmt.registerOutParameter(1, Types.VARCHAR);
@@ -125,7 +94,7 @@ public class ConnectionDB {
         ResultSet rs;
         Boolean returnMess = null;
 
-        try (Connection conn = DriverManager.getConnection("jdbc:mysql://93.41.247.149:3306/trivial?useSSL=false", "root", "root");
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://10.87.144.91:3306/trivial?useSSL=false", "root", "root");
              CallableStatement stmt = conn.prepareCall(query)) {
 
             stmt.registerOutParameter(1, Types.VARCHAR);

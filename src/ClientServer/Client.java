@@ -34,7 +34,6 @@ public class Client {
                 System.out.print("Messaggio da inviare al server: ");
                 tastiera = new BufferedReader(new InputStreamReader(System.in));
                 messaggio = tastiera.readLine();
-
                 out.writeBytes(messaggio + "\n");
 
             } while (!messaggio.toLowerCase().equals("esci"));

@@ -21,7 +21,6 @@ public class Controller {
         }
 
         match.initializePlayers(gamingPlayers); //inizializzo i giocatori
-        match.InitializePossiblePieces();  //inizializzo le possibili pedine per la scelta
         //ci sarebbe da fare la scelta della pedina qui
         match.initializePhase(); //setto il primo giocatore di turno
     }

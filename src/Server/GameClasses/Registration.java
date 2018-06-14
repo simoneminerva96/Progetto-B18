@@ -20,11 +20,8 @@ public class Registration {
        prende i dati inseriti ed effettua la registrazione
     */
     public boolean Registration(String nicknameInserted,String passwordInserted){
-        boolean check=false;
-
         //effettuare il controllo sui dati inseriti, se consentiti effettuare la reg senno mess. di errore
-        check=connection.getPlayer(nicknameInserted,passwordInserted);
-        return check;
+        return connection.getPlayer(nicknameInserted,passwordInserted);
     }
 
 }

@@ -87,7 +87,7 @@ public class FormButton extends ButtonSkeleton implements ButtonListener, ClickL
         }
     }
 
-    public boolean onClickFormLogin(float mx, float my) {
+    public boolean onClickForm(float mx, float my) {
         if (mx >= minx && mx <= maxx && my >= miny && my <= maxy) {
             current = press;
             clicked = true;
@@ -95,20 +95,9 @@ public class FormButton extends ButtonSkeleton implements ButtonListener, ClickL
         return clicked;
     }
 
-    public boolean onClickFormRegistration(float mx, float my){
-            if(mx>=minx && mx<=maxx && my>=miny && my<=maxy) {
-                current = press;
-                clicked = true;
-            }
-        return clicked;
-    }
+    public void onDoubleClick(Button clicked, float mx, float my) { }
 
-    public void onDoubleClick(Button clicked, float mx, float my) {
-
-    }
-
-    public void onRightClick(Button clicked, float mx, float my) {
-    }
+    public void onRightClick(Button clicked, float mx, float my) { }
 
     public void onMouseEnter(Button b,float mx, float my) {
 

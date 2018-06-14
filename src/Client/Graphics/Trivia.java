@@ -134,35 +134,9 @@ public class Trivia extends BasicGameState {
             fonx1.drawString((x+100),y,pGUI.get(i).getName(), Color.white);
             ArrayList<Slice> slc = new ArrayList<>();
             slc.addAll(controller.getSliceObtained(i));
-
-            for (int j=0; j<slc.size(); j++){
+            for (int j=0; j<slc.size(); j++) {
                 Categories c = slc.get(j).getCategory();
-                switch (c){
-                    case Geografia:{
-                        graphics.drawImage(diamanti.get(5),x+70,y+40 );
-                        break;
-                    }
-                    case Storia:{
-                        graphics.drawImage(diamanti.get(3), x+100,y+40);
-                        break;
-                    }
-                    case Scienze:{
-                        graphics.drawImage(diamanti.get(4), x+130,y+40);
-                        break;
-                    }
-                    case Spettacolo:{
-                        graphics.drawImage(diamanti.get(2), x+160,y+40);
-                        break;
-                    }
-                    case ArteLetteratura:{
-                        graphics.drawImage(diamanti.get(1), x+190,y+40);
-                        break;
-                    }
-                    case Sport:{
-                        graphics.drawImage(diamanti.get(0), x+210,y+40);
-                        break;
-                    }
-                }
+                drawDiamanti(graphics, c, x, y);
             }
             slc.clear();
         }
@@ -179,8 +153,7 @@ public class Trivia extends BasicGameState {
         /*
         Se la pedina si è fermata (ready=true) controllo se è una casella di bonus malus. Se non è una bonus malus
          controllo se è la casella iniziale, se non è allora posso renderizzare la domanda, altrimenti controllo
-         se ho vinto o se passo il turno.
-         Se ho risposto e mi è uscita la stringa, allora resetto ready e launched.
+         se ho vinto o se passo il turno. Se ho risposto e mi è uscita la stringa, allora resetto ready e launched.
          */
 
         if (pGUI.get(controller.getIndex()).isReady() ) {
@@ -324,5 +297,34 @@ public class Trivia extends BasicGameState {
             runTime = Time1 - Time0;
         }
     }
+
+    private void drawDiamanti(Graphics graphics, Categories c, int x, int y){
+            switch (c){
+                case Geografia:{
+                    graphics.drawImage(diamanti.get(5),x+70,y+40 );
+                    break;
+                }
+                case Storia:{
+                    graphics.drawImage(diamanti.get(3), x+100,y+40);
+                    break;
+                }
+                case Scienze:{
+                    graphics.drawImage(diamanti.get(4), x+130,y+40);
+                    break;
+                }
+                case Spettacolo:{
+                    graphics.drawImage(diamanti.get(2), x+160,y+40);
+                    break;
+                }
+                case ArteLetteratura:{
+                    graphics.drawImage(diamanti.get(1), x+190,y+40);
+                    break;
+                }
+                case Sport:{
+                    graphics.drawImage(diamanti.get(0), x+210,y+40);
+                    break;
+                }
+            }
+        }
 }
 
