@@ -48,6 +48,7 @@ public class Client {
     public static void main(String[] args) throws IOException {
 
         Client C = new Client();
+        System.out.println("CONNESSIONE RIUSCITA, ORA BISOGNA COMUNICARE");
         C.comunica();
 
     }
