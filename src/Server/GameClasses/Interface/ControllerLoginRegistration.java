@@ -12,7 +12,7 @@ public class ControllerLoginRegistration {
     public ControllerLoginRegistration(){
         reg = new Registration();
         login = new Login();
-        serverInterface = new ServerInterface();
+        //serverInterface = new ServerInterface();
     }
 
     public boolean login(String username, String psw){
