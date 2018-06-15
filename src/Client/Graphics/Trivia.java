@@ -98,10 +98,7 @@ public class Trivia extends BasicGameState {
         luca = new Image("res/char/luca.png");
         background = new Image("res/backgrounds/green_landscape.png");
         launch = new Image("res/buttons/Button_Launch/Button_Launch.png");
-
-        for (int i=1; i<7; i++){
-            diamanti.add(new Image("res/diamonds/d"+i+".png"));
-        }
+        initializeDiamonds();
 
         domanda.init(gameContainer, stateBasedGame);
         esc.init(gameContainer, stateBasedGame);
@@ -136,15 +133,10 @@ public class Trivia extends BasicGameState {
             slc.addAll(controller.getSliceObtained(i));
             for (int j=0; j<slc.size(); j++) {
                 Categories c = slc.get(j).getCategory();
-                drawDiamanti(graphics, c, x, y);
+                drawDiamonds(graphics, c, x, y);
             }
             slc.clear();
         }
-
-        /*rydia.draw(1100, 30);
-        ceodore.draw(1400, 30);
-        kain.draw(1100, 150);
-        luca.draw(1400, 150);*/
 
         for (PlayerGUI p : pGUI) { p.getPedina().draw(p.getxUpdate(), p.getyUpdate()); }
 
@@ -282,7 +274,6 @@ public class Trivia extends BasicGameState {
                 pGUI.add(i, new PlayerGUI(p, piece3));
             }
         }
-
         for (PlayerGUI p : pGUI) {
             p.getPedina().stop();
         }
@@ -298,33 +289,37 @@ public class Trivia extends BasicGameState {
         }
     }
 
-    private void drawDiamanti(Graphics graphics, Categories c, int x, int y){
-            switch (c){
-                case Geografia:{
-                    graphics.drawImage(diamanti.get(5),x+70,y+40 );
-                    break;
-                }
-                case Storia:{
-                    graphics.drawImage(diamanti.get(3), x+100,y+40);
-                    break;
-                }
-                case Scienze:{
-                    graphics.drawImage(diamanti.get(4), x+130,y+40);
-                    break;
-                }
-                case Spettacolo:{
-                    graphics.drawImage(diamanti.get(2), x+160,y+40);
-                    break;
-                }
-                case ArteLetteratura:{
-                    graphics.drawImage(diamanti.get(1), x+190,y+40);
-                    break;
-                }
-                case Sport:{
-                    graphics.drawImage(diamanti.get(0), x+210,y+40);
-                    break;
-                }
+    private void drawDiamonds(Graphics graphics, Categories c, int x, int y){
+        switch (c){
+            case Geografia:
+                graphics.drawImage(diamanti.get(5),x+70,y+40 );
+                break;
+            case Storia:
+                graphics.drawImage(diamanti.get(3), x+100,y+40);
+                break;
+            case Scienze:
+                graphics.drawImage(diamanti.get(4), x+130,y+40);
+                break;
+            case Spettacolo:
+                graphics.drawImage(diamanti.get(2), x+160,y+40);
+                break;
+            case ArteLetteratura:
+                graphics.drawImage(diamanti.get(1), x+190,y+40);
+                break;
+            case Sport:
+                graphics.drawImage(diamanti.get(0), x+210,y+40);
+                break;
+        }
+    }
+
+    private void initializeDiamonds (){
+        for (int i=1; i<7; i++){
+            try {
+                diamanti.add(new Image("res/diamonds/d"+i+".png"));
+            } catch (SlickException e) {
+                e.printStackTrace();
             }
         }
+    }
 }
 
