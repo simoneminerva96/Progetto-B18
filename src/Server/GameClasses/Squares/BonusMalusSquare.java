@@ -1,7 +1,6 @@
 package Server.GameClasses.Squares;
 import Server.GameClasses.*;
 import Server.GameClasses.Interface.BonusMalusRandom;
-
 import java.util.Random;
 
 /*
