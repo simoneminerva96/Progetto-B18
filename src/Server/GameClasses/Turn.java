@@ -1,9 +1,7 @@
 package Server.GameClasses;
 
 import Server.GameClasses.Interface.Direction;
-import Server.GameClasses.Squares.BonusMalusSquare;
-import Server.GameClasses.Squares.FinalQuestionSquare;
-import Server.GameClasses.Squares.InitialSquare;
+import Server.GameClasses.Squares.*;
 import Server.GameClasses.Interface.BonusMalusRandom;
 
 import java.sql.SQLClientInfoException;
@@ -72,8 +70,10 @@ public class Turn {
     }
     //metodo che estrae l'effetto che avrà la casella random quando ci finisci sopra
     public void extractEffectType(){
-        BonusMalusSquare currentSquare= (BonusMalusSquare)getcurrentSquare();
+        BonusMalusRandomSquare currentSquare= (BonusMalusRandomSquare) getcurrentSquare();
         currentSquare.extractEffectType();
+        /*BonusMalusSquare currentSquare= (BonusMalusSquare)getcurrentSquare();
+        currentSquare.extractEffectType();*/
     }
     public Square getcurrentSquare(){
         int currentPosition=playerOnTurn.getActualPosition();
@@ -90,7 +90,7 @@ public class Turn {
 
     public boolean checkBonusMalus(){
         Square currentSquare=getcurrentSquare();
-        if(currentSquare instanceof BonusMalusSquare ){
+        if(currentSquare instanceof BonusMalusRandomSquare ){
             return true;
         }
         else return false;
@@ -99,8 +99,8 @@ public class Turn {
     //ritorna l'effetto che viene eseguito dalla casella
     public BonusMalusRandom executeBonusMalus(){
         Square currentSquare=getcurrentSquare();
-        if(currentSquare instanceof BonusMalusSquare){
-            return ((BonusMalusSquare) currentSquare).executeBonusMalus(this);
+        if(currentSquare instanceof BonusMalusRandomSquare){
+            return ((BonusMalusRandomSquare) currentSquare).executeBonusMalus(this);
         }
         else return null;
     }

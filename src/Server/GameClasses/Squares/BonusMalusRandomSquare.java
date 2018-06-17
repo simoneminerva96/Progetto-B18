@@ -4,7 +4,7 @@ import Server.GameClasses.Interface.BonusMalusRandom;
 import Server.GameClasses.Square;
 import Server.GameClasses.Turn;
 
-public class BonusMalusRandomSquare extends Square {
+public abstract class BonusMalusRandomSquare extends Square {
 
     private BonusMalusRandom squareType;
 
@@ -25,4 +25,7 @@ public class BonusMalusRandomSquare extends Square {
         this.squareType = squareType;
     }
 
+    public void extractEffectType() {}
+
+    public BonusMalusRandom executeBonusMalus (Turn t){return null;}
 }

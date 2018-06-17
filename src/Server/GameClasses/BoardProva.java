@@ -106,11 +106,17 @@ public class BoardProva{
                 possibleQuestionGeofinal.addAll(creaDomandaDiProva("provaGeoFinal","A",true,"b",false,"c",false,"d",false));
                 squares.get(i).setPossibleQuestions(possibleQuestionGeofinal);
             }
-            if(i==6)squares.add(new BonusMalusSquare(i, BonusMalusRandom.Malus));
+            if (i==6) squares.add(new MalusSquare(i, BonusMalusRandom.Malus));
+            if(i==12)squares.add(new BonusSquare(i,BonusMalusRandom.Bonus));
+            if(i==18)squares.add(new RandomSquare(i,BonusMalusRandom.Random));
+            if(i==21)squares.add(new BonusSquare(i,BonusMalusRandom.Bonus));
+            if(i==30)squares.add(new MalusSquare(i,BonusMalusRandom.Malus));
+
+            /*if(i==6)squares.add(new BonusMalusSquare(i, BonusMalusRandom.Malus));
             if(i==12)squares.add(new BonusMalusSquare(i,BonusMalusRandom.Bonus));
             if(i==18)squares.add(new BonusMalusSquare(i,BonusMalusRandom.Random));
             if(i==21)squares.add(new BonusMalusSquare(i,BonusMalusRandom.Bonus));
-            if(i==30)squares.add(new BonusMalusSquare(i,BonusMalusRandom.Malus));
+            if(i==30)squares.add(new BonusMalusSquare(i,BonusMalusRandom.Malus));*/
         }
     }
     public ArrayList<Square> getSquares() {
@@ -118,8 +124,8 @@ public class BoardProva{
     }
 
     private ArrayList<Question> creaDomandaDiProva(String domanda,String ans1,boolean corr1,String ans2,boolean corr2,String ans3,boolean corr3,String ans4,boolean corr4){
-        ArrayList<Question> q=new ArrayList<Question>();
-        ArrayList<Answer> a=new ArrayList<Answer>();
+        ArrayList<Question> q=new ArrayList<>();
+        ArrayList<Answer> a=new ArrayList<>();
         a.add(new Answer(ans1,corr1));
         a.add(new Answer(ans2,corr2));
         a.add(new Answer(ans3,corr3));
