@@ -75,25 +75,17 @@ public class Turn {
         /*BonusMalusSquare currentSquare= (BonusMalusSquare)getcurrentSquare();
         currentSquare.extractEffectType();*/
     }
-    public Square getcurrentSquare(){
+    private Square getcurrentSquare(){
         int currentPosition=playerOnTurn.getActualPosition();
         Square currentSquare=playBoard.getSquares().get(currentPosition);
         return currentSquare;
     }
     public boolean checkInitialSquare(){
-        Square currentSquare=getcurrentSquare();
-        if(currentSquare instanceof InitialSquare){
-            return true;
-        }
-        else return false;
+        return getcurrentSquare() instanceof InitialSquare;
     }
 
     public boolean checkBonusMalus(){
-        Square currentSquare=getcurrentSquare();
-        if(currentSquare instanceof BonusMalusRandomSquare ){
-            return true;
-        }
-        else return false;
+        return getcurrentSquare() instanceof  BonusMalusRandomSquare;
     }
 
     //ritorna l'effetto che viene eseguito dalla casella
@@ -125,14 +117,13 @@ public class Turn {
     }
 
     //RITORNA TRUE SE IL GIOCATORE HA OTTENUTO LO SPICCHIO
-    public void obtainSlice(){
+    private void obtainSlice(){
         Square actualSquare=getcurrentSquare();
         if(actualSquare instanceof FinalQuestionSquare){
             Categories categoryOfTheSlice=((FinalQuestionSquare)actualSquare).getCategory();
             playerOnTurn.obtainSlice(categoryOfTheSlice);
         }
     }
-
 
     public Boolean verifyVictory(){
         if(playerOnTurn.getSlicesObtained().size() == 6 && playerOnTurn.getActualPosition() ==0){

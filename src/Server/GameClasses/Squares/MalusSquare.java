@@ -5,8 +5,8 @@ import Server.GameClasses.Turn;
 
 public class MalusSquare extends BonusMalusRandomSquare {
 
-    public MalusSquare(Integer index, BonusMalusRandom squareType) {
-        super(index, squareType);
+    public MalusSquare(Integer index) {
+        super(index);
     }
 
     public boolean goOnIt (int indexOfAnswer) {
@@ -15,6 +15,6 @@ public class MalusSquare extends BonusMalusRandomSquare {
 
     public BonusMalusRandom executeBonusMalus (Turn t){
         t.setCorrectAnswer(false);
-        return getSquareType();
+        return BonusMalusRandom.MALUS;
     }
 }

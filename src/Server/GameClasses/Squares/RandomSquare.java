@@ -6,9 +6,11 @@ import Server.GameClasses.Turn;
 import java.util.Random;
 
 public class RandomSquare extends BonusMalusRandomSquare {
+    private BonusMalusRandom squareType;
 
-    public RandomSquare(Integer index, BonusMalusRandom squareType) {
-        super(index, squareType);
+    public RandomSquare(Integer index) {
+        super(index);
+        this.squareType = BonusMalusRandom.RANDOM;
     }
 
     public boolean goOnIt (int indexOfAnswer) {
@@ -16,7 +18,7 @@ public class RandomSquare extends BonusMalusRandomSquare {
     }
 
     public void extractEffectType() {
-        if(super.getSquareType().equals(BonusMalusRandom.Random)){
+        if(squareType.equals(BonusMalusRandom.RANDOM)){
             Random generator = new Random();
             int min = 1; // numero minimo
             int max = 2; // numero massimo
@@ -25,23 +27,23 @@ public class RandomSquare extends BonusMalusRandomSquare {
 
             switch (result){
                 case 1:
-                    super.setSquareType(BonusMalusRandom.Bonus);
+                    squareType = BonusMalusRandom.BONUS;
                     break;
                 case 2:
-                    super.setSquareType(BonusMalusRandom.Malus);
+                    squareType = BonusMalusRandom.MALUS;
                     break;
             }
         }
     }
 
     public BonusMalusRandom executeBonusMalus(Turn t){
-        switch (getSquareType()){
-            case Bonus:
+        switch (squareType){
+            case BONUS:
                 break;
-            case Malus:
+            case MALUS:
                 t.setCorrectAnswer(false);
                 break;
         }
-        return getSquareType();
+        return squareType;
     }
 }

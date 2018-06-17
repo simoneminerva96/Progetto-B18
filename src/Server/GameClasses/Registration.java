@@ -15,12 +15,13 @@ public class Registration {
         connection=new ConnectionDB();
     }
 
-    /*
-       metodo da chiamare quando l'utente preme il tasto register sull'interfaccia
-       prende i dati inseriti ed effettua la registrazione
-    */
+    /**
+     * Prelevati i dati inseriti dall'utente, richiama il db per effettuare la registrazione
+     * @param nicknameInserted username inserito dall'utente
+     * @param passwordInserted password inserita dall'utente
+     * @return boolean se è andata a buon fine o no
+     */
     public boolean Registration(String nicknameInserted,String passwordInserted){
-        //effettuare il controllo sui dati inseriti, se consentiti effettuare la reg senno mess. di errore
         return connection.getPlayer(nicknameInserted,passwordInserted);
     }
 

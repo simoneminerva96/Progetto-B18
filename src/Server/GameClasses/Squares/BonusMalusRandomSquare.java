@@ -6,23 +6,12 @@ import Server.GameClasses.Turn;
 
 public abstract class BonusMalusRandomSquare extends Square {
 
-    private BonusMalusRandom squareType;
-
-    public BonusMalusRandomSquare(Integer index, BonusMalusRandom squareType) {
+    public BonusMalusRandomSquare(Integer index) {
         super(index);
-        this.squareType = squareType;
     }
 
     public boolean goOnIt (int indexOfAnswer) {
         return false;
-    }
-
-    public BonusMalusRandom getSquareType() {
-        return squareType;
-    }
-
-    public void setSquareType(BonusMalusRandom squareType) {
-        this.squareType = squareType;
     }
 
     public void extractEffectType() {}

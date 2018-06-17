@@ -1,8 +1,6 @@
 package Server.GameClasses;
 
-import java.sql.SQLException;
 import java.util.*;
-
 import Server.GameClasses.Interface.BonusMalusRandom;
 import Server.GameClasses.Interface.Direction;
 
@@ -21,30 +19,20 @@ public class TrivialGame {
     public TrivialGame(){
         players = new ArrayList<>();
         die = new Die();
-        try{
-            playBoard = new BoardProva();
-            turn = new Turn(null,playBoard);    //all'inizio non ho alcun giocatore di turno
-        }
-        catch (SQLException e){
-            System.out.println(e.getMessage());
-            System.exit(1);
-        }
+        playBoard = new BoardProva();
+        turn = new Turn(null,playBoard);    //all'inizio non ho alcun giocatore di turno
     }
 
-    public ArrayList<Player> getPlayers() {
-        return players;
-    }
+    public ArrayList<Player> getPlayers() { return players; }
 
-    public Integer getIndex() {
-        return index;
-    }
+    public Integer getIndex() { return index; }
 
     /**
      * metodo che crea i giocatori che parteciperanno alla partita, riceve in ingresso la lista dei nickname
      */
     public void initializePlayers(ArrayList<String> nicknames){
-        for(int i=0;i<nicknames.size();i++){
-            players.add(new Player(nicknames.get(i)));
+        for (String username : nicknames) {
+            players.add(new Player(username));
         }
     }
 
@@ -55,15 +43,15 @@ public class TrivialGame {
     */
     public void BeginningDieRoll(){
         // a ogni giocatore viene associato il risultato del suo lancio
-        ArrayList<Integer> launches=new ArrayList<>();
-        launches.addAll(fillArray());   //array dei lanci ottenuti
+        ArrayList<Integer> launches = new ArrayList<>(fillArray());   //array dei lanci ottenuti
+
         for(int i=0;i<players.size();i++) players.get(i).setInitialRollResult(launches.get(i));
         //STAMPA DEL RISULTATO DEL LANCIO
         System.out.println("risultati del lancio:");
         for(int i=0;i<launches.size();i++) System.out.println("giocatore " + players.get(i).getNickname() + " : " + players.get(i).getInitialRollResult());
         //ordinamento lanci precedenti
-        ArrayList<Integer> orderedLaunches=new ArrayList<Integer>();
-        orderedLaunches.addAll(orderLaunches(launches));
+        ArrayList<Integer> orderedLaunches=new ArrayList<>(orderLaunches(launches));
+
         //creazione lista ordinata dei giocatori
         orderPlayers(orderedLaunches);
         //stampa giocatori ordinati
@@ -71,9 +59,12 @@ public class TrivialGame {
         for(int i=0;i<players.size();i++) System.out.println(players.get(i).getNickname());
     }
 
-    //metodo che ordina l'array dei giocatori a seconda dei risultati ottenuti
-    public void orderPlayers(ArrayList<Integer> orderedLaunches){
-        ArrayList<Player> orderedPlayers=new ArrayList<Player>();
+    /**
+     * ordina l'array in base ai risultati ottenuti
+     * @param orderedLaunches risultati dei lanci ottenuti
+     */
+    private void orderPlayers(ArrayList<Integer> orderedLaunches){
+        ArrayList<Player> orderedPlayers=new ArrayList<>();
         for(int i=0;i<orderedLaunches.size();i++){
             for(int j=0;j<players.size();j++){
                 if(players.get(j).getInitialRollResult() == orderedLaunches.get(i)) orderedPlayers.add(players.get(j));
@@ -83,7 +74,7 @@ public class TrivialGame {
         players.addAll(orderedPlayers);
     }
     //metodo che riempe l'array del lanci con risultati del dado
-    public ArrayList<Integer> fillArray(){
+    private ArrayList<Integer> fillArray(){
         ArrayList<Integer> launches = new ArrayList<>();
         launches.add(die.Launch());     //aggiungo il primo lancio
         Boolean check=false;
@@ -91,7 +82,7 @@ public class TrivialGame {
         //ciclo che riempe l'array dei lanci facendo in modo che siano diversi
         for(int i=0;i<players.size() -1;i++){
             Integer actualLaunch = null;
-            while (check==false)
+            while (!check)
             {
                 actualLaunch = die.Launch();
                 check = checkDifferentLaunches(launches, actualLaunch);
@@ -102,7 +93,11 @@ public class TrivialGame {
         return launches;
     }
 
-    //metodo che ordina un array di interi in ordine decrescente
+    /**
+     *
+     * @param launches lanci effettuati
+     * @return array di interi ordinato in ordine decrescente
+     */
     private ArrayList<Integer> orderLaunches(ArrayList<Integer> launches){
         int swipVariable;
         for(int i=0;i<launches.size();i++){
@@ -120,12 +115,13 @@ public class TrivialGame {
     //metodo che viene usato per controllare che i lanci dei giocatori siano diversi tra loro
     private boolean checkDifferentLaunches(ArrayList<Integer> previousLaunches, int currentLaunch){
         Boolean check=true;
-        for(int i=0;i<previousLaunches.size();i++){
-            if(currentLaunch==previousLaunches.get(i)) check=false;
+        for (Integer order : previousLaunches){
+            if (currentLaunch== order) {
+                check = false;
+            }
         }
         return check;
     }
-
 
     //metodi che eseguono le fasi di gioco del turno
 
@@ -137,17 +133,11 @@ public class TrivialGame {
         turn.setPlayerOnTurn(players.get(index));
     }
 
-    public int throwDie(){
-        return turn.dieLaunch();
-    }
+    public int throwDie(){ return turn.dieLaunch(); }
 
-    public void chooseDirection(Direction d){
-        turn.setChosenDirection(d);
-    }
+    public void chooseDirection(Direction d){ turn.setChosenDirection(d); }
 
-    public void movePlayer(){
-        turn.movePlayer();
-    }
+    public void movePlayer(){ turn.movePlayer(); }
 
     public boolean checkInitialSquare(){
         boolean check=turn.checkInitialSquare();
@@ -155,39 +145,29 @@ public class TrivialGame {
         return check;
     }
 
-    public boolean checkBonusMalus(){
-        return turn.checkBonusMalus();
-    }
+    public boolean checkBonusMalus(){ return turn.checkBonusMalus(); }
 
-    public BonusMalusRandom executeBonusMalus(){
-        BonusMalusRandom type=turn.executeBonusMalus();
-        return type;
-    }
+    public BonusMalusRandom executeBonusMalus(){ return turn.executeBonusMalus(); }
 
-    public Question visualizeQuestion(){
-        return turn.visualizeQuestion();
-    }
+    public Question visualizeQuestion(){ return turn.visualizeQuestion(); }
 
-    public boolean answerQuestion(int indexOfQuestion){
-        boolean correct=turn.AnswerQuestion(indexOfQuestion);
-        return correct;
-    }
+    public boolean answerQuestion(int indexOfQuestion){ return turn.AnswerQuestion(indexOfQuestion); }
 
-    //se la risposta data è sbagliata incrementa l'indice e aggiorna il giocatore di turno
     public void setPlayerOnTurn(){
+        //se la risposta data è sbagliata incrementa l'indice e aggiorna il giocatore di turno
         if(!turn.getCorrectAnswer()){
             index ++;   //L'INDICE PUNTA AL GIOCATORE SUCCESSIVO
             if(index==players.size()) index=0;
             turn.setPlayerOnTurn(players.get(index));
         }
     }
-    //metodo che ritorna gli spicchi ottenuti da un giocatore selezionato da index
-    public ArrayList<Slice> obtainedSlices(int index){
-        return players.get(index).getSlicesObtained();
-    }
 
-    public boolean verifyVictory(){
-        return turn.verifyVictory();
-    }
+    /**
+     * @param index indice del giocatore di cui si valuta il numero dei diamanti
+     * @return diamanti ottenuti finora
+     */
+    public ArrayList<Slice> obtainedSlices(int index){ return players.get(index).getSlicesObtained(); }
+
+    public boolean verifyVictory(){ return turn.verifyVictory(); }
 
 }

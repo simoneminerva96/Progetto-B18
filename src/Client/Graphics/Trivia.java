@@ -129,11 +129,10 @@ public class Trivia extends BasicGameState {
             }
             playerBack.get(i).draw(x, y);
             fonx1.drawString((x+100),y,pGUI.get(i).getName(), Color.white);
-            ArrayList<Slice> slc = new ArrayList<>();
-            slc.addAll(controller.getSliceObtained(i));
-            for (int j=0; j<slc.size(); j++) {
-                Categories c = slc.get(j).getCategory();
-                drawDiamonds(graphics, c, x, y);
+            ArrayList<Slice> slc = new ArrayList<>(controller.getSliceObtained(i));
+            for(Slice slice : slc) {
+                Categories c = slice.getCategory();
+                drawDiamonds(graphics,c,x,y);
             }
             slc.clear();
         }
@@ -152,11 +151,11 @@ public class Trivia extends BasicGameState {
             //entra se è una bonus/malus o random
             if(controller.checkBonusMalus()){
                 switch(controller.checkType()) {
-                    case Bonus: {
+                    case BONUS: {
                         fonx1.drawString(1190,700, "PUOI RILANCIARE IL DADO!", Color.black);
                         break;
                     }
-                    case Malus: {
+                    case MALUS: {
                         fonx1.drawString(1190, 700, "HAI PERSO IL TURNO!", Color.black);
                         break;
                     }
