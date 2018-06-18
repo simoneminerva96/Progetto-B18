@@ -3,6 +3,8 @@ package Client.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
+import java.io.Serializable;
+
 /**
  * @author Rita
  * La classe DieGUI rappresenta un'interfaccia tra la classe Die e Trivia.
@@ -10,19 +12,19 @@ import org.newdawn.slick.SlickException;
  * - Image currentDie: immagine attuale da visualizzare sul tabellone
  */
 
-public class DieGUI {
+public class DieGUI implements Serializable {
     private Image[] die = new Image[6];
     private Image currentDie;
 
     public DieGUI() {
-        for (int i=0; i<6; i++){
+        /*for (int i=0; i<6; i++){
             try {
                 die[i] = new Image("res/die/Dado"+(i+1)+".png");
             } catch (SlickException e) {
                 e.printStackTrace();
             }
         }
-        currentDie = die[1];
+        currentDie = die[1];*/
     }
 
     public Image getCurrentDie() {
