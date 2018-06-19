@@ -35,14 +35,16 @@ public class LoginRegistrationInterface extends BasicGameState {
     private TrueTypeFont fonx1;
     private Image background, registrationback;
     private FormButton regButton, logButton;
-    private ControllerLoginRegistration clr;
+    //private ControllerLoginRegistration clr;
     private boolean checkR, checkL;
     private TriviaFont f;
     private Music music;
+    private ClientInterface clientInterface;
 
-    public LoginRegistrationInterface(int n) {
-        clr = new ControllerLoginRegistration();
+    public LoginRegistrationInterface(int n, ClientInterface clientInterface) {
+        //clr = new ControllerLoginRegistration();
         f = new TriviaFont();
+        this.clientInterface = clientInterface;
     }
 
     @Override
@@ -99,10 +101,14 @@ public class LoginRegistrationInterface extends BasicGameState {
             regButton.setClicked(false);
             logButton.setClicked(false);
             if(regButton.onClickForm(in.getMouseX(),in.getMouseY())){
-                checkR = clr.registration(usrname.getText(), psw.getText());
+                clientInterface.sendForRegistration(usrname.getText(), psw.getText());
+                checkR = clientInterface.registration();
+                //checkR = clr.registration(usrname.getText(), psw.getText());
             }
             if(logButton.onClickForm(in.getMouseX(),in.getMouseY())){
-                checkL = clr.login(usrname.getText(), psw.getText());
+                clientInterface.sendForLogin(usrname.getText(), psw.getText());
+                checkL = clientInterface.login();
+                //checkL = clr.login(usrname.getText(), psw.getText());
             }
         }
         regButton.onMouseEnter(regButton,in.getMouseX(),in.getMouseY());

@@ -10,6 +10,7 @@ import org.newdawn.slick.state.*;
  * di gioco (trivia, mainmenu, registration) e il nome del gioco che verrà visualizzato sulla finestra.
  */
 public class MainGraphics extends StateBasedGame{
+    private ClientInterface clientInterface;
     public static final String gameName = "Trivial Pursuit";
     public static final int trivia = 5;
     public static final int mainmenu = 2;
@@ -17,8 +18,9 @@ public class MainGraphics extends StateBasedGame{
     public static final int characterSelection=4;
     public static final int logininterface=1;
 
-    public MainGraphics(String gameName) throws Exception {
+    public MainGraphics(String gameName, ClientInterface clientInterface) {
         super(gameName);
+        this.clientInterface = clientInterface;
     }
 
     /**
@@ -31,8 +33,8 @@ public class MainGraphics extends StateBasedGame{
 
     @Override
     public void initStatesList(GameContainer gc) throws SlickException {
+        this.addState(new LoginRegistrationInterface(logininterface,clientInterface));
         this.addState(new PlayerNumberSelection(playernumbersel));
-        this.addState(new LoginRegistrationInterface(logininterface));
         this.addState(new MainMenu(mainmenu));
         this.addState(new Trivia(trivia));
         this.addState(new CharacterSelection(characterSelection));
@@ -46,7 +48,7 @@ public class MainGraphics extends StateBasedGame{
     public void Run() throws Exception{
         AppGameContainer appgc;
         try {
-            appgc = new AppGameContainer(new MainGraphics(gameName));
+            appgc = new AppGameContainer(new MainGraphics(gameName, clientInterface));
             appgc.setAlwaysRender(true);
             appgc.setDisplayMode(1680, 1000, false);
             appgc.setShowFPS(false);
