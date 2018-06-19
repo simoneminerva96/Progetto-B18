@@ -2,6 +2,7 @@ package Server.GameClasses.ConnectionDB;
 
 import Server.GameClasses.Answer;
 import Server.GameClasses.Categories;
+import Server.GameClasses.Credenziali;
 import Server.GameClasses.Question;
 import java.sql.*;
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ public class ConnectionDB {
      */
     public ArrayList<Question> getQuestion (String cod) throws SQLException{
 
-        cn = DriverManager.getConnection("jdbc:mysql://10.87.144.91:3306/trivial?useSSL=false", "root", "root");
+        cn = DriverManager.getConnection("jdbc:mysql://93.41.247.149:3306/trivial?useSSL=false", "root", "root");
         sql = "select ID_QUEST, DESCRIZIONE, RISPOSTA, VALUE from domande join risposte on ID_QUEST = ID_DOMANDA where ID_QUEST LIKE \"" + cod + "%\"";
         // ________________________________query
         ArrayList<Question> questions=new ArrayList<Question>();
@@ -64,12 +65,14 @@ public class ConnectionDB {
     }
 
     //Procedura per l'inserimento delle credenziali utente nel DB(registrazione)
-    public Boolean getPlayer(String IDNAME, String PW) {
+    public Boolean getPlayer(Credenziali credenziali) {
+        String IDNAME = credenziali.getUser();
+        String PW = credenziali.getPassword();
         //
         String query = "{ ?=call ADD_PLAYER1(?,?) }";
         ResultSet rs;
         Boolean returnMessage = null;
-        try (Connection conn = DriverManager.getConnection("jdbc:mysql://10.87.144.91:3306/trivial?useSSL=false", "root", "root");
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://93.41.247.149:3306/trivial?useSSL=false", "root", "root");
              CallableStatement stmt = conn.prepareCall(query)) {
 
             stmt.registerOutParameter(1, Types.VARCHAR);
@@ -88,13 +91,15 @@ public class ConnectionDB {
     
 
     //Funzione per fare ritornare il messaggio di avvenuto login o errore
-    public Boolean ExistsPlayer(String IDNAME, String PW) {
+    public Boolean ExistsPlayer(Credenziali credenziali) {
+        String IDNAME = credenziali.getUser();
+        String PW = credenziali.getPassword();
         //
         String query = "{ ?=call PLAYER_EXIST(?,?) }";
         ResultSet rs;
         Boolean returnMess = null;
 
-        try (Connection conn = DriverManager.getConnection("jdbc:mysql://10.87.144.91:3306/trivial?useSSL=false", "root", "root");
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://93.41.247.149:3306/trivial?useSSL=false", "root", "root");
              CallableStatement stmt = conn.prepareCall(query)) {
 
             stmt.registerOutParameter(1, Types.VARCHAR);

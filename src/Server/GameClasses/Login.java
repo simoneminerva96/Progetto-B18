@@ -18,12 +18,10 @@ public class Login {
     /**
      Metodo da chiamare quando l'utente preme il tasto login sull'interfaccia. Prende i dati inseriti
      ed effettua il login se sono corretti, altrimenti segna messaggio di errore.
-     @param nicknameInserted nickname inserito
-     @param passwordInserted password inserita
      @return flag di avvenuto login
      */
-    public boolean Login(String nicknameInserted,String passwordInserted){
-        return connection.ExistsPlayer(nicknameInserted,passwordInserted);
+    public boolean Login(Credenziali credenziali){
+        return connection.ExistsPlayer(credenziali);
     }
 
 }

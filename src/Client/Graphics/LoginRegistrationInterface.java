@@ -101,12 +101,16 @@ public class LoginRegistrationInterface extends BasicGameState {
             regButton.setClicked(false);
             logButton.setClicked(false);
             if(regButton.onClickForm(in.getMouseX(),in.getMouseY())){
-                clientInterface.sendForRegistration(usrname.getText(), psw.getText());
+                String username = usrname.getText();
+                String password = psw.getText();
+                clientInterface.sendForRegistration(username, password);
                 checkR = clientInterface.registration();
                 //checkR = clr.registration(usrname.getText(), psw.getText());
             }
             if(logButton.onClickForm(in.getMouseX(),in.getMouseY())){
-                clientInterface.sendForLogin(usrname.getText(), psw.getText());
+                String username = usrname.getText();
+                String password = psw.getText();
+                clientInterface.sendForLogin(username, password);
                 checkL = clientInterface.login();
                 //checkL = clr.login(usrname.getText(), psw.getText());
             }

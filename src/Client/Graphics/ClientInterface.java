@@ -1,5 +1,7 @@
 package Client.Graphics;
 
+import Server.GameClasses.Credenziali;
+
 import java.io.Serializable;
 import java.io.*;
 import java.net.InetAddress;
@@ -11,9 +13,9 @@ public class ClientInterface implements Serializable {
     private ObjectInputStream in = null;
 
     public ClientInterface(){
-        Socket server = null;
+
         try {
-            server = new Socket(InetAddress.getLocalHost(),8888);
+            Socket server = new Socket(InetAddress.getLocalHost(),8888);
             System.out.println("Connessione al server effettuata");
             out = new ObjectOutputStream(server.getOutputStream());
             in = new ObjectInputStream(server.getInputStream());
@@ -23,7 +25,7 @@ public class ClientInterface implements Serializable {
     }
 
     public void comunica(){
-        try {
+        /*try {
             Socket server = new Socket(InetAddress.getLocalHost(),8888);
             System.out.println("Connessione al server effettuata");
             out = new ObjectOutputStream(server.getOutputStream());
@@ -38,22 +40,22 @@ public class ClientInterface implements Serializable {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     public void sendForLogin (String usr, String psw) {
+        Credenziali credenziali = new Credenziali(usr, psw);
         try {
-            out.writeChars(usr);
-            out.writeChars(psw);
+            out.writeObject(credenziali);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public void sendForRegistration (String usr, String psw) {
+        Credenziali credenziali = new Credenziali(usr, psw);
         try {
-            out.writeChars(usr);
-            out.writeChars(psw);
+            out.writeObject(credenziali);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -61,8 +63,10 @@ public class ClientInterface implements Serializable {
     public boolean login()  {
         boolean check = false;
         try {
-            check = in.readBoolean();
+            check = (boolean) in.readObject();
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
         return check;
@@ -71,8 +75,10 @@ public class ClientInterface implements Serializable {
     public boolean registration(){
         boolean check = false;
         try {
-            check = in.readBoolean();
+            check = (boolean) in.readObject();
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
         return check;

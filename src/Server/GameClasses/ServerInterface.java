@@ -22,10 +22,17 @@ public class ServerInterface extends Thread implements Serializable {
             in = new ObjectInputStream(socketClient.getInputStream());
             out = new ObjectOutputStream(socketClient.getOutputStream());
 
-            String usr = (String) in.readObject();
-            String psw = (String) in.readObject();
-            check = registration(usr,psw);
-            out.writeBoolean(check);
+            Credenziali credenziali = (Credenziali) in.readObject();
+            //String usr = (String) in.readObject();
+            System.out.println("usr:"+ credenziali.getUser());
+            //String psw = (String) in.readObject();
+            System.out.println("psw: "+ credenziali.getPassword());
+            check = login(credenziali);
+            out.writeObject(check);
+            //check = registration(credenziali);
+            //System.out.println("bool: " +check);
+            //out.writeObject(check);
+
             /*System.out.println("aspetto un messaggio...");
             DieGUI die = (DieGUI) in.readObject();
             System.out.println("Object received: " +die);
@@ -38,11 +45,11 @@ public class ServerInterface extends Thread implements Serializable {
         }
     }
 
-    public boolean login(String username, String psw){
-        return controllerLoginRegistration.login(username,psw);
+    public boolean login(Credenziali credenziali){
+        return controllerLoginRegistration.login(credenziali);
     }
 
-    public boolean registration(String username, String psw){
-        return controllerLoginRegistration.registration(username, psw);
+    public boolean registration(Credenziali credenziali){
+        return controllerLoginRegistration.registration(credenziali);
     }
 }

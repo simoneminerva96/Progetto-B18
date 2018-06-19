@@ -17,12 +17,10 @@ public class Registration {
 
     /**
      * Prelevati i dati inseriti dall'utente, richiama il db per effettuare la registrazione
-     * @param nicknameInserted username inserito dall'utente
-     * @param passwordInserted password inserita dall'utente
      * @return boolean se è andata a buon fine o no
      */
-    public boolean Registration(String nicknameInserted,String passwordInserted){
-        return connection.getPlayer(nicknameInserted,passwordInserted);
+    public boolean Registration(Credenziali credenziali){
+        return connection.getPlayer(credenziali);
     }
 
 }
