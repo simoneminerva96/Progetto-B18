@@ -1,24 +1,15 @@
 package Server.GameClasses.Interface;
 
-import Server.GameClasses.Credenziali;
-import Server.GameClasses.Login;
-import Server.GameClasses.Registration;
-import Server.GameClasses.ServerInterface;
+import Server.GameClasses.*;
 
 public class ControllerLoginRegistration {
-    private Registration reg;
-    private Login login;
+    private Request request;
 
     public ControllerLoginRegistration(){
-        reg = new Registration();
-        login = new Login();
+        request = new Request();
     }
 
-    public boolean login(Credenziali credenziali){
-        return login.Login(credenziali);
-    }
-
-    public boolean registration(Credenziali credenziali){
-        return reg.Registration(credenziali);
+    public boolean request (Credenziali credenziali, TypeOfRequest typeOfRequest) {
+        return request.request(credenziali, typeOfRequest);
     }
 }

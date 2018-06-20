@@ -22,23 +22,22 @@ public class ServerInterface extends Thread implements Serializable {
         try {
             in = new ObjectInputStream(socketClient.getInputStream());
             out = new ObjectOutputStream(socketClient.getOutputStream());
-            Credenziali credenziali = (Credenziali) in.readObject();
-            typeOfRequest = (TypeOfRequest) in.readObject();
-            switch (typeOfRequest){
-                case REGISTRAZIONE:
-                    check = registration(credenziali);
-                    break;
-                case LOGIN:
-                    check = login(credenziali);
-                    break;
+            while(true) {
+                Credenziali credenziali = (Credenziali) in.readObject();
+                System.out.println("cred:" + credenziali);
+                typeOfRequest = (TypeOfRequest) in.readObject();
+                System.out.println("type" + typeOfRequest);
+                switch (typeOfRequest) {
+                    case REGISTRAZIONE:
+                        check = request(credenziali, TypeOfRequest.REGISTRAZIONE);
+                        break;
+                    case LOGIN:
+                        check = request(credenziali, TypeOfRequest.LOGIN);
+                        break;
+                }
+                System.out.println("check" + check);
+                out.writeObject(check);
             }
-            out.writeObject(check);
-
-            /*System.out.println("aspetto un messaggio...");
-            DieGUI die = (DieGUI) in.readObject();
-            System.out.println("Object received: " +die);
-            out.writeObject(die);
-            socketClient.close(); //termino la connesione al client*/
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
@@ -46,9 +45,7 @@ public class ServerInterface extends Thread implements Serializable {
         }
     }
 
-    public boolean login(Credenziali credenziali){
-        return controllerLoginRegistration.login(credenziali);
+    public boolean request (Credenziali credenziali, TypeOfRequest typeOfRequest) {
+        return controllerLoginRegistration.request(credenziali, typeOfRequest);
     }
-
-    public boolean registration(Credenziali credenziali){ return controllerLoginRegistration.registration(credenziali); }
 }
