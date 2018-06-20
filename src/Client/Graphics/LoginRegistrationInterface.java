@@ -4,6 +4,7 @@ import Client.Graphics.Fonts.TextFieldTest;
 import Client.Graphics.Fonts.TriviaFont;
 import Client.Graphics.com.sticky.FormButton;
 import Server.GameClasses.Interface.ControllerLoginRegistration;
+import Server.GameClasses.TypeOfRequest;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -35,14 +36,12 @@ public class LoginRegistrationInterface extends BasicGameState {
     private TrueTypeFont fonx1;
     private Image background, registrationback;
     private FormButton regButton, logButton;
-    //private ControllerLoginRegistration clr;
     private boolean checkR, checkL;
     private TriviaFont f;
     private Music music;
     private ClientInterface clientInterface;
 
     public LoginRegistrationInterface(int n, ClientInterface clientInterface) {
-        //clr = new ControllerLoginRegistration();
         f = new TriviaFont();
         this.clientInterface = clientInterface;
     }
@@ -101,18 +100,12 @@ public class LoginRegistrationInterface extends BasicGameState {
             regButton.setClicked(false);
             logButton.setClicked(false);
             if(regButton.onClickForm(in.getMouseX(),in.getMouseY())){
-                String username = usrname.getText();
-                String password = psw.getText();
-                clientInterface.sendForRegistration(username, password);
-                checkR = clientInterface.registration();
-                //checkR = clr.registration(usrname.getText(), psw.getText());
+                clientInterface.sendCredential(usrname.getText(),psw.getText(), TypeOfRequest.REGISTRAZIONE);
+                checkR = clientInterface.receiveOutcome();
             }
             if(logButton.onClickForm(in.getMouseX(),in.getMouseY())){
-                String username = usrname.getText();
-                String password = psw.getText();
-                clientInterface.sendForLogin(username, password);
-                checkL = clientInterface.login();
-                //checkL = clr.login(usrname.getText(), psw.getText());
+                clientInterface.sendCredential(usrname.getText(),psw.getText(), TypeOfRequest.LOGIN);
+                checkL = clientInterface.receiveOutcome();
             }
         }
         regButton.onMouseEnter(regButton,in.getMouseX(),in.getMouseY());

@@ -9,7 +9,8 @@ public class ServerInterface extends Thread implements Serializable {
     private Socket socketClient ;
     private ObjectInputStream in = null;
     private ObjectOutputStream out = null;
-    private boolean check = false;
+    private TypeOfRequest typeOfRequest;
+    private boolean check;
 
     public ServerInterface(Socket socketClient){
         this.socketClient = socketClient;
@@ -21,17 +22,17 @@ public class ServerInterface extends Thread implements Serializable {
         try {
             in = new ObjectInputStream(socketClient.getInputStream());
             out = new ObjectOutputStream(socketClient.getOutputStream());
-
             Credenziali credenziali = (Credenziali) in.readObject();
-            //String usr = (String) in.readObject();
-            System.out.println("usr:"+ credenziali.getUser());
-            //String psw = (String) in.readObject();
-            System.out.println("psw: "+ credenziali.getPassword());
-            check = login(credenziali);
+            typeOfRequest = (TypeOfRequest) in.readObject();
+            switch (typeOfRequest){
+                case REGISTRAZIONE:
+                    check = registration(credenziali);
+                    break;
+                case LOGIN:
+                    check = login(credenziali);
+                    break;
+            }
             out.writeObject(check);
-            //check = registration(credenziali);
-            //System.out.println("bool: " +check);
-            //out.writeObject(check);
 
             /*System.out.println("aspetto un messaggio...");
             DieGUI die = (DieGUI) in.readObject();
@@ -49,7 +50,5 @@ public class ServerInterface extends Thread implements Serializable {
         return controllerLoginRegistration.login(credenziali);
     }
 
-    public boolean registration(Credenziali credenziali){
-        return controllerLoginRegistration.registration(credenziali);
-    }
+    public boolean registration(Credenziali credenziali){ return controllerLoginRegistration.registration(credenziali); }
 }
