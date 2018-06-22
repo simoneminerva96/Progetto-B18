@@ -33,11 +33,13 @@ public class MainGraphics extends StateBasedGame{
 
     @Override
     public void initStatesList(GameContainer gc) throws SlickException {
-        this.addState(new LoginRegistrationInterface(logininterface,clientInterface));
         this.addState(new PlayerNumberSelection(playernumbersel));
+        this.addState(new CharacterSelection(characterSelection));
+        this.addState(new LoginRegistrationInterface(logininterface,clientInterface));
+
         this.addState(new MainMenu(mainmenu));
         this.addState(new Trivia(trivia));
-        this.addState(new CharacterSelection(characterSelection));
+
     }
 
     /**
