@@ -96,7 +96,7 @@ public class CharacterSelection extends BasicGameState {
         int bias=180;
         for(int j=0;j<nPlayers;j++){
             graphics.drawImage(images.get(j),700,yTemp+bias*j);
-            if(isClicked)
+            if(isClicked )
                  fonx1.drawString(900,yTemp+bias*j,usernames.get(j));
             else
                 fonx1.drawString(900,yTemp+bias*j,"*********");
