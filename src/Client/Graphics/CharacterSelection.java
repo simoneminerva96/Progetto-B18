@@ -62,12 +62,12 @@ public class CharacterSelection extends BasicGameState {
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         background=new Image("res/backgrounds/green_landscape.png");
         gameName="Trivial Pursuit";
-        fonx1 = new TrueTypeFont(f.getFont().deriveFont(32f),false);
+        fonx1 = new TrueTypeFont(f.getFont().deriveFont(24f),false);
 
-        rydia = new Image("res/char/rydia.png");
-        ceodore = new Image("res/char/ceodore.png");
-        kain = new Image("res/char/kain.png");
-        luca = new Image("res/char/luca.png");
+        rydia = new Image("res/char/FFIV/rydial.png");
+        ceodore = new Image("res/char/FFIV/ceodor.png");
+        kain = new Image("res/char/FFIV/kainl.png");
+        luca = new Image("res/char/FFIV/lucal.png");
 
         images=new ArrayList<>();
         images.add(rydia);
@@ -81,8 +81,8 @@ public class CharacterSelection extends BasicGameState {
         usernames.add("PLAYER3");
         usernames.add("PLAYER4");
 
-       // next=new StateButton(new Rectangle(1000,700,100,101),new Image("res/buttons/Button_MenuFrame/next0.png"),new Image("res/buttons/Button_MenuFrame/next1.png"),new Image("res/buttons/Button_MenuFrame/back0.png"),null);
-        launch=new StateButton(new Rectangle(1000,800,100,101),new Image("res/buttons/Button_Play/Button_Play_01.png"),new Image("res/buttons/Button_Play/Button_Play_02.png"),new Image("res/buttons/Button_Play/Button_Play_01.png"),null);
+        next=new StateButton(new Rectangle(780,750,100,101),new Image("res/buttons/Button_MenuFrame/next0.png"),new Image("res/buttons/Button_MenuFrame/next1.png"),new Image("res/buttons/Button_MenuFrame/back0.png"),null);
+        launch=new StateButton(new Rectangle(780,750,100,101),new Image("res/buttons/Button_Play/Button_Play_01.png"),new Image("res/buttons/Button_Play/Button_Play_02.png"),new Image("res/buttons/Button_Play/Button_Play_01.png"),null);
 
     }
 
@@ -90,16 +90,19 @@ public class CharacterSelection extends BasicGameState {
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
         graphics.drawImage(background,0,0);
       //  next.render(gameContainer,graphics);
-        launch.render(gameContainer,graphics);
+        if(isClicked)
+            next.render(gameContainer,graphics);
+        else
+            launch.render(gameContainer,graphics);
 
-        int yTemp=100;
+        int yTemp=80;
         int bias=180;
         for(int j=0;j<nPlayers;j++){
             graphics.drawImage(images.get(j),700,yTemp+bias*j);
             if(isClicked )
-                 fonx1.drawString(900,yTemp+bias*j,usernames.get(j));
+                 fonx1.drawString(780,yTemp+bias*j,usernames.get(j));
             else
-                fonx1.drawString(900,yTemp+bias*j,"*********");
+                fonx1.drawString(780,yTemp+bias*j,"*********");
 
         }
 
@@ -112,10 +115,15 @@ public class CharacterSelection extends BasicGameState {
         Input r=gameContainer.getInput();
 
         if(r.isMousePressed(0)){
+            if(isClicked){
+                next.onClickState(r.getMouseX(),r.getMouseY(),stateBasedGame,5);
+            }
             isClicked=launch.onClickBoolean(r.getMouseX(),r.getMouseY());
+
         }
 
         launch.onMouseEnter(launch,r.getMouseX(),r.getMouseY());
+        next.onMouseEnter(next,r.getMouseX(),r.getMouseY());
 
      /*   while(true){
             if(t==usernames.size()-1){
