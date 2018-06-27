@@ -14,40 +14,25 @@ import java.util.ArrayList;
 
 public class CharacterSelection extends BasicGameState {
 
-    //DEBUG
-    public String mouse= "No input";
-    Boolean clicked=false;
-    int xb=100,yb=100;
+    //INT
+    private int nPlayers=1; //numero di giocatori selezionati
 
+    //IMMAGINI
+    private Image background; //immagine di background
+    private Image rydia, ceodore, kain, luca; //immagini pedine
 
-    int nPlayers=1;
-    int t=0;
+    private ArrayList<Image>images; //arraylist immagini pedine
+    private ArrayList<String>usernames; //arraylist degli username ordinati
 
-    private boolean isClicked=false;
+    //STATEBUTTON
+    private StateButton launch; //esegue metodo per ordine giocatori
+    private StateButton next; //passaggio allo state successivo
 
-    private Image background;
-    TrueTypeFont font;
-    private String gameName;
+    private boolean isClicked=false; //verifica se launch è stato cliccato
 
-    private Image rydia, ceodore, kain, luca;
-
-    private ArrayList<Image>images;
-    private ArrayList<String>usernames;
-
+    //FONT
     private TrueTypeFont fonx1;
-
-    private StateButton launch;
-    private StateButton next;
-
-    UnicodeFont fonx;
     private TriviaFont f;
-
-    int playerN=1;
-
-
-
-    //STATES
-    MenuFrame mf=new MenuFrame(10);
 
     public CharacterSelection(int i) throws SlickException {
         f=new TriviaFont();
@@ -61,7 +46,6 @@ public class CharacterSelection extends BasicGameState {
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         background=new Image("res/backgrounds/green_landscape.png");
-        gameName="Trivial Pursuit";
         fonx1 = new TrueTypeFont(f.getFont().deriveFont(24f),false);
 
         rydia = new Image("res/char/FFIV/rydial.png");
@@ -89,17 +73,19 @@ public class CharacterSelection extends BasicGameState {
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
         graphics.drawImage(background,0,0);
-      //  next.render(gameContainer,graphics);
-        if(isClicked)
+
+        if(isClicked) //se launch è stato cliccato, render del button per il passaggio allo state successivo
             next.render(gameContainer,graphics);
         else
             launch.render(gameContainer,graphics);
 
-        int yTemp=80;
-        int bias=180;
+        int yTemp=80; //coordinata y per immagini e stringhe username
+        int bias=180; //n pixel tra un immagine e l'altra
+
+        //in base a nPlayers, cambia il numero di elementi visualizzati
         for(int j=0;j<nPlayers;j++){
             graphics.drawImage(images.get(j),700,yTemp+bias*j);
-            if(isClicked )
+            if(isClicked )//se launch è cliccato, visualizza gli username ordinati nell'arraylist
                  fonx1.drawString(780,yTemp+bias*j,usernames.get(j));
             else
                 fonx1.drawString(780,yTemp+bias*j,"*********");
@@ -113,29 +99,20 @@ public class CharacterSelection extends BasicGameState {
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
         Input r=gameContainer.getInput();
-
         if(r.isMousePressed(0)){
             if(isClicked){
                 next.onClickState(r.getMouseX(),r.getMouseY(),stateBasedGame,5);
+
             }
-            isClicked=launch.onClickBoolean(r.getMouseX(),r.getMouseY());
+            isClicked=launch.onClickBoolean(r.getMouseX(),r.getMouseY()); //se launch è cliccato, isclicked assume il valore boolean in return dal metodo(true)
 
         }
 
         launch.onMouseEnter(launch,r.getMouseX(),r.getMouseY());
         next.onMouseEnter(next,r.getMouseX(),r.getMouseY());
-
-     /*   while(true){
-            if(t==usernames.size()-1){
-                t=0;
-            }
-            t++;
-        }*/
-
-
-
     }
 
+    //metodo che "setta" il valore di nPlayers. Viene chiamato nello state precedente.
     public void getPlayerNumber(int n){
         this.nPlayers=n;
     }
