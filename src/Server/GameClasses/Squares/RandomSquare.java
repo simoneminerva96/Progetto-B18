@@ -1,6 +1,6 @@
 package Server.GameClasses.Squares;
 
-import Server.GameClasses.Interface.BonusMalusRandom;
+import Server.GameClasses.BonusMalusRandom;
 import Server.GameClasses.Turn;
 
 import java.util.Random;

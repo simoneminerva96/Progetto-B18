@@ -2,7 +2,7 @@ package Client.Graphics;
 
 import Server.GameClasses.Question;
 import Client.Graphics.Fonts.TriviaFont;
-import Server.GameClasses.Interface.Controller;
+import Server.GameClasses.Controller;
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;

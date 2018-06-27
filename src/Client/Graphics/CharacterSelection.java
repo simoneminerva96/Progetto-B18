@@ -1,6 +1,5 @@
 package Client.Graphics;
 
-import Client.Graphics.Fonts.MenuFrame;
 import Client.Graphics.Fonts.TriviaFont;
 import Client.Graphics.com.sticky.StateButton;
 import org.newdawn.slick.*;
@@ -13,7 +12,6 @@ import org.newdawn.slick.state.StateBasedGame;
 import java.util.ArrayList;
 
 public class CharacterSelection extends BasicGameState {
-
     //INT
     private int nPlayers=1; //numero di giocatori selezionati
 
@@ -34,9 +32,7 @@ public class CharacterSelection extends BasicGameState {
     private TrueTypeFont fonx1;
     private TriviaFont f;
 
-    public CharacterSelection(int i) throws SlickException {
-        f=new TriviaFont();
-    }
+    public CharacterSelection(int i) { f=new TriviaFont(); }
 
     @Override
     public int getID() {
@@ -89,11 +85,7 @@ public class CharacterSelection extends BasicGameState {
                  fonx1.drawString(780,yTemp+bias*j,usernames.get(j));
             else
                 fonx1.drawString(780,yTemp+bias*j,"*********");
-
         }
-
-
-
     }
 
     @Override
@@ -102,10 +94,8 @@ public class CharacterSelection extends BasicGameState {
         if(r.isMousePressed(0)){
             if(isClicked){
                 next.onClickState(r.getMouseX(),r.getMouseY(),stateBasedGame,5);
-
             }
             isClicked=launch.onClickBoolean(r.getMouseX(),r.getMouseY()); //se launch è cliccato, isclicked assume il valore boolean in return dal metodo(true)
-
         }
 
         launch.onMouseEnter(launch,r.getMouseX(),r.getMouseY());

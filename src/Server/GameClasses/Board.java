@@ -2,7 +2,6 @@ package Server.GameClasses;
 
 import Server.GameClasses.Squares.*;
 import Server.GameClasses.ConnectionDB.ConnectionDB;
-import Server.GameClasses.Interface.BonusMalusRandom;
 
 import java.sql.SQLException;
 import java.util.ArrayList;

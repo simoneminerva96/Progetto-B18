@@ -1,10 +1,6 @@
 package Server.GameClasses;
 
-import Server.GameClasses.Interface.Direction;
 import Server.GameClasses.Squares.*;
-import Server.GameClasses.Interface.BonusMalusRandom;
-
-import java.sql.SQLClientInfoException;
 
 /**
  * CLASSE CHE CORRISPONDE A UN TURNO DI GIOCO, effettua la movimentazione delle pedine sul tabellone

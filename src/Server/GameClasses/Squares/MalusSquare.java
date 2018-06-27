@@ -1,6 +1,6 @@
 package Server.GameClasses.Squares;
 
-import Server.GameClasses.Interface.BonusMalusRandom;
+import Server.GameClasses.BonusMalusRandom;
 import Server.GameClasses.Turn;
 
 public class MalusSquare extends BonusMalusRandomSquare {

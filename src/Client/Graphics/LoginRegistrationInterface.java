@@ -3,7 +3,6 @@ package Client.Graphics;
 import Client.Graphics.Fonts.TextFieldTest;
 import Client.Graphics.Fonts.TriviaFont;
 import Client.Graphics.com.sticky.FormButton;
-import Server.GameClasses.Interface.ControllerLoginRegistration;
 import Server.GameClasses.TypeOfRequest;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Graphics;
@@ -22,15 +21,12 @@ import org.newdawn.slick.state.StateBasedGame;
  * - f, fonx1: font utilizzato
  * - regButton: bottone per la registrazione
  * - logButton: bottone per il login
- * - reg: oggetto di tipo Registration
- * - login: oggetto di tipo Login
  * - checkR: flag che indica se la registrazione è andata a buon fine oppure no
  * - checkL: flag che indica se la registrazione è andata a buon fine oppure no
  * - music: oggetto di tipo Music per la musica di gioco
  */
 
 public class LoginRegistrationInterface extends BasicGameState {
-
     private TextField usrname;
     private TextFieldTest psw;
     private TrueTypeFont fonx1;

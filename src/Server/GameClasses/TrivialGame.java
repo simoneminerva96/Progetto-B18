@@ -1,8 +1,6 @@
 package Server.GameClasses;
 
 import java.util.*;
-import Server.GameClasses.Interface.BonusMalusRandom;
-import Server.GameClasses.Interface.Direction;
 
 /**
  * CLASSE A CUI CORRISPONDE UNA SINGOLA PARTITA DI GIOCO

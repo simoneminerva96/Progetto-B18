@@ -1,11 +1,10 @@
 package Server.GameClasses;
 
-import Server.GameClasses.Interface.ControllerLoginRegistration;
 import java.io.*;
 import java.net.Socket;
 
 public class ServerInterface extends Thread implements Serializable {
-    private ControllerLoginRegistration controllerLoginRegistration;
+    private Controller controller;
     private Socket socketClient ;
     private ObjectInputStream in = null;
     private ObjectOutputStream out = null;
@@ -14,7 +13,7 @@ public class ServerInterface extends Thread implements Serializable {
 
     public ServerInterface(Socket socketClient){
         this.socketClient = socketClient;
-        controllerLoginRegistration = new ControllerLoginRegistration();
+        controller = new Controller();
     }
 
     @Override
@@ -46,6 +45,6 @@ public class ServerInterface extends Thread implements Serializable {
     }
 
     public boolean request (Credenziali credenziali, TypeOfRequest typeOfRequest) {
-        return controllerLoginRegistration.request(credenziali, typeOfRequest);
+        return controller.request(credenziali, typeOfRequest);
     }
 }

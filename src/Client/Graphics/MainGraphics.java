@@ -46,7 +46,7 @@ public class MainGraphics extends StateBasedGame{
      * - appgc: finestra di gioco di nome gameName
      * @throws Exception
      */
-    public void Run() throws Exception{
+    public void run() {
         AppGameContainer appgc;
         try {
             appgc = new AppGameContainer(new MainGraphics(gameName, clientInterface));

@@ -1,7 +1,5 @@
 package Server.GameClasses.Squares;
 
-import Server.GameClasses.Square;
-
 public class InitialSquare extends Square {
 
     public InitialSquare(Integer index) {

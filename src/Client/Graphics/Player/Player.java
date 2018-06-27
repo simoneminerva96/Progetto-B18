@@ -1,6 +1,6 @@
 package Client.Graphics.Player;
 
-import Server.GameClasses.Interface.Direction;
+import Server.GameClasses.Direction;
 import Client.Graphics.Map.Map;
 
 /**

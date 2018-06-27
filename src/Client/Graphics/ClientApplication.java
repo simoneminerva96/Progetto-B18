@@ -5,7 +5,7 @@ public class ClientApplication {
         ClientInterface clientInterface = new ClientInterface();
         try {
             MainGraphics m = new MainGraphics("Trivial", clientInterface);
-            m.Run();
+            m.run();
         } catch (Exception e) {
             e.printStackTrace();
         }

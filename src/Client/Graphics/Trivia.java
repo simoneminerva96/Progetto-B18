@@ -1,11 +1,12 @@
 package Client.Graphics;
 
 import Server.GameClasses.Categories;
+import Server.GameClasses.Controller;
+import Server.GameClasses.Direction;
 import Server.GameClasses.Slice;
 import Client.Graphics.Fonts.TriviaFont;
 import Client.Graphics.Map.Map;
 import Client.Graphics.Player.*;
-import Server.GameClasses.Interface.*;
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Color;

@@ -1,15 +1,14 @@
-package Server.GameClasses.Interface;
+package Server.GameClasses;
 
-import Server.GameClasses.Question;
-import Server.GameClasses.Slice;
-import Server.GameClasses.TrivialGame;
 import java.util.ArrayList;
 
 public class Controller {
     private TrivialGame match;
+    private Request request;
 
     public Controller(){
         match=new TrivialGame();
+        request = new Request();
     }
 
     public void initializePlayers(int nplayers){
@@ -67,10 +66,16 @@ public class Controller {
     }
 
     public ArrayList<Slice> getSliceObtained(int index){
-        return this.match.obtainedSlices(index);
+        return match.obtainedSlices(index);
     }
 
     public boolean verifyVictory(){
-        return this.match.verifyVictory();
+        return match.verifyVictory();
+    }
+
+    public void beginningDieRoll (){ match.BeginningDieRoll(); }
+
+    public boolean request (Credenziali credenziali, TypeOfRequest typeOfRequest) {
+        return request.request(credenziali, typeOfRequest);
     }
 }
