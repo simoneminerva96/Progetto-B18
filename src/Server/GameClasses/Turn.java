@@ -66,10 +66,8 @@ public class Turn {
     }
     //metodo che estrae l'effetto che avrà la casella random quando ci finisci sopra
     public void extractEffectType(){
-        BonusMalusRandomSquare currentSquare= (BonusMalusRandomSquare) getcurrentSquare();
+        RandomSquare currentSquare= (RandomSquare) getcurrentSquare();
         currentSquare.extractEffectType();
-        /*BonusMalusSquare currentSquare= (BonusMalusSquare)getcurrentSquare();
-        currentSquare.extractEffectType();*/
     }
     private Square getcurrentSquare(){
         int currentPosition=playerOnTurn.getActualPosition();

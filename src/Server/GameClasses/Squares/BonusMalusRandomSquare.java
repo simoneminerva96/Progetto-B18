@@ -9,11 +9,7 @@ public abstract class BonusMalusRandomSquare extends Square {
         super(index);
     }
 
-    public boolean goOnIt (int indexOfAnswer) {
-        return false;
-    }
+    public abstract boolean goOnIt (int indexOfAnswer);
 
-    public void extractEffectType() {}
-
-    public BonusMalusRandom executeBonusMalus (Turn t){return null;}
+    public abstract BonusMalusRandom executeBonusMalus (Turn t);
 }
