@@ -12,19 +12,19 @@ import java.io.Serializable;
  * - Image currentDie: immagine attuale da visualizzare sul tabellone
  */
 
-public class DieGUI implements Serializable {
+public class DieGUI {
     private Image[] die = new Image[6];
     private Image currentDie;
 
     public DieGUI() {
-        /*for (int i=0; i<6; i++){
+        for (int i=0; i<6; i++){
             try {
                 die[i] = new Image("res/die/Dado"+(i+1)+".png");
             } catch (SlickException e) {
                 e.printStackTrace();
             }
         }
-        currentDie = die[1];*/
+        currentDie = die[1];
     }
 
     public Image getCurrentDie() {

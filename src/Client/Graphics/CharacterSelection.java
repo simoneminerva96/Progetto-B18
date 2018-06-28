@@ -32,7 +32,14 @@ public class CharacterSelection extends BasicGameState {
     private TrueTypeFont fonx1;
     private TriviaFont f;
 
-    public CharacterSelection(int i) { f=new TriviaFont(); }
+    //DADI
+    DieGUI dadi;
+
+    public CharacterSelection(int i) {
+        f=new TriviaFont();
+        dadi=new DieGUI();
+        dadi.setCurrentDie(1);  //POI VA MODIFICATO PRENDENDO IL VALORE GIUSTO DALLA LOGICA
+    }
 
     @Override
     public int getID() {
@@ -43,7 +50,6 @@ public class CharacterSelection extends BasicGameState {
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         background=new Image("res/backgrounds/green_landscape.png");
         fonx1 = new TrueTypeFont(f.getFont().deriveFont(24f),false);
-
         rydia = new Image("res/char/FFIV/rydial.png");
         ceodore = new Image("res/char/FFIV/ceodor.png");
         kain = new Image("res/char/FFIV/kainl.png");
@@ -60,18 +66,18 @@ public class CharacterSelection extends BasicGameState {
         usernames.add("PLAYER2");
         usernames.add("PLAYER3");
         usernames.add("PLAYER4");
-
         next=new StateButton(new Rectangle(780,750,100,101),new Image("res/buttons/Button_MenuFrame/next0.png"),new Image("res/buttons/Button_MenuFrame/next1.png"),new Image("res/buttons/Button_MenuFrame/back0.png"),null);
-        launch=new StateButton(new Rectangle(780,750,100,101),new Image("res/buttons/Button_Play/Button_Play_01.png"),new Image("res/buttons/Button_Play/Button_Play_02.png"),new Image("res/buttons/Button_Play/Button_Play_01.png"),null);
+        launch=new StateButton(new Rectangle(740,750,100,101),new Image("res/buttons/Button_Launch/Button_Launch.png"),new Image("res/buttons/Button_Launch/Button_Launch.png"),new Image("res/buttons/Button_Launch/Button_Launch.png"),null);
 
     }
 
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
         graphics.drawImage(background,0,0);
-
-        if(isClicked) //se launch è stato cliccato, render del button per il passaggio allo state successivo
-            next.render(gameContainer,graphics);
+        fonx1.drawString(720,25,"ORDINE DI GIOCO", Color.black);
+        if(isClicked) { //se launch è stato cliccato, render del button per il passaggio allo state successivo
+            next.render(gameContainer, graphics);
+        }
         else
             launch.render(gameContainer,graphics);
 
@@ -81,8 +87,11 @@ public class CharacterSelection extends BasicGameState {
         //in base a nPlayers, cambia il numero di elementi visualizzati
         for(int j=0;j<nPlayers;j++){
             graphics.drawImage(images.get(j),700,yTemp+bias*j);
-            if(isClicked )//se launch è cliccato, visualizza gli username ordinati nell'arraylist
-                 fonx1.drawString(780,yTemp+bias*j,usernames.get(j));
+            if(isClicked ) {//se launch è cliccato, visualizza gli username ordinati nell'arraylist
+                fonx1.drawString(780, yTemp + bias * j, usernames.get(j));
+                fonx1.drawString(500, yTemp + bias*j +25, "GIOCATORE " + (j + 1) + ":", Color.black);
+                graphics.drawImage(dadi.getCurrentDie(),1080,yTemp + bias * j+10);
+            }
             else
                 fonx1.drawString(780,yTemp+bias*j,"*********");
         }
