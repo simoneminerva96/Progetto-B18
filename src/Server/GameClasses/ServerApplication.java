@@ -20,7 +20,8 @@ public class ServerApplication {
                 socketClient = server.accept();
                 serverInterface = new ServerInterface(socketClient);
                 System.out.println("Connesso al client");
-                serverInterface.start();
+                //serverInterface.start();     QUANDO C'è IL DB è DISPONIBILE
+                serverInterface.sendNicknames();
             }
         } catch (IOException e) {
             e.printStackTrace();

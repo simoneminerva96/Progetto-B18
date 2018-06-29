@@ -1,26 +1,33 @@
 package Server.GameClasses;
 
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
+
 import java.io.*;
 import java.net.Socket;
 
 public class ServerInterface extends Thread implements Serializable {
     private Controller controller;
     private Socket socketClient ;
-    private ObjectInputStream in = null;
-    private ObjectOutputStream out = null;
+    private ObjectInputStream in ;
+    private ObjectOutputStream out;
     private TypeOfRequest typeOfRequest;
     private boolean check;
 
     public ServerInterface(Socket socketClient){
         this.socketClient = socketClient;
         controller = new Controller();
+        try{
+            in = new ObjectInputStream(socketClient.getInputStream());
+            out = new ObjectOutputStream(socketClient.getOutputStream());
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void run() {
         try {
-            in = new ObjectInputStream(socketClient.getInputStream());
-            out = new ObjectOutputStream(socketClient.getOutputStream());
             while(true) {
                 Credenziali credenziali = (Credenziali) in.readObject();
                 System.out.println("cred:" + credenziali);
@@ -47,4 +54,14 @@ public class ServerInterface extends Thread implements Serializable {
     public boolean request (Credenziali credenziali, TypeOfRequest typeOfRequest) {
         return controller.request(credenziali, typeOfRequest);
     }
+
+    public void sendNicknames(){
+        try{
+            out.writeObject(controller.getOrdinatedNicknames());
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
 }

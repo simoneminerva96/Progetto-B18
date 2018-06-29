@@ -18,9 +18,8 @@ public class Controller {
         for(int i=0;i<nplayers;i++){
             gamingPlayers.add("prova" + (i +1));
         }
-
         match.initializePlayers(gamingPlayers); //inizializzo i giocatori
-        //ci sarebbe da fare la scelta della pedina qui
+        match.BeginningDieRoll();
         match.initializePhase(); //setto il primo giocatore di turno
     }
 
@@ -73,7 +72,11 @@ public class Controller {
         return match.verifyVictory();
     }
 
-    public void beginningDieRoll (){ match.BeginningDieRoll(); }
+    //metodo che restituisce i nicknames ordinati(dopo il lancio del dado iniziale)
+    public ArrayList<String> getOrdinatedNicknames(){
+        return match.getordinatednicknames();
+    }
+
 
     public boolean request (Credenziali credenziali, TypeOfRequest typeOfRequest) {
         return request.request(credenziali, typeOfRequest);
