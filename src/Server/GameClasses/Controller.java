@@ -1,8 +1,9 @@
 package Server.GameClasses;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Controller {
+public class Controller implements Serializable {
     private TrivialGame match;
     private Request request;
 
@@ -76,7 +77,6 @@ public class Controller {
     public ArrayList<String> getOrdinatedNicknames(){
         return match.getordinatednicknames();
     }
-
 
     public boolean request (Credenziali credenziali, TypeOfRequest typeOfRequest) {
         return request.request(credenziali, typeOfRequest);

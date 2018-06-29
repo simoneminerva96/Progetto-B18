@@ -1,6 +1,6 @@
 package Server.GameClasses;
 
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
+//(import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 
 import java.io.*;
 import java.net.Socket;
@@ -11,7 +11,8 @@ public class ServerInterface extends Thread implements Serializable {
     private ObjectInputStream in ;
     private ObjectOutputStream out;
     private TypeOfRequest typeOfRequest;
-    private boolean check;
+    private int numberOfPlayers;
+    private boolean logged = false;
 
     public ServerInterface(Socket socketClient){
         this.socketClient = socketClient;
@@ -27,28 +28,33 @@ public class ServerInterface extends Thread implements Serializable {
 
     @Override
     public void run() {
-        try {
-            while(true) {
-                Credenziali credenziali = (Credenziali) in.readObject();
-                System.out.println("cred:" + credenziali);
-                typeOfRequest = (TypeOfRequest) in.readObject();
-                System.out.println("type" + typeOfRequest);
-                switch (typeOfRequest) {
-                    case REGISTRAZIONE:
-                        check = request(credenziali, TypeOfRequest.REGISTRAZIONE);
-                        break;
-                    case LOGIN:
-                        check = request(credenziali, TypeOfRequest.LOGIN);
-                        break;
+            while (true) {
+                boolean isLogin = false;
+                boolean check = false;
+                Credenziali credenziali = null;
+                try {
+                    /*credenziali = (Credenziali) in.readObject();
+                    typeOfRequest = (TypeOfRequest) in.readObject();
+                    switch (typeOfRequest) {
+                        case REGISTRAZIONE:
+                            check = request(credenziali, TypeOfRequest.REGISTRAZIONE);
+                            break;
+                        case LOGIN:
+                            check = request(credenziali, TypeOfRequest.LOGIN);
+                            isLogin = check;
+                            break;
+                    }
+                    out.writeObject(check);*/
+                    numberOfPlayers = (int) in.readObject();
+                    System.out.println("NUMERI GIOCATORI: " + numberOfPlayers);
+                    controller.initializePlayers(numberOfPlayers);
                 }
-                System.out.println("check" + check);
-                out.writeObject(check);
+                catch (IOException e) {
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
     }
 
     public boolean request (Credenziali credenziali, TypeOfRequest typeOfRequest) {
@@ -63,5 +69,4 @@ public class ServerInterface extends Thread implements Serializable {
             e.printStackTrace();
         }
     }
-
 }

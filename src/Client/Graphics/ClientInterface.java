@@ -60,6 +60,14 @@ public class ClientInterface implements Serializable {
         return index;
     }
 
+    public void sendNumberOfPlayers(int n){
+        try {
+            out.writeObject(n);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public int getDiceValue () {
         int diceValue = 0;
         try {
@@ -119,7 +127,7 @@ public class ClientInterface implements Serializable {
     public ArrayList<String>getNicknames(){
         ArrayList<String>nicknames=new ArrayList<>();
         try{
-            nicknames.addAll((ArrayList<String>)in.readObject());
+            nicknames.addAll((ArrayList<String>) in.readObject());
         }catch(IOException e){
             e.printStackTrace();
         } catch (ClassNotFoundException e) {

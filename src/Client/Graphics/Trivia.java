@@ -57,6 +57,7 @@ public class Trivia extends BasicGameState {
     private boolean checkVictory = false;
     private int diceN = 0;
     private Controller controller;
+    private ClientInterface clientInterface;
     private int NPLAYERS;
 
     private Domanda domanda;
@@ -64,7 +65,7 @@ public class Trivia extends BasicGameState {
     private TrueTypeFont fonx1;
     private TriviaFont f;
 
-    public Trivia(int id) {
+    public Trivia(int id, ClientInterface clientInterface) {
         domanda = new Domanda(6);
         esc = new Escape(7);
         pGUI = new ArrayList<>();
@@ -72,6 +73,7 @@ public class Trivia extends BasicGameState {
         f = new TriviaFont();
         playerBack = new ArrayList<>();
         diamanti = new ArrayList<>();
+        this.clientInterface = clientInterface;
     }
 
     public int getID() {
@@ -257,7 +259,7 @@ public class Trivia extends BasicGameState {
 
     public void setPlayersNumber(int n) throws SlickException {
         NPLAYERS = n;
-        controller.initializePlayers(NPLAYERS);
+     //   controller.initializePlayers(NPLAYERS);
         for (int i = 0; i <NPLAYERS; i++) {
             Player p = new Player("prova" + (i+1), i + 1, map);
             playerBack.add(new Image("res/backgrounds/PlayerBackgrounds/SfondoGiocatore"+i+".png"));

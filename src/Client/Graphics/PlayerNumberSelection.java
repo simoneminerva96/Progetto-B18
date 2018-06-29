@@ -17,8 +17,10 @@ public class PlayerNumberSelection extends BasicGameState {
     private NumberButton one,two,three,four;
     private boolean[]array;
     private MenuFrame mf=new MenuFrame(10);
+    private ClientInterface clientInterface;
 
-    public PlayerNumberSelection(int i) throws SlickException {
+    public PlayerNumberSelection(int i, ClientInterface clientInterface) throws SlickException {
+        this.clientInterface = clientInterface;
     }
 
     @Override
@@ -68,11 +70,8 @@ public class PlayerNumberSelection extends BasicGameState {
             numbertosend=three.onClickGetNumber(r.getMouseX(),r.getMouseY(),numbertosend,array);
             numbertosend=four.onClickGetNumber(r.getMouseX(),r.getMouseY(),numbertosend,array);
             mf.setNumbertosend(numbertosend);
+            clientInterface.sendNumberOfPlayers(numbertosend);
             mf.update(gameContainer,stateBasedGame,delta);
-
-
-        }else if(r.isMousePressed(1)){
-            System.out.println(numbertosend);
         }
 
         mf.setMouseClicked(false);

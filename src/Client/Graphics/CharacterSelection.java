@@ -66,14 +66,9 @@ public class CharacterSelection extends BasicGameState {
         images.add(kain);
         images.add(luca);
 
-        usernames=new ArrayList<>();
-        usernames.add("PLAYER1");
-        usernames.add("PLAYER2");
-        usernames.add("PLAYER3");
-        usernames.add("PLAYER4");
+        usernames=clientInterface.getNicknames();
         next=new StateButton(new Rectangle(780,750,100,101),new Image("res/buttons/Button_MenuFrame/next0.png"),new Image("res/buttons/Button_MenuFrame/next1.png"),new Image("res/buttons/Button_MenuFrame/back0.png"),null);
         launch=new StateButton(new Rectangle(740,750,100,101),new Image("res/buttons/Button_Launch/Button_Launch.png"),new Image("res/buttons/Button_Launch/Button_Launch.png"),new Image("res/buttons/Button_Launch/Button_Launch.png"),null);
-
     }
 
     @Override
