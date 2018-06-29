@@ -1,13 +1,12 @@
 package Client.Graphics;
 
-import Server.GameClasses.Credenziali;
-import Server.GameClasses.Direction;
-import Server.GameClasses.Question;
-import Server.GameClasses.TypeOfRequest;
+import Server.GameClasses.*;
+
 import java.io.Serializable;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class ClientInterface implements Serializable {
     private ObjectOutputStream out = null;
@@ -115,5 +114,18 @@ public class ClientInterface implements Serializable {
             e.printStackTrace();
         }
         return esito;
+    }
+
+    public ArrayList<String>getNicknames(){
+        ArrayList<String>nicknames=new ArrayList<>();
+        try{
+            nicknames.addAll((ArrayList<String>)in.readObject());
+        }catch(IOException e){
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return nicknames;
     }
 }

@@ -69,6 +69,9 @@ public class Player{
         int tempx, tempy;
         this.direction = direction;
 
+        //TEMPY
+
+
         switch(direction){
             case FORWARD:
                 if (y == miny) {

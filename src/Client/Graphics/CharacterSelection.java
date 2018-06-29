@@ -35,8 +35,13 @@ public class CharacterSelection extends BasicGameState {
     //DADI
     DieGUI dadi;
 
-    public CharacterSelection(int i) {
+    //CLIENTINTERFACE
+    private ClientInterface clientInterface;
+
+
+    public CharacterSelection(int i,ClientInterface clientInterface) {
         f=new TriviaFont();
+        this.clientInterface = clientInterface;
         dadi=new DieGUI();
         dadi.setCurrentDie(1);  //POI VA MODIFICATO PRENDENDO IL VALORE GIUSTO DALLA LOGICA
     }
