@@ -61,6 +61,7 @@ public class StateButton extends ButtonSkeleton implements ButtonListener,
     public void onClick(Button clicked, float mx, float my) {}
     public boolean onClickState(float mx, float my,StateBasedGame stateBasedGame,int i) throws SlickException {
 
+
         if(mx>=minx&&mx<=maxx&&my>=miny&&my<=maxy) {
             current = press;
             stateBasedGame.enterState(i);
