@@ -31,13 +31,14 @@ public class ServerInterface extends Thread implements Serializable {
                 //getCredenziali();
                 //riceve il numero di giocatori selezionato nel client
                 numberOfPlayers = (int) in.readObject();
-                System.out.println("N. GIOCATORI RICEVUTO DAL CLIENT: " + numberOfPlayers);
                 //istanzia i giocatori e esegue il lancio iniziale del dado
                 controller.initializePlayers(numberOfPlayers);
                 controller.beginningDieRoll();
                 //invio i nicknames dei giocatori
                 sendNicknames();
                 //invio i risultati dei lanci del dado
+                sendResultsOfRoll();
+
             }
         }
         catch (IOException e){
@@ -87,5 +88,12 @@ public class ServerInterface extends Thread implements Serializable {
         }
     }
 
-
+    public void sendResultsOfRoll(){
+        try{
+            out.writeObject(controller.getResultsOfRoll());
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+    }
 }

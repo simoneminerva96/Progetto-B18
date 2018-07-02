@@ -43,16 +43,10 @@ public class TrivialGame {
         // a ogni giocatore viene associato il risultato del suo lancio
         ArrayList<Integer> launches = new ArrayList<>(fillArray());   //array dei lanci ottenuti
         for(int i=0;i<players.size();i++) players.get(i).setInitialRollResult(launches.get(i));
-        //STAMPA DEL RISULTATO DEL LANCIO
-        System.out.println("risultati del lancio:");
-        for(int i=0;i<launches.size();i++) System.out.println("giocatore " + players.get(i).getNickname() + " : " + players.get(i).getInitialRollResult());
         //ordinamento lanci precedenti
         ArrayList<Integer> orderedLaunches=new ArrayList<>(orderLaunches(launches));
         //creazione lista ordinata dei giocatori
         orderPlayers(orderedLaunches);
-        //stampa giocatori ordinati
-        System.out.println("ordered players:");
-        for(int i=0;i<players.size();i++) System.out.println(players.get(i).getNickname());
     }
 
     public ArrayList<String> getordinatednicknames(){

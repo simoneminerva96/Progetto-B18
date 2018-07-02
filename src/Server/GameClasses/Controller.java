@@ -26,6 +26,14 @@ public class Controller implements Serializable {
         match.BeginningDieRoll();
         match.initializePhase(); //setto il primo giocatore di turno
     }
+    //metodo che ritorna i risultati dei lanci dei dadi iniziali
+    public ArrayList<Integer> getResultsOfRoll(){
+        ArrayList<Integer> results=new ArrayList<Integer>();
+        for(int i=0;i<match.getPlayers().size();i++){
+            results.add(match.getPlayers().get(i).getInitialRollResult());
+        }
+        return results;
+    }
     public int getIndex(){
         return match.getIndex();
     }

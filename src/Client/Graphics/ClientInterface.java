@@ -67,6 +67,18 @@ public class ClientInterface implements Serializable {
         }
     }
 
+    public ArrayList<Integer> getResultsOfRoll(){
+        ArrayList<Integer> results=new ArrayList<>();
+        try {
+            results.addAll((ArrayList< Integer>)in.readObject());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return results;
+    }
+
     public int getDiceValue () {
         int diceValue = 0;
         try {
