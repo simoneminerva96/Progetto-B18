@@ -259,7 +259,7 @@ public class Trivia extends BasicGameState {
 
     public void setPlayersNumber(int n) throws SlickException {
         NPLAYERS = n;
-     //   controller.initializePlayers(NPLAYERS);
+        controller.initializePlayers(NPLAYERS);
         for (int i = 0; i <NPLAYERS; i++) {
             Player p = new Player("prova" + (i+1), i + 1, map);
             playerBack.add(new Image("res/backgrounds/PlayerBackgrounds/SfondoGiocatore"+i+".png"));

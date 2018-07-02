@@ -19,6 +19,7 @@ public class Player{
     private String name;
     private Direction direction = Direction.FORWARD;
     private boolean isOnLeft=false,isOnRight=false,isOnUp=false,isOnDown=false;
+    private CoordinateSystem csys;
 
     public Player(String name,int id,Map map){
         this.id = id;
@@ -46,6 +47,7 @@ public class Player{
         }
         finali = new Coordinate(massime.getX(), massime.getY());
         this.name = name;
+        csys=new CoordinateSystem(minime.getX(),minime.getY(),massime.getX(),massime.getY());
     }
 
     public int getX() { return finali.getX(); }
@@ -60,19 +62,23 @@ public class Player{
      * @param direction direzione scelta dall'utente
      */
     public void update(int die,Direction direction) {
-        int y = finali.getY();
+      /*  int y = finali.getY();
         int x = finali.getX();
         int miny = minime.getY();
         int maxy = massime.getY();
         int minx = minime.getX();
         int maxx = massime.getX();
-        int tempx, tempy;
+        int tempx, tempy;*/
         this.direction = direction;
 
-        //TEMPY
+        csys.calculate(finali.getX(),finali.getY(),die,direction);
+        finali.setCoordinates(csys.getX(),csys.getY());
 
 
-        switch(direction){
+
+
+
+       /* switch(direction){
             case FORWARD:
                 if (y == miny) {
                     isOnLeft = false;
@@ -168,7 +174,7 @@ public class Player{
                     finali.setCoordinates(x, y);
                     break;
                 }
-        }
+        }*/
     }
 
     public String getName() {

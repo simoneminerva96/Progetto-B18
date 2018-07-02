@@ -1,5 +1,7 @@
 package Client.Graphics.Player;
 
+import Server.GameClasses.Direction;
+
 public class Coordinate {
     private int x,y;
 
@@ -20,5 +22,7 @@ public class Coordinate {
         this.x = x;
         this.y = y;
     }
+
+
 
 }

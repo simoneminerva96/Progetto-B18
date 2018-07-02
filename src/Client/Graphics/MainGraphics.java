@@ -39,6 +39,7 @@ public class MainGraphics extends StateBasedGame{
         this.addState(new MainMenu(mainmenu));
         this.addState(new Trivia(trivia, clientInterface));
 
+
     }
 
     /**
