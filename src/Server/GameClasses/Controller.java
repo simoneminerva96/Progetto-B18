@@ -20,10 +20,12 @@ public class Controller implements Serializable {
             gamingPlayers.add("prova" + (i +1));
         }
         match.initializePlayers(gamingPlayers); //inizializzo i giocatori
+    }
+
+    public void beginningDieRoll(){
         match.BeginningDieRoll();
         match.initializePhase(); //setto il primo giocatore di turno
     }
-
     public int getIndex(){
         return match.getIndex();
     }

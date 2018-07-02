@@ -13,7 +13,6 @@ public class ClientInterface implements Serializable {
     private ObjectInputStream in = null;
 
     public ClientInterface(){
-
         try {
             Socket server = new Socket(InetAddress.getLocalHost(),8888);
             System.out.println("Connessione al server effettuata");
@@ -136,4 +135,5 @@ public class ClientInterface implements Serializable {
 
         return nicknames;
     }
+
 }

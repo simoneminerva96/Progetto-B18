@@ -15,9 +15,10 @@ public class PlayerNumberSelection extends BasicGameState {
     public static int numbertosend=1;
     private Image background;
     private NumberButton one,two,three,four;
-    private boolean[]array;
+    private boolean[] array;
     private MenuFrame mf=new MenuFrame(10);
     private ClientInterface clientInterface;
+    private boolean checkSend; //serve a controllare che il numero di giocatori venga inviato una sola volta
 
     public PlayerNumberSelection(int i, ClientInterface clientInterface) throws SlickException {
         this.clientInterface = clientInterface;
@@ -63,14 +64,16 @@ public class PlayerNumberSelection extends BasicGameState {
         mf.setMouseCoordinates(r.getMouseX(),r.getMouseY());
 
         if(r.isMousePressed(0)) {
-
             mf.setMouseClicked(true);
             numbertosend=one.onClickGetNumber(r.getMouseX(),r.getMouseY(),numbertosend,array);
             numbertosend=two.onClickGetNumber(r.getMouseX(),r.getMouseY(),numbertosend,array);
             numbertosend=three.onClickGetNumber(r.getMouseX(),r.getMouseY(),numbertosend,array);
             numbertosend=four.onClickGetNumber(r.getMouseX(),r.getMouseY(),numbertosend,array);
             mf.setNumbertosend(numbertosend);
-            clientInterface.sendNumberOfPlayers(numbertosend);
+            if(!checkSend){
+                clientInterface.sendNumberOfPlayers(numbertosend);
+                checkSend=true;
+            }
             mf.update(gameContainer,stateBasedGame,delta);
         }
 

@@ -132,7 +132,7 @@ public class Trivia extends BasicGameState {
             }
             playerBack.get(i).draw(x, y);
             fonx1.drawString((x+100),y,pGUI.get(i).getName(), Color.white);
-            ArrayList<Slice> slc = new ArrayList<>(controller.getSliceObtained(i));
+            ArrayList<Slice> slc = new ArrayList<>(/*controller.getSliceObtained(i)*/);
             for(Slice slice : slc) {
                 Categories c = slice.getCategory();
                 drawDiamonds(graphics,c,x,y);

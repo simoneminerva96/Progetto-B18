@@ -11,7 +11,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import java.util.ArrayList;
 
-public class CharacterSelection extends BasicGameState {
+public class GameOrderState extends BasicGameState {
     //INT
     private int nPlayers=1; //numero di giocatori selezionati
 
@@ -33,17 +33,15 @@ public class CharacterSelection extends BasicGameState {
     private TriviaFont f;
 
     //DADI
-    DieGUI dadi;
+    private ArrayList<DieGUI> dadi;
 
     //CLIENTINTERFACE
     private ClientInterface clientInterface;
 
-
-    public CharacterSelection(int i,ClientInterface clientInterface) {
+    private boolean checkReceivedInformation; //diventa true se ho ricevuto le informazioni da visualizzare dal server
+    public GameOrderState(int i, ClientInterface clientInterface) {
         f=new TriviaFont();
         this.clientInterface = clientInterface;
-        dadi=new DieGUI();
-        dadi.setCurrentDie(1);  //POI VA MODIFICATO PRENDENDO IL VALORE GIUSTO DALLA LOGICA
     }
 
     @Override
@@ -65,8 +63,19 @@ public class CharacterSelection extends BasicGameState {
         images.add(ceodore);
         images.add(kain);
         images.add(luca);
-
+        /*
+        //riceve i nickname dei giocatori dal server
         usernames=clientInterface.getNicknames();
+        System.out.println("NUMERO DI NICKNAMES RICEVUTI " + usernames.size());
+        //riceve i risultati estratti dei dadi dal server
+        ArrayList<DieGUI> dadi=new ArrayList<>();
+        for(int i=0;i<usernames.size();i++){
+            dadi.add(new DieGUI());
+            //dadi.get(i).setCurrentDie(clientInterface.getDiceValue());
+            dadi.get(i).setCurrentDie(1);
+        }
+        */
+        dadi=new ArrayList<>();
         next=new StateButton(new Rectangle(780,750,100,101),new Image("res/buttons/Button_MenuFrame/next0.png"),new Image("res/buttons/Button_MenuFrame/next1.png"),new Image("res/buttons/Button_MenuFrame/back0.png"),null);
         launch=new StateButton(new Rectangle(740,750,100,101),new Image("res/buttons/Button_Launch/Button_Launch.png"),new Image("res/buttons/Button_Launch/Button_Launch.png"),new Image("res/buttons/Button_Launch/Button_Launch.png"),null);
     }
@@ -75,22 +84,22 @@ public class CharacterSelection extends BasicGameState {
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
         graphics.drawImage(background,0,0);
         fonx1.drawString(720,25,"ORDINE DI GIOCO", Color.black);
-        if(isClicked) { //se launch è stato cliccato, render del button per il passaggio allo state successivo
+        if(checkReceivedInformation) { //se launch è stato cliccato, render del button per il passaggio allo state successivo
             next.render(gameContainer, graphics);
         }
-        else
+        else{
             launch.render(gameContainer,graphics);
-
+        }
         int yTemp=80; //coordinata y per immagini e stringhe username
         int bias=180; //n pixel tra un immagine e l'altra
 
         //in base a nPlayers, cambia il numero di elementi visualizzati
         for(int j=0;j<nPlayers;j++){
             graphics.drawImage(images.get(j),700,yTemp+bias*j);
-            if(isClicked ) {//se launch è cliccato, visualizza gli username ordinati nell'arraylist
+            if(checkReceivedInformation) {//se launch è cliccato, visualizza gli username ordinati nell'arraylist
                 fonx1.drawString(780, yTemp + bias * j, usernames.get(j));
                 fonx1.drawString(500, yTemp + bias*j +25, "GIOCATORE " + (j + 1) + ":", Color.black);
-                graphics.drawImage(dadi.getCurrentDie(),1080,yTemp + bias * j+10);
+                graphics.drawImage(dadi.get(j).getCurrentDie(),1080,yTemp + bias * j+10);
             }
             else
                 fonx1.drawString(780,yTemp+bias*j,"*********");
@@ -101,10 +110,23 @@ public class CharacterSelection extends BasicGameState {
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
         Input r=gameContainer.getInput();
         if(r.isMousePressed(0)){
-            if(isClicked){
-                next.onClickState(r.getMouseX(),r.getMouseY(),stateBasedGame,5);
-            }
             isClicked=launch.onClickBoolean(r.getMouseX(),r.getMouseY()); //se launch è cliccato, isclicked assume il valore boolean in return dal metodo(true)
+            if(isClicked){
+                //next.onClickState(r.getMouseX(),r.getMouseY(),stateBasedGame,5);
+                //riceve i nickname dei giocatori dal server
+                usernames=clientInterface.getNicknames();
+                System.out.println("NUMERO DI NICKNAMES RICEVUTI " + usernames.size());
+                //riceve i risultati estratti dei dadi dal server
+                for(int j=0;j<usernames.size();j++){
+                    dadi.add(new DieGUI());
+                    //dadi.get(i).setCurrentDie(clientInterface.getDiceValue());
+                    dadi.get(j).setCurrentDie(1);
+                }
+                checkReceivedInformation=true;
+            }
+            if(isClicked && checkReceivedInformation) {
+
+            }
         }
 
         launch.onMouseEnter(launch,r.getMouseX(),r.getMouseY());
