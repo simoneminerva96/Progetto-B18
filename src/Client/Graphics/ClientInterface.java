@@ -47,19 +47,28 @@ public class ClientInterface implements Serializable {
         return check;
     }
 
-    public int getIndex () {
-        int index = 0;
+    //metodo generico che invia un check al server (per fargli eseguire determinare operaz.)
+    public void sendOutcome(boolean check){
         try {
-            index = (int) in.readObject();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            out.writeObject(check);
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public int getIndex () {
+        int index =-1;
+        try {
+            index = (Integer)in.readObject();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
         return index;
     }
 
-    public void sendNumberOfPlayers(int n){
+    public void sendindex(int n){
         try {
             out.writeObject(n);
         } catch (IOException e) {
@@ -91,7 +100,7 @@ public class ClientInterface implements Serializable {
         return diceValue;
     }
 
-    public void setDirection (Direction direction) {
+    public void sendDirection (Direction direction) {
         try {
             out.writeObject(direction);
         } catch (IOException e) {
@@ -111,17 +120,6 @@ public class ClientInterface implements Serializable {
         return question;
     }
 
-    public boolean answerQuestion () {
-        boolean esito = false;
-        try {
-            esito = (boolean) in.readObject();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        return esito;
-    }
 
     public boolean checkBonusMalus () {
         boolean esito = false;
@@ -133,6 +131,30 @@ public class ClientInterface implements Serializable {
             e.printStackTrace();
         }
         return esito;
+    }
+
+    public BonusMalusRandom getType () {
+        BonusMalusRandom bonusMalus=null;
+        try {
+            bonusMalus = (BonusMalusRandom) in.readObject();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return bonusMalus;
+    }
+
+    public Boolean getCheckInitialSquare() {
+        boolean check=false;
+        try {
+            check = (boolean) in.readObject();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return check;
     }
 
     public ArrayList<String>getNicknames(){

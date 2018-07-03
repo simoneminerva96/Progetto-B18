@@ -66,6 +66,7 @@ public class Trivia extends BasicGameState {
     private TriviaFont f;
 
     private boolean checkreceivedInformationPLAYERS; //diventa true quando ho ricevuto l'informazione sul num di giocatori
+    private int indexPlayerOnTurn;
 
     public Trivia(int id, ClientInterface clientInterface) {
         domanda = new Domanda(6);
@@ -109,7 +110,8 @@ public class Trivia extends BasicGameState {
         esc.init(gameContainer, stateBasedGame);
         fonx1 = new TrueTypeFont(f.getFont().deriveFont(23f), false);
         controller = new Controller();      //non serve piu
-        domanda.setController(controller);
+        //domanda.setController(controller);
+        domanda.setClientInterface(clientInterface);
     }
 
     @Override
@@ -121,7 +123,7 @@ public class Trivia extends BasicGameState {
         graphics.drawImage(backgroundMap, 0, 0);
         graphics.drawImage(back, 1190, 860);
         graphics.drawImage(forward, 1050, 860);
-        fonx1.drawString(1190, 280, "E' il turno di: " + pGUI.get(controller.getIndex()).getName(), Color.black);
+        fonx1.drawString(1190, 280, "E' il turno di: " + pGUI.get(indexPlayerOnTurn).getName(), Color.black);
         launch.draw(1320, 860);
 
         for(int i=0; i<NPLAYERS; i++){
@@ -151,11 +153,11 @@ public class Trivia extends BasicGameState {
          controllo se è la casella iniziale, se non è allora posso renderizzare la domanda, altrimenti controllo
          se ho vinto o se passo il turno. Se ho risposto e mi è uscita la stringa, allora resetto ready e launched.
          */
-
-        if (pGUI.get(controller.getIndex()).isReady() ) {
+        //POSSIBILE ERRORE PERCHè IL RENDER VIENE FATTO PRIMA(IN CASO DOVREI CAMBIARE QUQNDO RICEVO INDEXPLAYERONTURN)
+        if (pGUI.get(indexPlayerOnTurn).isReady() ) {
             //entra se è una bonus/malus o random
-            if(controller.checkBonusMalus()){
-                switch(controller.checkType()) {
+            if(clientInterface.checkBonusMalus()){
+                switch(clientInterface.getType()) {
                     case BONUS: {
                         fonx1.drawString(1190,700, "PUOI RILANCIARE IL DADO!", Color.black);
                         break;
@@ -168,24 +170,24 @@ public class Trivia extends BasicGameState {
             }
             // se non sono nella casella iniziale visualizzo una domanda
             else {
-                if (!controller.checkInitialSquare()) {
+                if (!clientInterface.getCheckInitialSquare()) {
                     domanda.render(gameContainer, stateBasedGame, graphics);
                 }
                 // se sono nella casella iniziale controllo se ho abbastanza spicchi per la vittoria, altrimenti
                 // passa il turno
                 else {
-                    if (controller.verifyVictory()) {
+                    if (clientInterface.receiveOutcome()) {
                         fonx1.drawString(1190,700, "HAI VINTO",Color.black);
                         checkVictory = true;
                     }
                     else {
                         fonx1.drawString(1190,700, "CASELLA INIZIALE, PASSI IL TURNO!",Color.black);
-                        pGUI.get(controller.getIndex()).setReady(false);
+                        pGUI.get(indexPlayerOnTurn).setReady(false);
                         launched = false;
                     }
                 }
             }
-            pGUI.get(controller.getIndex()).setReady(false);
+            pGUI.get(indexPlayerOnTurn).setReady(false);
             launched = false;
         }
 
@@ -212,10 +214,11 @@ public class Trivia extends BasicGameState {
          */
         if (xpos > 1322 && xpos < 1505 && ypos > 57 && ypos < 143) {
             if (input.isMousePressed(0) && !launched) {
-                controller.setPlayerOnTurn();
-                pGUI.get(controller.getIndex()).setClicked(false);
+                clientInterface.sendOutcome(true); //comunica al server che deve eseguire setplayerOnturn
+                indexPlayerOnTurn=clientInterface.getIndex();
+                pGUI.get(indexPlayerOnTurn).setClicked(false);
                 launched = true;
-                diceN = controller.getDiceValue();
+                diceN = clientInterface.getDiceValue();
                 d.setCurrentDie(diceN);
                 domanda.reset();
             }
@@ -229,16 +232,18 @@ public class Trivia extends BasicGameState {
             if (input.isMousePressed(0)) {
                 if (ypos > 45 && ypos < 145) {
                     if (xpos > 1045 && xpos < 1160) {
-                        pGUI.get(controller.getIndex()).setClicked(true);
-                        controller.setDirection(Direction.FORWARD);
-                        pGUI.get(controller.getIndex()).getP().update(diceN, Direction.FORWARD);
-                        pGUI.get(controller.getIndex()).updateCoordinates();
+                        pGUI.get(indexPlayerOnTurn).setClicked(true);
+                        //controller.setDirection(Direction.FORWARD);
+                        clientInterface.sendDirection(Direction.FORWARD);
+                        pGUI.get(indexPlayerOnTurn).getP().update(diceN, Direction.FORWARD);
+                        pGUI.get(indexPlayerOnTurn).updateCoordinates();
                     }
                     if (xpos > 1180 && xpos < 1290) {
-                        pGUI.get(controller.getIndex()).setClicked(true);
-                        controller.setDirection(Direction.BACK);
-                        pGUI.get(controller.getIndex()).getP().update(diceN, Direction.BACK);
-                        pGUI.get(controller.getIndex()).updateCoordinates();
+                        pGUI.get(indexPlayerOnTurn).setClicked(true);
+                        //controller.setDirection(Direction.BACK);
+                        clientInterface.sendDirection(Direction.BACK);
+                        pGUI.get(indexPlayerOnTurn).getP().update(diceN, Direction.BACK);
+                        pGUI.get(indexPlayerOnTurn).updateCoordinates();
                     }
                 }
             }
@@ -250,7 +255,7 @@ public class Trivia extends BasicGameState {
             e.printStackTrace();
         }
 
-        pGUI.get(controller.getIndex()).updateOnEachFrame(i);
+        pGUI.get(indexPlayerOnTurn).updateOnEachFrame(i);
 
         if (input.isKeyPressed(Input.KEY_ESCAPE)) { esc.setQuit(true); }
 

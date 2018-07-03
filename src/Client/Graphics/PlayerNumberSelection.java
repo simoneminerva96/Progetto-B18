@@ -71,7 +71,7 @@ public class PlayerNumberSelection extends BasicGameState {
             numbertosend=four.onClickGetNumber(r.getMouseX(),r.getMouseY(),numbertosend,array);
             mf.setNumbertosend(numbertosend);
             if(!checkSend){
-                clientInterface.sendNumberOfPlayers(numbertosend);
+                clientInterface.sendindex(numbertosend);
                 checkSend=true;
             }
             mf.update(gameContainer,stateBasedGame,delta);

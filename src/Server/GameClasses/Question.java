@@ -1,5 +1,6 @@
 package Server.GameClasses;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -9,7 +10,7 @@ import java.util.ArrayList;
  * @author Ansaldi Jacopo <jacopo.ansaldi01@universitadipavia.it>
  */
 
-public class Question {
+public class Question implements Serializable {
     private String question;
     private ArrayList<Answer> answers;
 
