@@ -128,18 +128,19 @@ public class Coordinate {
     private Coordinate checkYBack (Coordinate minime, Coordinate massime, int die) {
 
         for(int i = 0; i<die; i++) {
-            if (y == minime.getY()) {
-               if (x > minime.getX())
-                   x -= MINMOVEMENT;
-               else
-                   y += MINMOVEMENT;
+            if (x == massime.getX() && y > minime.getY()) {
+                y -= MINMOVEMENT;
             }
-            if (y == massime.getY()) {
-                if (x < massime.getX())
-                    x += MINMOVEMENT;
-                else
-                    y -= MINMOVEMENT;
-            }
+            else
+                if (y == minime.getY() && x > minime.getX()) {
+                    x -= MINMOVEMENT;
+                } else
+                    if (x == minime.getX() && y < massime.getY()) {
+                        y += MINMOVEMENT;
+                    } else
+                        if (y == massime.getY() && x < massime.getX()) {
+                            x += MINMOVEMENT;
+                        }
         }
         return new Coordinate(x,y);
     }
