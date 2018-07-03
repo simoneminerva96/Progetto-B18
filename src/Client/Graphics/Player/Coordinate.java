@@ -32,10 +32,8 @@ public class Coordinate {
         int mul=1,confront,temp;*/
 
         if (direction == Direction.FORWARD) {
-            checkYForward(minime, massime, die);
-            //checkXForward(minime,massime,die);
+            checkForward(minime, massime, die);
         } else {
-            checkXBack(minime,massime,die);
             checkYBack(minime, massime, die);
         }
 
@@ -107,78 +105,24 @@ public class Coordinate {
         }*/
     }
 
-    private Coordinate checkYForward (Coordinate minime, Coordinate massime, int die) {
-        int t = 0;
-        for(int i = 0; i<die; i++) {
+    private Coordinate checkForward (Coordinate minime, Coordinate massime, int die) {
 
+        for(int i = 0; i<die; i++) {
             if (y == minime.getY() && x < massime.getX()) {
                 x += MINMOVEMENT;
-                System.out.println("vai3");
             }
-            if (x==minime.getX() && y> minime.getY()) {
-                y -= MINMOVEMENT;
-                System.out.println("vai1");
-            }
-            if (y==massime.getY() && x >minime.getX()) {
+            else
+                if (y < massime.getY() && x == massime.getX()) {
+                y += MINMOVEMENT;
+            } else
+                if (y == massime.getY() && x > minime.getX()) {
                 x -= MINMOVEMENT;
-                System.out.println("vai2");
-            }
-            if (y < massime.getY() && x== massime.getX()) {
-
-                if (t == 0){
-                    System.out.println("EH VOLEVI");
-                    t = 1;
-                }
-                else {
-                    y += MINMOVEMENT;
-                    System.out.println("vai4");
-                }
-
-            }
-
-
-            /*if (y < massime.getY() && x <= massime.getX()) {
-                y -= MINMOVEMENT;
-            }*/
-            /*if (y == minime.getY()) {
-                if (x < massime.getX())
-                    x += MINMOVEMENT;
-                else
-                    y += MINMOVEMENT;
-            }
-            if (y == massime.getY()) {
-                if (x > minime.getX())
-                    x -= MINMOVEMENT;
-                else
+                } else
+                    if (x == minime.getX() && y > minime.getY()) {
                     y -= MINMOVEMENT;
             }
-            System.out.println("X - checkY:" +  x);
-            System.out.println("Y - checkY: " + y);
-        */
         }
         return new Coordinate(x,y);
-    }
-
-    private Coordinate checkXForward (Coordinate minime, Coordinate massime, int die) {
-
-        for (int i=0; i<die; i++) {
-            if (x == massime.getX()) {
-                if (y < massime.getY())
-                    y += MINMOVEMENT;
-                else
-                    x -= MINMOVEMENT;
-            }
-            if (x == minime.getX()) {
-                if (y > minime.getY())
-                    y -= MINMOVEMENT;
-                else
-                    x += MINMOVEMENT;
-            }
-            System.out.println("X - checkx:" +  x);
-            System.out.println("Y - checkX: " + y);
-
-        }
-        return new Coordinate(x, y);
     }
 
     private Coordinate checkYBack (Coordinate minime, Coordinate massime, int die) {
@@ -198,25 +142,6 @@ public class Coordinate {
             }
         }
         return new Coordinate(x,y);
-    }
-
-    private Coordinate checkXBack (Coordinate minime, Coordinate massime, int die) {
-
-        for (int i=0; i<die; i++) {
-            if (x == massime.getX()) {
-                if (y > minime.getY())
-                    y -= MINMOVEMENT;
-                else
-                    x -= MINMOVEMENT;
-            }
-            if (x == minime.getX()) {
-                if (y < massime.getY())
-                    y += MINMOVEMENT;
-                else
-                    x += MINMOVEMENT;
-            }
-        }
-        return new Coordinate(x, y);
     }
 
 }
