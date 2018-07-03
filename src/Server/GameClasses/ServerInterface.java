@@ -38,6 +38,8 @@ public class ServerInterface extends Thread implements Serializable {
                 sendNicknames();
                 //invio i risultati dei lanci del dado
                 sendResultsOfRoll();
+                //invio i nicknames ordinati per lo state trivia
+                sendNicknames();
 
             }
         }

@@ -56,7 +56,7 @@ public class Trivia extends BasicGameState {
     private boolean launched = false;
     private boolean checkVictory = false;
     private int diceN = 0;
-    private Controller controller;
+    private Controller controller;  //non serve piu
     private ClientInterface clientInterface;
     private int NPLAYERS;
 
@@ -64,6 +64,8 @@ public class Trivia extends BasicGameState {
     private Escape esc;
     private TrueTypeFont fonx1;
     private TriviaFont f;
+
+    private boolean checkreceivedInformationPLAYERS; //diventa true quando ho ricevuto l'informazione sul num di giocatori
 
     public Trivia(int id, ClientInterface clientInterface) {
         domanda = new Domanda(6);
@@ -106,7 +108,7 @@ public class Trivia extends BasicGameState {
         domanda.init(gameContainer, stateBasedGame);
         esc.init(gameContainer, stateBasedGame);
         fonx1 = new TrueTypeFont(f.getFont().deriveFont(23f), false);
-        controller = new Controller();
+        controller = new Controller();      //non serve piu
         domanda.setController(controller);
     }
 
@@ -198,11 +200,12 @@ public class Trivia extends BasicGameState {
     }
 
     @Override
-    public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) {
+    public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException{
         float xpos = Mouse.getX();
         float ypos = Mouse.getY();
-
+        if(!checkreceivedInformationPLAYERS)initializePlayers();
         Input input = gameContainer.getInput();
+
         /*
         Se sono nelle coordinate del bottone Launch, ottengo il numero estratto, metto launched a true e aggiorno la
         faccia del dado. Resetto answered, esito a false perchè risponderò ad una domanda.
@@ -257,11 +260,39 @@ public class Trivia extends BasicGameState {
         }
     }
 
-    public void setPlayersNumber(int n) throws SlickException {
-        NPLAYERS = n;
-        controller.initializePlayers(NPLAYERS);
+    //non occcorre piu che ricevo dallo state precedente il num di giocatori, lo prendo dal client direttamente
+    //con questo metodo istanzio i giocatori nell'ordine di gioco corretto coerentemente con lo state precedente
+    public void initializePlayers()throws SlickException{
+        ArrayList<String> nicknames=new ArrayList<>(clientInterface.getNicknames());
+        NPLAYERS=nicknames.size();
         for (int i = 0; i <NPLAYERS; i++) {
-            Player p = new Player("prova" + (i+1), i + 1, map);
+            Player p = new Player(nicknames.get(i), i + 1, map);
+            playerBack.add(new Image("res/backgrounds/PlayerBackgrounds/SfondoGiocatore"+i+".png"));
+            if (i == 0) {
+                pGUI.add(i, new PlayerGUI(p, piece));
+            }
+            if (i == 1) {
+                pGUI.add(i, new PlayerGUI(p, piece1));
+            }
+            if (i == 2) {
+                pGUI.add(i, new PlayerGUI(p, piece2));
+            }
+            if (i == 3) {
+                pGUI.add(i, new PlayerGUI(p, piece3));
+            }
+        }
+        for (PlayerGUI p : pGUI) {
+            p.getPedina().stop();
+        }
+        checkreceivedInformationPLAYERS=true;
+    }
+
+   /* public void setPlayersNumber(int n) throws SlickException {
+        NPLAYERS = n;
+        //controller.initializePlayers(NPLAYERS);
+        ArrayList<String> nicknames=new ArrayList<>(clientInterface.getNicknames());
+        for (int i = 0; i <nicknames.size(); i++) {
+            Player p = new Player(nicknames.get(i), i + 1, map);
             playerBack.add(new Image("res/backgrounds/PlayerBackgrounds/SfondoGiocatore"+i+".png"));
             if (i == 0) {
                 pGUI.add(i, new PlayerGUI(p, piece));
@@ -280,7 +311,7 @@ public class Trivia extends BasicGameState {
             p.getPedina().stop();
         }
     }
-
+*/
     private static void pause(){
         long Time0 = System.currentTimeMillis();
         long Time1;

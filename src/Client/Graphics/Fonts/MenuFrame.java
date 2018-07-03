@@ -53,7 +53,7 @@ public class MenuFrame extends BasicGameState {
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
         if(mouseClicked){
             if(isNumberToSend)
-                next.onClickStateSendNumber(mx,my,gameContainer,stateBasedGame,numbertosend);
+                next.onClickStateSendNumber(mx,my,stateBasedGame,numbertosend);
             else
                 next.onClickState(mx,my,stateBasedGame,nextState);
 
