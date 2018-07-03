@@ -27,12 +27,11 @@ import org.newdawn.slick.state.StateBasedGame;
 public class Domanda extends BasicGameState {
     private boolean esito = false;
     private boolean answered = false;
-    //private Controller controller;
     private Question question;
     private TrueTypeFont fonx1;
     private TriviaFont f;
     private ClientInterface clientInterface;
-    private boolean checkreceived;
+    private boolean checkreceivedQuestion;
 
     public Domanda(int state) {
         f = new TriviaFont();
@@ -41,6 +40,9 @@ public class Domanda extends BasicGameState {
     @Override
     public int getID() { return 6; }
 
+    public void setCheckreceivedQuestion(boolean check){
+        this.checkreceivedQuestion=check;
+    }
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) {
         fonx1 = new TrueTypeFont(f.getFont().deriveFont(23f), false);
@@ -53,13 +55,15 @@ public class Domanda extends BasicGameState {
      */
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
-        question=clientInterface.getQuestion();
+        if(!checkreceivedQuestion){
+            question=clientInterface.getQuestion();
+            checkreceivedQuestion=true;
+        }
         fonx1.drawString( 1190, 350, question.getQuestion(), Color.black);
         fonx1.drawString(1290,420, question.getAnswers().get(0).getAnswer(), Color.black);
         fonx1.drawString(1290,480, question.getAnswers().get(1).getAnswer(), Color.black);
         fonx1.drawString(1290,540, question.getAnswers().get(2).getAnswer(), Color.black);
         fonx1.drawString(1290,600, question.getAnswers().get(3).getAnswer(), Color.black);
-
         if (answered) {
             if (esito) {
                 fonx1.drawString(1190, 700, "RISPOSTA ESATTA!", Color.black);
@@ -78,7 +82,6 @@ public class Domanda extends BasicGameState {
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) {
         int posX = Mouse.getX();
         int posY = Mouse.getY();
-
         if (posX>1204 && posX<1412){
             if (posY<604 && posY>542) {
                 if (Mouse.isButtonDown(0) && !answered) {
@@ -97,16 +100,13 @@ public class Domanda extends BasicGameState {
             if (posY<472 && posY>430) {
                 if (Mouse.isButtonDown(0) && !answered) {
                     clientInterface.sendindex(2);
-                    //esito = controller.answerQuestion(2);
                     esito=clientInterface.receiveOutcome();
                     answered = true;
                 }
             }
-
             if (posY<410 && posY>372) {
                 if (Mouse.isButtonDown(0) && !answered){
                     clientInterface.sendindex(3);
-                    //esito = controller.answerQuestion(3);
                     esito=clientInterface.receiveOutcome();
                     answered = true;
                 }

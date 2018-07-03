@@ -11,6 +11,7 @@ public class ServerInterface extends Thread implements Serializable {
     private TypeOfRequest typeOfRequest;
     private int numberOfPlayers;
     private boolean esitoRisposta;
+    private int index;
 
     public ServerInterface(Socket socketClient){
         this.socketClient = socketClient;
@@ -52,8 +53,12 @@ public class ServerInterface extends Thread implements Serializable {
                 sendCheckInitialSquare();
                 if(!controller.checkInitialSquare()){
                     sendQuestion();
-                    esitoRisposta=controller.answerQuestion(getIndex());
+                    System.out.println("sended question");
+                    index=getIndex();
+                    System.out.println("received index");
+                    esitoRisposta=controller.answerQuestion(index);
                     sendCheck(esitoRisposta);
+                    System.out.println("sended check");
                 }
                 else {
                     sendCheck(controller.verifyVictory());
@@ -87,7 +92,7 @@ public class ServerInterface extends Thread implements Serializable {
     public int getIndex(){
         Integer index=0;
         try {
-            index = (Integer) in.readObject();
+            index = (int) in.readObject();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
