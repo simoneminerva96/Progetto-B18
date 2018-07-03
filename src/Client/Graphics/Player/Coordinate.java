@@ -4,6 +4,7 @@ import Server.GameClasses.Direction;
 
 public class Coordinate {
     private int x,y;
+    private final int MINMOVEMENT = 2;
 
     public Coordinate(int x, int y) {
         this.x = x;
@@ -24,13 +25,21 @@ public class Coordinate {
     }
 
     public void calculate(Coordinate minime,Coordinate massime,int die,Direction direction){
-        int minx=minime.getX();
+        /*int minx=minime.getX();
         int miny=minime.getY();
         int maxx=massime.getX();
         int maxy=massime.getY();
+        int mul=1,confront,temp;*/
 
-        int mul=1,confront,temp;
-        if(y==miny){
+        if (direction == Direction.FORWARD) {
+            checkYForward(minime, massime, die);
+            //checkXForward(minime,massime,die);
+        } else {
+            checkXBack(minime,massime,die);
+            checkYBack(minime, massime, die);
+        }
+
+        /*if(y==miny){
             if(direction==Direction.FORWARD){
                 mul=-1;
                 confront=maxx*mul;
@@ -95,9 +104,105 @@ public class Coordinate {
                 y=temp*mul;
             }
 
-        }
+        }*/
     }
 
+    private Coordinate checkYForward (Coordinate minime, Coordinate massime, int die) {
 
+        for(int i = 0; i<die; i++) {
+            System.out.println("die" + die);
+            if (y==minime.getY() && x< massime.getX()) {
+                x += MINMOVEMENT;
+            }
+            if (y<massime.getY() && x == massime.getX()) {
+                y += MINMOVEMENT;
+            }
+            if (y == massime.getY() && x == minime.getX()) {
+                y -= MINMOVEMENT;
+            }
+            if (y == massime.getY() && x> minime.getX()) {
+                x -= MINMOVEMENT;
+            }
+            /*if (y < massime.getY() && x <= massime.getX()) {
+                y -= MINMOVEMENT;
+            }*/
+            /*if (y == minime.getY()) {
+                if (x < massime.getX())
+                    x += MINMOVEMENT;
+                else
+                    y += MINMOVEMENT;
+            }
+            if (y == massime.getY()) {
+                if (x > minime.getX())
+                    x -= MINMOVEMENT;
+                else
+                    y -= MINMOVEMENT;
+            }
+            System.out.println("X - checkY:" +  x);
+            System.out.println("Y - checkY: " + y);
+        */
+        }
+        return new Coordinate(x,y);
+    }
+
+    private Coordinate checkXForward (Coordinate minime, Coordinate massime, int die) {
+
+        for (int i=0; i<die; i++) {
+            if (x == massime.getX()) {
+                if (y < massime.getY())
+                    y += MINMOVEMENT;
+                else
+                    x -= MINMOVEMENT;
+            }
+            if (x == minime.getX()) {
+                if (y > minime.getY())
+                    y -= MINMOVEMENT;
+                else
+                    x += MINMOVEMENT;
+            }
+            System.out.println("X - checkx:" +  x);
+            System.out.println("Y - checkX: " + y);
+
+        }
+        return new Coordinate(x, y);
+    }
+
+    private Coordinate checkYBack (Coordinate minime, Coordinate massime, int die) {
+
+        for(int i = 0; i<die; i++) {
+            if (y == minime.getY()) {
+               if (x > minime.getX())
+                   x -= MINMOVEMENT;
+               else
+                   y += MINMOVEMENT;
+            }
+            if (y == massime.getY()) {
+                if (x < massime.getX())
+                    x += MINMOVEMENT;
+                else
+                    y -= MINMOVEMENT;
+            }
+        }
+        return new Coordinate(x,y);
+    }
+
+    private Coordinate checkXBack (Coordinate minime, Coordinate massime, int die) {
+
+        for (int i=0; i<die; i++) {
+            if (x == massime.getX()) {
+                if (y > minime.getY())
+                    y -= MINMOVEMENT;
+                else
+                    x -= MINMOVEMENT;
+            }
+            if (x == minime.getX()) {
+                if (y < massime.getY())
+                    y += MINMOVEMENT;
+                else
+                    x += MINMOVEMENT;
+            }
+        }
+        return new Coordinate(x, y);
+    }
 
 }

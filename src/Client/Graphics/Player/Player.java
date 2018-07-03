@@ -72,6 +72,24 @@ public class Player{
 
 
         finali.calculate(minime,massime,die,direction);
+        System.out.println("X:" + finali.getX());
+        System.out.println("Y: " +finali.getY());
+        if (direction == Direction.FORWARD) {
+            if (finali.getY()==minime.getY() || finali.getX() == minime.getX()) {
+                isOnLeft = false;
+            }
+        } else
+        {
+            if( finali.getY() == minime.getY()) {
+                isOnUp = true;
+            }
+            if (finali.getX() == massime.getX()) {
+                isOnRight = true;
+            }
+            if (finali.getX() == minime.getX()) {
+                isOnDown = true;
+            }
+        }
 
 
 
