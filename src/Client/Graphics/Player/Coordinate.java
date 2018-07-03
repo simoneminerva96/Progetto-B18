@@ -108,7 +108,7 @@ public class Coordinate {
     }
 
     private Coordinate checkYForward (Coordinate minime, Coordinate massime, int die) {
-
+        int t = 0;
         for(int i = 0; i<die; i++) {
 
             if (y == minime.getY() && x < massime.getX()) {
@@ -123,9 +123,17 @@ public class Coordinate {
                 x -= MINMOVEMENT;
                 System.out.println("vai2");
             }
-            if (y < massime.getY() && x== massime.getX() bka) {
-                y += MINMOVEMENT;
-                System.out.println("vai4");
+            if (y < massime.getY() && x== massime.getX()) {
+
+                if (t == 0){
+                    System.out.println("EH VOLEVI");
+                }
+                else {
+                    t = 1;
+                    y += MINMOVEMENT;
+                    System.out.println("vai4");
+                }
+
             }
 
 
