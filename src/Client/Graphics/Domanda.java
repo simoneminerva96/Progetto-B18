@@ -33,7 +33,7 @@ public class Domanda extends BasicGameState {
     private ClientInterface clientInterface;
     private boolean checkreceivedQuestion;
 
-    public Domanda(int state) {
+    public Domanda() {
         f = new TriviaFont();
     }
 

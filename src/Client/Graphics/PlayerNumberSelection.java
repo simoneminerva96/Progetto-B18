@@ -20,7 +20,7 @@ public class PlayerNumberSelection extends BasicGameState {
     private ClientInterface clientInterface;
     private boolean checkSend; //serve a controllare che il numero di giocatori venga inviato una sola volta
 
-    public PlayerNumberSelection(int i, ClientInterface clientInterface) throws SlickException {
+    public PlayerNumberSelection(ClientInterface clientInterface) {
         this.clientInterface = clientInterface;
     }
 
@@ -61,7 +61,6 @@ public class PlayerNumberSelection extends BasicGameState {
         two.render(gameContainer,graphics);
         three.render(gameContainer,graphics);
         four.render(gameContainer,graphics);
-
     }
 
     @Override
@@ -73,15 +72,14 @@ public class PlayerNumberSelection extends BasicGameState {
             numbertosend=two.onClickGetNumber(r.getMouseX(),r.getMouseY(),numbertosend,array);
             numbertosend=three.onClickGetNumber(r.getMouseX(),r.getMouseY(),numbertosend,array);
             numbertosend=four.onClickGetNumber(r.getMouseX(),r.getMouseY(),numbertosend,array);
-            if(!checkSend){
+            if (next.onClickBoolean(r.getMouseX(), r.getMouseY()) && !checkSend) {
+                GameOrderState cr = (GameOrderState) stateBasedGame.getState(4);
+                cr.getPlayerNumber(numbertosend);
                 clientInterface.sendindex(numbertosend);
-                checkSend=true;
+                checkSend = true;
+                stateBasedGame.enterState(4);
             }
-            next.onClickStateSendNumber(r.getMouseX(),r.getMouseY(),stateBasedGame,numbertosend);
             sound.onClickStateSound(r.getMouseX(), r.getMouseY(), gameContainer, gameContainer.isMusicOn());
-           // back.onClickState(r.getMouseX(),r.getMouseY(),stateBasedGame,2);
-           // home.onClickState(r.getMouseX(), r.getMouseY(), stateBasedGame, 1);
-
         }
 
         one.onMouseEnterAndClick(one,r.getMouseX(),r.getMouseY(),array);
@@ -92,8 +90,6 @@ public class PlayerNumberSelection extends BasicGameState {
         back.onMouseEnter(back,r.getMouseX(),r.getMouseY());
         next.onMouseEnter(next,r.getMouseX(),r.getMouseY());
         sound.onMouseEnter(sound,r.getMouseX(),r.getMouseY());
-
     }
-
 }
 

@@ -40,7 +40,7 @@ public class GameOrderState extends BasicGameState {
 
     private boolean checkReceivedInformation; //diventa true se ho ricevuto le informazioni da visualizzare dal server
 
-    public GameOrderState(int i, ClientInterface clientInterface) {
+    public GameOrderState(ClientInterface clientInterface) {
         f=new TriviaFont();
         this.clientInterface = clientInterface;
     }

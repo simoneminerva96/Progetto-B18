@@ -17,7 +17,7 @@ public class MainMenu extends BasicGameState {
     private StateButton play;
     private TriviaFont f;
 
-    public MainMenu(int i)  {
+    public MainMenu()  {
         f = new TriviaFont();
     }
 

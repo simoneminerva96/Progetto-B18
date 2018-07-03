@@ -37,7 +37,7 @@ public class LoginRegistrationInterface extends BasicGameState {
     private Music music;
     private ClientInterface clientInterface;
 
-    public LoginRegistrationInterface(int n, ClientInterface clientInterface) {
+    public LoginRegistrationInterface(ClientInterface clientInterface) {
         f = new TriviaFont();
         this.clientInterface = clientInterface;
     }

@@ -127,9 +127,9 @@ public class Coordinate {
 
                 if (t == 0){
                     System.out.println("EH VOLEVI");
+                    t = 1;
                 }
                 else {
-                    t = 1;
                     y += MINMOVEMENT;
                     System.out.println("vai4");
                 }

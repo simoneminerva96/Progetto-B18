@@ -68,9 +68,9 @@ public class Trivia extends BasicGameState {
     private boolean checkreceivedInformationPLAYERS; //diventa true quando ho ricevuto l'informazione sul num di giocatori
     private int indexPlayerOnTurn;
 
-    public Trivia(int id, ClientInterface clientInterface) {
-        domanda = new Domanda(6);
-        esc = new Escape(7);
+    public Trivia(ClientInterface clientInterface) {
+        domanda = new Domanda();
+        esc = new Escape();
         pGUI = new ArrayList<>();
         pGUI.clear();
         f = new TriviaFont();
