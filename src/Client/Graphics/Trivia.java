@@ -230,6 +230,7 @@ public class Trivia extends BasicGameState {
                 if (ypos > 45 && ypos < 145) {
                     if (xpos > 1045 && xpos < 1160) {
                         pGUI.get(controller.getIndex()).setClicked(true);
+
                         controller.setDirection(Direction.FORWARD);
                         pGUI.get(controller.getIndex()).getP().update(diceN, Direction.FORWARD);
                         pGUI.get(controller.getIndex()).updateCoordinates();
