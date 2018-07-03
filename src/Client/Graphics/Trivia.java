@@ -54,7 +54,6 @@ public class Trivia extends BasicGameState {
     private boolean launched = false;
     private boolean checkVictory = false;
     private int diceN = 0;
-    private Controller controller;  //non serve piu
     private ClientInterface clientInterface;
     private int NPLAYERS;
 
@@ -63,7 +62,7 @@ public class Trivia extends BasicGameState {
     private TrueTypeFont fonx1;
     private TriviaFont f;
     private boolean checkBonusMalus,checkreceivedBonusMalus,checkreceivedtype,checkinitialSquare,checkreceivedInitialSquare;
-    private boolean checkplayerVictory,checkreceivedVictory;
+    private boolean checkplayerVictory,checkreceivedVictory,checkReceivedSlices;
     private BonusMalusRandom checktype;
 
     private boolean checkreceivedInformationPLAYERS; //diventa true quando ho ricevuto l'informazione sul num di giocatori
@@ -110,8 +109,6 @@ public class Trivia extends BasicGameState {
         domanda.init(gameContainer, stateBasedGame);
         esc.init(gameContainer, stateBasedGame);
         fonx1 = new TrueTypeFont(f.getFont().deriveFont(23f), false);
-        controller = new Controller();      //non serve piu
-        //domanda.setController(controller);
         domanda.setClientInterface(clientInterface);
     }
 
@@ -137,7 +134,7 @@ public class Trivia extends BasicGameState {
             }
             playerBack.get(i).draw(x, y);
             fonx1.drawString((x+100),y,pGUI.get(i).getName(), Color.white);
-            ArrayList<Slice> slc = new ArrayList<>(/*controller.getSliceObtained(i)*/);
+            ArrayList<Slice> slc = new ArrayList<>(/*controller.getSliceObtained(i)*/);   //DA FARE
             for(Slice slice : slc) {
                 Categories c = slice.getCategory();
                 drawDiamonds(graphics,c,x,y);
@@ -315,31 +312,6 @@ public class Trivia extends BasicGameState {
         checkreceivedInformationPLAYERS=true;
     }
 
-   /* public void setPlayersNumber(int n) throws SlickException {
-        NPLAYERS = n;
-        //controller.initializePlayers(NPLAYERS);
-        ArrayList<String> nicknames=new ArrayList<>(clientInterface.getNicknames());
-        for (int i = 0; i <nicknames.size(); i++) {
-            Player p = new Player(nicknames.get(i), i + 1, map);
-            playerBack.add(new Image("res/backgrounds/PlayerBackgrounds/SfondoGiocatore"+i+".png"));
-            if (i == 0) {
-                pGUI.add(i, new PlayerGUI(p, piece));
-            }
-            if (i == 1) {
-                pGUI.add(i, new PlayerGUI(p, piece1));
-            }
-            if (i == 2) {
-                pGUI.add(i, new PlayerGUI(p, piece2));
-            }
-            if (i == 3) {
-                pGUI.add(i, new PlayerGUI(p, piece3));
-            }
-        }
-        for (PlayerGUI p : pGUI) {
-            p.getPedina().stop();
-        }
-    }
-*/
     private static void pause(){
         long Time0 = System.currentTimeMillis();
         long Time1;
