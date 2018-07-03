@@ -110,19 +110,25 @@ public class Coordinate {
     private Coordinate checkYForward (Coordinate minime, Coordinate massime, int die) {
 
         for(int i = 0; i<die; i++) {
-            System.out.println("die" + die);
-            if (y==minime.getY() && x< massime.getX()) {
+
+            if (y == minime.getY() && x < massime.getX()) {
                 x += MINMOVEMENT;
+                System.out.println("vai3");
             }
-            if (y<massime.getY() && x == massime.getX()) {
-                y += MINMOVEMENT;
-            }
-            if (y == massime.getY() && x == minime.getX()) {
+            if (x==minime.getX() && y> minime.getY()) {
                 y -= MINMOVEMENT;
+                System.out.println("vai1");
             }
-            if (y == massime.getY() && x> minime.getX()) {
+            if (y==massime.getY() && x >minime.getX()) {
                 x -= MINMOVEMENT;
+                System.out.println("vai2");
             }
+            if (y < massime.getY() && x== massime.getX()) {
+                y += MINMOVEMENT;
+                System.out.println("vai4");
+            }
+
+
             /*if (y < massime.getY() && x <= massime.getX()) {
                 y -= MINMOVEMENT;
             }*/
