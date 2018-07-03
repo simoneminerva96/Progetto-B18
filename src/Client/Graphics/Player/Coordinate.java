@@ -123,7 +123,7 @@ public class Coordinate {
                 x -= MINMOVEMENT;
                 System.out.println("vai2");
             }
-            if (y < massime.getY() && x== massime.getX()) {
+            if (y < massime.getY() && x== massime.getX() bka) {
                 y += MINMOVEMENT;
                 System.out.println("vai4");
             }
