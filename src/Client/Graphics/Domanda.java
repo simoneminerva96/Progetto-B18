@@ -113,7 +113,7 @@ public class Domanda extends BasicGameState {
             }
         }
     }
-
+    //setta client interface
     public void setClientInterface(ClientInterface clientInterface) {
         this.clientInterface = clientInterface;
     }
