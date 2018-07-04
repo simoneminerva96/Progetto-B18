@@ -34,7 +34,7 @@ public class Coordinate {
         if (direction == Direction.FORWARD) {
             checkForward(minime, massime, die);
         } else {
-            checkYBack(minime, massime, die);
+            checkBack(minime, massime, die);
         }
 
         /*if(y==miny){
@@ -125,7 +125,7 @@ public class Coordinate {
         return new Coordinate(x,y);
     }
 
-    private Coordinate checkYBack (Coordinate minime, Coordinate massime, int die) {
+    private Coordinate checkBack (Coordinate minime, Coordinate massime, int die) {
 
         for(int i = 0; i<die; i++) {
             if (x == massime.getX() && y > minime.getY()) {

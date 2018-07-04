@@ -98,10 +98,10 @@ public class Trivia extends BasicGameState {
         forward = new Image("res/buttons/Frecce/forward.png");
         d = new DieGUI();
 
-        rydia = new Image("res/char/rydia.png");
-        ceodore = new Image("res/char/ceodore.png");
-        kain = new Image("res/char/kain.png");
-        luca = new Image("res/char/luca.png");
+        rydia = new Image("res/char/rydial.png");
+        ceodore = new Image("res/char/ceodor.png");
+        kain = new Image("res/char/kainl.png");
+        luca = new Image("res/char/lucal.png");
         background = new Image("res/backgrounds/green_landscape.png");
         launch = new Image("res/buttons/Button_Launch/Button_Launch.png");
         initializeDiamonds();
@@ -141,6 +141,11 @@ public class Trivia extends BasicGameState {
             }
             slc.clear();
         }
+
+        rydia.draw(1100,30);
+        ceodore.draw(1400, 30);
+        kain.draw(1100, 150);
+        luca.draw(1400, 150);
 
         for (PlayerGUI p : pGUI) { p.getPedina().draw(p.getxUpdate(), p.getyUpdate()); }
 
@@ -254,14 +259,12 @@ public class Trivia extends BasicGameState {
                 if (ypos > 45 && ypos < 145) {
                     if (xpos > 1045 && xpos < 1160) {
                         pGUI.get(indexPlayerOnTurn).setClicked(true);
-                        //controller.setDirection(Direction.FORWARD);
                         clientInterface.sendDirection(Direction.FORWARD);
                         pGUI.get(indexPlayerOnTurn).getP().update(diceN, Direction.FORWARD);
                         pGUI.get(indexPlayerOnTurn).updateCoordinates();
                     }
                     if (xpos > 1180 && xpos < 1290) {
                         pGUI.get(indexPlayerOnTurn).setClicked(true);
-                        //controller.setDirection(Direction.BACK);
                         clientInterface.sendDirection(Direction.BACK);
                         pGUI.get(indexPlayerOnTurn).getP().update(diceN, Direction.BACK);
                         pGUI.get(indexPlayerOnTurn).updateCoordinates();
