@@ -10,7 +10,7 @@ public class ServerInterface extends Thread implements Serializable {
     private ObjectOutputStream out;
     private TypeOfRequest typeOfRequest;
     private int numberOfPlayers;
-    private boolean esitoRisposta;
+    private boolean esitoRisposta, loginEffettuato;
     private int index;
 
     public ServerInterface(Socket socketClient){
@@ -27,7 +27,9 @@ public class ServerInterface extends Thread implements Serializable {
 
     @Override
     public void run() {
-        //getCredenziali();
+        while (!loginEffettuato) {
+            loginEffettuato = getCredenziali();
+        }
         //riceve il numero di giocatori selezionato nel client
         numberOfPlayers = getIndex();
         //istanzia i giocatori e esegue il lancio iniziale del dado
@@ -58,6 +60,7 @@ public class ServerInterface extends Thread implements Serializable {
                     sendCheck(esitoRisposta);
                     if (esitoRisposta) {
                         if (controller.isFinalQuestion()) {
+                            System.out.println(controller.getCategoriesOfTheSliceObtained().name());
                             sendCategories(controller.getCategoriesOfTheSliceObtained());
                         } else
                         sendCategories(Categories.Nessuna);
@@ -70,7 +73,7 @@ public class ServerInterface extends Thread implements Serializable {
         }
     }
     //riceve le credenziali per il login/registrazione dal client
-    public void getCredenziali(){
+    public boolean getCredenziali(){
         boolean check = false;
         Credenziali credenziali = null;
         try {
@@ -82,6 +85,8 @@ public class ServerInterface extends Thread implements Serializable {
                     break;
                 case LOGIN:
                     check = request(credenziali, TypeOfRequest.LOGIN);
+                    if (check)
+                        loginEffettuato = true;
                     break;
             }
             sendCheck(check);
@@ -91,6 +96,7 @@ public class ServerInterface extends Thread implements Serializable {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+        return loginEffettuato;
     }
     public int getIndex(){
         Integer index=0;

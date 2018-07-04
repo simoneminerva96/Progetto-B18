@@ -204,6 +204,7 @@ public class Trivia extends BasicGameState {
                     if (domanda.isEsito()) {
                         if (!checkReceivedSlices) {
                             Categories c = clientInterface.getCategoriesOfTheSliceObtained();
+                            System.out.println(c.name());
                             if (!c.equals(Categories.Nessuna)) {
                                 Slice slice = new Slice(c);
                                 pGUI.get(indexPlayerOnTurn).addSliceObtained(slice);
@@ -346,22 +347,22 @@ public class Trivia extends BasicGameState {
     private void drawDiamonds(Graphics graphics, Categories c, int x, int y){
         switch (c){
             case Geografia:
-                graphics.drawImage(diamanti.get(5),x+70,y+40 );
+                graphics.drawImage(diamanti.get(5),x+100,y+40 );
                 break;
             case Storia:
-                graphics.drawImage(diamanti.get(3), x+100,y+40);
+                graphics.drawImage(diamanti.get(3), x+125,y+40);
                 break;
             case Scienze:
-                graphics.drawImage(diamanti.get(4), x+130,y+40);
+                graphics.drawImage(diamanti.get(4), x+150,y+40);
                 break;
             case Spettacolo:
-                graphics.drawImage(diamanti.get(2), x+160,y+40);
+                graphics.drawImage(diamanti.get(2), x+175,y+40);
                 break;
             case ArteLetteratura:
-                graphics.drawImage(diamanti.get(1), x+190,y+40);
+                graphics.drawImage(diamanti.get(1), x+200,y+40);
                 break;
             case Sport:
-                graphics.drawImage(diamanti.get(0), x+210,y+40);
+                graphics.drawImage(diamanti.get(0), x+225,y+40);
                 break;
         }
     }
