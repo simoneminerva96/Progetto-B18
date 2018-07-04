@@ -1,11 +1,10 @@
 package Client.Graphics;
 
-import Server.GameClasses.Categories;
-import Server.GameClasses.Slice;
+import Client.Graphics.Player.Player;
+import Server.GameClasses.*;
 import Client.Graphics.Fonts.TriviaFont;
 import Client.Graphics.Map.Map;
 import Client.Graphics.Player.*;
-import Server.GameClasses.Interface.*;
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Color;
@@ -55,22 +54,29 @@ public class Trivia extends BasicGameState {
     private boolean launched = false;
     private boolean checkVictory = false;
     private int diceN = 0;
-    private Controller controller;
+    private ClientInterface clientInterface;
     private int NPLAYERS;
 
     private Domanda domanda;
     private Escape esc;
     private TrueTypeFont fonx1;
     private TriviaFont f;
+    private boolean checkBonusMalus,checkreceivedBonusMalus,checkreceivedtype,checkinitialSquare,checkreceivedInitialSquare;
+    private boolean checkplayerVictory,checkreceivedVictory,checkReceivedSlices;
+    private BonusMalusRandom checktype;
 
-    public Trivia(int id) {
-        domanda = new Domanda(6);
-        esc = new Escape(7);
+    private boolean checkreceivedInformationPLAYERS; //diventa true quando ho ricevuto l'informazione sul num di giocatori
+    private int indexPlayerOnTurn;
+
+    public Trivia(ClientInterface clientInterface) {
+        domanda = new Domanda();
+        esc = new Escape();
         pGUI = new ArrayList<>();
         pGUI.clear();
         f = new TriviaFont();
         playerBack = new ArrayList<>();
         diamanti = new ArrayList<>();
+        this.clientInterface = clientInterface;
     }
 
     public int getID() {
@@ -92,22 +98,18 @@ public class Trivia extends BasicGameState {
         forward = new Image("res/buttons/Frecce/forward.png");
         d = new DieGUI();
 
-        rydia = new Image("res/char/rydia.png");
-        ceodore = new Image("res/char/ceodore.png");
-        kain = new Image("res/char/kain.png");
-        luca = new Image("res/char/luca.png");
+        rydia = new Image("res/char/rydial.png");
+        ceodore = new Image("res/char/ceodor.png");
+        kain = new Image("res/char/kainl.png");
+        luca = new Image("res/char/lucal.png");
         background = new Image("res/backgrounds/green_landscape.png");
         launch = new Image("res/buttons/Button_Launch/Button_Launch.png");
-
-        for (int i=1; i<7; i++){
-            diamanti.add(new Image("res/diamonds/d"+i+".png"));
-        }
+        initializeDiamonds();
 
         domanda.init(gameContainer, stateBasedGame);
         esc.init(gameContainer, stateBasedGame);
         fonx1 = new TrueTypeFont(f.getFont().deriveFont(23f), false);
-        controller = new Controller();
-        domanda.setController(controller);
+        domanda.setClientInterface(clientInterface);
     }
 
     @Override
@@ -119,7 +121,7 @@ public class Trivia extends BasicGameState {
         graphics.drawImage(backgroundMap, 0, 0);
         graphics.drawImage(back, 1190, 860);
         graphics.drawImage(forward, 1050, 860);
-        fonx1.drawString(1190, 280, "E' il turno di: " + pGUI.get(controller.getIndex()).getName(), Color.black);
+        fonx1.drawString(1190, 280, "E' il turno di: " + pGUI.get(indexPlayerOnTurn).getName(), Color.black);
         launch.draw(1320, 860);
 
         for(int i=0; i<NPLAYERS; i++){
@@ -132,45 +134,18 @@ public class Trivia extends BasicGameState {
             }
             playerBack.get(i).draw(x, y);
             fonx1.drawString((x+100),y,pGUI.get(i).getName(), Color.white);
-            ArrayList<Slice> slc = new ArrayList<>();
-            slc.addAll(controller.getSliceObtained(i));
-
-            for (int j=0; j<slc.size(); j++){
-                Categories c = slc.get(j).getCategory();
-                switch (c){
-                    case Geografia:{
-                        graphics.drawImage(diamanti.get(5),x+70,y+40 );
-                        break;
-                    }
-                    case Storia:{
-                        graphics.drawImage(diamanti.get(3), x+100,y+40);
-                        break;
-                    }
-                    case Scienze:{
-                        graphics.drawImage(diamanti.get(4), x+130,y+40);
-                        break;
-                    }
-                    case Spettacolo:{
-                        graphics.drawImage(diamanti.get(2), x+160,y+40);
-                        break;
-                    }
-                    case ArteLetteratura:{
-                        graphics.drawImage(diamanti.get(1), x+190,y+40);
-                        break;
-                    }
-                    case Sport:{
-                        graphics.drawImage(diamanti.get(0), x+210,y+40);
-                        break;
-                    }
-                }
+            ArrayList<Slice> slc = new ArrayList<>(/*controller.getSliceObtained(i)*/);   //DA FARE
+            for(Slice slice : slc) {
+                Categories c = slice.getCategory();
+                drawDiamonds(graphics,c,x,y);
             }
             slc.clear();
         }
 
-        /*rydia.draw(1100, 30);
+        rydia.draw(1100,30);
         ceodore.draw(1400, 30);
         kain.draw(1100, 150);
-        luca.draw(1400, 150);*/
+        luca.draw(1400, 150);
 
         for (PlayerGUI p : pGUI) { p.getPedina().draw(p.getxUpdate(), p.getyUpdate()); }
 
@@ -179,19 +154,31 @@ public class Trivia extends BasicGameState {
         /*
         Se la pedina si è fermata (ready=true) controllo se è una casella di bonus malus. Se non è una bonus malus
          controllo se è la casella iniziale, se non è allora posso renderizzare la domanda, altrimenti controllo
-         se ho vinto o se passo il turno.
-         Se ho risposto e mi è uscita la stringa, allora resetto ready e launched.
+         se ho vinto o se passo il turno. Se ho risposto e mi è uscita la stringa, allora resetto ready e launched.
          */
 
-        if (pGUI.get(controller.getIndex()).isReady() ) {
+        if (pGUI.get(indexPlayerOnTurn).isReady() ) {
             //entra se è una bonus/malus o random
-            if(controller.checkBonusMalus()){
-                switch(controller.checkType()) {
-                    case Bonus: {
-                        fonx1.drawString(1190,700, "PUOI RILANCIARE IL DADO!", Color.black);
+
+            //ricevo check bonusmalus
+            if(!checkreceivedBonusMalus){
+                checkBonusMalus=clientInterface.checkBonusMalus();
+                checkreceivedBonusMalus=true;
+            }
+            //se il checkbonusmalus è vero esegui l'effetto del bonus malus
+            if (checkBonusMalus) {
+                //ricevo il tipo estratto
+                if(!checkreceivedtype){
+                    checktype=clientInterface.getType();
+                    checkreceivedtype=true;
+                }
+                //a seconda del tipo estratto eseguo bonus o malus
+                switch (checktype) {
+                    case BONUS: {
+                        fonx1.drawString(1190, 700, "PUOI RILANCIARE IL DADO!", Color.black);
                         break;
                     }
-                    case Malus: {
+                    case MALUS: {
                         fonx1.drawString(1190, 700, "HAI PERSO IL TURNO!", Color.black);
                         break;
                     }
@@ -199,24 +186,33 @@ public class Trivia extends BasicGameState {
             }
             // se non sono nella casella iniziale visualizzo una domanda
             else {
-                if (!controller.checkInitialSquare()) {
+                //ricevo check se la casella in cui sono è la casella iniziale
+                if(!checkreceivedInitialSquare){
+                    checkinitialSquare=clientInterface.getCheckInitialSquare();
+                    checkreceivedInitialSquare=true;
+                }
+                //se non sono sulla casella iniziale renderizzo la domanda
+                if (!checkinitialSquare) {
                     domanda.render(gameContainer, stateBasedGame, graphics);
                 }
                 // se sono nella casella iniziale controllo se ho abbastanza spicchi per la vittoria, altrimenti
                 // passa il turno
                 else {
-                    if (controller.verifyVictory()) {
-                        fonx1.drawString(1190,700, "HAI VINTO",Color.black);
-                        checkVictory = true;
+                    if(!checkreceivedVictory){
+                        checkplayerVictory=clientInterface.receiveOutcome();
+                        checkreceivedVictory=true;
                     }
-                    else {
-                        fonx1.drawString(1190,700, "CASELLA INIZIALE, PASSI IL TURNO!",Color.black);
-                        pGUI.get(controller.getIndex()).setReady(false);
+                    if (checkplayerVictory) {
+                        fonx1.drawString(1190, 700, "HAI VINTO", Color.black);
+                        checkVictory = true;
+                    } else {
+                        fonx1.drawString(1190, 700, "CASELLA INIZIALE, PASSI IL TURNO!", Color.black);
+                        pGUI.get(indexPlayerOnTurn).setReady(false);
                         launched = false;
                     }
                 }
             }
-            pGUI.get(controller.getIndex()).setReady(false);
+            pGUI.get(indexPlayerOnTurn).setReady(false);
             launched = false;
         }
 
@@ -231,23 +227,26 @@ public class Trivia extends BasicGameState {
     }
 
     @Override
-    public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) {
+    public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException{
         float xpos = Mouse.getX();
         float ypos = Mouse.getY();
-
+        if(!checkreceivedInformationPLAYERS) initializePlayers();
         Input input = gameContainer.getInput();
+
         /*
         Se sono nelle coordinate del bottone Launch, ottengo il numero estratto, metto launched a true e aggiorno la
         faccia del dado. Resetto answered, esito a false perchè risponderò ad una domanda.
          */
         if (xpos > 1322 && xpos < 1505 && ypos > 57 && ypos < 143) {
             if (input.isMousePressed(0) && !launched) {
-                controller.setPlayerOnTurn();
-                pGUI.get(controller.getIndex()).setClicked(false);
+                clientInterface.sendOutcome(true); //comunica al server che deve eseguire setplayerOnturn
+                indexPlayerOnTurn=clientInterface.getIndex();
+                pGUI.get(indexPlayerOnTurn).setClicked(false);
                 launched = true;
-                diceN = controller.getDiceValue();
+                diceN = clientInterface.getDiceValue();
                 d.setCurrentDie(diceN);
                 domanda.reset();
+                resetBoolean();
             }
         }
 
@@ -259,16 +258,16 @@ public class Trivia extends BasicGameState {
             if (input.isMousePressed(0)) {
                 if (ypos > 45 && ypos < 145) {
                     if (xpos > 1045 && xpos < 1160) {
-                        pGUI.get(controller.getIndex()).setClicked(true);
-                        controller.setDirection(Direction.FORWARD);
-                        pGUI.get(controller.getIndex()).getP().update(diceN, Direction.FORWARD);
-                        pGUI.get(controller.getIndex()).updateCoordinates();
+                        pGUI.get(indexPlayerOnTurn).setClicked(true);
+                        clientInterface.sendDirection(Direction.FORWARD);
+                        pGUI.get(indexPlayerOnTurn).getP().update(diceN, Direction.FORWARD);
+                        pGUI.get(indexPlayerOnTurn).updateCoordinates();
                     }
                     if (xpos > 1180 && xpos < 1290) {
-                        pGUI.get(controller.getIndex()).setClicked(true);
-                        controller.setDirection(Direction.BACK);
-                        pGUI.get(controller.getIndex()).getP().update(diceN, Direction.BACK);
-                        pGUI.get(controller.getIndex()).updateCoordinates();
+                        pGUI.get(indexPlayerOnTurn).setClicked(true);
+                        clientInterface.sendDirection(Direction.BACK);
+                        pGUI.get(indexPlayerOnTurn).getP().update(diceN, Direction.BACK);
+                        pGUI.get(indexPlayerOnTurn).updateCoordinates();
                     }
                 }
             }
@@ -280,8 +279,7 @@ public class Trivia extends BasicGameState {
             e.printStackTrace();
         }
 
-        pGUI.get(controller.getIndex()).updateOnEachFrame(i);
-
+        pGUI.get(indexPlayerOnTurn).updateOnEachFrame(i);
         if (input.isKeyPressed(Input.KEY_ESCAPE)) { esc.setQuit(true); }
 
         if (checkVictory) {
@@ -290,11 +288,13 @@ public class Trivia extends BasicGameState {
         }
     }
 
-    public void setPlayersNumber(int n) throws SlickException {
-        NPLAYERS = n;
-        controller.initializePlayers(NPLAYERS);
+    //non occcorre piu che ricevo dallo state precedente il num di giocatori, lo prendo dal client direttamente
+    //con questo metodo istanzio i giocatori nell'ordine di gioco corretto coerentemente con lo state precedente
+    public void initializePlayers()throws SlickException{
+        ArrayList<String> nicknames=new ArrayList<>(clientInterface.getNicknames());
+        NPLAYERS=nicknames.size();
         for (int i = 0; i <NPLAYERS; i++) {
-            Player p = new Player("prova" + (i+1), i + 1, map);
+            Player p = new Player(nicknames.get(i), i + 1, map);
             playerBack.add(new Image("res/backgrounds/PlayerBackgrounds/SfondoGiocatore"+i+".png"));
             if (i == 0) {
                 pGUI.add(i, new PlayerGUI(p, piece));
@@ -309,10 +309,10 @@ public class Trivia extends BasicGameState {
                 pGUI.add(i, new PlayerGUI(p, piece3));
             }
         }
-
         for (PlayerGUI p : pGUI) {
             p.getPedina().stop();
         }
+        checkreceivedInformationPLAYERS=true;
     }
 
     private static void pause(){
@@ -324,5 +324,48 @@ public class Trivia extends BasicGameState {
             runTime = Time1 - Time0;
         }
     }
+
+    private void drawDiamonds(Graphics graphics, Categories c, int x, int y){
+        switch (c){
+            case Geografia:
+                graphics.drawImage(diamanti.get(5),x+70,y+40 );
+                break;
+            case Storia:
+                graphics.drawImage(diamanti.get(3), x+100,y+40);
+                break;
+            case Scienze:
+                graphics.drawImage(diamanti.get(4), x+130,y+40);
+                break;
+            case Spettacolo:
+                graphics.drawImage(diamanti.get(2), x+160,y+40);
+                break;
+            case ArteLetteratura:
+                graphics.drawImage(diamanti.get(1), x+190,y+40);
+                break;
+            case Sport:
+                graphics.drawImage(diamanti.get(0), x+210,y+40);
+                break;
+        }
+    }
+
+    private void initializeDiamonds (){
+        for (int i=1; i<7; i++){
+            try {
+                diamanti.add(new Image("res/diamonds/d"+i+".png"));
+            } catch (SlickException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void resetBoolean(){
+        checkreceivedBonusMalus=false;
+        checkreceivedtype=false;
+        checkreceivedInitialSquare=false;
+        checkreceivedVictory=false;
+        domanda.setCheckreceivedQuestion(false);
+    }
 }
+
+
 

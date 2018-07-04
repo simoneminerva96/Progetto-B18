@@ -6,7 +6,7 @@ package Server.GameClasses;
  */
 
 public class Slice {
-    Categories category;
+    private Categories category;
 
     public Slice(Categories category){
         this.category=category;

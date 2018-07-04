@@ -3,7 +3,7 @@ package Client.Graphics;
 import Client.Graphics.Fonts.TextFieldTest;
 import Client.Graphics.Fonts.TriviaFont;
 import Client.Graphics.com.sticky.FormButton;
-import Server.GameClasses.Interface.ControllerLoginRegistration;
+import Server.GameClasses.TypeOfRequest;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -21,32 +21,25 @@ import org.newdawn.slick.state.StateBasedGame;
  * - f, fonx1: font utilizzato
  * - regButton: bottone per la registrazione
  * - logButton: bottone per il login
- * - reg: oggetto di tipo Registration
- * - login: oggetto di tipo Login
  * - checkR: flag che indica se la registrazione è andata a buon fine oppure no
  * - checkL: flag che indica se la registrazione è andata a buon fine oppure no
  * - music: oggetto di tipo Music per la musica di gioco
  */
 
 public class LoginRegistrationInterface extends BasicGameState {
-
     private TextField usrname;
     private TextFieldTest psw;
     private TrueTypeFont fonx1;
     private Image background, registrationback;
     private FormButton regButton, logButton;
-    private ControllerLoginRegistration clr;
-    //private Registration reg;
-    //private Login login;
     private boolean checkR, checkL;
     private TriviaFont f;
     private Music music;
+    private ClientInterface clientInterface;
 
-    public LoginRegistrationInterface(int n) {
-        //this.reg = new Registration();
-        //this.login = new Login();
-        clr = new ControllerLoginRegistration();
+    public LoginRegistrationInterface(ClientInterface clientInterface) {
         f = new TriviaFont();
+        this.clientInterface = clientInterface;
     }
 
     @Override
@@ -63,7 +56,7 @@ public class LoginRegistrationInterface extends BasicGameState {
         psw = new TextFieldTest(gameContainer , fonx1 , 700 , 480 , 250 , 40);
         psw.setBackgroundColor(org.newdawn.slick.Color.lightGray);
         psw.setMaskEnabled(true);
-        music = new Music("res/music/Wallpaper.wav");
+        music = new Music("res/music/Kevin MacLeod _ Enter the Party.wav");
         music.play();
     }
 
@@ -80,14 +73,14 @@ public class LoginRegistrationInterface extends BasicGameState {
 
         if (regButton.isClicked()) {
             if (checkR) {
-                fonx1.drawString(690,100, "Registrazione effettuata con successo", org.newdawn.slick.Color.blue);
+                fonx1.drawString(590,100, "Registrazione effettuata con successo", org.newdawn.slick.Color.blue);
             }
-            else fonx1.drawString(690,100, "Registrazione fallita", org.newdawn.slick.Color.blue);
+            else fonx1.drawString(590,100, "Registrazione fallita", org.newdawn.slick.Color.blue);
         }
 
         if(logButton.isClicked()){
             if (!checkL) {
-                fonx1.drawString(490,20, "Username o password errati", org.newdawn.slick.Color.blue);
+                fonx1.drawString(590,20, "Username o password errati", org.newdawn.slick.Color.blue);
             }
             else {
                 stateBasedGame.enterState(2);
@@ -95,10 +88,6 @@ public class LoginRegistrationInterface extends BasicGameState {
         }
     }
 
-    /*
-    OnClickFormRegistration preleva ciò che viene inserito e lo salva nel db attraverso il metodo di Registration.
-    OnClickFormLogin preleva ciò che viene inserito ed effettua il login attraverso il metodo di Login.
-     */
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) {
         Input in = gameContainer.getInput();
@@ -106,11 +95,13 @@ public class LoginRegistrationInterface extends BasicGameState {
         if (in.isMousePressed(0)){
             regButton.setClicked(false);
             logButton.setClicked(false);
-            if(regButton.onClickFormRegistration(in.getMouseX(),in.getMouseY())){
-                checkR = clr.registration(usrname.getText(), psw.getText());
+            if(regButton.onClickForm(in.getMouseX(),in.getMouseY())){
+                clientInterface.sendCredential(usrname.getText(),psw.getText(), TypeOfRequest.REGISTRAZIONE);
+                checkR = clientInterface.receiveOutcome();
             }
-            if(logButton.onClickFormLogin(in.getMouseX(),in.getMouseY())){
-                checkL = clr.login(usrname.getText(), psw.getText());
+            if(logButton.onClickForm(in.getMouseX(),in.getMouseY())){
+                clientInterface.sendCredential(usrname.getText(),psw.getText(), TypeOfRequest.LOGIN);
+                checkL = clientInterface.receiveOutcome();
             }
         }
         regButton.onMouseEnter(regButton,in.getMouseX(),in.getMouseY());

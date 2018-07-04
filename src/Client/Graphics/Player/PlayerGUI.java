@@ -1,6 +1,6 @@
 package Client.Graphics.Player;
 
-import Server.GameClasses.Interface.Direction;
+import Server.GameClasses.Direction;
 import org.newdawn.slick.Animation;
 
 /**
@@ -17,8 +17,9 @@ import org.newdawn.slick.Animation;
  */
 
 public class PlayerGUI {
-    private float x,y;
-    private float xUpdate,yUpdate;
+    private Coordinate finali, update;
+    //private float x,y;
+    //private float xUpdate,yUpdate;
     private Player p;
     private Pedina piece;
     private boolean ready = false, clicked=false;
@@ -27,8 +28,11 @@ public class PlayerGUI {
     public PlayerGUI(Player p, Pedina piece){
         this.p = p;
         this.piece = piece;
-        x = xUpdate = (p.getX()*minMovement)-5;
-        y = yUpdate = (p.getY()*minMovement)-5;
+        finali = new Coordinate((p.getX()*minMovement), (p.getY()*minMovement));
+        update = new Coordinate(finali.getX(), finali.getY());
+
+        //x = xUpdate = (p.getX()*minMovement)-5;
+        //y = yUpdate = (p.getY()*minMovement)-5;
     }
 
     /**
@@ -36,8 +40,10 @@ public class PlayerGUI {
      * ogni volta che viene eseguito il metodo update di Player.
      */
     public void updateCoordinates(){
-        x = (p.getX()*minMovement)-5;
-        y = (p.getY()*minMovement)-5;
+        finali.setX((p.getX()*minMovement));
+        finali.setY((p.getY()*minMovement));
+        //x = (p.getX()*minMovement)-5;
+        //y = (p.getY()*minMovement)-5;
     }
 
     /**
@@ -48,9 +54,16 @@ public class PlayerGUI {
      * @param delta parametro di Slick2D per aggiornare i frame di gioco.
      **/
     public void updateOnEachFrame(int delta) {
-                if (xUpdate < x) {
+        int x = update.getX();
+        int y = update.getY();
+
+       if(p.getDirection()==Direction.FORWARD)
+           updateForward(x,y,delta);
+       else if(p.getDirection()==Direction.BACK)
+           updateBack(x,y,delta);
+         /*if (xUpdate < x) {
                     if(this.p.getDirection()==Direction.FORWARD){
-                        if (p.isOnLeft == false) {
+                        if (!p.isOnLeft()) {
                             piece.setMvdx();
                             xUpdate += 0.1 * delta;
                             if (xUpdate >= x) {
@@ -61,11 +74,11 @@ public class PlayerGUI {
                             yUpdate -= 0.1 * delta;
                             if (yUpdate <= y) {
                                 yUpdate = y;
-                                p.isOnLeft = false;
+                                p.setOnLeft(false);
                             }
                         }
                     }else {
-                        if(p.isOnDown==false){
+                        if(!p.isOnDown()){
                             piece.setMvdx();
                             xUpdate += 0.1 * delta;
                             if (xUpdate >= x) {
@@ -76,13 +89,13 @@ public class PlayerGUI {
                             yUpdate+=0.1*delta;
                             if(yUpdate>=y){
                                 yUpdate=y;
-                                p.isOnDown=false;
+                                p.setOnDown(false);
                             }
                         }
                     }
                 } else if (yUpdate < y) {
                     if(p.getDirection()==Direction.BACK){
-                        if(p.isOnUp==false){
+                        if(!p.isOnUp()){
                             piece.setMvdwn();
                             yUpdate += 0.1 * delta;
                             if (yUpdate >= y) {
@@ -93,7 +106,7 @@ public class PlayerGUI {
                             xUpdate-=0.1*delta;
                             if(xUpdate<=x){
                                 xUpdate=x;
-                                p.isOnUp=false;
+                                p.setOnUp(false);
                             }
                         }
                     }else{
@@ -111,7 +124,7 @@ public class PlayerGUI {
                             xUpdate = x;
                         }
                     }else{
-                        if (p.isOnRight == false) {
+                        if (!p.isOnRight()) {
                             piece.setMvsx();
                             xUpdate -= 0.1 * delta;
                             if (xUpdate <= x) {
@@ -122,7 +135,7 @@ public class PlayerGUI {
                             yUpdate -= 0.1 * delta;
                             if (yUpdate <= y) {
                                 yUpdate = y;
-                                p.isOnRight = false;
+                                p.setOnRight(false);
                             }
                         }
                     }
@@ -137,15 +150,102 @@ public class PlayerGUI {
                     if(clicked) {
                         ready = true;
                     }
-                }
+                }*/
     }
 
+    public void updateForward(int x,int y,int delta){
+        if (x != finali.getX() || y != finali.getY()) {
+                if (y == (p.getMinime().getY()*minMovement) && x < (p.getMassime().getX()*minMovement)) {
+                    x += 0.23*delta;
+                    update.setX(x);
+                    piece.setMvdx();
+                } else
+                if (y < (p.getMassime().getY()*minMovement) && x == (p.getMassime().getX()*minMovement)) {
+                    y += 0.23*delta;
+                    update.setY(y);
+                    piece.setMvdwn();
+                } else
+                if (y == (p.getMassime().getY()*minMovement) && x > (p.getMinime().getX()*minMovement)) {
+                    x -= 0.07*delta;
+                    update.setX(x);
+                    piece.setMvsx();
+                } else
+                if (x == (p.getMinime().getX()*minMovement) && y > (p.getMinime().getY()*minMovement)) {
+                    y -= 0.07*delta;
+                    update.setY(y);
+                    piece.setMvup();
+                }
+
+        } else {
+            piece.getCurrentImage().stop();
+            if (clicked) {
+                ready = true;
+            }
+        }
+
+    }
+
+    public void updateBack(int x,int y,int delta){
+        System.out.println("FINALI X:"+finali.getX()+" Y:"+finali.getY());
+        System.out.println("UPDATE X:"+update.getX()+" Y:"+update.getY());
+        if (x != finali.getX() || y != finali.getY()) {
+           /* if (x == (p.getMinime().getX()*minMovement) && y > (p.getMinime().getY()*minMovement)) {
+                y -= 0.1*delta;
+                update.setY(y);
+                piece.setMvup();
+                System.out.println("QUA");
+            }
+            else
+            if (y == (p.getMinime().getY()*minMovement) && x > (p.getMinime().getX()*minMovement)) {
+                x -= 0.1*delta;
+                update.setX(x);
+                piece.setMvsx();
+                System.out.println("QUA");
+            } else
+            if (x == (p.getMinime().getX()*minMovement) && y < (p.getMassime().getY()*minMovement)) {
+                y += 0.1*delta;
+                update.setY(y);
+                piece.setMvdwn();
+                System.out.println("QUA");
+            } else
+            if (y == (p.getMassime().getY()*minMovement) && x < (p.getMassime().getX()*minMovement)) {
+                x += 0.1*delta;
+                update.setX(x);
+                piece.setMvdx();
+                System.out.println("QUA");
+            }*/
+           if(x==(p.getMassime().getX()*minMovement)&&y>(p.getMinime().getY()*minMovement)){
+               y-=0.1*delta;
+               update.setY(y);
+               piece.setMvup();
+               System.out.println("QUA");
+           }else if(y==(p.getMinime().getY()*minMovement)&&x>(p.getMinime().getX()*minMovement)){
+               x-=0.1*delta;
+               update.setX(x);
+               piece.setMvsx();
+           }else if(x==(p.getMinime().getX()*minMovement)&&y<(p.getMassime().getY()*minMovement)){
+               y+=0.23*delta;
+               update.setY(y);
+               piece.setMvdwn();
+           }else if(y==(p.getMassime().getY()*minMovement)&&x<(p.getMassime().getX()*minMovement)){
+               x+=0.23*delta;
+               update.setX(x);
+               piece.setMvdx();
+
+           }
+        }else{
+            piece.getCurrentImage().stop();
+            if(clicked){
+                ready=true;
+            }
+        }
+    }
     public float getxUpdate() {
-        return xUpdate;
+        return update.getX();
     }
 
     public float getyUpdate() {
-        return yUpdate;
+        return update.getY();
     }
 
     public Animation getPedina(){

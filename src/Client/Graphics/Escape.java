@@ -20,7 +20,7 @@ public class Escape extends BasicGameState {
     private FormButton exit, resume, menu;
     private boolean quit = false;
 
-    public Escape (int n) { }
+    public Escape () { }
 
     @Override
     public int getID() { return 7; }

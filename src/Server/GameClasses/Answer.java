@@ -1,10 +1,12 @@
 package Server.GameClasses;
 
+import java.io.Serializable;
+
 /**
  * classe che corrisponde a una possibile risposta a una domanda
  * @author Ansaldi Jacopo <jacopo.ansaldi01@universitadipavia.it>
  */
-public class Answer {
+public class Answer implements Serializable{
     private String answer;
     private boolean correct;
 

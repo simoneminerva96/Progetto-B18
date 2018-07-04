@@ -4,8 +4,6 @@ import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Shape;
 import Client.Graphics.com.sticky.events.*;
 import org.newdawn.slick.state.StateBasedGame;
-import Client.Graphics.*;
-
 
 /**
  * A button with graphics and sound effects which reacts to the mouse.
@@ -77,20 +75,12 @@ public class StateButton extends ButtonSkeleton implements ButtonListener,
         }
     }
 
-    public void onClickStateSendNumber(float mx, float my,GameContainer gameContainer,StateBasedGame stateBasedGame, int i)throws SlickException{
+    public boolean onClickBoolean(float mx,float my){
         if(mx>=minx&&mx<=maxx&&my>=miny&&my<=maxy) {
-            /*CharacterSelection cr;
-            cr=(CharacterSelection)stateBasedGame.getState(4);
-            cr.getPlayerNumber(i);
-            stateBasedGame.enterState(4);*/
-            PlayerOrderAssignment poa;
-            poa=(PlayerOrderAssignment)stateBasedGame.getState(4);
-            poa.setPlayerNumber(i);
-            Trivia tr;
-            tr = (Trivia)stateBasedGame.getState(5);
-            tr.setPlayersNumber(i);
-            stateBasedGame.enterState(4);
+            return true;
         }
+        return false;
+
     }
 
     public void onDoubleClick(Button clicked, float mx, float my) {}

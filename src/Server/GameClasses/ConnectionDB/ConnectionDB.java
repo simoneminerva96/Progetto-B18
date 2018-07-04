@@ -2,6 +2,7 @@ package Server.GameClasses.ConnectionDB;
 
 import Server.GameClasses.Answer;
 import Server.GameClasses.Categories;
+import Server.GameClasses.Credenziali;
 import Server.GameClasses.Question;
 import java.sql.*;
 import java.util.ArrayList;
@@ -23,8 +24,9 @@ public class ConnectionDB {
         metodo che ritorna l'arraylist delle domande corrispondenti al codice passato
      */
     public ArrayList<Question> getQuestion (String cod) throws SQLException{
-
-        cn = DriverManager.getConnection("jdbc:mysql://93.41.247.149:3306/trivial?useSSL=false", "root", "root");
+        // UNI 10.87.144.91
+        // 93.41.247.149
+        cn = DriverManager.getConnection("jdbc:mysql://10.87.144.91:3306/trivial?useSSL=false", "root", "root");
         sql = "select ID_QUEST, DESCRIZIONE, RISPOSTA, VALUE from domande join risposte on ID_QUEST = ID_DOMANDA where ID_QUEST LIKE \"" + cod + "%\"";
         // ________________________________query
         ArrayList<Question> questions=new ArrayList<Question>();
@@ -44,7 +46,7 @@ public class ConnectionDB {
                     boolean correct=conversionDB(rs.getString("VALUE"));
                     answers.add(new Answer(rs.getString("RISPOSTA"),correct));
                     i++;
-                    questions.add(new Question(rs.getString("DESCRIZIONE"),conversionCode(cod),answers));//LA CATEGORIA VA SETTATA QUANDO CHIAMO IL METODO NEL COSTRUTTORE DEL TABELLONE
+                    questions.add(new Question(rs.getString("DESCRIZIONE"),answers));//LA CATEGORIA VA SETTATA QUANDO CHIAMO IL METODO NEL COSTRUTTORE DEL TABELLONE
                     answers.clear();
                 }
 
@@ -55,37 +57,6 @@ public class ConnectionDB {
         cn.close(); // chiusura connessione
         return questions;
     }
-    //metodo che converte il codice corrispondente nella categoria della domanda
-    private Categories conversionCode(String cod){
-        Categories category=null;
-        switch (cod){
-            case "GEO":
-            case "FGEO":
-                category= Categories.Geografia;
-                break;
-            case "STO":
-            case "FSTO":
-                category= Categories.Storia;
-                break;
-            case "SPO":
-            case "FSPO":
-                category= Categories.Sport;
-                break;
-            case "SPE":
-            case "FSPE":
-                category= Categories.Spettacolo;
-                break;
-            case "ART":
-            case "FART":
-                category= Categories.ArteLetteratura;
-                break;
-            case "SCI":
-            case "FSCI":
-                category= Categories.Scienze;
-                break;
-        }
-        return category;
-    }
     // metodo che converte y/n in true e false
     private static Boolean conversionDB(String input){
         if(input.equalsIgnoreCase("y")){
@@ -95,12 +66,14 @@ public class ConnectionDB {
     }
 
     //Procedura per l'inserimento delle credenziali utente nel DB(registrazione)
-    public Boolean getPlayer(String IDNAME, String PW) {
+    public Boolean getPlayer(Credenziali credenziali) {
+        String IDNAME = credenziali.getUser();
+        String PW = credenziali.getPassword();
         //
         String query = "{ ?=call ADD_PLAYER1(?,?) }";
         ResultSet rs;
         Boolean returnMessage = null;
-        try (Connection conn = DriverManager.getConnection("jdbc:mysql://93.41.247.149:3306/trivial?useSSL=false", "root", "root");
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://10.87.144.91:3306/trivial?useSSL=false", "root", "root");
              CallableStatement stmt = conn.prepareCall(query)) {
 
             stmt.registerOutParameter(1, Types.VARCHAR);
@@ -119,13 +92,15 @@ public class ConnectionDB {
     
 
     //Funzione per fare ritornare il messaggio di avvenuto login o errore
-    public Boolean ExistsPlayer(String IDNAME, String PW) {
+    public Boolean ExistsPlayer(Credenziali credenziali) {
+        String IDNAME = credenziali.getUser();
+        String PW = credenziali.getPassword();
         //
         String query = "{ ?=call PLAYER_EXIST(?,?) }";
         ResultSet rs;
         Boolean returnMess = null;
 
-        try (Connection conn = DriverManager.getConnection("jdbc:mysql://93.41.247.149:3306/trivial?useSSL=false", "root", "root");
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://10.87.144.91:3306/trivial?useSSL=false", "root", "root");
              CallableStatement stmt = conn.prepareCall(query)) {
 
             stmt.registerOutParameter(1, Types.VARCHAR);

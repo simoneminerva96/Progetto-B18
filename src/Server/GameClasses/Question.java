@@ -1,5 +1,6 @@
 package Server.GameClasses;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -9,24 +10,18 @@ import java.util.ArrayList;
  * @author Ansaldi Jacopo <jacopo.ansaldi01@universitadipavia.it>
  */
 
-public class Question {
+public class Question implements Serializable {
     private String question;
-    private Categories category;
     private ArrayList<Answer> answers;
 
-    public Question(String question,Categories category,ArrayList<Answer> answers) {
+    public Question(String question,ArrayList<Answer> answers) {
         this.question = question;
-        this.category = category;
         this.answers = new ArrayList<>();
         this.answers.addAll(answers);
     }
 
     public String getQuestion() {
         return question;
-    }
-
-    public Categories getCategory() {
-        return category;
     }
 
     public ArrayList<Answer> getAnswers() {

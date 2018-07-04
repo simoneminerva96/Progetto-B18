@@ -3,6 +3,8 @@ package Client.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
+import java.io.Serializable;
+
 /**
  * @author Rita
  * La classe DieGUI rappresenta un'interfaccia tra la classe Die e Trivia.

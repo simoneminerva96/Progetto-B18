@@ -1,22 +1,18 @@
 package Server.GameClasses;
 
 import java.util.ArrayList;
-import java.util.Random;
-
 /**
  * classe corrispondente a un singolo giocatore che partecipa alla partita
  * @author Ansaldi Jacopo <jacopo.ansaldi01@universitadipavia.it>
  */
 public class Player {
     private String nickname;
-    private Piece chosenPiece;
     private int initialRollResult;
     private int actualPosition;
     private ArrayList<Slice> slicesObtained;
 
     public Player(String nickname){
         this.nickname=nickname;
-        chosenPiece=null;   //quando viene istanziato un giocatore esso non ha ancora nessuna pedina associata
         initialRollResult=0;
         actualPosition=0;   //quando viene istanziato un giocatore viene inizializzato sulla casella iniziale(index=0)
         slicesObtained=new ArrayList<>();
@@ -37,7 +33,7 @@ public class Player {
                 check=true;
             }
         }
-        if(check==false){
+        if(!check){
             slicesObtained.add(new Slice(category));
         }
     }
@@ -52,10 +48,6 @@ public class Player {
 
     public String getNickname() {
         return nickname;
-    }
-
-    public void setChosenPiece(Piece chosenPiece) {
-        this.chosenPiece = chosenPiece;
     }
 
     public int getActualPosition() {
