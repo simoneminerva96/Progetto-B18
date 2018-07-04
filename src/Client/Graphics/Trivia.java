@@ -123,10 +123,6 @@ public class Trivia extends BasicGameState {
         graphics.drawImage(forward, 1050, 860);
         fonx1.drawString(1190, 280, "E' il turno di: " + pGUI.get(indexPlayerOnTurn).getName(), Color.black);
         launch.draw(1320, 860);
-        rydia.draw(1100,30);
-        ceodore.draw(1400, 30);
-        kain.draw(1100, 150);
-        luca.draw(1400, 150);
 
         for(int i=0; i<NPLAYERS; i++){
             if ((i==1) || (i==3)){
@@ -138,17 +134,16 @@ public class Trivia extends BasicGameState {
             }
             playerBack.get(i).draw(x, y);
             fonx1.drawString((x+100),y,pGUI.get(i).getName(), Color.white);
-            for (int j =0; j< pGUI.get(i).getSlc().size(); i++) {
-                Categories c = pGUI.get(i).getSlc().get(j).getCategory();
+            for (Slice slice : pGUI.get(i).getSlc()) {
+                Categories c = slice.getCategory();
                 drawDiamonds(graphics, c, x, y);
             }
-            /*ArrayList<Slice> slc = new ArrayList<>(/*controller.getSliceObtained(i));   //DA FARE*/
-            /*for(Slice slice : slc) {
-                Categories c = slice.getCategory();
-                drawDiamonds(graphics,c,x,y);
-            }
-            slc.clear();*/
         }
+
+        rydia.draw(1100,30);
+        ceodore.draw(1400, 30);
+        kain.draw(1100, 150);
+        luca.draw(1400, 150);
 
         for (PlayerGUI p : pGUI) { p.getPedina().draw(p.getxUpdate(), p.getyUpdate()); }
 
@@ -203,7 +198,6 @@ public class Trivia extends BasicGameState {
                             if (!c.equals(Categories.Nessuna)) {
                                 Slice slice = new Slice(c);
                                 pGUI.get(indexPlayerOnTurn).addSliceObtained(slice);
-                                System.out.println("size"+ pGUI.get(indexPlayerOnTurn).getSlc().size());
                             }
                             checkReceivedSlices = true;
                         }
