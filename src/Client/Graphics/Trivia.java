@@ -45,6 +45,7 @@ public class Trivia extends BasicGameState {
     private Image launch;
     private ArrayList<Image> diamanti;
     private ArrayList<Image> playerBack;
+    private ArrayList<Image> playerIcons;
 
     private DieGUI d;
     private Map map;
@@ -76,6 +77,7 @@ public class Trivia extends BasicGameState {
         f = new TriviaFont();
         playerBack = new ArrayList<>();
         diamanti = new ArrayList<>();
+        playerIcons=new ArrayList<>();
         this.clientInterface = clientInterface;
     }
 
@@ -102,6 +104,11 @@ public class Trivia extends BasicGameState {
         ceodore = new Image("res/char/ceodor.png");
         kain = new Image("res/char/kainl.png");
         luca = new Image("res/char/lucal.png");
+
+        playerIcons.add(rydia);
+        playerIcons.add(ceodore);
+        playerIcons.add(kain);
+        playerIcons.add(luca);
         background = new Image("res/backgrounds/green_landscape.png");
         launch = new Image("res/buttons/Button_Launch/Button_Launch.png");
         initializeDiamonds();
@@ -116,6 +123,7 @@ public class Trivia extends BasicGameState {
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
         int x = 1100;
         int y = 30;
+
 
         graphics.drawImage(background, 0, 0);
         graphics.drawImage(backgroundMap, 0, 0);
@@ -133,6 +141,7 @@ public class Trivia extends BasicGameState {
                 y = 150;
             }
             playerBack.get(i).draw(x, y);
+            playerIcons.get(i).draw(x,y);
             fonx1.drawString((x+100),y,pGUI.get(i).getName(), Color.white);
             for (Slice slice : pGUI.get(i).getSlc()) {
                 Categories c = slice.getCategory();
@@ -140,10 +149,10 @@ public class Trivia extends BasicGameState {
             }
         }
 
-        rydia.draw(1100,30);
+      /*  rydia.draw(1100,30);
         ceodore.draw(1400, 30);
         kain.draw(1100, 150);
-        luca.draw(1400, 150);
+        luca.draw(1400, 150);*/
 
         for (PlayerGUI p : pGUI) { p.getPedina().draw(p.getxUpdate(), p.getyUpdate()); }
 
