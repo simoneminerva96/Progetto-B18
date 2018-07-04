@@ -19,7 +19,6 @@ import org.newdawn.slick.state.StateBasedGame;
  * della domanda corretta e di mostrare una stringa che informa se la risposta cliccata è corretta o
  * meno.
  * - esito: flag in cui salvo l'esito della risposta che ho cliccato
- * - controller: interfaccia controller con la logica per prelevare le domande
  * - answered: flag che indica se ho risposto o meno
  * - question: oggetto di tipo Question che contiene la domanda estratta
  */
@@ -59,11 +58,11 @@ public class Domanda extends BasicGameState {
             question=clientInterface.getQuestion();
             checkreceivedQuestion=true;
         }
-        fonx1.drawString( 1190, 350, question.getQuestion(), Color.black);
-        fonx1.drawString(1290,420, question.getAnswers().get(0).getAnswer(), Color.black);
-        fonx1.drawString(1290,480, question.getAnswers().get(1).getAnswer(), Color.black);
-        fonx1.drawString(1290,540, question.getAnswers().get(2).getAnswer(), Color.black);
-        fonx1.drawString(1290,600, question.getAnswers().get(3).getAnswer(), Color.black);
+        fonx1.drawString( 1100, 350, question.getQuestion(), Color.black);
+        fonx1.drawString(1190,420, question.getAnswers().get(0).getAnswer(), Color.black);
+        fonx1.drawString(1190,480, question.getAnswers().get(1).getAnswer(), Color.black);
+        fonx1.drawString(1190,540, question.getAnswers().get(2).getAnswer(), Color.black);
+        fonx1.drawString(1190,600, question.getAnswers().get(3).getAnswer(), Color.black);
         if (answered) {
             if (esito) {
                 fonx1.drawString(1190, 700, "RISPOSTA ESATTA!", Color.black);
