@@ -32,8 +32,9 @@ public class Domanda extends BasicGameState {
     private ClientInterface clientInterface;
     private boolean checkreceivedQuestion;
 
-    public Domanda() {
+    public Domanda(ClientInterface clientInterface) {
         f = new TriviaFont();
+        this.clientInterface = clientInterface;
     }
 
     @Override

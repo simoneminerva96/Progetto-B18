@@ -41,7 +41,6 @@ import java.util.ArrayList;
 
 public class Trivia extends BasicGameState {
     private Image backgroundMap, back, forward, background;
-    private Image rydia, ceodore, kain, luca;
     private Image launch;
     private ArrayList<Image> diamanti;
     private ArrayList<Image> playerBack;
@@ -70,7 +69,7 @@ public class Trivia extends BasicGameState {
     private int indexPlayerOnTurn;
 
     public Trivia(ClientInterface clientInterface) {
-        domanda = new Domanda();
+        domanda = new Domanda(clientInterface);
         esc = new Escape();
         pGUI = new ArrayList<>();
         pGUI.clear();
@@ -100,15 +99,10 @@ public class Trivia extends BasicGameState {
         forward = new Image("res/buttons/Frecce/forward.png");
         d = new DieGUI();
 
-        rydia = new Image("res/char/rydial.png");
-        ceodore = new Image("res/char/ceodor.png");
-        kain = new Image("res/char/kainl.png");
-        luca = new Image("res/char/lucal.png");
-
-        playerIcons.add(rydia);
-        playerIcons.add(ceodore);
-        playerIcons.add(kain);
-        playerIcons.add(luca);
+        playerIcons.add(new Image("res/char/rydial.png"));
+        playerIcons.add(new Image("res/char/ceodor.png"));
+        playerIcons.add(new Image("res/char/kainl.png"));
+        playerIcons.add(new Image("res/char/lucal.png"));
         background = new Image("res/backgrounds/green_landscape.png");
         launch = new Image("res/buttons/Button_Launch/Button_Launch.png");
         initializeDiamonds();
@@ -116,7 +110,6 @@ public class Trivia extends BasicGameState {
         domanda.init(gameContainer, stateBasedGame);
         esc.init(gameContainer, stateBasedGame);
         fonx1 = new TrueTypeFont(f.getFont().deriveFont(23f), false);
-        domanda.setClientInterface(clientInterface);
     }
 
     @Override
@@ -147,11 +140,6 @@ public class Trivia extends BasicGameState {
                 drawDiamonds(graphics, c, x, y);
             }
         }
-
-      /*  rydia.draw(1100,30);
-        ceodore.draw(1400, 30);
-        kain.draw(1100, 150);
-        luca.draw(1400, 150);*/
 
         for (PlayerGUI p : pGUI) { p.getPedina().draw(p.getxUpdate(), p.getyUpdate()); }
 
@@ -203,7 +191,6 @@ public class Trivia extends BasicGameState {
                     if (domanda.isEsito()) {
                         if (!checkReceivedSlices) {
                             Categories c = clientInterface.getCategoriesOfTheSliceObtained();
-                            System.out.println(c.name());
                             if (!c.equals(Categories.Nessuna)) {
                                 Slice slice = new Slice(c);
                                 pGUI.get(indexPlayerOnTurn).addSliceObtained(slice);
@@ -233,7 +220,6 @@ public class Trivia extends BasicGameState {
             launched = false;
         }
 
-        //se il flag quit = true vuol dire che ho premuto Esc e renderizzo lo state esc.
         if (esc.isQuit()) {
             try {
                 esc.render(gameContainer, stateBasedGame, graphics);
@@ -252,7 +238,7 @@ public class Trivia extends BasicGameState {
         if(!checkreceivedInformationPLAYERS) initializePlayers();
 
         /*
-        Se sono nelle coordinate del bottone Launch, ottengo il numero estratto, metto launched a true e aggiorno la
+        Se sono nelle coordinate del bottone Launch, ottengo il numero estratto, launched=true e aggiorno la
         faccia del dado. Resetto answered, esito a false perchè risponderò ad una domanda.
          */
         if (xpos > 1322 && xpos < 1505 && ypos > 57 && ypos < 143) {
@@ -269,27 +255,20 @@ public class Trivia extends BasicGameState {
         }
 
         /*
-        se ho lanciato il dado, controllo le coordinate in cui ho cliccato (una delle due frecce).
-        in uno o nell'altro caso, informo il controller della direzione presa, aggiorno le coordinate delle gui
+        Controllo di essere nelle coordinate di una delle due frecce, aggiorno il server sulla direzione presa e
+        aggiorno la gui dei giocatori
          */
         if (launched) {
             if (input.isMousePressed(0)) {
                 if (ypos > 45 && ypos < 145) {
-                    if (xpos > 1045 && xpos < 1160) {
-                        pGUI.get(indexPlayerOnTurn).setClicked(true);
-                        clientInterface.sendDirection(Direction.FORWARD);
-                        pGUI.get(indexPlayerOnTurn).getP().update(diceN, Direction.FORWARD);
-                        pGUI.get(indexPlayerOnTurn).updateCoordinates();
-                    }
-                    if (xpos > 1180 && xpos < 1290) {
-                        pGUI.get(indexPlayerOnTurn).setClicked(true);
-                        clientInterface.sendDirection(Direction.BACK);
-                        pGUI.get(indexPlayerOnTurn).getP().update(diceN, Direction.BACK);
-                        pGUI.get(indexPlayerOnTurn).updateCoordinates();
-                    }
+                    if (xpos > 1045 && xpos < 1160)
+                        updateGui(Direction.FORWARD);
+                    if (xpos > 1180 && xpos < 1290)
+                        updateGui(Direction.BACK);
                 }
             }
         }
+
         try {
             domanda.update(gameContainer, stateBasedGame, i);
             esc.update(gameContainer, stateBasedGame, i);
@@ -304,6 +283,13 @@ public class Trivia extends BasicGameState {
             pause();
             gameContainer.exit();
         }
+    }
+
+    public void updateGui (Direction direction) {
+        pGUI.get(indexPlayerOnTurn).setClicked(true);
+        clientInterface.sendDirection(direction);
+        pGUI.get(indexPlayerOnTurn).getP().update(diceN, direction);
+        pGUI.get(indexPlayerOnTurn).updateCoordinates();
     }
 
     //non occcorre piu che ricevo dallo state precedente il num di giocatori, lo prendo dal client direttamente
