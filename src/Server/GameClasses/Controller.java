@@ -91,4 +91,12 @@ public class Controller implements Serializable {
     public boolean request (Credenziali credenziali, TypeOfRequest typeOfRequest) {
         return request.request(credenziali, typeOfRequest);
     }
+
+    public boolean isFinalQuestion () {
+        return match.isFinalQuestion();
+    }
+
+    public Categories getCategoriesOfTheSliceObtained () {
+        return match.getCategoriesOfTheSliceObtained();
+    }
 }

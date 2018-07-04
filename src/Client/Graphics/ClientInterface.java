@@ -38,9 +38,9 @@ public class ClientInterface implements Serializable {
         boolean check = false;
         try {
             check = (boolean) in.readObject();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
         return check;
@@ -165,7 +165,18 @@ public class ClientInterface implements Serializable {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-
         return nicknames;
+    }
+
+    public Categories getCategoriesOfTheSliceObtained () {
+        Categories c = null;
+        try {
+            c = (Categories) in.readObject();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return c;
     }
 }

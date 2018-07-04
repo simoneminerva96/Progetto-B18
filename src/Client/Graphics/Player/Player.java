@@ -18,7 +18,6 @@ public class Player{
     private int id;
     private String name;
     private Direction direction = Direction.FORWARD;
-    private boolean isOnLeft=false,isOnRight=false,isOnUp=false,isOnDown=false;
 
     public Player(String name,int id,Map map){
         this.id = id;
@@ -49,12 +48,6 @@ public class Player{
 
     }
 
-    public int getX() { return finali.getX(); }
-
-    public int getY() { return finali.getY(); }
-
-    public Direction getDirection(){return direction;}
-
     /**
      * Aggiorna le coordinate del giocatore in base al numero ottenuto dal dado e alla direzione scelta.
      * @param die numero estratto
@@ -62,167 +55,20 @@ public class Player{
      */
     public void update(int die,Direction direction) {
         this.direction = direction;
-
         finali.calculate(minime,massime,die,direction);
-        /*if (direction == Direction.FORWARD) {
-            if (finali.getY()==minime.getY()) {
-                isOnLeft = false;
-            }
-            if(finali.getX() == minime.getX()) {
-                isOnLeft = true;
-            }
-        } else {
-            if (finali.getY() == minime.getY()) {
-                isOnUp = true;
-                if (finali.getX() == massime.getX()) {
-                    isOnRight = true;
-                }
-                if (finali.getX() == minime.getX()) {
-                    isOnDown = true;
-                }
-            }
-        }*/
-
-       /* switch(direction){
-            case FORWARD:
-                if (y == miny) {
-                    isOnLeft = false;
-                    tempx = x + (2 * die);
-                    if (tempx > maxx) {
-                        tempx = tempx - maxx;
-                        x = maxx;
-                        y += tempx;
-                    } else
-                        x = tempx;
-                    finali.setCoordinates(x, y);
-                    break;
-                }
-                if (x == maxx) {
-                    tempy = y + (2 * die);
-                    if (tempy > maxy) {
-                        tempy = tempy - maxy;
-                        x -= tempy;
-                        y = maxy;
-                    } else
-                        y = tempy;
-                    finali.setCoordinates(x, y);
-                    break;
-                }
-                if (y == maxy) {
-                    tempx = x - (2 * die);
-                    if (tempx < minx) {
-                        tempx = minx - tempx;
-                        x = minx;
-                        y -= tempx;
-                    } else
-                        x = tempx;
-                    finali.setCoordinates(x, y);
-                    break;
-                }
-                if (x == minx) {
-                    tempy = y - (2 * die);
-                    isOnLeft = true;
-                    if (tempy < miny) {
-                        tempy = miny - tempy;
-                        x += tempy;
-                        y = miny;
-                    } else
-                        y = tempy;
-                    finali.setCoordinates(x, y);
-                    break;
-                }
-            case BACK:
-                if (y == miny) {
-                    tempx = x - (2 * die);
-                    isOnUp = true;
-                    if (tempx < minx) {
-                        tempx = minx - tempx;
-                        x = minx;
-                        y += tempx;
-                    } else
-                        x = tempx;
-                    finali.setCoordinates(x, y);
-                    break;
-                }
-                if (x == maxx) {
-                    isOnRight = true;
-                    tempy = y - (2 * die);
-                    if (tempy < miny) {
-                        tempy = miny - tempy;
-                        x -= tempy;
-                        y = miny;
-                    } else
-                        y = tempy;
-                    finali.setCoordinates(x, y);
-                    break;
-                }
-                if (y == maxy) {
-                    tempx = x + (2 * die);
-                    if (tempx > maxx) {
-                        tempx = tempx - maxx;
-                        x = maxx;
-                        y -= tempx;
-                    } else
-                        x = tempx;
-                    finali.setCoordinates(x, y);
-                    break;
-                }
-                if (x == minx) {
-                    isOnDown = true;
-                    tempy = y + (2 * die);
-                    if (tempy > maxy) {
-                        tempy = tempy - maxy;
-                        x += tempy;
-                        y = maxy;
-                    } else
-                        y = tempy;
-                    finali.setCoordinates(x, y);
-                    break;
-                }
-        }*/
     }
 
     public String getName() {
         return name;
     }
 
-    public Coordinate getMinime() {
-        return minime;
-    }
+    public Coordinate getMinime() { return minime; }
 
-    public Coordinate getMassime() {
-        return massime;
-    }
+    public Coordinate getMassime() { return massime; }
 
-    public boolean isOnLeft() {
-        return isOnLeft;
-    }
+    public int getX() { return finali.getX(); }
 
-    public boolean isOnRight() {
-        return isOnRight;
-    }
+    public int getY() { return finali.getY(); }
 
-    public boolean isOnUp() {
-        return isOnUp;
-    }
-
-    public boolean isOnDown() {
-        return isOnDown;
-    }
-
-    public void setOnLeft(boolean onLeft) {
-        isOnLeft = onLeft;
-    }
-
-    public void setOnRight(boolean onRight) {
-        isOnRight = onRight;
-    }
-
-    public void setOnUp(boolean onUp) {
-        isOnUp = onUp;
-    }
-
-    public void setOnDown(boolean onDown) {
-        isOnDown = onDown;
-    }
+    public Direction getDirection(){return direction;}
 }

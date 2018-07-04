@@ -1,7 +1,10 @@
 package Client.Graphics.Player;
 
 import Server.GameClasses.Direction;
+import Server.GameClasses.Slice;
 import org.newdawn.slick.Animation;
+
+import java.util.ArrayList;
 
 /**
  * @author Stefano
@@ -18,12 +21,13 @@ import org.newdawn.slick.Animation;
 
 public class PlayerGUI {
     private Coordinate finali, update;
-    //private float x,y;
-    //private float xUpdate,yUpdate;
     private Player p;
     private Pedina piece;
     private boolean ready = false, clicked=false;
     private static final int minMovement = 50;
+
+    private ArrayList<Slice> slc;
+
 
     public PlayerGUI(Player p, Pedina piece){
         this.p = p;
@@ -31,8 +35,7 @@ public class PlayerGUI {
         finali = new Coordinate((p.getX()*minMovement), (p.getY()*minMovement));
         update = new Coordinate(finali.getX(), finali.getY());
 
-        //x = xUpdate = (p.getX()*minMovement)-5;
-        //y = yUpdate = (p.getY()*minMovement)-5;
+        slc = new ArrayList<>();
     }
 
     /**
@@ -42,8 +45,6 @@ public class PlayerGUI {
     public void updateCoordinates(){
         finali.setX((p.getX()*minMovement));
         finali.setY((p.getY()*minMovement));
-        //x = (p.getX()*minMovement)-5;
-        //y = (p.getY()*minMovement)-5;
     }
 
     /**
@@ -59,98 +60,8 @@ public class PlayerGUI {
 
        if(p.getDirection()==Direction.FORWARD)
            updateForward(x,y,delta);
-       else if(p.getDirection()==Direction.BACK)
+       else
            updateBack(x,y,delta);
-         /*if (xUpdate < x) {
-                    if(this.p.getDirection()==Direction.FORWARD){
-                        if (!p.isOnLeft()) {
-                            piece.setMvdx();
-                            xUpdate += 0.1 * delta;
-                            if (xUpdate >= x) {
-                                xUpdate = x;
-                            }
-                        } else {
-                            piece.setMvup();
-                            yUpdate -= 0.1 * delta;
-                            if (yUpdate <= y) {
-                                yUpdate = y;
-                                p.setOnLeft(false);
-                            }
-                        }
-                    }else {
-                        if(!p.isOnDown()){
-                            piece.setMvdx();
-                            xUpdate += 0.1 * delta;
-                            if (xUpdate >= x) {
-                                xUpdate = x;
-                            }
-                        }else{
-                            piece.setMvdwn();
-                            yUpdate+=0.1*delta;
-                            if(yUpdate>=y){
-                                yUpdate=y;
-                                p.setOnDown(false);
-                            }
-                        }
-                    }
-                } else if (yUpdate < y) {
-                    if(p.getDirection()==Direction.BACK){
-                        if(!p.isOnUp()){
-                            piece.setMvdwn();
-                            yUpdate += 0.1 * delta;
-                            if (yUpdate >= y) {
-                                yUpdate = y;
-                            }
-                        }else{
-                            piece.setMvsx();
-                            xUpdate-=0.1*delta;
-                            if(xUpdate<=x){
-                                xUpdate=x;
-                                p.setOnUp(false);
-                            }
-                        }
-                    }else{
-                        piece.setMvdwn();
-                        yUpdate += 0.1 * delta;
-                        if (yUpdate >= y) {
-                            yUpdate = y;
-                        }
-                    }
-                } else if (xUpdate > x) {
-                    if(p.getDirection()==Direction.FORWARD){
-                        piece.setMvsx();
-                        xUpdate -= 0.1 * delta;
-                        if (xUpdate <= x) {
-                            xUpdate = x;
-                        }
-                    }else{
-                        if (!p.isOnRight()) {
-                            piece.setMvsx();
-                            xUpdate -= 0.1 * delta;
-                            if (xUpdate <= x) {
-                                xUpdate = x;
-                            }
-                        } else {
-                            piece.setMvup();
-                            yUpdate -= 0.1 * delta;
-                            if (yUpdate <= y) {
-                                yUpdate = y;
-                                p.setOnRight(false);
-                            }
-                        }
-                    }
-                } else if (yUpdate > y) {
-                    piece.setMvup();
-                    yUpdate -= 0.1 * delta;
-                    if (yUpdate <= y) {
-                        yUpdate = y;
-                    }
-                } else {
-                    piece.getCurrentImage().stop();
-                    if(clicked) {
-                        ready = true;
-                    }
-                }*/
     }
 
     public void updateForward(int x,int y,int delta){
@@ -186,39 +97,11 @@ public class PlayerGUI {
     }
 
     public void updateBack(int x,int y,int delta){
-        System.out.println("FINALI X:"+finali.getX()+" Y:"+finali.getY());
-        System.out.println("UPDATE X:"+update.getX()+" Y:"+update.getY());
         if (x != finali.getX() || y != finali.getY()) {
-           /* if (x == (p.getMinime().getX()*minMovement) && y > (p.getMinime().getY()*minMovement)) {
-                y -= 0.1*delta;
-                update.setY(y);
-                piece.setMvup();
-                System.out.println("QUA");
-            }
-            else
-            if (y == (p.getMinime().getY()*minMovement) && x > (p.getMinime().getX()*minMovement)) {
-                x -= 0.1*delta;
-                update.setX(x);
-                piece.setMvsx();
-                System.out.println("QUA");
-            } else
-            if (x == (p.getMinime().getX()*minMovement) && y < (p.getMassime().getY()*minMovement)) {
-                y += 0.1*delta;
-                update.setY(y);
-                piece.setMvdwn();
-                System.out.println("QUA");
-            } else
-            if (y == (p.getMassime().getY()*minMovement) && x < (p.getMassime().getX()*minMovement)) {
-                x += 0.1*delta;
-                update.setX(x);
-                piece.setMvdx();
-                System.out.println("QUA");
-            }*/
            if(x==(p.getMassime().getX()*minMovement)&&y>(p.getMinime().getY()*minMovement)){
                y-=0.1*delta;
                update.setY(y);
                piece.setMvup();
-               System.out.println("QUA");
            }else if(y==(p.getMinime().getY()*minMovement)&&x>(p.getMinime().getX()*minMovement)){
                x-=0.1*delta;
                update.setX(x);
@@ -231,7 +114,6 @@ public class PlayerGUI {
                x+=0.23*delta;
                update.setX(x);
                piece.setMvdx();
-
            }
         }else{
             piece.getCurrentImage().stop();
@@ -272,4 +154,9 @@ public class PlayerGUI {
     public Player getP() {
         return p;
     }
+
+    public void addSliceObtained (Slice slice) { slc.add(slice); }
+
+    public ArrayList<Slice> getSlc() { return slc; }
+
 }

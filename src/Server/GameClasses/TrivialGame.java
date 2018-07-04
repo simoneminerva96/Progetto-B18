@@ -167,4 +167,11 @@ public class TrivialGame {
 
     public boolean verifyVictory(){ return turn.verifyVictory(); }
 
+    public boolean isFinalQuestion () {
+        return turn.isFinalQuestion();
+    }
+
+    public Categories getCategoriesOfTheSliceObtained () {
+        return turn.getCategoriesOfTheSliceObtained();
+    }
 }

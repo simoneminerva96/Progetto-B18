@@ -51,14 +51,17 @@ public class ServerInterface extends Thread implements Serializable {
             if(controller.checkBonusMalus()) sendType();
             else {
                 sendCheckInitialSquare();
-                if(!controller.checkInitialSquare()){
+                if(!controller.checkInitialSquare()) {
                     sendQuestion();
-                    System.out.println("sended question");
-                    index=getIndex();
-                    System.out.println("received index");
-                    esitoRisposta=controller.answerQuestion(index);
+                    index = getIndex();
+                    esitoRisposta = controller.answerQuestion(index);
                     sendCheck(esitoRisposta);
-                    System.out.println("sended check");
+                    if (esitoRisposta) {
+                        if (controller.isFinalQuestion()) {
+                            sendCategories(controller.getCategoriesOfTheSliceObtained());
+                        } else
+                        sendCategories(Categories.Nessuna);
+                    }
                 }
                 else {
                     sendCheck(controller.verifyVictory());
@@ -205,6 +208,14 @@ public class ServerInterface extends Thread implements Serializable {
         } catch (IOException e) {
             e.printStackTrace();
 
+        }
+    }
+
+    public void sendCategories (Categories categoria) {
+        try {
+            out.writeObject(categoria);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

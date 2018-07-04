@@ -122,4 +122,8 @@ public class Domanda extends BasicGameState {
         esito = false;
         answered = false;
     }
+
+    public boolean isEsito() {
+        return esito;
+    }
 }

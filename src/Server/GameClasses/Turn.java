@@ -17,6 +17,9 @@ public class Turn {
     private Direction chosenDirection;
     private boolean correctAnswer= true; //booleano che mi indica se la risposta data dall'utente è giusta o sbagliata
 
+    private boolean isFinalQuestion;
+    private Categories categoriesOfTheSliceObtained;
+
     public Turn(Player playerOnTurn,BoardProva playBoard){
         this.playerOnTurn=playerOnTurn;
         this.playBoard=playBoard;
@@ -114,8 +117,10 @@ public class Turn {
     private void obtainSlice(){
         Square actualSquare=getcurrentSquare();
         if(actualSquare instanceof FinalQuestionSquare){
+            isFinalQuestion = true;
             Categories categoryOfTheSlice=((FinalQuestionSquare)actualSquare).getCategory();
             playerOnTurn.obtainSlice(categoryOfTheSlice);
+            categoriesOfTheSliceObtained = categoryOfTheSlice;
         }
     }
 
@@ -126,4 +131,12 @@ public class Turn {
         else return false;
     }
 
+
+    public boolean isFinalQuestion() {
+        return isFinalQuestion;
+    }
+
+    public Categories getCategoriesOfTheSliceObtained () {
+        return categoriesOfTheSliceObtained;
+    }
 }
