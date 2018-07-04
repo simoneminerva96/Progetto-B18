@@ -124,7 +124,6 @@ public class Trivia extends BasicGameState {
         int x = 1100;
         int y = 30;
 
-
         graphics.drawImage(background, 0, 0);
         graphics.drawImage(backgroundMap, 0, 0);
         graphics.drawImage(back, 1190, 860);
