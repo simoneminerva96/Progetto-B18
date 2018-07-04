@@ -61,22 +61,15 @@ public class Player{
      * @param direction direzione scelta dall'utente
      */
     public void update(int die,Direction direction) {
-      /*  int y = finali.getY();
-        int x = finali.getX();
-        int miny = minime.getY();
-        int maxy = massime.getY();
-        int minx = minime.getX();
-        int maxx = massime.getX();
-        int tempx, tempy;*/
         this.direction = direction;
 
-
         finali.calculate(minime,massime,die,direction);
-        System.out.println("X:" + finali.getX());
-        System.out.println("Y: " +finali.getY());
-        if (direction == Direction.FORWARD) {
-            if (finali.getY()==minime.getY() || finali.getX() == minime.getX()) {
+        /*if (direction == Direction.FORWARD) {
+            if (finali.getY()==minime.getY()) {
                 isOnLeft = false;
+            }
+            if(finali.getX() == minime.getX()) {
+                isOnLeft = true;
             }
         } else {
             if (finali.getY() == minime.getY()) {
@@ -88,7 +81,7 @@ public class Player{
                     isOnDown = true;
                 }
             }
-        }
+        }*/
 
        /* switch(direction){
             case FORWARD:
@@ -191,6 +184,14 @@ public class Player{
 
     public String getName() {
         return name;
+    }
+
+    public Coordinate getMinime() {
+        return minime;
+    }
+
+    public Coordinate getMassime() {
+        return massime;
     }
 
     public boolean isOnLeft() {

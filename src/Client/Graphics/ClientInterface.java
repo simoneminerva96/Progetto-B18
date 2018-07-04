@@ -168,5 +168,4 @@ public class ClientInterface implements Serializable {
 
         return nicknames;
     }
-
 }
