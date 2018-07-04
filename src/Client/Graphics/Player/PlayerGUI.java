@@ -56,42 +56,12 @@ public class PlayerGUI {
     public void updateOnEachFrame(int delta) {
         int x = update.getX();
         int y = update.getY();
-       System.out.println("FINALI X:"+finali.getX()+ "Y:"+finali.getY());
-       // System.out.println("UPDATE X:"+update.getX()+ "Y:"+update.getY());
 
-        if (x != finali.getX() || y != finali.getY()) {
-            if (p.getDirection() == Direction.FORWARD) {
-                if (y == (p.getMinime().getY()*minMovement) && x < (p.getMassime().getX()*minMovement)) {
-                    x += 0.1*delta;
-                    System.out.println("X:"+x);
-                    update.setX(x);
-
-                    piece.setMvdx();
-                } else
-                if (y < (p.getMassime().getY()*minMovement) && x == (p.getMassime().getX()*minMovement)) {
-                    y += 0.1*delta;
-                    update.setY(y);
-                    piece.setMvdwn();
-                } else
-                if (y == (p.getMassime().getY()*minMovement) && x > (p.getMinime().getX()*minMovement)) {
-                    x -= 0.1*delta;
-                    update.setX(x);
-
-
-                    piece.setMvsx();
-                } else
-                if (x == (p.getMinime().getX()*minMovement) && y > (p.getMinime().getY()*minMovement)) {
-                    y -= 0.1*delta;
-                    update.setY(y);
-                    piece.setMvup();
-                }
-            }
-        } else {
-            piece.getCurrentImage().stop();
-            if (clicked) {
-                ready = true;
-            }
-        }    /*if (xUpdate < x) {
+       if(p.getDirection()==Direction.FORWARD)
+           updateForward(x,y,delta);
+       else if(p.getDirection()==Direction.BACK)
+           updateBack(x,y,delta);
+         /*if (xUpdate < x) {
                     if(this.p.getDirection()==Direction.FORWARD){
                         if (!p.isOnLeft()) {
                             piece.setMvdx();
@@ -183,6 +153,93 @@ public class PlayerGUI {
                 }*/
     }
 
+    public void updateForward(int x,int y,int delta){
+        if (x != finali.getX() || y != finali.getY()) {
+                if (y == (p.getMinime().getY()*minMovement) && x < (p.getMassime().getX()*minMovement)) {
+                    x += 0.23*delta;
+                    update.setX(x);
+                    piece.setMvdx();
+                } else
+                if (y < (p.getMassime().getY()*minMovement) && x == (p.getMassime().getX()*minMovement)) {
+                    y += 0.23*delta;
+                    update.setY(y);
+                    piece.setMvdwn();
+                } else
+                if (y == (p.getMassime().getY()*minMovement) && x > (p.getMinime().getX()*minMovement)) {
+                    x -= 0.07*delta;
+                    update.setX(x);
+                    piece.setMvsx();
+                } else
+                if (x == (p.getMinime().getX()*minMovement) && y > (p.getMinime().getY()*minMovement)) {
+                    y -= 0.07*delta;
+                    update.setY(y);
+                    piece.setMvup();
+                }
+
+        } else {
+            piece.getCurrentImage().stop();
+            if (clicked) {
+                ready = true;
+            }
+        }
+
+    }
+
+    public void updateBack(int x,int y,int delta){
+        System.out.println("FINALI X:"+finali.getX()+" Y:"+finali.getY());
+        System.out.println("UPDATE X:"+update.getX()+" Y:"+update.getY());
+        if (x != finali.getX() || y != finali.getY()) {
+           /* if (x == (p.getMinime().getX()*minMovement) && y > (p.getMinime().getY()*minMovement)) {
+                y -= 0.1*delta;
+                update.setY(y);
+                piece.setMvup();
+                System.out.println("QUA");
+            }
+            else
+            if (y == (p.getMinime().getY()*minMovement) && x > (p.getMinime().getX()*minMovement)) {
+                x -= 0.1*delta;
+                update.setX(x);
+                piece.setMvsx();
+                System.out.println("QUA");
+            } else
+            if (x == (p.getMinime().getX()*minMovement) && y < (p.getMassime().getY()*minMovement)) {
+                y += 0.1*delta;
+                update.setY(y);
+                piece.setMvdwn();
+                System.out.println("QUA");
+            } else
+            if (y == (p.getMassime().getY()*minMovement) && x < (p.getMassime().getX()*minMovement)) {
+                x += 0.1*delta;
+                update.setX(x);
+                piece.setMvdx();
+                System.out.println("QUA");
+            }*/
+           if(x==(p.getMassime().getX()*minMovement)&&y>(p.getMinime().getY()*minMovement)){
+               y-=0.1*delta;
+               update.setY(y);
+               piece.setMvup();
+               System.out.println("QUA");
+           }else if(y==(p.getMinime().getY()*minMovement)&&x>(p.getMinime().getX()*minMovement)){
+               x-=0.1*delta;
+               update.setX(x);
+               piece.setMvsx();
+           }else if(x==(p.getMinime().getX()*minMovement)&&y<(p.getMassime().getY()*minMovement)){
+               y+=0.23*delta;
+               update.setY(y);
+               piece.setMvdwn();
+           }else if(y==(p.getMassime().getY()*minMovement)&&x<(p.getMassime().getX()*minMovement)){
+               x+=0.23*delta;
+               update.setX(x);
+               piece.setMvdx();
+
+           }
+        }else{
+            piece.getCurrentImage().stop();
+            if(clicked){
+                ready=true;
+            }
+        }
+    }
     public float getxUpdate() {
         return update.getX();
     }
