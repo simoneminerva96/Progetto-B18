@@ -1,6 +1,7 @@
 package Client.Graphics;
 
 import Client.Graphics.Player.Player;
+import Client.Graphics.com.sticky.StateButton;
 import Server.GameClasses.*;
 import Client.Graphics.Fonts.TriviaFont;
 import Client.Graphics.Map.Map;
@@ -53,6 +54,7 @@ public class Trivia extends BasicGameState {
 
     private boolean launched = false;
     private boolean checkVictory = false;
+    private boolean clicked =false;
     private int diceN = 0;
     private ClientInterface clientInterface;
     private int NPLAYERS;
@@ -67,6 +69,8 @@ public class Trivia extends BasicGameState {
 
     private boolean checkreceivedInformationPLAYERS; //diventa true quando ho ricevuto l'informazione sul num di giocatori
     private int indexPlayerOnTurn;
+
+
 
     public Trivia(ClientInterface clientInterface) {
         domanda = new Domanda(clientInterface);
@@ -170,10 +174,12 @@ public class Trivia extends BasicGameState {
                 switch (checktype) {
                     case BONUS: {
                         fonx1.drawString(1190, 700, "PUOI RILANCIARE IL DADO!", Color.black);
+                        domanda.setClicked(true);
                         break;
                     }
                     case MALUS: {
                         fonx1.drawString(1190, 700, "HAI PERSO IL TURNO!", Color.black);
+                        domanda.setClicked(true);
                         break;
                     }
                 }
@@ -213,6 +219,7 @@ public class Trivia extends BasicGameState {
                     } else {
                         fonx1.drawString(1190, 700, "CASELLA INIZIALE, PASSI IL TURNO!", Color.black);
                         pGUI.get(indexPlayerOnTurn).setReady(false);
+                        domanda.setClicked(true);
                         launched = false;
                     }
                 }
@@ -243,7 +250,7 @@ public class Trivia extends BasicGameState {
         faccia del dado. Resetto answered, esito a false perchè risponderò ad una domanda.
          */
         if (xpos > 1322 && xpos < 1505 && ypos > 57 && ypos < 143) {
-            if (input.isMousePressed(0) && !launched) {
+            if (input.isMousePressed(0) && !launched && domanda.isClicked()) {
                 clientInterface.sendOutcome(true); //comunica al server che deve eseguire setplayerOnturn
                 indexPlayerOnTurn=clientInterface.getIndex();
                 System.out.println("index player on turn: " + indexPlayerOnTurn);
@@ -253,6 +260,7 @@ public class Trivia extends BasicGameState {
                 System.out.println("diceN: "+diceN);
                 d.setCurrentDie(diceN);
                 domanda.reset();
+                domanda.setClicked(false);
                 resetBoolean();
             }
         }

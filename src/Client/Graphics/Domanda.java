@@ -24,6 +24,7 @@ import org.newdawn.slick.state.StateBasedGame;
 public class Domanda extends BasicGameState {
     private boolean esito = false;
     private boolean answered = false;
+    private boolean clicked =true;
     private Question question;
     private TrueTypeFont fonx1;
     private TriviaFont f;
@@ -88,6 +89,7 @@ public class Domanda extends BasicGameState {
                     clientInterface.sendindex(0);
                     esito = clientInterface.receiveOutcome();
                     answered = true;
+                    clicked=true;
                 }
             }
             if (posY<527 && posY>486) {
@@ -95,6 +97,7 @@ public class Domanda extends BasicGameState {
                     clientInterface.sendindex(1);
                     esito = clientInterface.receiveOutcome();
                     answered = true;
+                    clicked=true;
                 }
             }
             if (posY<472 && posY>430) {
@@ -102,6 +105,7 @@ public class Domanda extends BasicGameState {
                     clientInterface.sendindex(2);
                     esito=clientInterface.receiveOutcome();
                     answered = true;
+                    clicked=true;
                 }
             }
             if (posY<410 && posY>372) {
@@ -109,6 +113,7 @@ public class Domanda extends BasicGameState {
                     clientInterface.sendindex(3);
                     esito=clientInterface.receiveOutcome();
                     answered = true;
+                    clicked=true;
                 }
             }
         }
@@ -141,4 +146,11 @@ public class Domanda extends BasicGameState {
         else fonx1.drawString( 1190,340, question.getQuestion(), Color.black);
     }
 
+    public boolean isClicked() {
+        return clicked;
+    }
+
+    public void setClicked(boolean clicked) {
+        this.clicked = clicked;
+    }
 }
