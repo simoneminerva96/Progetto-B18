@@ -65,28 +65,32 @@ public class PlayerGUI {
     }
 
     public void updateForward(int x,int y,int delta){
+
         if (x != finali.getX() || y != finali.getY()) {
-                if (y == (p.getMinime().getY()*minMovement) && x < (p.getMassime().getX()*minMovement)) {
+                if (y == (p.getMinime().getY()*minMovement) && x >= p.getMinime().getX()*minMovement) {
                     x += 0.1;
+                    System.out.println("xUpdate1: " +x + "yUpdate1: " +y);
                     update.setX(x);
                     piece.setMvdx();
                 } else
                 if (y < (p.getMassime().getY()*minMovement) && x == (p.getMassime().getX()*minMovement)) {
                     y += 0.1;
+                    System.out.println("xUpdate2: " +x + "yUpdate2: " +y);
                     update.setY(y);
                     piece.setMvdwn();
                 } else
                 if (y == (p.getMassime().getY()*minMovement) && x > (p.getMinime().getX()*minMovement)) {
                     x -= 0.1;
+                    System.out.println("xUpdate3: " +x + "yUpdate3: " +y);
                     update.setX(x);
                     piece.setMvsx();
                 } else
                 if (x == (p.getMinime().getX()*minMovement) && y > (p.getMinime().getY()*minMovement)) {
                     y -= 0.1;
+                    System.out.println("xUpdate4: " +x + "yUpdate4: " +y);
                     update.setY(y);
                     piece.setMvup();
                 }
-
         } else {
             piece.getCurrentImage().stop();
             if (clicked) {

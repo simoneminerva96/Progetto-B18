@@ -14,6 +14,7 @@ public class BonusSquare extends BonusMalusRandomSquare {
     }
 
     public BonusMalusRandom executeBonusMalus (Turn t){
+        t.setCorrectAnswer(true);
         return BonusMalusRandom.BONUS;
     }
 }
