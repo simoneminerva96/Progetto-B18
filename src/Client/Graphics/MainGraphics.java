@@ -11,12 +11,7 @@ import org.newdawn.slick.state.*;
  */
 public class MainGraphics extends StateBasedGame{
     private ClientInterface clientInterface;
-    public static final String gameName = "Trivial Pursuit";
-    public static final int trivia = 5;
-    public static final int mainmenu = 2;
-    public static final int playernumbersel=3;
-    public static final int characterSelection=4;
-    public static final int logininterface=1;
+    private static final String gameName = "Trivial Pursuit";
 
     public MainGraphics(String gameName, ClientInterface clientInterface) {
         super(gameName);
@@ -33,8 +28,8 @@ public class MainGraphics extends StateBasedGame{
 
     @Override
     public void initStatesList(GameContainer gc) throws SlickException {
-        this.addState(new LoginRegistrationInterface(clientInterface));
         this.addState(new PlayerNumberSelection(clientInterface));
+        this.addState(new LoginRegistrationInterface(clientInterface));
         this.addState(new GameOrderState(clientInterface));
         this.addState(new MainMenu());
         this.addState(new Trivia(clientInterface));

@@ -8,47 +8,45 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
-
 import java.util.ArrayList;
 
+/**
+ * State in cui viene fatto il lancio del dado e viene mostrato l'ordine effettivo di gioco.
+ * - nPlayers: numero di giocatori selezionati
+ * - background: immagine di background
+ * - rydia, ceodore, kain, luca : immagini pedine
+ * - images: arrayList di immagini delle pedine
+ * - usernames: arrayList degli username ordinati
+ * - launch: bottone per lanciare il dado per l'ordine dei giocatori
+ * - next: bottone per passare allo state Trivia
+ * - isClicked: verifica se launch è stato cliccato
+ * - f, fonx1: font
+ * - dadi: array di dadi da visualizzare
+ * - clientInterface: oggetto per comunicare con il server
+ * - checkReceivedInformation: boolean che diventa true se ho ricevuto le informazioni da visualizzare dal server
+ */
 public class GameOrderState extends BasicGameState {
-    //INT
-    private int nPlayers=1; //numero di giocatori selezionati
-
-    //IMMAGINI
-    private Image background; //immagine di background
-    private Image rydia, ceodore, kain, luca; //immagini pedine
-
-    private ArrayList<Image>images; //arraylist immagini pedine
-    private ArrayList<String>usernames; //arraylist degli username ordinati
-
-    //STATEBUTTON
-    private StateButton launch; //esegue metodo per ordine giocatori
-    private StateButton next; //passaggio allo state successivo
-
-    private boolean isClicked=false; //verifica se launch è stato cliccato
-
-    //FONT
+    private int nPlayers=1;
+    private Image background;
+    private Image rydia, ceodore, kain, luca;
+    private ArrayList<Image>images;
+    private ArrayList<String>usernames;
+    private StateButton launch;
+    private StateButton next;
+    private boolean isClicked=false;
     private TrueTypeFont fonx1;
     private TriviaFont f;
-
-    //DADI
     private ArrayList<DieGUI> dadi;
-
-    //CLIENTINTERFACE
     private ClientInterface clientInterface;
+    private boolean checkReceivedInformation;
 
-    private boolean checkReceivedInformation; //diventa true se ho ricevuto le informazioni da visualizzare dal server
-
-    public GameOrderState(ClientInterface clientInterface) {
+    GameOrderState(ClientInterface clientInterface) {
         f=new TriviaFont();
         this.clientInterface = clientInterface;
     }
 
     @Override
-    public int getID() {
-        return 4;
-    }
+    public int getID() { return 4; }
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
@@ -71,10 +69,11 @@ public class GameOrderState extends BasicGameState {
     }
 
     @Override
-    public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
+    public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
         graphics.drawImage(background,0,0);
         fonx1.drawString(720,25,"ORDINE DI GIOCO", Color.black);
-        if(checkReceivedInformation) { //se launch è stato cliccato, render del button per il passaggio allo state successivo
+        //se launch è stato cliccato, render del button per il passaggio allo state successivo
+        if(checkReceivedInformation) {
             fonx1.drawString(1060,25,"RISULTATI" ,Color.black);
             next.render(gameContainer, graphics);
         }
@@ -88,7 +87,8 @@ public class GameOrderState extends BasicGameState {
         //in base a nPlayers, cambia il numero di elementi visualizzati
         for(int j=0;j<nPlayers;j++){
             graphics.drawImage(images.get(j),700,yTemp+bias*j);
-            if(checkReceivedInformation) {//se launch è cliccato, visualizza gli username ordinati nell'arraylist
+            //se launch è cliccato, visualizza gli username ordinati nell'arraylist
+            if(checkReceivedInformation) {
                 fonx1.drawString(780, yTemp + bias * j, usernames.get(j));
                 fonx1.drawString(500, yTemp + bias*j +25, "GIOCATORE " + (j + 1) + ":", Color.black);
                 graphics.drawImage(dadi.get(j).getCurrentDie(),1080,yTemp + bias * j+10);
@@ -101,33 +101,31 @@ public class GameOrderState extends BasicGameState {
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
         Input r=gameContainer.getInput();
-        //se premo il tasto sinistro entro nell'if
+
         if(r.isMousePressed(0)){
-            isClicked=launch.onClickBoolean(r.getMouseX(),r.getMouseY()); //quando schiaccio il tasto launch isclicked diventa true
+            //quando schiaccio il tasto launch isclicked diventa true
+            isClicked=launch.onClickBoolean(r.getMouseX(),r.getMouseY());
             //se ho gia ricevuto le info dal server, quando schiaccio su next vai nel prossimo state
             if(checkReceivedInformation) next.onClickState(r.getMouseX(),r.getMouseY(),stateBasedGame,5);
         }
+
         //se premo launch e non ho ancora ricevuto le info dal server entro nell'if per riceverle
         if(isClicked && !checkReceivedInformation){
-            //riceve i nickname dei giocatori dal server
             usernames=clientInterface.getNicknames();
-            //riceve i risultati estratti dei dadi dal server
             ArrayList<Integer> resultsOfRoll=clientInterface.getResultsOfRoll();
             for(int j=0;j<usernames.size();j++){
                 dadi.add(new DieGUI());
                 dadi.get(j).setCurrentDie(resultsOfRoll.get(j));
             }
-            checkReceivedInformation=true;  //lo metto a true perchè sennò continuerei a richiedere le info dal server
+            checkReceivedInformation=true;
         }
 
         launch.onMouseEnter(launch,r.getMouseX(),r.getMouseY());
         next.onMouseEnter(next,r.getMouseX(),r.getMouseY());
     }
 
-    //metodo che "setta" il valore di nPlayers. Viene chiamato nello state precedente.
-    public void getPlayerNumber(int n){
-        this.nPlayers=n;
-    }
+    /**metodo che "setta" il valore di nPlayers. Viene chiamato nello state precedente. */
+    void getPlayerNumber(int n){ this.nPlayers=n; }
 }
 
 

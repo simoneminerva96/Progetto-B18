@@ -64,13 +64,10 @@ public class Trivia extends BasicGameState {
     private boolean checkBonusMalus,checkreceivedBonusMalus,checkreceivedtype,checkinitialSquare,checkreceivedInitialSquare;
     private boolean checkplayerVictory,checkreceivedVictory,checkReceivedSlices;
     private BonusMalusRandom checktype;
-
     private boolean checkreceivedInformationPLAYERS; //diventa true quando ho ricevuto l'informazione sul num di giocatori
     private int indexPlayerOnTurn;
 
-
-
-    public Trivia(ClientInterface clientInterface) {
+    Trivia(ClientInterface clientInterface) {
         domanda = new Domanda(clientInterface);
         esc = new Escape();
         pGUI = new ArrayList<>();
@@ -82,9 +79,7 @@ public class Trivia extends BasicGameState {
         this.clientInterface = clientInterface;
     }
 
-    public int getID() {
-        return 5;
-    }
+    public int getID() { return 5; }
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
@@ -153,7 +148,6 @@ public class Trivia extends BasicGameState {
          controllo se è la casella iniziale, se non è allora posso renderizzare la domanda, altrimenti controllo
          se ho vinto o se passo il turno. Se ho risposto e mi è uscita la stringa, allora resetto ready e launched.
          */
-
         checkReady(gameContainer,stateBasedGame,graphics);
 
         if (esc.isQuit()) {
@@ -198,13 +192,10 @@ public class Trivia extends BasicGameState {
         if (launched) {
             if (input.isMousePressed(0)) {
                 if (ypos > 45 && ypos < 145) {
-                    if (xpos > 1045 && xpos < 1160) {
+                    if (xpos > 1045 && xpos < 1160)
                         updateGui(Direction.FORWARD);
-                    }
-                    if (xpos > 1180 && xpos < 1290) {
+                    if (xpos > 1180 && xpos < 1290)
                         updateGui(Direction.BACK);
-                    }
-
                 }
             }
         }
@@ -216,7 +207,7 @@ public class Trivia extends BasicGameState {
             e.printStackTrace();
         }
 
-        pGUI.get(indexPlayerOnTurn).updateOnEachFrame(i);
+        pGUI.get(indexPlayerOnTurn).updateOnEachFrame();
         if (input.isKeyPressed(Input.KEY_ESCAPE)) { esc.setQuit(true); }
 
         if (checkVictory) {
@@ -229,7 +220,6 @@ public class Trivia extends BasicGameState {
     private void checkReady(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics){
         if (pGUI.get(indexPlayerOnTurn).isReady() ) {
             //entra se è una bonus/malus o random
-
             //ricevo check bonusmalus
             if(!checkreceivedBonusMalus){
                 checkBonusMalus=clientInterface.checkBonusMalus();
@@ -240,7 +230,6 @@ public class Trivia extends BasicGameState {
             pGUI.get(indexPlayerOnTurn).setReady(false);
             launched = false;
         }
-
     }
 
     //verifica se l'utente è su una casella bonusmalus
@@ -254,16 +243,14 @@ public class Trivia extends BasicGameState {
             }
             //a seconda del tipo estratto eseguo bonus o malus
             switch (checktype) {
-                case BONUS: {
+                case BONUS:
                     fonx1.drawString(1190, 700, "PUOI RILANCIARE IL DADO!", Color.black);
                     domanda.setClicked(true);
                     break;
-                }
-                case MALUS: {
+                case MALUS:
                     fonx1.drawString(1190, 700, "HAI PERSO IL TURNO!", Color.black);
                     domanda.setClicked(true);
                     break;
-                }
             }
         }
         else {
@@ -273,7 +260,6 @@ public class Trivia extends BasicGameState {
                 checkreceivedInitialSquare=true;
             }
             checkVictoryState(gameContainer,stateBasedGame,graphics);
-
         }
     }
 
@@ -322,7 +308,7 @@ public class Trivia extends BasicGameState {
 
     //non occcorre piu che ricevo dallo state precedente il num di giocatori, lo prendo dal client direttamente
     //con questo metodo istanzio i giocatori nell'ordine di gioco corretto coerentemente con lo state precedente
-    public void initializePlayers()throws SlickException{
+    private void initializePlayers()throws SlickException{
         ArrayList<String> nicknames=new ArrayList<>(clientInterface.getNicknames());
         NPLAYERS=nicknames.size();
         for (int i = 0; i <NPLAYERS; i++) {
@@ -341,9 +327,7 @@ public class Trivia extends BasicGameState {
                 pGUI.add(i, new PlayerGUI(p, piece3));
             }
         }
-        for (PlayerGUI p : pGUI) {
-            p.getPedina().stop();
-        }
+        for (PlayerGUI p : pGUI) { p.getPedina().stop(); }
         checkreceivedInformationPLAYERS=true;
     }
 

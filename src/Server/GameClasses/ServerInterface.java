@@ -28,9 +28,9 @@ public class ServerInterface extends Thread implements Serializable {
 
     @Override
     public void run() {
-        while (!loginEffettuato) {
+        /*while (!loginEffettuato) {
             loginEffettuato = getCredenziali();
-        }
+        }*/
         //riceve il numero di giocatori selezionato nel client
         numberOfPlayers = getIndex();
         //istanzia i giocatori e esegue il lancio iniziale del dado
@@ -42,11 +42,10 @@ public class ServerInterface extends Thread implements Serializable {
         sendResultsOfRoll();
         //invio i nicknames ordinati per lo state trivia
         sendNicknames();
-        while (true)
-        {
-            if(receiveOutcome()){
+
+        while (true) {
+            if(receiveOutcome())
                 controller.setPlayerOnTurn();
-            }
             sendIndex();
             sendDiceValue();
             controller.setDirection(getDirection());
@@ -58,20 +57,16 @@ public class ServerInterface extends Thread implements Serializable {
                     sendQuestion();
                     index = getIndex();
                     esitoRisposta = controller.answerQuestion(index);
-                    System.out.println("esito risposta " +esitoRisposta);
                     sendCheck(esitoRisposta);
                     if (esitoRisposta) {
-                        isFinalQuestion = controller.isFinalQuestion();
-                        System.out.println("is final question: "+ isFinalQuestion);
-                        if (isFinalQuestion) {
+                        if (controller.isFinalQuestion())
                             sendCategories(controller.getCategoriesOfTheSliceObtained().name());
-                        } else
+                        else
                         sendCategories("Nessuna");
                     }
                 }
-                else {
+                else
                     sendCheck(controller.verifyVictory());
-                }
             }
         }
     }
@@ -116,7 +111,6 @@ public class ServerInterface extends Thread implements Serializable {
         boolean check = false;
         try {
             check = (boolean) in.readObject();
-            System.out.println("receive outcome: " +check);
         } catch (Exception e) {
             e.printStackTrace();
         }

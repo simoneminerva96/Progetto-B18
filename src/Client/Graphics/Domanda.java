@@ -19,6 +19,10 @@ import org.newdawn.slick.state.StateBasedGame;
  * - esito: flag in cui salvo l'esito della risposta che ho cliccato
  * - answered: flag che indica se ho risposto o meno
  * - question: oggetto di tipo Question che contiene la domanda estratta
+ * - clicked: flag che indica se posso inviare la direzione al server nella prossima mossa
+ * - f, fonx1: font
+ * - clientInterface: oggetto per comunicare con il server
+ * - checkReceivedQuestion: flag che indica se ho già ricevuto l'informazione dal server o no
  */
 
 public class Domanda extends BasicGameState {
@@ -31,7 +35,7 @@ public class Domanda extends BasicGameState {
     private ClientInterface clientInterface;
     private boolean checkreceivedQuestion;
 
-    public Domanda(ClientInterface clientInterface) {
+    Domanda(ClientInterface clientInterface) {
         f = new TriviaFont();
         this.clientInterface = clientInterface;
     }
@@ -39,22 +43,21 @@ public class Domanda extends BasicGameState {
     @Override
     public int getID() { return 6; }
 
-    public void setCheckreceivedQuestion(boolean check){
+    void setCheckreceivedQuestion(boolean check){
         this.checkreceivedQuestion=check;
     }
+
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) {
         fonx1 = new TrueTypeFont(f.getFont().deriveFont(23f), false);
     }
 
     /**
-     * Visualizzo nella grafica le domande e le risposte.
-     * Se ho risposto, aggiorno il flag relativo. In base al valore di esito visualizzo risposta1 o
-     * risposta2. Se ho risposto e ho visualizzato la stringa, end = true.
+     * Visualizzo nella grafica le domande e le risposte. Se ho risposto, aggiorno il flag relativo. In base al valore
+     * di esito visualizzo risposta1 o risposta2. Se ho risposto e ho visualizzato la stringa, end = true.
      */
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
-
         if(!checkreceivedQuestion){
             question=clientInterface.getQuestion();
             checkreceivedQuestion=true;
@@ -76,7 +79,7 @@ public class Domanda extends BasicGameState {
     /**
      * Controllo le coordinate delle risposte in cui l'utente clicca. In ogni caso, posso cliccare solo
      * se premo il tasto sinistro del mouse e se non ho già risposto. Una volta cliccato, aggiorno
-     * il flag answered e mi salvo l'esito della risposta utilizzando l'interfaccia controller.
+     * il flag answered, clicked e mi salvo l'esito della risposta ricevuta dal server.
      */
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) {
@@ -85,50 +88,34 @@ public class Domanda extends BasicGameState {
 
         if (posX>1105 && posX<1410){
             if (posY<604 && posY>542) {
-                if (Mouse.isButtonDown(0) && !answered) {
-                    clientInterface.sendindex(0);
-                    esito = clientInterface.receiveOutcome();
-                    answered = true;
-                    clicked=true;
-                }
+                if (Mouse.isButtonDown(0) && !answered)
+                    updateInformation(0);
+
             }
             if (posY<527 && posY>486) {
-                if (Mouse.isButtonDown(0) && !answered) {
-                    clientInterface.sendindex(1);
-                    esito = clientInterface.receiveOutcome();
-                    answered = true;
-                    clicked=true;
-                }
+                if (Mouse.isButtonDown(0) && !answered)
+                   updateInformation(1);
             }
             if (posY<472 && posY>430) {
-                if (Mouse.isButtonDown(0) && !answered) {
-                    clientInterface.sendindex(2);
-                    esito=clientInterface.receiveOutcome();
-                    answered = true;
-                    clicked=true;
-                }
+                if (Mouse.isButtonDown(0) && !answered)
+                    updateInformation(2);
             }
             if (posY<410 && posY>372) {
-                if (Mouse.isButtonDown(0) && !answered){
-                    clientInterface.sendindex(3);
-                    esito=clientInterface.receiveOutcome();
-                    answered = true;
-                    clicked=true;
-                }
+                if (Mouse.isButtonDown(0) && !answered)
+                    updateInformation(3);
             }
         }
     }
 
-    public void reset(){
-        esito = false;
-        answered = false;
+    private void updateInformation (int index) {
+        clientInterface.sendindex(index);
+        esito = clientInterface.receiveOutcome();
+        answered = true;
+        clicked = true;
+
     }
 
-    public boolean isEsito() {
-        return esito;
-    }
-
-    public void drawQuestion(){
+    private void drawQuestion(){
         if(question.getQuestion().length()>60) {
             String part1=question.getQuestion().substring(0,30);
             String part2=question.getQuestion().substring(30,60);
@@ -146,11 +133,20 @@ public class Domanda extends BasicGameState {
         else fonx1.drawString( 1190,340, question.getQuestion(), Color.black);
     }
 
-    public boolean isClicked() {
+    void reset(){
+        esito = false;
+        answered = false;
+    }
+
+    boolean isEsito() {
+        return esito;
+    }
+
+    boolean isClicked() {
         return clicked;
     }
 
-    public void setClicked(boolean clicked) {
+    void setClicked(boolean clicked) {
         this.clicked = clicked;
     }
 }
