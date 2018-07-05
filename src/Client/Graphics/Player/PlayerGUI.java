@@ -64,57 +64,18 @@ public class PlayerGUI {
            updateBack(x,y,delta);
     }
 
-    public void updateForward(int x,int y,int delta){
-        /*if (x < finali.getX()) {
-            piece.setMvdx();
-            x += 1;
-            if (x >= finali.getX()) {
-                x = finali.getX();
-            }
-            update.setX(x);
-        } else
-            if(y < finali.getY()) {
-                piece.setMvdwn();
-                y += 1;
-                if (y >= finali.getY()) {
-                    y = finali.getY();
-                }
-                update.setY(y);
-            }
-            else
-                if (x > finali.getX()) {
-                    piece.setMvsx();
-                    x -= 1;
-                    if (x <= finali.getX()) {
-                        x = finali.getX();
-                    }
-                    update.setX(x);
-                }
-                else if (y > finali.getY()) {
-                    piece.setMvup();
-                    y -= 1;
-                    if (y <= finali.getY()) {
-                        y = finali.getY();
-                    }
-                    update.setY(y);
-                } else {
-                    piece.getCurrentImage().stop();
-                    if(clicked) {
-                        ready = true;
-                    }
-                }*/
+    public void updateForward(int x,int y, int delta){
+
         if (x != finali.getX() || y != finali.getY()) {
-                if (y == (p.getMinime().getY()*minMovement) && x >= p.getMinime().getX()*minMovement) {
-                    piece.setMvdx();
-                    x += 0.45;
-                    if (x >= finali.getX()) {
-                        x = finali.getX();
-                    }
+                if (y == (p.getMinime().getY()*minMovement) && x < p.getMassime().getX()*minMovement) {
+
+                    x += 1;
                     System.out.println("xUpdate1: " +x + "yUpdate1: " +y);
                     update.setX(x);
+                    piece.setMvdx();
                 } else
-                if (y < (p.getMassime().getY()*minMovement) && x == (p.getMassime().getX()*minMovement)) {
-                    y += 0.45;
+                if ( x == (p.getMassime().getX()*minMovement)  && y < (p.getMassime().getY()*minMovement) ) {
+                    y += 1;
                     System.out.println("xUpdate2: " +x + "yUpdate2: " +y);
                     update.setY(y);
                     piece.setMvdwn();
@@ -141,21 +102,23 @@ public class PlayerGUI {
     }
 
     public void updateBack(int x,int y,int delta){
+
         if (x != finali.getX() || y != finali.getY()) {
-           if(x==(p.getMassime().getX()*minMovement)&&y>(p.getMinime().getY()*minMovement)){
-               y-= 0.15*delta;
+
+           if(x==(p.getMassime().getX()*minMovement) && y>(p.getMinime().getY()*minMovement)){
+               y-= 0.15;
                update.setY(y);
                piece.setMvup();
-           }else if(y==(p.getMinime().getY()*minMovement)&&x>(p.getMinime().getX()*minMovement)){
-               x-= 0.15*delta;
+           }else if(y==(p.getMinime().getY()*minMovement) && x>(p.getMinime().getX()*minMovement)){
+               x-= 0.15;
                update.setX(x);
                piece.setMvsx();
-           }else if(x==(p.getMinime().getX()*minMovement)&&y<(p.getMassime().getY()*minMovement)){
-               y+= 0.45*delta;
+           }else if(x==(p.getMinime().getX()*minMovement) && y<(p.getMassime().getY()*minMovement)){
+               y+= 1;
                update.setY(y);
                piece.setMvdwn();
-           }else if(y==(p.getMassime().getY()*minMovement)&&x<(p.getMassime().getX()*minMovement)){
-               x+= 0.45*delta;
+           }else if(y==(p.getMassime().getY()*minMovement) && x<(p.getMassime().getX()*minMovement)){
+               x+= 1;
                update.setX(x);
                piece.setMvdx();
            }
