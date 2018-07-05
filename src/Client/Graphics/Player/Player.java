@@ -21,7 +21,7 @@ public class Player{
 
     public Player(String name,int id,Map map){
         this.id = id;
-        matrice = new Coordinate(map.getXmax(), map.getYmax());
+        matrice = new Coordinate(map.getdimO(), map.getdimV());
         switch(id){
             case 1:
                 minime = new Coordinate(0,0);
