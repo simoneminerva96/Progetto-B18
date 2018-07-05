@@ -264,10 +264,13 @@ public class Trivia extends BasicGameState {
         if (launched) {
             if (input.isMousePressed(0)) {
                 if (ypos > 45 && ypos < 145) {
-                    if (xpos > 1045 && xpos < 1160)
+                    if (xpos > 1045 && xpos < 1160) {
                         updateGui(Direction.FORWARD);
-                    if (xpos > 1180 && xpos < 1290)
+                    }
+                    if (xpos > 1180 && xpos < 1290) {
                         updateGui(Direction.BACK);
+                    }
+
                 }
             }
         }

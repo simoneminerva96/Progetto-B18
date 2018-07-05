@@ -65,28 +65,68 @@ public class PlayerGUI {
     }
 
     public void updateForward(int x,int y,int delta){
-
-        if (x != finali.getX() || y != finali.getY()) {
+        if (x < finali.getX()) {
+            piece.setMvdx();
+            x += 0.45*delta-0.3;
+            if (x >= finali.getX()) {
+                x = finali.getX();
+            }
+            update.setX(x);
+        } else
+            if(y < finali.getY()) {
+                piece.setMvdwn();
+                y += 0.45;
+                if (y >= finali.getY()) {
+                    y = finali.getY();
+                }
+                update.setY(y);
+            }
+            else
+                if (x > finali.getX()) {
+                    piece.setMvsx();
+                    x -= 0.45;
+                    if (x <= finali.getX()) {
+                        x = finali.getX();
+                    }
+                    update.setX(x);
+                }
+                else if (y > finali.getY()) {
+                    piece.setMvup();
+                    y -= 0.45;
+                    if (y <= finali.getY()) {
+                        y = finali.getY();
+                    }
+                    update.setY(y);
+                } else {
+                    piece.getCurrentImage().stop();
+                    if(clicked) {
+                        ready = true;
+                    }
+                }
+        /*if (x != finali.getX() || y != finali.getY()) {
                 if (y == (p.getMinime().getY()*minMovement) && x >= p.getMinime().getX()*minMovement) {
-                    x += 0.45*delta;
+                    piece.setMvdx();
+                    x += 0.45;
+                    if (x >= finali.getX()) {
+                        x = finali.getX();
+                    }
                     System.out.println("xUpdate1: " +x + "yUpdate1: " +y);
                     update.setX(x);
-                    piece.setMvdx();
                 } else
                 if (y < (p.getMassime().getY()*minMovement) && x == (p.getMassime().getX()*minMovement)) {
-                    y += 0.45*delta;
+                    y += 0.45;
                     System.out.println("xUpdate2: " +x + "yUpdate2: " +y);
                     update.setY(y);
                     piece.setMvdwn();
                 } else
                 if (y == (p.getMassime().getY()*minMovement) && x > (p.getMinime().getX()*minMovement)) {
-                    x -= 0.15*delta;
+                    x -= 0.15;
                     System.out.println("xUpdate3: " +x + "yUpdate3: " +y);
                     update.setX(x);
                     piece.setMvsx();
                 } else
                 if (x == (p.getMinime().getX()*minMovement) && y > (p.getMinime().getY()*minMovement)) {
-                    y -= 0.15*delta;
+                    y -= 0.15;
                     System.out.println("xUpdate4: " +x + "yUpdate4: " +y);
                     update.setY(y);
                     piece.setMvup();
@@ -96,7 +136,7 @@ public class PlayerGUI {
             if (clicked) {
                 ready = true;
             }
-        }
+        }*/
 
     }
 
@@ -126,38 +166,21 @@ public class PlayerGUI {
             }
         }
     }
-    public float getxUpdate() {
-        return update.getX();
-    }
+    public float getxUpdate() { return update.getX(); }
 
-    public float getyUpdate() {
-        return update.getY();
-    }
+    public float getyUpdate() { return update.getY(); }
 
-    public Animation getPedina(){
-        return piece.getCurrentImage();
-    }
+    public Animation getPedina(){ return piece.getCurrentImage(); }
 
-    public boolean isReady() {
-        return ready;
-    }
+    public boolean isReady() { return ready; }
 
-    public void setReady(boolean ready) {
-        this.ready = ready;
-    }
+    public void setReady(boolean ready) { this.ready = ready; }
 
-    public void setClicked(boolean clicked) {
-        this.clicked = clicked;
-    }
+    public void setClicked(boolean clicked) { this.clicked = clicked; }
 
-    public String getName() {
-        return p.getName();
-    }
+    public String getName() { return p.getName(); }
 
-    //classe player della grafica
-    public Player getP() {
-        return p;
-    }
+    public Player getP() { return p; }
 
     public void addSliceObtained (Slice slice) { slc.add(slice); }
 
