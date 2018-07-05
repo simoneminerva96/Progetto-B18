@@ -122,6 +122,7 @@ public class Turn {
             playerOnTurn.obtainSlice(categoryOfTheSlice);
             categoriesOfTheSliceObtained = categoryOfTheSlice;
         }
+        else isFinalQuestion = false;
     }
 
     public Boolean verifyVictory(){
