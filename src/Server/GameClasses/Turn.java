@@ -105,7 +105,7 @@ public class Turn {
 
     boolean getCorrectAnswer(){ return this.correctAnswer; }
 
-    /**RITORNA TRUE SE IL GIOCATORE HA OTTENUTO LO SPICCHIO */
+    /**AGGIUNGE LO SPICCHIO AL GIOCATORE SE LA DOMANDA è UNA DOMANDA FINALE*/
     private void obtainSlice(){
         Square actualSquare=getcurrentSquare();
         if(actualSquare instanceof FinalQuestionSquare){
