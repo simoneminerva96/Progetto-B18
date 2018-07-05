@@ -78,7 +78,7 @@ public class ServerInterface extends Thread implements Serializable {
     //riceve le credenziali per il login/registrazione dal client
     public boolean getCredenziali(){
         boolean check = false;
-        Credenziali credenziali = null;
+        Credenziali credenziali;
         try {
             credenziali = (Credenziali) in.readObject();
             typeOfRequest = (TypeOfRequest) in.readObject();
