@@ -65,9 +65,9 @@ public class PlayerGUI {
     }
 
     public void updateForward(int x,int y,int delta){
-        if (x < finali.getX()) {
+        /*if (x < finali.getX()) {
             piece.setMvdx();
-            x += 0.45*delta-0.3;
+            x += 1;
             if (x >= finali.getX()) {
                 x = finali.getX();
             }
@@ -75,7 +75,7 @@ public class PlayerGUI {
         } else
             if(y < finali.getY()) {
                 piece.setMvdwn();
-                y += 0.45;
+                y += 1;
                 if (y >= finali.getY()) {
                     y = finali.getY();
                 }
@@ -84,7 +84,7 @@ public class PlayerGUI {
             else
                 if (x > finali.getX()) {
                     piece.setMvsx();
-                    x -= 0.45;
+                    x -= 1;
                     if (x <= finali.getX()) {
                         x = finali.getX();
                     }
@@ -92,7 +92,7 @@ public class PlayerGUI {
                 }
                 else if (y > finali.getY()) {
                     piece.setMvup();
-                    y -= 0.45;
+                    y -= 1;
                     if (y <= finali.getY()) {
                         y = finali.getY();
                     }
@@ -102,8 +102,8 @@ public class PlayerGUI {
                     if(clicked) {
                         ready = true;
                     }
-                }
-        /*if (x != finali.getX() || y != finali.getY()) {
+                }*/
+        if (x != finali.getX() || y != finali.getY()) {
                 if (y == (p.getMinime().getY()*minMovement) && x >= p.getMinime().getX()*minMovement) {
                     piece.setMvdx();
                     x += 0.45;
@@ -136,7 +136,7 @@ public class PlayerGUI {
             if (clicked) {
                 ready = true;
             }
-        }*/
+        }
 
     }
 
