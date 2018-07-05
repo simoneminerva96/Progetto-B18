@@ -148,10 +148,12 @@ public class Trivia extends BasicGameState {
         if (launched) { d.getCurrentDie().draw(1550, 870); }
 
         /*
-        Se la pedina si è fermata (ready=true) controllo se è una casella di bonus malus. Se non è una bonus malus
+            METODI DI VERIFICA STATO POSIZIONE UTENTE
+         Se la pedina si è fermata (ready=true) controllo se è una casella di bonus malus.Se non è una bonus malus
          controllo se è la casella iniziale, se non è allora posso renderizzare la domanda, altrimenti controllo
          se ho vinto o se passo il turno. Se ho risposto e mi è uscita la stringa, allora resetto ready e launched.
          */
+
         checkReady(gameContainer,stateBasedGame,graphics);
 
         if (esc.isQuit()) {
@@ -223,6 +225,7 @@ public class Trivia extends BasicGameState {
         }
     }
 
+
     private void checkReady(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics){
         if (pGUI.get(indexPlayerOnTurn).isReady() ) {
             //entra se è una bonus/malus o random
@@ -240,6 +243,7 @@ public class Trivia extends BasicGameState {
 
     }
 
+    //verifica se l'utente è su una casella bonusmalus
     private void checkBonusMalusState(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics){
         //se il checkbonusmalus è vero esegui l'effetto del bonus malus
         if (checkBonusMalus) {
@@ -262,19 +266,18 @@ public class Trivia extends BasicGameState {
                 }
             }
         }
-        // se non sono nella casella iniziale visualizzo una domanda
         else {
             //ricevo check se la casella in cui sono è la casella iniziale
             if(!checkreceivedInitialSquare){
                 checkinitialSquare=clientInterface.getCheckInitialSquare();
                 checkreceivedInitialSquare=true;
             }
-            //se non sono sulla casella iniziale renderizzo la domanda
             checkVictoryState(gameContainer,stateBasedGame,graphics);
 
         }
     }
 
+    //render dello state domanda  / verifica se l'utente ha vinto
     private void checkVictoryState(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics){
         //se non sono sulla casella iniziale renderizzo la domanda
         if (!checkinitialSquare) {

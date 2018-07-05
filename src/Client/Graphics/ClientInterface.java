@@ -41,9 +41,7 @@ public class ClientInterface implements Serializable {
         boolean check = false;
         try {
             check = (boolean) in.readObject();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return check;
@@ -80,9 +78,7 @@ public class ClientInterface implements Serializable {
         ArrayList<Integer> results=new ArrayList<>();
         try {
             results.addAll((ArrayList< Integer>)in.readObject());
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return results;
@@ -92,9 +88,7 @@ public class ClientInterface implements Serializable {
         int diceValue = 0;
         try {
             diceValue = (int) in.readObject();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return diceValue;
@@ -112,9 +106,7 @@ public class ClientInterface implements Serializable {
         Question question = null;
         try {
             question = (Question) in.readObject();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return question;
@@ -125,9 +117,7 @@ public class ClientInterface implements Serializable {
         boolean esito = false;
         try {
             esito = (boolean) in.readObject();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return esito;
@@ -137,9 +127,7 @@ public class ClientInterface implements Serializable {
         BonusMalusRandom bonusMalus=null;
         try {
             bonusMalus = (BonusMalusRandom) in.readObject();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return bonusMalus;
@@ -149,9 +137,7 @@ public class ClientInterface implements Serializable {
         boolean check=false;
         try {
             check = (boolean) in.readObject();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return check;
@@ -161,9 +147,7 @@ public class ClientInterface implements Serializable {
         ArrayList<String>nicknames=new ArrayList<>();
         try{
             nicknames.addAll((ArrayList<String>) in.readObject());
-        }catch(IOException e){
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        }catch(Exception e){
             e.printStackTrace();
         }
         return nicknames;
@@ -173,9 +157,7 @@ public class ClientInterface implements Serializable {
         String c = null;
         try {
             c = (String) in.readObject();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return c;

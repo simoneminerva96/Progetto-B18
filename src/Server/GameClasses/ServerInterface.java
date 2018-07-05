@@ -95,9 +95,7 @@ public class ServerInterface extends Thread implements Serializable {
             }
             sendCheck(check);
         }
-        catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        catch (Exception e) {
             e.printStackTrace();
         }
         return loginEffettuato;
@@ -108,9 +106,7 @@ public class ServerInterface extends Thread implements Serializable {
         Integer index=0;
         try {
             index = (int) in.readObject();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return index;
@@ -121,9 +117,7 @@ public class ServerInterface extends Thread implements Serializable {
         try {
             check = (boolean) in.readObject();
             System.out.println("receive outcome: " +check);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return check;
@@ -185,9 +179,7 @@ public class ServerInterface extends Thread implements Serializable {
         Direction direction=null;
         try {
             direction=(Direction)in.readObject();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return direction;
