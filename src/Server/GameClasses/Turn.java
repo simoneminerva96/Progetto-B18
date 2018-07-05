@@ -38,6 +38,7 @@ public class Turn {
     //metodo che effettua il lancio del dado
     public int dieLaunch(){
         dieresult=die.Launch();
+        System.out.println("DIERESULT: "+dieresult);
         return dieresult;
     }
 

@@ -12,6 +12,7 @@ public class ServerInterface extends Thread implements Serializable {
     private int numberOfPlayers;
     private boolean esitoRisposta, loginEffettuato;
     private int index;
+    boolean isFinalQuestion;
 
     public ServerInterface(Socket socketClient){
         this.socketClient = socketClient;
@@ -57,13 +58,15 @@ public class ServerInterface extends Thread implements Serializable {
                     sendQuestion();
                     index = getIndex();
                     esitoRisposta = controller.answerQuestion(index);
+                    System.out.println("esito risposta " +esitoRisposta);
                     sendCheck(esitoRisposta);
                     if (esitoRisposta) {
-                        if (controller.isFinalQuestion()) {
-                            System.out.println(controller.getCategoriesOfTheSliceObtained().name());
-                            sendCategories(controller.getCategoriesOfTheSliceObtained());
+                        isFinalQuestion = controller.isFinalQuestion();
+                        System.out.println("is final question: "+ isFinalQuestion);
+                        if (isFinalQuestion) {
+                            sendCategories(controller.getCategoriesOfTheSliceObtained().name());
                         } else
-                        sendCategories(Categories.Nessuna);
+                        sendCategories("Nessuna");
                     }
                 }
                 else {
@@ -113,6 +116,7 @@ public class ServerInterface extends Thread implements Serializable {
         boolean check = false;
         try {
             check = (boolean) in.readObject();
+            System.out.println("receive outcome: " +check);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
@@ -155,6 +159,7 @@ public class ServerInterface extends Thread implements Serializable {
     public void sendIndex(){
         try{
             out.writeObject(controller.getIndex());
+            System.out.println("send index: "+ controller.getIndex() );
         }
         catch (IOException e){
             e.printStackTrace();
@@ -163,7 +168,9 @@ public class ServerInterface extends Thread implements Serializable {
     //invia il risultato del lancio del dado
     public void sendDiceValue () {
         try {
-            out.writeObject(controller.getDiceValue());
+            int diceN = controller.getDiceValue();
+            out.writeObject(diceN);
+            System.out.println("send dice value: " + diceN);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -184,6 +191,7 @@ public class ServerInterface extends Thread implements Serializable {
     public void sendcheckBonusMalus () {
         try {
             out.writeObject(controller.checkBonusMalus());
+            System.out.println("send check bonus malus: " +controller.checkBonusMalus());
         } catch (IOException e) {
             e.printStackTrace();
 
@@ -217,7 +225,7 @@ public class ServerInterface extends Thread implements Serializable {
         }
     }
 
-    public void sendCategories (Categories categoria) {
+    public void sendCategories (String categoria) {
         try {
             out.writeObject(categoria);
         } catch (IOException e) {

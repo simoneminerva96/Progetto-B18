@@ -2,9 +2,7 @@ package Client.Graphics;
 
 import Server.GameClasses.Question;
 import Client.Graphics.Fonts.TriviaFont;
-import Server.GameClasses.Controller;
 import org.lwjgl.input.Mouse;
-import org.lwjgl.opencl.CL;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -55,22 +53,16 @@ public class Domanda extends BasicGameState {
      */
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
-        int x = 1100;
-        int y = 350;
 
         if(!checkreceivedQuestion){
             question=clientInterface.getQuestion();
             checkreceivedQuestion=true;
         }
-
-        if (question.getQuestion().length() > 20) {
-            y += 20;
-        }
-        fonx1.drawString( x, y, question.getQuestion(), Color.black);
-        fonx1.drawString(x+90,420, question.getAnswers().get(0).getAnswer(), Color.black);
-        fonx1.drawString(x+90,480, question.getAnswers().get(1).getAnswer(), Color.black);
-        fonx1.drawString(x+90,540, question.getAnswers().get(2).getAnswer(), Color.black);
-        fonx1.drawString(x+90,600, question.getAnswers().get(3).getAnswer(), Color.black);
+        fonx1.drawString( 1190,350, question.getQuestion(), Color.black);
+        fonx1.drawString(1190,420, question.getAnswers().get(0).getAnswer(), Color.black);
+        fonx1.drawString(1190,480, question.getAnswers().get(1).getAnswer(), Color.black);
+        fonx1.drawString(1190,540, question.getAnswers().get(2).getAnswer(), Color.black);
+        fonx1.drawString(1190,600, question.getAnswers().get(3).getAnswer(), Color.black);
         if (answered) {
             if (esito) {
                 fonx1.drawString(1190, 700, "RISPOSTA ESATTA!", Color.black);

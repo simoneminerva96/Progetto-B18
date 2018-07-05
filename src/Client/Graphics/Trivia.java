@@ -190,9 +190,10 @@ public class Trivia extends BasicGameState {
                     domanda.render(gameContainer, stateBasedGame, graphics);
                     if (domanda.isEsito()) {
                         if (!checkReceivedSlices) {
-                            Categories c = clientInterface.getCategoriesOfTheSliceObtained();
-                            if (!c.equals(Categories.Nessuna)) {
-                                Slice slice = new Slice(c);
+                            String c = clientInterface.getCategoriesOfTheSliceObtained();
+                            if (!c.equals("Nessuna")) {
+                                Categories categories = Categories.valueOf(c);
+                                Slice slice = new Slice(categories);
                                 pGUI.get(indexPlayerOnTurn).addSliceObtained(slice);
                             }
                             checkReceivedSlices = true;
@@ -245,9 +246,11 @@ public class Trivia extends BasicGameState {
             if (input.isMousePressed(0) && !launched) {
                 clientInterface.sendOutcome(true); //comunica al server che deve eseguire setplayerOnturn
                 indexPlayerOnTurn=clientInterface.getIndex();
+                System.out.println("index player on turn: " + indexPlayerOnTurn);
                 pGUI.get(indexPlayerOnTurn).setClicked(false);
                 launched = true;
                 diceN = clientInterface.getDiceValue();
+                System.out.println("diceN: "+diceN);
                 d.setCurrentDie(diceN);
                 domanda.reset();
                 resetBoolean();

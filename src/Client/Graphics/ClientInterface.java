@@ -168,10 +168,10 @@ public class ClientInterface implements Serializable {
         return nicknames;
     }
 
-    public Categories getCategoriesOfTheSliceObtained () {
-        Categories c = null;
+    public String getCategoriesOfTheSliceObtained () {
+        String c = null;
         try {
-            c = (Categories) in.readObject();
+            c = (String) in.readObject();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
