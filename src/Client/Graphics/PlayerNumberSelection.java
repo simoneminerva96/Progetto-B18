@@ -9,25 +9,30 @@ import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+/**
+ * State in cui si sceglie il numero di giocatori per la partita.
+ * - background: immagine di sfondo
+ * - menuback: sfondo della finestra dei bottoni
+ * - home, back, next, sound : bottoni per tornare alla home, indietro, andare avanti e fare stop o play per la musica
+ * - one, two, three, four: bottoni per scegliere uno, due, tre o quattro giocatori
+ * - array: array di boolean per identificare quale è stato premuto
+ * - clientInterface: oggetto clientInterface per comunicare con il server
+ * - checkSend: controlla che il numero di giocatori venga inviato una volta sola
+ */
 public class PlayerNumberSelection extends BasicGameState {
-
-    public static int numbertosend=1;
+    private static int numbertosend=1;
     private Image background;
     private Image menuback;
     private StateButton home,back,next,sound;
     private NumberButton one,two,three,four;
     private boolean[] array;
     private ClientInterface clientInterface;
-    private boolean checkSend; //serve a controllare che il numero di giocatori venga inviato una sola volta
+    private boolean checkSend;
 
-    public PlayerNumberSelection(ClientInterface clientInterface) {
-        this.clientInterface = clientInterface;
-    }
+    PlayerNumberSelection(ClientInterface clientInterface) { this.clientInterface = clientInterface; }
 
     @Override
-    public int getID() {
-        return 3;
-    }
+    public int getID() { return 3; }
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {

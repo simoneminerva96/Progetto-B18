@@ -16,14 +16,14 @@ import org.newdawn.slick.state.StateBasedGame;
  * @author Rita, Stefano
  *
  *La classe LoginRegistrationInterface rappresenta l'interfaccia in cui avviene sia login che registrazione.
- * - usrname: textfield in cui inserire usrname
- * - psw: textfield in cui inserisco la password
+ * - usrname, psw: textfield in cui inserire usrname
  * - f, fonx1: font utilizzato
  * - regButton: bottone per la registrazione
  * - logButton: bottone per il login
  * - checkR: flag che indica se la registrazione è andata a buon fine oppure no
  * - checkL: flag che indica se la registrazione è andata a buon fine oppure no
  * - music: oggetto di tipo Music per la musica di gioco
+ * - clientInterface: oggetto clientInterface per comunicare con il server
  */
 
 public class LoginRegistrationInterface extends BasicGameState {
@@ -37,7 +37,7 @@ public class LoginRegistrationInterface extends BasicGameState {
     private Music music;
     private ClientInterface clientInterface;
 
-    public LoginRegistrationInterface(ClientInterface clientInterface) {
+    LoginRegistrationInterface(ClientInterface clientInterface) {
         f = new TriviaFont();
         this.clientInterface = clientInterface;
     }
@@ -72,19 +72,16 @@ public class LoginRegistrationInterface extends BasicGameState {
         fonx1.drawString(700,450,"INSERISCI PASSWORD", org.newdawn.slick.Color.white);
 
         if (regButton.isClicked()) {
-            if (checkR) {
+            if (checkR)
                 fonx1.drawString(590,100, "Registrazione effettuata con successo", org.newdawn.slick.Color.blue);
-            }
             else fonx1.drawString(590,100, "Registrazione fallita", org.newdawn.slick.Color.blue);
         }
 
         if(logButton.isClicked()){
-            if (!checkL) {
+            if (!checkL)
                 fonx1.drawString(590,20, "Username o password errati", org.newdawn.slick.Color.blue);
-            }
-            else {
+            else
                 stateBasedGame.enterState(2);
-            }
         }
     }
 

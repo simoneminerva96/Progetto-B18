@@ -90,7 +90,6 @@ public class Domanda extends BasicGameState {
             if (posY<604 && posY>542) {
                 if (Mouse.isButtonDown(0) && !answered)
                     updateInformation(0);
-
             }
             if (posY<527 && posY>486) {
                 if (Mouse.isButtonDown(0) && !answered)
@@ -112,7 +111,6 @@ public class Domanda extends BasicGameState {
         esito = clientInterface.receiveOutcome();
         answered = true;
         clicked = true;
-
     }
 
     private void drawQuestion(){
@@ -138,15 +136,9 @@ public class Domanda extends BasicGameState {
         answered = false;
     }
 
-    boolean isEsito() {
-        return esito;
-    }
+    boolean isEsito() { return esito; }
 
-    boolean isClicked() {
-        return clicked;
-    }
+    boolean isClicked() { return clicked; }
 
-    void setClicked(boolean clicked) {
-        this.clicked = clicked;
-    }
+    void setClicked(boolean clicked) { this.clicked = clicked; }
 }
