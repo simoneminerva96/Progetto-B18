@@ -10,11 +10,13 @@ import java.util.ArrayList;
 public class ClientInterface implements Serializable {
     private ObjectOutputStream out = null;
     private ObjectInputStream in = null;
+    private boolean connected = false;
 
-    public ClientInterface(){
+    ClientInterface(){
         try {
             Socket server = new Socket(InetAddress.getLocalHost(),8888);
             System.out.println("Connessione al server effettuata");
+            connected = true;
             out = new ObjectOutputStream(server.getOutputStream());
             in = new ObjectInputStream(server.getInputStream());
 
@@ -23,19 +25,17 @@ public class ClientInterface implements Serializable {
         }
     }
 
-    public void sendCredential(String usr, String psw, TypeOfRequest typeOfRequest){
-        System.out.println("user " +usr + "psw " + psw);
+    void sendCredential(String usr, String psw, TypeOfRequest typeOfRequest){
         Credenziali credenziali = new Credenziali(usr, psw);
         try {
             out.writeObject(credenziali);
             out.writeObject(typeOfRequest);
-
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public boolean receiveOutcome (){
+    boolean receiveOutcome (){
         boolean check = false;
         try {
             check = (boolean) in.readObject();
@@ -47,10 +47,10 @@ public class ClientInterface implements Serializable {
         return check;
     }
 
-    //metodo generico che invia un check al server (per fargli eseguire determinare operaz.)
-    public void sendOutcome(boolean check){
+    /**metodo generico che invia un check al server (per fargli eseguire determinare operaz.) */
+    void sendOutcome(){
         try {
-            out.writeObject(check);
+            out.writeObject(true);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -60,15 +60,13 @@ public class ClientInterface implements Serializable {
         int index =-1;
         try {
             index = (Integer)in.readObject();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return index;
     }
 
-    public void sendindex(int n){
+    void sendindex(int n){
         try {
             out.writeObject(n);
         } catch (IOException e) {
@@ -76,7 +74,7 @@ public class ClientInterface implements Serializable {
         }
     }
 
-    public ArrayList<Integer> getResultsOfRoll(){
+    ArrayList<Integer> getResultsOfRoll(){
         ArrayList<Integer> results=new ArrayList<>();
         try {
             results.addAll((ArrayList< Integer>)in.readObject());
@@ -88,7 +86,7 @@ public class ClientInterface implements Serializable {
         return results;
     }
 
-    public int getDiceValue () {
+    int getDiceValue () {
         int diceValue = 0;
         try {
             diceValue = (int) in.readObject();
@@ -100,7 +98,7 @@ public class ClientInterface implements Serializable {
         return diceValue;
     }
 
-    public void sendDirection (Direction direction) {
+    void sendDirection (Direction direction) {
         try {
             out.writeObject(direction);
         } catch (IOException e) {
@@ -121,7 +119,7 @@ public class ClientInterface implements Serializable {
     }
 
 
-    public boolean checkBonusMalus () {
+    boolean checkBonusMalus () {
         boolean esito = false;
         try {
             esito = (boolean) in.readObject();
@@ -133,7 +131,7 @@ public class ClientInterface implements Serializable {
         return esito;
     }
 
-    public BonusMalusRandom getType () {
+    BonusMalusRandom getType () {
         BonusMalusRandom bonusMalus=null;
         try {
             bonusMalus = (BonusMalusRandom) in.readObject();
@@ -145,7 +143,7 @@ public class ClientInterface implements Serializable {
         return bonusMalus;
     }
 
-    public Boolean getCheckInitialSquare() {
+    Boolean getCheckInitialSquare() {
         boolean check=false;
         try {
             check = (boolean) in.readObject();
@@ -157,7 +155,7 @@ public class ClientInterface implements Serializable {
         return check;
     }
 
-    public ArrayList<String>getNicknames(){
+    ArrayList<String>getNicknames(){
         ArrayList<String>nicknames=new ArrayList<>();
         try{
             nicknames.addAll((ArrayList<String>) in.readObject());
@@ -169,7 +167,7 @@ public class ClientInterface implements Serializable {
         return nicknames;
     }
 
-    public String getCategoriesOfTheSliceObtained () {
+    String getCategoriesOfTheSliceObtained () {
         String c = null;
         try {
             c = (String) in.readObject();
@@ -180,4 +178,6 @@ public class ClientInterface implements Serializable {
         }
         return c;
     }
+
+    boolean isConnected() { return connected; }
 }

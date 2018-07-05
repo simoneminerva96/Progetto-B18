@@ -5,18 +5,18 @@ import Client.Graphics.Map.Map;
 
 /**
  * @author Stefano
- *
  * La classe Player contiene le informazioni relative al singolo giocatore. È caratterizzato da:
  * - name: nome del giocatore
+ * - id: id del giocatore
  * - Coordinate minime, massime, finali, matrice
  * - direction: direzione di spostamento
- * - isOnLeft, isOnRight, isOnUp, isOnDown
  */
 
 public class Player{
     private Coordinate minime, massime, finali, matrice;
     private int id;
     private String name;
+    private final int MINMOVEMENT = 2;
     private Direction direction = Direction.FORWARD;
 
     public Player(String name,int id,Map map){
@@ -45,7 +45,6 @@ public class Player{
         }
         finali = new Coordinate(massime.getX(), massime.getY());
         this.name = name;
-
     }
 
     /**
@@ -55,7 +54,54 @@ public class Player{
      */
     public void update(int die,Direction direction) {
         this.direction = direction;
-        finali.calculate(minime,massime,die,direction);
+        if (direction == Direction.FORWARD) {
+            finali = checkForward(minime, massime, die);
+        } else
+            finali = checkBack(minime, massime, die);
+    }
+
+    private Coordinate checkForward (Coordinate minime, Coordinate massime, int die) {
+        int x = finali.getX();
+        int y = finali.getY();
+
+        for(int i = 0; i<die; i++) {
+            if (y == minime.getY() && x < massime.getX()) {
+                x += MINMOVEMENT;
+            }
+            else
+            if (y < massime.getY() && x == massime.getX()) {
+                y += MINMOVEMENT;
+            } else
+            if (y == massime.getY() && x > minime.getX()) {
+                x -= MINMOVEMENT;
+            } else
+            if (x == minime.getX() && y > minime.getY()) {
+                y -= MINMOVEMENT;
+            }
+        }
+        return new Coordinate(x,y);
+    }
+
+    private Coordinate checkBack (Coordinate minime, Coordinate massime, int die) {
+        int x = finali.getX();
+        int y = finali.getY();
+
+        for(int i = 0; i<die; i++) {
+            if (x == massime.getX() && y > minime.getY()) {
+                y -= MINMOVEMENT;
+            }
+            else
+            if (y == minime.getY() && x > minime.getX()) {
+                x -= MINMOVEMENT;
+            } else
+            if (x == minime.getX() && y < massime.getY()) {
+                y += MINMOVEMENT;
+            } else
+            if (y == massime.getY() && x < massime.getX()) {
+                x += MINMOVEMENT;
+            }
+        }
+        return new Coordinate(x,y);
     }
 
     public String getName() {

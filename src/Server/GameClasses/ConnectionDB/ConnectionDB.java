@@ -22,17 +22,17 @@ public class ConnectionDB {
 
     /**metodo che ritorna l'arraylist delle domande corrispondenti al codice passato */
     public ArrayList<Question> getQuestion (String cod) throws SQLException{
-        Integer i=1;
-        ArrayList<Answer> answers=new ArrayList<>();
-        ArrayList<Question> questions=new ArrayList<>();
-
         cn = DriverManager.getConnection("jdbc:mysql://93.41.247.149:3306/trivial?useSSL=false", "root", "root");
         sql = "select ID_QUEST, DESCRIZIONE, RISPOSTA, VALUE from domande join risposte on ID_QUEST = ID_DOMANDA where ID_QUEST LIKE \"" + cod + "%\"";
+
         // ________________________________query
+        ArrayList<Question> questions=new ArrayList<>();
 
         try {
             st = cn.createStatement(); //creo un statement sulla connessione
             rs = st.executeQuery(sql); //faccio la query sullo statement
+            Integer i=1;
+            ArrayList<Answer> answers=new ArrayList<>();
             while (rs.next())
                 if(i%4!=0){
                     Boolean correct=conversionDB(rs.getString("VALUE"));
