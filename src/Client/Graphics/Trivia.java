@@ -154,7 +154,18 @@ public class Trivia extends BasicGameState {
          controllo se è la casella iniziale, se non è allora posso renderizzare la domanda, altrimenti controllo
          se ho vinto o se passo il turno. Se ho risposto e mi è uscita la stringa, allora resetto ready e launched.
          */
+        checkReady(gameContainer,stateBasedGame,graphics);
 
+        if (esc.isQuit()) {
+            try {
+                esc.render(gameContainer, stateBasedGame, graphics);
+            } catch (SlickException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void checkReady(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics){
         if (pGUI.get(indexPlayerOnTurn).isReady() ) {
             //entra se è una bonus/malus o random
 
@@ -164,75 +175,79 @@ public class Trivia extends BasicGameState {
                 checkreceivedBonusMalus=true;
             }
             //se il checkbonusmalus è vero esegui l'effetto del bonus malus
-            if (checkBonusMalus) {
-                //ricevo il tipo estratto
-                if(!checkreceivedtype){
-                    checktype=clientInterface.getType();
-                    checkreceivedtype=true;
-                }
-                //a seconda del tipo estratto eseguo bonus o malus
-                switch (checktype) {
-                    case BONUS: {
-                        fonx1.drawString(1190, 700, "PUOI RILANCIARE IL DADO!", Color.black);
-                        domanda.setClicked(true);
-                        break;
-                    }
-                    case MALUS: {
-                        fonx1.drawString(1190, 700, "HAI PERSO IL TURNO!", Color.black);
-                        domanda.setClicked(true);
-                        break;
-                    }
-                }
-            }
-            // se non sono nella casella iniziale visualizzo una domanda
-            else {
-                //ricevo check se la casella in cui sono è la casella iniziale
-                if(!checkreceivedInitialSquare){
-                    checkinitialSquare=clientInterface.getCheckInitialSquare();
-                    checkreceivedInitialSquare=true;
-                }
-                //se non sono sulla casella iniziale renderizzo la domanda
-                if (!checkinitialSquare) {
-                    domanda.render(gameContainer, stateBasedGame, graphics);
-                    if (domanda.isEsito()) {
-                        if (!checkReceivedSlices) {
-                            String c = clientInterface.getCategoriesOfTheSliceObtained();
-                            if (!c.equals("Nessuna")) {
-                                Categories categories = Categories.valueOf(c);
-                                Slice slice = new Slice(categories);
-                                pGUI.get(indexPlayerOnTurn).addSliceObtained(slice);
-                            }
-                            checkReceivedSlices = true;
-                        }
-                    }
-                }
-                // se sono nella casella iniziale controllo se ho abbastanza spicchi per la vittoria, altrimenti
-                // passa il turno
-                else {
-                    if(!checkreceivedVictory){
-                        checkplayerVictory=clientInterface.receiveOutcome();
-                        checkreceivedVictory=true;
-                    }
-                    if (checkplayerVictory) {
-                        fonx1.drawString(1190, 700, "HAI VINTO", Color.black);
-                        checkVictory = true;
-                    } else {
-                        fonx1.drawString(1190, 700, "CASELLA INIZIALE, PASSI IL TURNO!", Color.black);
-                        pGUI.get(indexPlayerOnTurn).setReady(false);
-                        domanda.setClicked(true);
-                        launched = false;
-                    }
-                }
-            }
+            checkBonusMalusState(gameContainer,stateBasedGame,graphics);
             pGUI.get(indexPlayerOnTurn).setReady(false);
             launched = false;
         }
 
-        if (esc.isQuit()) {
-            try {
-                esc.render(gameContainer, stateBasedGame, graphics);
-            } catch (SlickException e) {
-                e.printStackTrace();
+    }
+
+    public void checkBonusMalusState(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics){
+        //se il checkbonusmalus è vero esegui l'effetto del bonus malus
+        if (checkBonusMalus) {
+            //ricevo il tipo estratto
+            if(!checkreceivedtype){
+                checktype=clientInterface.getType();
+                checkreceivedtype=true;
+            }
+            //a seconda del tipo estratto eseguo bonus o malus
+            switch (checktype) {
+                case BONUS: {
+                    fonx1.drawString(1190, 700, "PUOI RILANCIARE IL DADO!", Color.black);
+                    domanda.setClicked(true);
+                    break;
+                }
+                case MALUS: {
+                    fonx1.drawString(1190, 700, "HAI PERSO IL TURNO!", Color.black);
+                    domanda.setClicked(true);
+                    break;
+                }
+            }
+        }
+        // se non sono nella casella iniziale visualizzo una domanda
+        else {
+            //ricevo check se la casella in cui sono è la casella iniziale
+            if(!checkreceivedInitialSquare){
+                checkinitialSquare=clientInterface.getCheckInitialSquare();
+                checkreceivedInitialSquare=true;
+            }
+            //se non sono sulla casella iniziale renderizzo la domanda
+            checkVictoryState(gameContainer,stateBasedGame,graphics);
+
+        }
+    }
+
+    public void checkVictoryState(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics){
+        //se non sono sulla casella iniziale renderizzo la domanda
+        if (!checkinitialSquare) {
+            domanda.render(gameContainer, stateBasedGame, graphics);
+            if (domanda.isEsito()) {
+                if (!checkReceivedSlices) {
+                    String c = clientInterface.getCategoriesOfTheSliceObtained();
+                    if (!c.equals("Nessuna")) {
+                        Categories categories = Categories.valueOf(c);
+                        Slice slice = new Slice(categories);
+                        pGUI.get(indexPlayerOnTurn).addSliceObtained(slice);
+                    }
+                    checkReceivedSlices = true;
+                }
+            }
+        }
+        // se sono nella casella iniziale controllo se ho abbastanza spicchi per la vittoria, altrimenti
+        // passa il turno
+        else {
+            if(!checkreceivedVictory){
+                checkplayerVictory=clientInterface.receiveOutcome();
+                checkreceivedVictory=true;
+            }
+            if (checkplayerVictory) {
+                fonx1.drawString(1190, 700, "HAI VINTO", Color.black);
+                checkVictory = true;
+            } else {
+                fonx1.drawString(1190, 700, "CASELLA INIZIALE, PASSI IL TURNO!", Color.black);
+                pGUI.get(indexPlayerOnTurn).setReady(false);
+                domanda.setClicked(true);
+                launched = false;
             }
         }
     }
