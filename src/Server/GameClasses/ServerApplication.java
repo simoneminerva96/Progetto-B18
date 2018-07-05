@@ -12,7 +12,7 @@ public class ServerApplication {
         Socket socketClient ;
 
         try {
-            ServerSocket server = new ServerSocket(8888);
+            ServerSocket server = new ServerSocket(1201);
             System.out.println("SERVER IS READY!!!!");
 
             while(true) {
