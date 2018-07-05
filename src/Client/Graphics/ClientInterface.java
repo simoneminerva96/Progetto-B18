@@ -14,7 +14,9 @@ public class ClientInterface implements Serializable {
 
     ClientInterface(){
         try {
-            Socket server = new Socket(InetAddress.getLocalHost(),8888);
+            //93.41.247.149 1201
+            //InetAddress.getLocalHost() 8888
+            Socket server = new Socket("93.41.247.149", 1201);
             System.out.println("Connessione al server effettuata");
             connected = true;
             out = new ObjectOutputStream(server.getOutputStream());
