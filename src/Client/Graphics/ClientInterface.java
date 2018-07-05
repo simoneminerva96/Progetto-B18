@@ -13,7 +13,7 @@ public class ClientInterface implements Serializable {
 
     public ClientInterface(){
         try {
-            Socket server = new Socket("93.41.247.149",1201);
+            Socket server = new Socket(InetAddress.getLocalHost(),8888);
             System.out.println("Connessione al server effettuata");
             out = new ObjectOutputStream(server.getOutputStream());
             in = new ObjectInputStream(server.getInputStream());
@@ -24,6 +24,7 @@ public class ClientInterface implements Serializable {
     }
 
     public void sendCredential(String usr, String psw, TypeOfRequest typeOfRequest){
+        System.out.println("user " +usr + "psw " + psw);
         Credenziali credenziali = new Credenziali(usr, psw);
         try {
             out.writeObject(credenziali);

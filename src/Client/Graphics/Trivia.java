@@ -360,22 +360,22 @@ public class Trivia extends BasicGameState {
 
     private void drawDiamonds(Graphics graphics, Categories c, int x, int y){
         switch (c){
-            case Geografia:
+            case GEOGRAFIA:
                 graphics.drawImage(diamanti.get(5),x+100,y+40 );
                 break;
-            case Storia:
+            case STORIA:
                 graphics.drawImage(diamanti.get(3), x+125,y+40);
                 break;
-            case Scienze:
+            case SCIENZE:
                 graphics.drawImage(diamanti.get(4), x+150,y+40);
                 break;
-            case Spettacolo:
+            case SPETTACOLO:
                 graphics.drawImage(diamanti.get(2), x+175,y+40);
                 break;
-            case ArteLetteratura:
+            case ARTELETTERATURA:
                 graphics.drawImage(diamanti.get(1), x+200,y+40);
                 break;
-            case Sport:
+            case SPORT:
                 graphics.drawImage(diamanti.get(0), x+225,y+40);
                 break;
         }

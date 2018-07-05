@@ -12,9 +12,9 @@ public class ServerInterface extends Thread implements Serializable {
     private int numberOfPlayers;
     private boolean esitoRisposta, loginEffettuato;
     private int index;
-    boolean isFinalQuestion;
+    private boolean isFinalQuestion;
 
-    public ServerInterface(Socket socketClient){
+    ServerInterface(Socket socketClient){
         this.socketClient = socketClient;
         controller = new Controller();
         try{
@@ -75,8 +75,9 @@ public class ServerInterface extends Thread implements Serializable {
             }
         }
     }
-    //riceve le credenziali per il login/registrazione dal client
-    public boolean getCredenziali(){
+
+    /** riceve le credenziali per il login/registrazione dal client. Restituisce true se è stato effettuato il login*/
+    private boolean getCredenziali(){
         boolean check = false;
         Credenziali credenziali;
         try {
@@ -101,7 +102,9 @@ public class ServerInterface extends Thread implements Serializable {
         }
         return loginEffettuato;
     }
-    public int getIndex(){
+
+    /** riceve l'indice della risposta */
+    private int getIndex(){
         Integer index=0;
         try {
             index = (int) in.readObject();
@@ -112,7 +115,8 @@ public class ServerInterface extends Thread implements Serializable {
         }
         return index;
     }
-    public boolean receiveOutcome (){
+    /** riceve un boolean che indica se è stato lanciato il dado*/
+    private boolean receiveOutcome (){
         boolean check = false;
         try {
             check = (boolean) in.readObject();
@@ -125,8 +129,8 @@ public class ServerInterface extends Thread implements Serializable {
         return check;
     }
 
-    //invia al client la conferma di avvenuta registrazione o login
-    public void sendCheck(boolean check){
+    /** invia al client la conferma di avvenuta registrazione o login */
+    private void sendCheck(boolean check){
         try {
             out.writeObject(check);
         }
@@ -134,11 +138,11 @@ public class ServerInterface extends Thread implements Serializable {
             e.printStackTrace();
         }
     }
-    public boolean request (Credenziali credenziali, TypeOfRequest typeOfRequest) {
-        return controller.request(credenziali, typeOfRequest);
-    }
+    /** esegue il login o la registrazione */
+    private boolean request (Credenziali credenziali, TypeOfRequest typeOfRequest) { return controller.request(credenziali, typeOfRequest); }
 
-    public void sendNicknames(){
+    /** invia al client i nickname dei giocatori */
+    private void sendNicknames(){
         try{
             out.writeObject(controller.getOrdinatedNicknames());
         }
@@ -147,7 +151,8 @@ public class ServerInterface extends Thread implements Serializable {
         }
     }
 
-    public void sendResultsOfRoll(){
+    /** invia al client i lanci dei dadi iniziali ottenuti */
+    private void sendResultsOfRoll(){
         try{
             out.writeObject(controller.getResultsOfRoll());
         }
@@ -155,28 +160,28 @@ public class ServerInterface extends Thread implements Serializable {
             e.printStackTrace();
         }
     }
-    //invia l'indice del giocatore che è di turno
-    public void sendIndex(){
+
+    /** invia l'indice del giocatore che è di turno */
+    private void sendIndex(){
         try{
             out.writeObject(controller.getIndex());
-            System.out.println("send index: "+ controller.getIndex() );
         }
         catch (IOException e){
             e.printStackTrace();
         }
     }
-    //invia il risultato del lancio del dado
-    public void sendDiceValue () {
+
+    /** invia il risultato del lancio del dado */
+    private void sendDiceValue () {
         try {
-            int diceN = controller.getDiceValue();
-            out.writeObject(diceN);
-            System.out.println("send dice value: " + diceN);
+            out.writeObject(controller.getDiceValue());
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public Direction getDirection () {
+    /** riceve dal client la direzione presa dal giocatore */
+    private Direction getDirection () {
         Direction direction=null;
         try {
             direction=(Direction)in.readObject();
@@ -188,17 +193,18 @@ public class ServerInterface extends Thread implements Serializable {
         return direction;
     }
 
-    public void sendcheckBonusMalus () {
+    /** invia al client un boolean se la casella è di bonus o malus */
+    private void sendcheckBonusMalus () {
         try {
             out.writeObject(controller.checkBonusMalus());
-            System.out.println("send check bonus malus: " +controller.checkBonusMalus());
         } catch (IOException e) {
             e.printStackTrace();
 
         }
     }
 
-    public void sendType () {
+    /** invia al client il tipo della bonus */
+    private void sendType () {
         try {
             out.writeObject(controller.checkType());
         } catch (IOException e) {
@@ -207,7 +213,8 @@ public class ServerInterface extends Thread implements Serializable {
         }
     }
 
-    public void sendCheckInitialSquare () {
+    /** invia al client se la casella è iniziale o no */
+    private void sendCheckInitialSquare () {
         try {
             out.writeObject(controller.checkInitialSquare());
         } catch (IOException e) {
@@ -216,7 +223,8 @@ public class ServerInterface extends Thread implements Serializable {
         }
     }
 
-    public void sendQuestion () {
+    /** invia al client la domanda e le relative risposte */
+    private void sendQuestion () {
         try {
             out.writeObject(controller.getQuestion());
         } catch (IOException e) {
@@ -225,7 +233,8 @@ public class ServerInterface extends Thread implements Serializable {
         }
     }
 
-    public void sendCategories (String categoria) {
+    /** invia al client la categoria dello spicchio ottenuto oppure la stringa "nessuna" se non è una domanda finale */
+    private void sendCategories (String categoria) {
         try {
             out.writeObject(categoria);
         } catch (IOException e) {

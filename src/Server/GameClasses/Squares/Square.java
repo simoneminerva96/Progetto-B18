@@ -1,7 +1,6 @@
 package Server.GameClasses.Squares;
 
 import Server.GameClasses.Question;
-
 import java.util.ArrayList;
 import java.util.Random;
 /**

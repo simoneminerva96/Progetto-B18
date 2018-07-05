@@ -4,6 +4,7 @@ import Server.GameClasses.*;
 
 public class FinalQuestionSquare extends Square {
     private Categories category;
+
     public FinalQuestionSquare(Integer index,Categories category){
         super(index);
         this.category=category;
