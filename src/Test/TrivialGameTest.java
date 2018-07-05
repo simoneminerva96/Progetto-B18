@@ -1,16 +1,11 @@
 package Test;
 
-import Server.GameClasses.Board;
 import Server.GameClasses.Die;
 import Server.GameClasses.TrivialGame;
-
-
 import java.util.ArrayList;
-
 //import static junit.framework.TestCase.assertTrue;
 //import static org.junit.jupiter.api.Assertions.assertTrue;
 //import static org.junit.jupiter.api.Assertions.assertTrue;
-
 
 class TrivialGameTest {
    //@Test

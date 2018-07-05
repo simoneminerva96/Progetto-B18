@@ -314,18 +314,14 @@ public class Trivia extends BasicGameState {
         for (int i = 0; i <NPLAYERS; i++) {
             Player p = new Player(nicknames.get(i), i + 1, map);
             playerBack.add(new Image("res/backgrounds/PlayerBackgrounds/SfondoGiocatore"+i+".png"));
-            if (i == 0) {
+            if (i == 0)
                 pGUI.add(i, new PlayerGUI(p, piece));
-            }
-            if (i == 1) {
+            if (i == 1)
                 pGUI.add(i, new PlayerGUI(p, piece1));
-            }
-            if (i == 2) {
+            if (i == 2)
                 pGUI.add(i, new PlayerGUI(p, piece2));
-            }
-            if (i == 3) {
+            if (i == 3)
                 pGUI.add(i, new PlayerGUI(p, piece3));
-            }
         }
         for (PlayerGUI p : pGUI) { p.getPedina().stop(); }
         checkreceivedInformationPLAYERS=true;
