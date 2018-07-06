@@ -53,9 +53,6 @@ public class Trivia extends BasicGameState {
 
     private boolean launched = false;
     private boolean checkVictory = false;
-    private boolean launchClick=false;
-    private boolean fwClick=false;
-    private boolean bkClick=false;
 
     private StateButton bkButton;
     private StateButton fwButton;
@@ -176,42 +173,34 @@ public class Trivia extends BasicGameState {
         if(!checkreceivedInformationPLAYERS) initializePlayers();
 
         if(input.isMousePressed(0)){
-            bkClick=bkButton.onClickBoolean(input.getMouseX(),input.getMouseY());
-            fwClick=fwButton.onClickBoolean(input.getMouseX(),input.getMouseY());
-            launchClick=launchButton.onClickBoolean(input.getMouseX(),input.getMouseY());
-        }
-
-
-        /*ottengo il numero estratto, launched=true e aggiorno la
+            /*ottengo il numero estratto, launched=true e aggiorno la
         faccia del dado. Resetto answered, esito a false perchè risponderò ad una domanda.*/
-        if(launchClick){
-            if(!launched && domanda.isClicked()){
-                clientInterface.sendOutcome(); //comunica al server che deve eseguire setplayerOnturn
-                indexPlayerOnTurn=clientInterface.getIndex();
-                pGUI.get(indexPlayerOnTurn).setClicked(false);
-                launched = true;
-                diceN = clientInterface.getDiceValue();
-                d.setCurrentDie(diceN);
-                domanda.reset();
-                domanda.setClicked(false);
-                resetBoolean();
-                launchClick=false;
+            if(launchButton.onClickBoolean(input.getMouseX(),input.getMouseY())){
+                if(!launched && domanda.isClicked()){
+                    clientInterface.sendOutcome(); //comunica al server che deve eseguire setplayerOnturn
+                    indexPlayerOnTurn=clientInterface.getIndex();
+                    pGUI.get(indexPlayerOnTurn).setClicked(false);
+                    launched = true;
+                    diceN = clientInterface.getDiceValue();
+                    d.setCurrentDie(diceN);
+                    domanda.reset();
+                    domanda.setClicked(false);
+                    resetBoolean();
+
+                }
             }
-        }
         /*aggiorno il server sulla direzione presa e
         aggiorno la gui dei giocatori verificando se è stato cliccato il tasto per il lancio del dado*/
-        if(launched){
-            if(bkClick){
-                updateGui(Direction.BACK);
-                bkClick=false;
-            }else if(fwClick){
-                updateGui(Direction.FORWARD);
-                fwClick=false;
+            if(launched){
+                if(bkButton.onClickBoolean(input.getMouseX(),input.getMouseY())){
+                    updateGui(Direction.BACK);
+
+                }else if(fwButton.onClickBoolean(input.getMouseX(),input.getMouseY())){
+                    updateGui(Direction.FORWARD);
+
+                }
             }
         }
-
-
-
         try {
             domanda.update(gameContainer, stateBasedGame, i);
             esc.update(gameContainer, stateBasedGame, i);
