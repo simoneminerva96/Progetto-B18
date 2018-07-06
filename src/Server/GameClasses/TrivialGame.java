@@ -10,19 +10,20 @@ import java.util.*;
 public class TrivialGame {
     private ArrayList<Player> players;      //giocatori partecipanti
     private Die die;        //dado
-    private Board playBoard;        //tabellone di gioco
-    //private BoardProva playBoard;    //tabellone di gioco di prova
+    //private Board playBoard;        //tabellone di gioco
+    private BoardProva playBoard;    //tabellone di gioco di prova
     private Turn turn;      //turno attuale
     private Integer index=0; //INDICE CHE SERVE PER TENER IL CONTO DI QUALE GIOCATORE è IL TURNO
 
     public TrivialGame(){
         players = new ArrayList<>();
         die = new Die();
-        try {
+        playBoard = new BoardProva();
+       /*try {
             playBoard = new Board();
         } catch (SQLException e) {
             e.printStackTrace();
-        }
+        }*/
         turn = new Turn(null,playBoard);    //all'inizio non ho alcun giocatore di turno
     }
 

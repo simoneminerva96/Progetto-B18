@@ -9,8 +9,8 @@ import Server.GameClasses.Squares.*;
 
 public class Turn {
     private final static int NSQUARES=36;
-    //private BoardProva playBoard;    //tabellone di gioco di prova
-    private Board playBoard;    //tabellone di gioco connesso al db
+    private BoardProva playBoard;    //tabellone di gioco di prova
+    //private Board playBoard;    //tabellone di gioco connesso al db
     private Player playerOnTurn;        //giocatore di turno
     private Die die;        //dado per determinare di quanto spostarsi
     private int dieresult;  //risultato del lancio del dado
@@ -20,7 +20,7 @@ public class Turn {
     private boolean isFinalQuestion;
     private Categories categoriesOfTheSliceObtained;
 
-    Turn(Player playerOnTurn,Board playBoard){
+    Turn(Player playerOnTurn,BoardProva playBoard){
         this.playerOnTurn=playerOnTurn;
         this.playBoard=playBoard;
         die=new Die();

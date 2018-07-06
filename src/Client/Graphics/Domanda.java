@@ -60,6 +60,7 @@ public class Domanda extends BasicGameState {
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
         if(!checkreceivedQuestion){
             question=clientInterface.getQuestion();
+            System.out.println("dom: "+ question);
             checkreceivedQuestion=true;
         }
         drawQuestion();
