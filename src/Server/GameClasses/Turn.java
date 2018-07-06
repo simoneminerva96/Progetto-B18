@@ -35,7 +35,6 @@ public class Turn {
     /**metodo che effettua il lancio del dado*/
     int dieLaunch(){
         dieresult=die.Launch();
-        System.out.println("DIERESULT: "+dieresult);
         return dieresult;
     }
 
@@ -93,12 +92,13 @@ public class Turn {
         return currentSquare.visualizeQuestion();
     }
 
-    /**metodo che permette al giocatore di rispondere */
+    /**metodo che permette al giocatore di rispondere. Eventualmente aggiunge lo spicchio della relativa categoria
+     * se la domanda è una di quelle finali. */
     Boolean AnswerQuestion(int indexOfAnswer){
         Square currentSquare=getcurrentSquare();
         correctAnswer=currentSquare.goOnIt(indexOfAnswer);
         if(correctAnswer){
-            this.obtainSlice();//METODO CHE AGGIUNGE AL GIOCATORE LO SPICCHIO DELLA CATEGORIA SE LA DOMANDA è UNA DOM. FINALE
+            this.obtainSlice();
         }
         return correctAnswer;
     }
@@ -118,7 +118,6 @@ public class Turn {
     }
 
     Boolean verifyVictory(){ return playerOnTurn.getSlicesObtained().size() == 6 && playerOnTurn.getActualPosition() ==0; }
-
 
     boolean isFinalQuestion() { return isFinalQuestion; }
 

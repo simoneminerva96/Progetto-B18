@@ -15,28 +15,27 @@ import org.newdawn.slick.state.StateBasedGame;
 import java.util.ArrayList;
 
 /**
- * @author Rita, Stefano
+ * @author Di Cecca Rita, Kothuwa Gamage Stefano
  *
  * La classe Trivia rappresenta lo state del tabellone.
  * - backgroundMap: immagine della mappa di gioco, tabellone
  * - back,forward: immagine freccia che torna indietro e che va avanti
  * - background: sfondo della schermata
- * - rydia, ceodore, kain, luca: immagini delle pedine
- * - d: oggetto di tipo DieGUI utilizzato per visualizzare la faccia del dado ed estrarre il numero
+ * - d: oggetto di tipo DieGUI utilizzato per visualizzare la faccia del dado
  * - map: oggetto di tipo Map associato alla matrice e al tabellone
  * - pGUI: arrayList di GUI dei player
  * - piece1,piece2,piece3,piece4: pedine associate ai player
  * - launch: bottone per lanciare il dado
  * - launched: flag che indica se ho tirato il dado o no
  * - diceN: intero che contiene il numero estratto
- * - domanda: oggetto Domanda, state da renderizzare
- * - esc: oggetto Escape, state da renderizzare
+ * - domanda: state da renderizzare per visualizzare e rispondere alla domanda
+ * - esc: state da renderizzare premendo il tasto ESC che visualizza Menu, Exit e Resume
  * - f, fonx1: font utilizzato
- * - controller: oggetto di tipo Controller per comunicare con la logica
  * - NPLAYERS: numero di giocatori effettivo per la partita
- * - playerBack: arrayList di sfondi
- * - checkVictory: se ho vinto la partita visualizzo stringa e dopo 5s chiude gioco
+ * - playerBack: arrayList di sfondi dei giocatori
+ * - checkVictory: flag che indica se ho vinto la partita. in tal caso, visualizzo stringa e dopo 5s chiude il gioco
  * - diamanti: arrayList di image di diamanti
+ * - indexPlayerOnTurn: indice del giocatore di turno
  */
 
 public class Trivia extends BasicGameState {
@@ -167,10 +166,8 @@ public class Trivia extends BasicGameState {
 
         if(!checkreceivedInformationPLAYERS) initializePlayers();
 
-        /*
-        Se sono nelle coordinate del bottone Launch, ottengo il numero estratto, launched=true e aggiorno la
-        faccia del dado. Resetto answered, esito a false perchè risponderò ad una domanda.
-         */
+        /*Se sono nelle coordinate del bottone Launch, ottengo il numero estratto, launched=true e aggiorno la
+        faccia del dado. Resetto answered, esito a false perchè risponderò ad una domanda.*/
         if (xpos > 1322 && xpos < 1505 && ypos > 57 && ypos < 143) {
             if (input.isMousePressed(0) && !launched && domanda.isClicked()) {
                 clientInterface.sendOutcome(); //comunica al server che deve eseguire setplayerOnturn
@@ -185,10 +182,8 @@ public class Trivia extends BasicGameState {
             }
         }
 
-        /*
-        Controllo di essere nelle coordinate di una delle due frecce, aggiorno il server sulla direzione presa e
-        aggiorno la gui dei giocatori
-         */
+        /*Controllo di essere nelle coordinate di una delle due frecce, aggiorno il server sulla direzione presa e
+        aggiorno la gui dei giocatori*/
         if (launched) {
             if (input.isMousePressed(0)) {
                 if (ypos > 45 && ypos < 145) {
@@ -216,11 +211,15 @@ public class Trivia extends BasicGameState {
         }
     }
 
-
+    /** controllo se la pedina si è fermata e in tal caso posso ricevere una domanda. Il primo controllo è se una
+     * casella di bonus o di malus.
+     * @param gameContainer container della finestra di gioco
+     * @param stateBasedGame oggetto che permette di passare tra state diversi
+     * @param graphics oggetto che permette di disegnare sulla finestra
+     */
     private void checkReady(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics){
         if (pGUI.get(indexPlayerOnTurn).isReady() ) {
             //entra se è una bonus/malus o random
-            //ricevo check bonusmalus
             if(!checkreceivedBonusMalus){
                 checkBonusMalus=clientInterface.checkBonusMalus();
                 checkreceivedBonusMalus=true;
@@ -232,7 +231,7 @@ public class Trivia extends BasicGameState {
         }
     }
 
-    //verifica se l'utente è su una casella bonusmalus
+    /** Metodo che esegue la bonus malus oppure controlla se sono sulla casella iniziale */
     private void checkBonusMalusState(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics){
         //se il checkbonusmalus è vero esegui l'effetto del bonus malus
         if (checkBonusMalus) {
@@ -263,7 +262,8 @@ public class Trivia extends BasicGameState {
         }
     }
 
-    //render dello state domanda  / verifica se l'utente ha vinto
+    /** Se non sono nei casi precedenti, sono su una casella classica e quindi render dello state domanda
+     * o verifica se l'utente ha vinto */
     private void checkVictoryState(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics){
         //se non sono sulla casella iniziale renderizzo la domanda
         if (!checkinitialSquare) {
@@ -306,8 +306,7 @@ public class Trivia extends BasicGameState {
         pGUI.get(indexPlayerOnTurn).updateCoordinates();
     }
 
-    //non occcorre piu che ricevo dallo state precedente il num di giocatori, lo prendo dal client direttamente
-    //con questo metodo istanzio i giocatori nell'ordine di gioco corretto coerentemente con lo state precedente
+    /** istanzio i giocatori nell'ordine di gioco corretto coerentemente con lo state precedente @see GameOrderState*/
     private void initializePlayers()throws SlickException{
         ArrayList<String> nicknames=new ArrayList<>(clientInterface.getNicknames());
         NPLAYERS=nicknames.size();
