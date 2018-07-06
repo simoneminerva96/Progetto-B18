@@ -6,7 +6,6 @@ import Server.GameClasses.*;
 import Client.Graphics.Fonts.TriviaFont;
 import Client.Graphics.Map.Map;
 import Client.Graphics.Player.*;
-import org.lwjgl.input.Mouse;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -97,7 +96,6 @@ public class Trivia extends BasicGameState {
         piece2 = new Pedina("res/char/FFIV/Kain/kainup.png", "res/char/FFIV/Kain/kaindwn.png", "res/char/FFIV/Kain/kainsx.png", "res/char/FFIV/Kain/kaindx.png", 40, 40);
         piece3 = new Pedina("res/char/FFIV/Luca/lucaup.png", "res/char/FFIV/Luca/lucadwn.png", "res/char/FFIV/Luca/lucasx.png", "res/char/FFIV/Luca/lucadx.png", 40, 40);
 
-
         bkButton=new StateButton(new Rectangle(1190, 860,100,100),new Image("res/buttons/Frecce/back.png"),new Image("res/buttons/Frecce/back.png"),new Image("res/buttons/Frecce/back.png"),null);
         fwButton=new StateButton(new Rectangle(1050, 860,100,100),new Image("res/buttons/Frecce/forward.png"),new Image("res/buttons/Frecce/forward.png"),new Image("res/buttons/Frecce/forward.png"),null);
         d = new DieGUI();
@@ -128,9 +126,8 @@ public class Trivia extends BasicGameState {
         launchButton.render(gameContainer,graphics);
 
         for(int i=0; i<NPLAYERS; i++){
-            if ((i==1) || (i==3)){
+            if ((i==1) || (i==3))
                 x = 1400;
-            }
             if (i==2) {
                 x = 1100;
                 y = 150;
@@ -167,7 +164,6 @@ public class Trivia extends BasicGameState {
 
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException{
-
         Input input = gameContainer.getInput();
 
         if(!checkreceivedInformationPLAYERS) initializePlayers();
@@ -192,13 +188,11 @@ public class Trivia extends BasicGameState {
         /*aggiorno il server sulla direzione presa e
         aggiorno la gui dei giocatori verificando se è stato cliccato il tasto per il lancio del dado*/
             if(launched){
-                if(bkButton.onClickBoolean(input.getMouseX(),input.getMouseY())){
+                if(bkButton.onClickBoolean(input.getMouseX(),input.getMouseY()))
                     updateGui(Direction.BACK);
-
-                }else if(fwButton.onClickBoolean(input.getMouseX(),input.getMouseY())){
+                else
+                    if(fwButton.onClickBoolean(input.getMouseX(),input.getMouseY()))
                     updateGui(Direction.FORWARD);
-
-                }
             }
         }
         try {
