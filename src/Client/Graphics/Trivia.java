@@ -183,8 +183,6 @@ public class Trivia extends BasicGameState {
                     domanda.reset();
                     domanda.setClicked(false);
                     resetBoolean();
-
-
                 }
             }
         /*aggiorno il server sulla direzione presa e
@@ -227,7 +225,6 @@ public class Trivia extends BasicGameState {
            if(!checkControls.isCheckreceivedBonusMalus()){
                checkBonusMalus=clientInterface.checkBonusMalus();
            }
-
             checkBonusMalusState(gameContainer,stateBasedGame,graphics);
             pGUI.get(indexPlayerOnTurn).setReady(false);
             launched = false;
