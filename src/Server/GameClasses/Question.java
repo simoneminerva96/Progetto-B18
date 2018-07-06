@@ -11,13 +11,12 @@ import java.util.ArrayList;
  */
 
 public class Question implements Serializable {
-    private String question;
-    private ArrayList<Answer> answers;
+    private String question;    //stringa contenente la domanda
+    private ArrayList<Answer> answers;  //array delle risposte associate
 
     public Question(String question,ArrayList<Answer> answers) {
         this.question = question;
-        this.answers = new ArrayList<>();
-        this.answers.addAll(answers);
+        this.answers = new ArrayList<>(answers);
     }
 
     public String getQuestion() {

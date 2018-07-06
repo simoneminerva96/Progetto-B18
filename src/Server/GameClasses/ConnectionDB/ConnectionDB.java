@@ -62,8 +62,26 @@ public class ConnectionDB {
         String IDNAME = credenziali.getUser();
         String PW = credenziali.getPassword();
         String query = "{ ?=call ADD_PLAYER1(?,?) }";
-        ResultSet rs;
+
+        return connect(query,credenziali);
+    }
+    
+
+    /**Funzione che permette di effettuare il login collegandosi al database
+     @param credenziali credenziali inserite dall'utente
+     */
+    public Boolean ExistsPlayer(Credenziali credenziali) {
+        String IDNAME = credenziali.getUser();
+        String PW = credenziali.getPassword();
+        String query = "{ ?=call PLAYER_EXIST(?,?) }";
+       return connect(query,credenziali);
+    }
+
+    public boolean connect(String query,Credenziali credenziali){
+        String IDNAME = credenziali.getUser();
+        String PW = credenziali.getPassword();
         Boolean returnMessage = null;
+        ResultSet rs;
 
         try (Connection conn = DriverManager.getConnection("jdbc:mysql://93.41.247.149:3306/trivial?useSSL=false", "root", "root");
              CallableStatement stmt = conn.prepareCall(query)) {
@@ -74,42 +92,11 @@ public class ConnectionDB {
 
             rs = stmt.executeQuery();
             while (rs.next()) {
-                 returnMessage = rs.getBoolean(1); //Il risultato viene inserito in una stringa
+                returnMessage = rs.getBoolean(1); //Il risultato viene inserito in una stringa
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
         return returnMessage;
-    }
-    
-
-    /**Funzione che permette di effettuare il login collegandosi al database
-     @param credenziali credenziali inserite dall'utente
-     */
-    public Boolean ExistsPlayer(Credenziali credenziali) {
-        String IDNAME = credenziali.getUser();
-        String PW = credenziali.getPassword();
-        //
-        String query = "{ ?=call PLAYER_EXIST(?,?) }";
-        ResultSet rs;
-        Boolean returnMess = null;
-
-        try (Connection conn = DriverManager.getConnection("jdbc:mysql://93.41.247.149:3306/trivial?useSSL=false", "root", "root");
-             CallableStatement stmt = conn.prepareCall(query)) {
-
-            stmt.registerOutParameter(1, Types.VARCHAR);
-            stmt.setString(2,IDNAME);
-            stmt.setString(3,PW);
-
-            rs = stmt.executeQuery();
-
-            while (rs.next()) {
-                returnMess = rs.getBoolean(1);
-            }
-
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-       return returnMess;
     }
 }

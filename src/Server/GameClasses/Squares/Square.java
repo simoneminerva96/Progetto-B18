@@ -34,7 +34,6 @@ public class Square {
     /**
      * Metodo che restituisce la domanda estratta. Genero un numero casuale tra 0 e numero massimo di
      * domande disponibili. Il numero generato corrisponderà all'indice della domanda da effettuare.
-     * @return
      */
     public Question visualizeQuestion(){
         Random questionChooser=new Random();

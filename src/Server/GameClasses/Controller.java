@@ -18,6 +18,7 @@ class Controller implements Serializable {
         request = new Request();
     }
 
+    /**inizializza i giocatori nella logica di gioco*/
     void initializePlayers(int nplayers){
         ArrayList<String> gamingPlayers=new ArrayList<>();
         //INSERISCO GIOCATORI DI PROVA, POI ANDRANNO INSERITI I NICKNAME DEI GIOCATORI
@@ -48,6 +49,7 @@ class Controller implements Serializable {
     /** @return valore estratto dal lancio del dado */
     int getDiceValue(){ return match.throwDie(); }
 
+    /**setta la direzione selezionata dal giocatore*/
     void setDirection(Direction direction){
         match.chooseDirection(direction);
         match.movePlayer();

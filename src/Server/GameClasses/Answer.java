@@ -7,8 +7,8 @@ import java.io.Serializable;
  * @author Ansaldi Jacopo <jacopo.ansaldi01@universitadipavia.it>
  */
 public class Answer implements Serializable{
-    private String answer;
-    private boolean correct;
+    private String answer;  //stringa contenente la risposta
+    private boolean correct;    //indica se la rispota è corretta
 
     public Answer(String answer,Boolean correct){
         this.answer=answer;

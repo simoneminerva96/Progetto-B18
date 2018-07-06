@@ -5,7 +5,7 @@ import java.util.ArrayList;
  * Classe corrispondente a un singolo giocatore che partecipa alla partita
  * - initialRollResult: risultato del lancio del dado iniziale
  * - actualPosition: posizione attuale del player sul tabellone
- * - slicesObtained: arrayList di diamanti ottenuti
+ * - slicesObtained: arrayList di spicchi ottenuti
  * @author Ansaldi Jacopo <jacopo.ansaldi01@universitadipavia.it>
  */
     class Player {
@@ -23,19 +23,22 @@ import java.util.ArrayList;
 
     /**
      * Metodo per assegnare uno spicchio di una categoria solo se non è stato già ottenuto.
-     * - check: flag che indica se lo spicchio è già presente
      * @param category categoria dello spicchio da verificare
      *
      */
      void obtainSlice(Categories category){
-        boolean check=false;
+        if(!checkSliceAlreadyObtained(category))
+            slicesObtained.add(new Slice(category));
+    }
 
+    /**ritorna true se il giocatore ha gia vinto lo spicchio di questa categoria*/
+    private boolean checkSliceAlreadyObtained(Categories c){
+        boolean check=false;
         for (Slice slice: slicesObtained) {
-            if (slice.getCategory().equals(category))
+            if (slice.getCategory().equals(c))
                 check = true;
         }
-        if(!check)
-            slicesObtained.add(new Slice(category));
+        return check;
     }
 
     int getInitialRollResult() { return initialRollResult; }

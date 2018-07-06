@@ -2,7 +2,9 @@ package Server.GameClasses.Squares;
 
 import Server.GameClasses.BonusMalusRandom;
 import Server.GameClasses.Turn;
-
+/**
+    casella malus
+ */
 public class MalusSquare extends BonusMalusRandomSquare {
 
     public MalusSquare(Integer index) {
@@ -14,7 +16,7 @@ public class MalusSquare extends BonusMalusRandomSquare {
     }
 
     public BonusMalusRandom executeBonusMalus (Turn t){
-        t.setCorrectAnswer(false);
+        t.setCorrectAnswer(false);  //cosi il giocatore passa il turno
         return BonusMalusRandom.MALUS;
     }
 }

@@ -10,17 +10,17 @@ import java.util.*;
 public class TrivialGame {
     private ArrayList<Player> players;      //giocatori partecipanti
     private Die die;        //dado
-    private Board playBoard;        //tabellone di gioco
-    //private BoardProva playBoard;    //tabellone di gioco di prova
+    //private Board playBoard;        //tabellone di gioco
+    private BoardProva playBoard;    //tabellone di gioco di prova
     private Turn turn;      //turno attuale
-    private Integer index=0; //INDICE CHE SERVE PER TENER IL CONTO DI QUALE GIOCATORE è IL TURNO
+    private Integer index; //INDICE CHE SERVE PER TENER IL CONTO DI QUALE GIOCATORE è IL TURNO
 
     public TrivialGame(){
         players = new ArrayList<>();
         die = new Die();
         try {
-            playBoard = new Board();
-        } catch (SQLException e) {
+            playBoard = new BoardProva();
+        } catch (Exception e) {
             e.printStackTrace();
         }
         turn = new Turn(null,playBoard);    //all'inizio non ho alcun giocatore di turno
@@ -50,7 +50,7 @@ public class TrivialGame {
         //creazione lista ordinata dei giocatori
         orderPlayers(orderedLaunches);
     }
-
+    /**ritorna i nickname dei giocatori dopo l'ordinamento iniziale*/
     ArrayList<String> getordinatednicknames(){
         ArrayList<String> nicknames=new ArrayList<>();
         for (Player p : players) {
@@ -122,7 +122,7 @@ public class TrivialGame {
     //metodi che eseguono le fasi di gioco del turno
 
     /**Setta il primo giocatore che è di turno */
-    void initializePhase(){
+    public void initializePhase(){
         index = 0;
         turn.setPlayerOnTurn(players.get(index));
     }
@@ -148,13 +148,17 @@ public class TrivialGame {
 
     boolean answerQuestion(int indexOfQuestion){ return turn.AnswerQuestion(indexOfQuestion); }
 
+    /**Se la risposta data è sbagliata incrementa l'indice e aggiorna il giocatore di turno*/
     void setPlayerOnTurn(){
-        //Se la risposta data è sbagliata incrementa l'indice e aggiorna il giocatore di turno
         if(!turn.getCorrectAnswer()){
-            index ++;
-            if(index==players.size()) index=0;
+            incrementIndex();
             turn.setPlayerOnTurn(players.get(index));
         }
+    }
+    /**incrementa l'indice corrispondente al giocatore di turno*/
+    private void incrementIndex(){
+        index ++;
+        if(index==players.size()) index=0;
     }
 
     boolean verifyVictory(){ return turn.verifyVictory(); }
