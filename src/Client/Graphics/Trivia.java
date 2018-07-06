@@ -60,18 +60,18 @@ public class Trivia extends BasicGameState {
     private int diceN = 0;
     private ClientInterface clientInterface;
     private int NPLAYERS;
+    private CheckControls checkControls;
 
     private Domanda domanda;
     private Escape esc;
     private TrueTypeFont fonx1;
     private TriviaFont f;
-    private boolean checkBonusMalus,checkreceivedBonusMalus,checkreceivedtype,checkinitialSquare,checkreceivedInitialSquare;
-    private boolean checkplayerVictory,checkreceivedVictory,checkReceivedSlices;
+    private boolean checkBonusMalus,checkinitialSquare,checkplayerVictory;
     private BonusMalusRandom checktype;
     private boolean checkreceivedInformationPLAYERS; //diventa true quando ho ricevuto l'informazione sul num di giocatori
     private int indexPlayerOnTurn;
 
-    Trivia(ClientInterface clientInterface) {
+    Trivia(ClientInterface clientInterface,CheckControls checkControls) {
         domanda = new Domanda(clientInterface);
         esc = new Escape();
         pGUI = new ArrayList<>();
@@ -81,6 +81,7 @@ public class Trivia extends BasicGameState {
         diamanti = new ArrayList<>();
         playerIcons=new ArrayList<>();
         this.clientInterface = clientInterface;
+        this.checkControls=checkControls;
     }
 
     public int getID() { return 5; }
@@ -183,6 +184,7 @@ public class Trivia extends BasicGameState {
                     domanda.setClicked(false);
                     resetBoolean();
 
+
                 }
             }
         /*aggiorno il server sulla direzione presa e
@@ -222,11 +224,10 @@ public class Trivia extends BasicGameState {
     private void checkReady(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics){
         if (pGUI.get(indexPlayerOnTurn).isReady() ) {
             //entra se è una bonus/malus o random
-            if(!checkreceivedBonusMalus){
-                checkBonusMalus=clientInterface.checkBonusMalus();
-                checkreceivedBonusMalus=true;
-            }
-            //se il checkbonusmalus è vero esegui l'effetto del bonus malus
+           if(!checkControls.isCheckreceivedBonusMalus()){
+               checkBonusMalus=clientInterface.checkBonusMalus();
+           }
+
             checkBonusMalusState(gameContainer,stateBasedGame,graphics);
             pGUI.get(indexPlayerOnTurn).setReady(false);
             launched = false;
@@ -238,10 +239,9 @@ public class Trivia extends BasicGameState {
         //se il checkbonusmalus è vero esegui l'effetto del bonus malus
         if (checkBonusMalus) {
             //ricevo il tipo estratto
-            if(!checkreceivedtype){
-                checktype=clientInterface.getType();
-                checkreceivedtype=true;
-            }
+           if(!checkControls.isCheckreceivedtype()){
+               checktype=clientInterface.getType();
+           }
             //a seconda del tipo estratto eseguo bonus o malus
             switch (checktype) {
                 case BONUS:
@@ -256,10 +256,9 @@ public class Trivia extends BasicGameState {
         }
         else {
             //ricevo check se la casella in cui sono è la casella iniziale
-            if(!checkreceivedInitialSquare){
-                checkinitialSquare=clientInterface.getCheckInitialSquare();
-                checkreceivedInitialSquare=true;
-            }
+           if(!checkControls.isCheckreceivedInitialSquare()){
+               checkinitialSquare=clientInterface.getCheckInitialSquare();
+           }
             checkVictoryState(gameContainer,stateBasedGame,graphics);
         }
     }
@@ -271,23 +270,22 @@ public class Trivia extends BasicGameState {
         if (!checkinitialSquare) {
             domanda.render(gameContainer, stateBasedGame, graphics);
             if (domanda.isEsito()) {
-                if (!checkReceivedSlices) {
+                if(!checkControls.isCheckReceivedSlices()){
                     String c = clientInterface.getCategoriesOfTheSliceObtained();
                     if (!c.equals("Nessuna")) {
                         Categories categories = Categories.valueOf(c);
                         Slice slice = new Slice(categories);
                         pGUI.get(indexPlayerOnTurn).addSliceObtained(slice);
                     }
-                    checkReceivedSlices = true;
                 }
             }
         }
         // se sono nella casella iniziale controllo se ho abbastanza spicchi per la vittoria, altrimenti
         // passa il turno
         else {
-            if(!checkreceivedVictory){
+
+            if(!checkControls.isCheckreceivedVictory()){
                 checkplayerVictory=clientInterface.receiveOutcome();
-                checkreceivedVictory=true;
             }
             if (checkplayerVictory) {
                 fonx1.drawString(1190, 700, "HAI VINTO", Color.black);
@@ -372,12 +370,13 @@ public class Trivia extends BasicGameState {
     }
 
     private void resetBoolean(){
-        checkreceivedBonusMalus=false;
-        checkreceivedtype=false;
-        checkreceivedInitialSquare=false;
-        checkreceivedVictory=false;
+       // checkreceivedBonusMalus=false;
+      //  checkreceivedtype=false;
+      //  checkreceivedInitialSquare=false;
+       // checkreceivedVictory=false;
         domanda.setCheckreceivedQuestion(false);
-        checkReceivedSlices = false;
+       // checkReceivedSlices = false;
+        checkControls.reset();
     }
 }
 

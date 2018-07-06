@@ -11,11 +11,13 @@ import org.newdawn.slick.state.*;
  */
 public class MainGraphics extends StateBasedGame{
     private ClientInterface clientInterface;
+    private CheckControls checkControls;
     private static final String gameName = "Trivial Pursuit";
 
-    MainGraphics(String gameName, ClientInterface clientInterface) {
+    MainGraphics(String gameName, ClientInterface clientInterface,CheckControls checkControls) {
         super(gameName);
         this.clientInterface = clientInterface;
+        this.checkControls=checkControls;
     }
 
     /**
@@ -29,7 +31,7 @@ public class MainGraphics extends StateBasedGame{
         this.addState(new PlayerNumberSelection(clientInterface));
         this.addState(new LoginRegistrationInterface(clientInterface));
         this.addState(new GameOrderState(clientInterface));
-        this.addState(new Trivia(clientInterface));
+        this.addState(new Trivia(clientInterface,checkControls));
     }
 
     /**Metodo che deve essere chiamato per avviare la grafica. Esso viene richiamato in {@see Clientinferface}
@@ -37,7 +39,7 @@ public class MainGraphics extends StateBasedGame{
      void run() {
         AppGameContainer appgc;
         try {
-            appgc = new AppGameContainer(new MainGraphics(gameName, clientInterface));
+            appgc = new AppGameContainer(new MainGraphics(gameName, clientInterface,checkControls));
             appgc.setAlwaysRender(true);
             appgc.setDisplayMode(1680, 1000, false);
             appgc.setShowFPS(false);
