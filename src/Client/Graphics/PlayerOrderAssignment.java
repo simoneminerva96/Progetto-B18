@@ -1,8 +1,8 @@
-package Graphics;
+package Client.Graphics;
 
-import Graphics.Player.Player;
-import Graphics.Player.PlayerGUI;
-import Graphics.com.sticky.StateButton;
+import Client.Graphics.*;
+
+import Client.Graphics.com.sticky.StateButton;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.BasicGameState;

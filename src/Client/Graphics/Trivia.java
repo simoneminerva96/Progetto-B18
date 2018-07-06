@@ -1,6 +1,7 @@
 package Client.Graphics;
 
 import Client.Graphics.Player.Player;
+import Client.Graphics.com.sticky.StateButton;
 import Server.GameClasses.*;
 import Client.Graphics.Fonts.TriviaFont;
 import Client.Graphics.Map.Map;
@@ -10,6 +11,7 @@ import org.newdawn.slick.*;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import java.util.ArrayList;
@@ -39,8 +41,7 @@ import java.util.ArrayList;
  */
 
 public class Trivia extends BasicGameState {
-    private Image backgroundMap, back, forward, background;
-    private Image launch;
+    private Image backgroundMap,background;
     private ArrayList<Image> diamanti;
     private ArrayList<Image> playerBack;
     private ArrayList<Image> playerIcons;
@@ -52,6 +53,14 @@ public class Trivia extends BasicGameState {
 
     private boolean launched = false;
     private boolean checkVictory = false;
+    private boolean launchClick=false;
+    private boolean fwClick=false;
+    private boolean bkClick=false;
+
+    private StateButton bkButton;
+    private StateButton fwButton;
+    private StateButton launchButton;
+
     private int diceN = 0;
     private ClientInterface clientInterface;
     private int NPLAYERS;
@@ -91,8 +100,9 @@ public class Trivia extends BasicGameState {
         piece2 = new Pedina("res/char/FFIV/Kain/kainup.png", "res/char/FFIV/Kain/kaindwn.png", "res/char/FFIV/Kain/kainsx.png", "res/char/FFIV/Kain/kaindx.png", 40, 40);
         piece3 = new Pedina("res/char/FFIV/Luca/lucaup.png", "res/char/FFIV/Luca/lucadwn.png", "res/char/FFIV/Luca/lucasx.png", "res/char/FFIV/Luca/lucadx.png", 40, 40);
 
-        back = new Image("res/buttons/Frecce/back.png");
-        forward = new Image("res/buttons/Frecce/forward.png");
+
+        bkButton=new StateButton(new Rectangle(1190, 860,100,100),new Image("res/buttons/Frecce/back.png"),new Image("res/buttons/Frecce/back.png"),new Image("res/buttons/Frecce/back.png"),null);
+        fwButton=new StateButton(new Rectangle(1050, 860,100,100),new Image("res/buttons/Frecce/forward.png"),new Image("res/buttons/Frecce/forward.png"),new Image("res/buttons/Frecce/forward.png"),null);
         d = new DieGUI();
 
         playerIcons.add(new Image("res/char/rydial.png"));
@@ -100,7 +110,7 @@ public class Trivia extends BasicGameState {
         playerIcons.add(new Image("res/char/kainl.png"));
         playerIcons.add(new Image("res/char/lucal.png"));
         background = new Image("res/backgrounds/green_landscape.png");
-        launch = new Image("res/buttons/Button_Launch/Button_Launch.png");
+        launchButton=new StateButton(new Rectangle(1320, 860,185,91),new Image("res/buttons/Button_Launch/Button_Launch_0.png"),new Image("res/buttons/Button_Launch/Button_Launch.png"),new Image("res/buttons/Button_Launch/Button_Launch_0.png"),null);
         initializeDiamonds();
 
         domanda.init(gameContainer, stateBasedGame);
@@ -115,10 +125,10 @@ public class Trivia extends BasicGameState {
 
         graphics.drawImage(background, 0, 0);
         graphics.drawImage(backgroundMap, 0, 0);
-        graphics.drawImage(back, 1190, 860);
-        graphics.drawImage(forward, 1050, 860);
+        bkButton.render(gameContainer,graphics);
+        fwButton.render(gameContainer,graphics);
         fonx1.drawString(1190, 280, "E' il turno di: " + pGUI.get(indexPlayerOnTurn).getName(), Color.black);
-        launch.draw(1320, 860);
+        launchButton.render(gameContainer,graphics);
 
         for(int i=0; i<NPLAYERS; i++){
             if ((i==1) || (i==3)){
@@ -160,16 +170,22 @@ public class Trivia extends BasicGameState {
 
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException{
-        float xpos = Mouse.getX();
-        float ypos = Mouse.getY();
+
         Input input = gameContainer.getInput();
 
         if(!checkreceivedInformationPLAYERS) initializePlayers();
 
-        /*Se sono nelle coordinate del bottone Launch, ottengo il numero estratto, launched=true e aggiorno la
+        if(input.isMousePressed(0)){
+            bkClick=bkButton.onClickBoolean(input.getMouseX(),input.getMouseY());
+            fwClick=fwButton.onClickBoolean(input.getMouseX(),input.getMouseY());
+            launchClick=launchButton.onClickBoolean(input.getMouseX(),input.getMouseY());
+        }
+
+
+        /*ottengo il numero estratto, launched=true e aggiorno la
         faccia del dado. Resetto answered, esito a false perchè risponderò ad una domanda.*/
-        if (xpos > 1322 && xpos < 1505 && ypos > 57 && ypos < 143) {
-            if (input.isMousePressed(0) && !launched && domanda.isClicked()) {
+        if(launchClick){
+            if(!launched && domanda.isClicked()){
                 clientInterface.sendOutcome(); //comunica al server che deve eseguire setplayerOnturn
                 indexPlayerOnTurn=clientInterface.getIndex();
                 pGUI.get(indexPlayerOnTurn).setClicked(false);
@@ -179,21 +195,22 @@ public class Trivia extends BasicGameState {
                 domanda.reset();
                 domanda.setClicked(false);
                 resetBoolean();
+                launchClick=false;
+            }
+        }
+        /*aggiorno il server sulla direzione presa e
+        aggiorno la gui dei giocatori verificando se è stato cliccato il tasto per il lancio del dado*/
+        if(launched){
+            if(bkClick){
+                updateGui(Direction.BACK);
+                bkClick=false;
+            }else if(fwClick){
+                updateGui(Direction.FORWARD);
+                fwClick=false;
             }
         }
 
-        /*Controllo di essere nelle coordinate di una delle due frecce, aggiorno il server sulla direzione presa e
-        aggiorno la gui dei giocatori*/
-        if (launched) {
-            if (input.isMousePressed(0)) {
-                if (ypos > 45 && ypos < 145) {
-                    if (xpos > 1045 && xpos < 1160)
-                        updateGui(Direction.FORWARD);
-                    if (xpos > 1180 && xpos < 1290)
-                        updateGui(Direction.BACK);
-                }
-            }
-        }
+
 
         try {
             domanda.update(gameContainer, stateBasedGame, i);
@@ -209,6 +226,8 @@ public class Trivia extends BasicGameState {
             pause();
             gameContainer.exit();
         }
+
+        launchButton.onMouseEnter(launchButton,input.getMouseX(),input.getMouseY());
     }
 
     /** controllo se la pedina si è fermata e in tal caso posso ricevere una domanda. Il primo controllo è se una
