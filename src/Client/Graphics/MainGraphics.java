@@ -32,7 +32,7 @@ public class MainGraphics extends StateBasedGame{
         this.addState(new Trivia(clientInterface));
     }
 
-    /**Metodo che deve essere chiamato per avviare la grafica. Esso viene richiamato in {@see MainController}
+    /**Metodo che deve essere chiamato per avviare la grafica. Esso viene richiamato in {@see Clientinferface}
      * - appgc: finestra di gioco di nome gameName*/
      void run() {
         AppGameContainer appgc;
