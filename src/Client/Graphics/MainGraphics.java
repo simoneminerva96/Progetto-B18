@@ -11,14 +11,9 @@ import org.newdawn.slick.state.*;
  */
 public class MainGraphics extends StateBasedGame{
     private ClientInterface clientInterface;
-    public static final String gameName = "Trivial Pursuit";
-    public static final int trivia = 5;
-    public static final int mainmenu = 2;
-    public static final int playernumbersel=3;
-    public static final int characterSelection=4;
-    public static final int logininterface=1;
+    private static final String gameName = "Trivial Pursuit";
 
-    public MainGraphics(String gameName, ClientInterface clientInterface) {
+    MainGraphics(String gameName, ClientInterface clientInterface) {
         super(gameName);
         this.clientInterface = clientInterface;
     }
@@ -26,26 +21,20 @@ public class MainGraphics extends StateBasedGame{
     /**
      * Aggiungo gli state al contenitore associato alla finestra di gioco. Il primo ad essere aggiunto
      * sarà il primo ad essere visualizzato.
-     *
      * @param gc contenitore associato alla finestra
-     * @throws SlickException
      */
-
     @Override
-    public void initStatesList(GameContainer gc) throws SlickException {
-        this.addState(new PlayerNumberSelection(clientInterface));
-        this.addState(new GameOrderState(clientInterface));
-        this.addState(new LoginRegistrationInterface(clientInterface));
+    public void initStatesList(GameContainer gc)  {
         this.addState(new MainMenu());
+        this.addState(new PlayerNumberSelection(clientInterface));
+        this.addState(new LoginRegistrationInterface(clientInterface));
+        this.addState(new GameOrderState(clientInterface));
         this.addState(new Trivia(clientInterface));
     }
 
-    /**
-     * Metodo che deve essere chiamato per avviare la grafica. Esso viene richiamato in {@see MainController}
-     * - appgc: finestra di gioco di nome gameName
-     * @throws Exception
-     */
-    public void run() {
+    /**Metodo che deve essere chiamato per avviare la grafica. Esso viene richiamato in {@see Clientinferface}
+     * - appgc: finestra di gioco di nome gameName*/
+     void run() {
         AppGameContainer appgc;
         try {
             appgc = new AppGameContainer(new MainGraphics(gameName, clientInterface));

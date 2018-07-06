@@ -3,8 +3,10 @@ package Server.GameClasses;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
+
+/**
+ * Classe Server Application che accetta nuovi client, crea la socket e avvia il metodo start del ServerInterface
+ */
 
 public class ServerApplication {
     public static void main(String[] args) {
@@ -13,14 +15,13 @@ public class ServerApplication {
 
         try {
             ServerSocket server = new ServerSocket(8888);
-            System.out.println("SERVER IS READY!!!!");
+            System.out.println("Server on");
 
             while(true) {
-                //mi metto in ascolto sulla porta aperta
                 socketClient = server.accept();
                 serverInterface = new ServerInterface(socketClient);
                 System.out.println("Connesso al client");
-                serverInterface.start();    // QUANDO C'è IL DB è DISPONIBILE
+                serverInterface.start();
             }
         } catch (IOException e) {
             e.printStackTrace();

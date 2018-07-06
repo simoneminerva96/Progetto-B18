@@ -10,6 +10,9 @@ import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+/**
+ * State in cui è presente il tasto play per iniziare a giocare.
+ */
 public class MainMenu extends BasicGameState {
 
     private Image background;
@@ -17,14 +20,10 @@ public class MainMenu extends BasicGameState {
     private StateButton play;
     private TriviaFont f;
 
-    public MainMenu()  {
-        f = new TriviaFont();
-    }
+    MainMenu()  { f = new TriviaFont(); }
 
     @Override
-    public int getID() {
-        return 2;
-    }
+    public int getID() { return 2; }
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
@@ -44,9 +43,8 @@ public class MainMenu extends BasicGameState {
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
         Input r=gameContainer.getInput();
 
-        if(r.isMousePressed(0)) {
-            //play.onClickState(r.getMouseX(),r.getMouseY(),stateBasedGame,3);
-        }
+        if(r.isMousePressed(0))
+            play.onClickState(r.getMouseX(),r.getMouseY(),stateBasedGame,3);
         play.onMouseEnter(play,r.getMouseX(),r.getMouseY());
 
     }

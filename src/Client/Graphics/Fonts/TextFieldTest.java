@@ -1,6 +1,5 @@
 package Client.Graphics.Fonts;
 
-
 import org.lwjgl.Sys;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;

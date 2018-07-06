@@ -3,48 +3,48 @@ package Server.GameClasses;
 import Server.GameClasses.Squares.*;
 
 /**
- * CLASSE CHE CORRISPONDE A UN TURNO DI GIOCO, effettua la movimentazione delle pedine sul tabellone
+ * Classe che corrisponde a un turno di gioco, effettua la movimentazione delle pedine sul tabellone
  * @author Ansaldi Jacopo <jacopo.ansaldi01@universitadipavia.it>
  */
 
 public class Turn {
     private final static int NSQUARES=36;
-    //private BoardProva playBoard;    //tabellone di gioco di prova
-    private BoardProva playBoard;    //tabellone di gioco connesso al db
-    private Player playerOnTurn;        //giocatore di turno
-    private Die die;        //dado per determinare di quanto spostarsi
+    private BoardProva playBoard;    //tabellone di gioco di prova, da utilizzare quando è possibile connettersi al db
+    //private Board playBoard;    //tabellone di gioco connesso al db
+    private Player playerOnTurn;  //giocatore di turno
+    private Die die;        //dado
     private int dieresult;  //risultato del lancio del dado
-    private Direction chosenDirection;
-    private boolean correctAnswer= true; //booleano che mi indica se la risposta data dall'utente è giusta o sbagliata
+    private Direction chosenDirection;  //direzione scelta
+    private boolean correctAnswer; //booleano che mi indica se la risposta data dall'utente è giusta o sbagliata
 
-    public Turn(Player playerOnTurn,BoardProva playBoard){
+    private boolean isFinalQuestion;
+    private Categories categoriesOfTheSliceObtained;
+
+    Turn(Player playerOnTurn,BoardProva playBoard){
         this.playerOnTurn=playerOnTurn;
         this.playBoard=playBoard;
         die=new Die();
         dieresult=0;
-    }
-    //metodo da chiamare nella classe trivialgame per cambiar turno
-    public void setPlayerOnTurn(Player playerOnTurn) {
-        this.playerOnTurn = playerOnTurn;
+        correctAnswer=true; //viene inizializzato a true perchè sulla casella iniziale è previsto di perder il turno, se fosse
+        //inizializzato a false durante il turno iniziale il giocatore perderebbe subito il turno senza lanciar il dado
     }
 
-    public void setCorrectAnswer(boolean correctAnswer) {
-        this.correctAnswer = correctAnswer;
-    }
+    /**metodo da chiamare in @see TrivialGame per cambiar turno */
+    void setPlayerOnTurn(Player playerOnTurn) { this.playerOnTurn = playerOnTurn; }
 
-    //metodo che effettua il lancio del dado
-    public int dieLaunch(){
+    public void setCorrectAnswer(boolean correctAnswer) { this.correctAnswer = correctAnswer; }
+
+    /**metodo che effettua il lancio del dado*/
+    int dieLaunch(){
         dieresult=die.Launch();
         return dieresult;
     }
 
-    //setta la direzione scelta dal giocatore
-    public void setChosenDirection(Direction direction){
-        this.chosenDirection=direction;
-    }
+    /**setta la direzione scelta dal giocatore */
+    void setChosenDirection(Direction direction){ this.chosenDirection=direction; }
 
-    //metodo che muove la pedina del risultato del dado nella direzione scelta
-    public void movePlayer(){
+    /**metodo che muove la pedina del risultato del dado nella direzione scelta */
+    void movePlayer(){
         if(chosenDirection.equals(Direction.FORWARD)){
             if(playerOnTurn.getActualPosition() + dieresult >= NSQUARES){
                 Integer position=playerOnTurn.getActualPosition() + dieresult -NSQUARES;
@@ -64,25 +64,27 @@ public class Turn {
             extractEffectType();
         }
     }
-    //metodo che estrae l'effetto che avrà la casella random quando ci finisci sopra
-    public void extractEffectType(){
+
+
+    /**metodo che estrae l'effetto che avrà la casella random quando ci finisci sopra */
+    private void extractEffectType(){
         RandomSquare currentSquare= (RandomSquare) getcurrentSquare();
         currentSquare.extractEffectType();
     }
+
+    /**ritorna la casella attuale*/
     private Square getcurrentSquare(){
         int currentPosition=playerOnTurn.getActualPosition();
-        Square currentSquare=playBoard.getSquares().get(currentPosition);
-        return currentSquare;
-    }
-    public boolean checkInitialSquare(){
-        return getcurrentSquare() instanceof InitialSquare;
+        return playBoard.getSquares().get(currentPosition);
     }
 
-    public boolean checkBonusMalus(){
-        return getcurrentSquare() instanceof  BonusMalusRandomSquare;
-    }
+    /**ritorna true se la casella attuale è la casella iniziale*/
+    public boolean checkInitialSquare(){ return getcurrentSquare() instanceof InitialSquare; }
 
-    //ritorna l'effetto che viene eseguito dalla casella
+    /**ritorna true se la casella attuale è una bonus malus o random*/
+    public boolean checkBonusMalus(){ return getcurrentSquare() instanceof  BonusMalusRandomSquare; }
+
+    /**ritorna l'effetto che viene eseguito dalla casella */
     public BonusMalusRandom executeBonusMalus(){
         Square currentSquare=getcurrentSquare();
         if(currentSquare instanceof BonusMalusRandomSquare){
@@ -96,7 +98,7 @@ public class Turn {
         return currentSquare.visualizeQuestion();
     }
 
-    //metodo che permette al giocatore di rispondere
+    /**metodo che permette al giocatore di rispondere */
     public Boolean AnswerQuestion(int indexOfAnswer){
         Square currentSquare=getcurrentSquare();
         correctAnswer=currentSquare.goOnIt(indexOfAnswer);
@@ -106,24 +108,24 @@ public class Turn {
         return correctAnswer;
     }
 
-    public boolean getCorrectAnswer(){
-        return this.correctAnswer;
-    }
+    boolean getCorrectAnswer(){ return this.correctAnswer; }
 
-    //RITORNA TRUE SE IL GIOCATORE HA OTTENUTO LO SPICCHIO
+    /**AGGIUNGE LO SPICCHIO AL GIOCATORE SE LA DOMANDA è UNA DOMANDA FINALE*/
     private void obtainSlice(){
         Square actualSquare=getcurrentSquare();
         if(actualSquare instanceof FinalQuestionSquare){
+            isFinalQuestion = true;
             Categories categoryOfTheSlice=((FinalQuestionSquare)actualSquare).getCategory();
             playerOnTurn.obtainSlice(categoryOfTheSlice);
+            categoriesOfTheSliceObtained = categoryOfTheSlice;
         }
+        else isFinalQuestion= false;
     }
+    /**verifica la vittoria del giocatore di turno*/
+    public Boolean verifyVictory(){ return playerOnTurn.getSlicesObtained().size() == 6 && playerOnTurn.getActualPosition() ==0; }
 
-    public Boolean verifyVictory(){
-        if(playerOnTurn.getSlicesObtained().size() == 6 && playerOnTurn.getActualPosition() ==0){
-            return true;
-        }
-        else return false;
-    }
+    /**ritorna true se la casella attuale è una casella corrispondente a una domanda finale*/
+    public boolean isFinalQuestion() { return isFinalQuestion; }
 
+    public Categories getCategoriesOfTheSliceObtained () { return categoriesOfTheSliceObtained; }
 }

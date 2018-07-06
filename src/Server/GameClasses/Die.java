@@ -2,7 +2,7 @@ package Server.GameClasses;
 
 import java.util.Random;
 /**
- * classe corrispondente a un dado
+ * Classe corrispondente a un dado
  * @author Ansaldi Jacopo <jacopo.ansaldi01@universitadipavia.it>
  */
 public class Die {
@@ -13,8 +13,7 @@ public class Die {
         generator=new Random();
     }
 
-    /**
-     * Singolo lancio del dado
+    /** Singolo lancio del dado
      * @return un intero compreso tra 1 e 6
      */
 

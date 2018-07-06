@@ -15,36 +15,35 @@ import org.newdawn.slick.state.StateBasedGame;
 import java.util.ArrayList;
 
 /**
- * @author Rita, Stefano
+ * @author Di Cecca Rita, Kothuwa Gamage Stefano
  *
  * La classe Trivia rappresenta lo state del tabellone.
  * - backgroundMap: immagine della mappa di gioco, tabellone
  * - back,forward: immagine freccia che torna indietro e che va avanti
  * - background: sfondo della schermata
- * - rydia, ceodore, kain, luca: immagini delle pedine
- * - d: oggetto di tipo DieGUI utilizzato per visualizzare la faccia del dado ed estrarre il numero
+ * - d: oggetto di tipo DieGUI utilizzato per visualizzare la faccia del dado
  * - map: oggetto di tipo Map associato alla matrice e al tabellone
  * - pGUI: arrayList di GUI dei player
  * - piece1,piece2,piece3,piece4: pedine associate ai player
  * - launch: bottone per lanciare il dado
  * - launched: flag che indica se ho tirato il dado o no
  * - diceN: intero che contiene il numero estratto
- * - domanda: oggetto Domanda, state da renderizzare
- * - esc: oggetto Escape, state da renderizzare
+ * - domanda: state da renderizzare per visualizzare e rispondere alla domanda
+ * - esc: state da renderizzare premendo il tasto ESC che visualizza Menu, Exit e Resume
  * - f, fonx1: font utilizzato
- * - controller: oggetto di tipo Controller per comunicare con la logica
  * - NPLAYERS: numero di giocatori effettivo per la partita
- * - playerBack: arrayList di sfondi
- * - checkVictory: se ho vinto la partita visualizzo stringa e dopo 5s chiude gioco
+ * - playerBack: arrayList di sfondi dei giocatori
+ * - checkVictory: flag che indica se ho vinto la partita. in tal caso, visualizzo stringa e dopo 5s chiude il gioco
  * - diamanti: arrayList di image di diamanti
+ * - indexPlayerOnTurn: indice del giocatore di turno
  */
 
 public class Trivia extends BasicGameState {
     private Image backgroundMap, back, forward, background;
-    private Image rydia, ceodore, kain, luca;
     private Image launch;
     private ArrayList<Image> diamanti;
     private ArrayList<Image> playerBack;
+    private ArrayList<Image> playerIcons;
 
     private DieGUI d;
     private Map map;
@@ -64,24 +63,22 @@ public class Trivia extends BasicGameState {
     private boolean checkBonusMalus,checkreceivedBonusMalus,checkreceivedtype,checkinitialSquare,checkreceivedInitialSquare;
     private boolean checkplayerVictory,checkreceivedVictory,checkReceivedSlices;
     private BonusMalusRandom checktype;
-
     private boolean checkreceivedInformationPLAYERS; //diventa true quando ho ricevuto l'informazione sul num di giocatori
     private int indexPlayerOnTurn;
 
-    public Trivia(ClientInterface clientInterface) {
-        domanda = new Domanda();
+    Trivia(ClientInterface clientInterface) {
+        domanda = new Domanda(clientInterface);
         esc = new Escape();
         pGUI = new ArrayList<>();
         pGUI.clear();
         f = new TriviaFont();
         playerBack = new ArrayList<>();
         diamanti = new ArrayList<>();
+        playerIcons=new ArrayList<>();
         this.clientInterface = clientInterface;
     }
 
-    public int getID() {
-        return 5;
-    }
+    public int getID() { return 5; }
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
@@ -98,10 +95,10 @@ public class Trivia extends BasicGameState {
         forward = new Image("res/buttons/Frecce/forward.png");
         d = new DieGUI();
 
-        rydia = new Image("res/char/rydial.png");
-        ceodore = new Image("res/char/ceodor.png");
-        kain = new Image("res/char/kainl.png");
-        luca = new Image("res/char/lucal.png");
+        playerIcons.add(new Image("res/char/rydial.png"));
+        playerIcons.add(new Image("res/char/ceodor.png"));
+        playerIcons.add(new Image("res/char/kainl.png"));
+        playerIcons.add(new Image("res/char/lucal.png"));
         background = new Image("res/backgrounds/green_landscape.png");
         launch = new Image("res/buttons/Button_Launch/Button_Launch.png");
         initializeDiamonds();
@@ -109,7 +106,6 @@ public class Trivia extends BasicGameState {
         domanda.init(gameContainer, stateBasedGame);
         esc.init(gameContainer, stateBasedGame);
         fonx1 = new TrueTypeFont(f.getFont().deriveFont(23f), false);
-        domanda.setClientInterface(clientInterface);
     }
 
     @Override
@@ -133,90 +129,26 @@ public class Trivia extends BasicGameState {
                 y = 150;
             }
             playerBack.get(i).draw(x, y);
+            playerIcons.get(i).draw(x,y);
             fonx1.drawString((x+100),y,pGUI.get(i).getName(), Color.white);
-            ArrayList<Slice> slc = new ArrayList<>(/*controller.getSliceObtained(i)*/);   //DA FARE
-            for(Slice slice : slc) {
+            for (Slice slice : pGUI.get(i).getSlc()) {
                 Categories c = slice.getCategory();
-                drawDiamonds(graphics,c,x,y);
+                drawDiamonds(graphics, c, x, y);
             }
-            slc.clear();
         }
-
-        rydia.draw(1100,30);
-        ceodore.draw(1400, 30);
-        kain.draw(1100, 150);
-        luca.draw(1400, 150);
 
         for (PlayerGUI p : pGUI) { p.getPedina().draw(p.getxUpdate(), p.getyUpdate()); }
 
         if (launched) { d.getCurrentDie().draw(1550, 870); }
 
         /*
-        Se la pedina si è fermata (ready=true) controllo se è una casella di bonus malus. Se non è una bonus malus
+            METODI DI VERIFICA STATO POSIZIONE UTENTE
+         Se la pedina si è fermata (ready=true) controllo se è una casella di bonus malus.Se non è una bonus malus
          controllo se è la casella iniziale, se non è allora posso renderizzare la domanda, altrimenti controllo
          se ho vinto o se passo il turno. Se ho risposto e mi è uscita la stringa, allora resetto ready e launched.
          */
+        checkReady(gameContainer,stateBasedGame,graphics);
 
-        if (pGUI.get(indexPlayerOnTurn).isReady() ) {
-            //entra se è una bonus/malus o random
-
-            //ricevo check bonusmalus
-            if(!checkreceivedBonusMalus){
-                checkBonusMalus=clientInterface.checkBonusMalus();
-                checkreceivedBonusMalus=true;
-            }
-            //se il checkbonusmalus è vero esegui l'effetto del bonus malus
-            if (checkBonusMalus) {
-                //ricevo il tipo estratto
-                if(!checkreceivedtype){
-                    checktype=clientInterface.getType();
-                    checkreceivedtype=true;
-                }
-                //a seconda del tipo estratto eseguo bonus o malus
-                switch (checktype) {
-                    case BONUS: {
-                        fonx1.drawString(1190, 700, "PUOI RILANCIARE IL DADO!", Color.black);
-                        break;
-                    }
-                    case MALUS: {
-                        fonx1.drawString(1190, 700, "HAI PERSO IL TURNO!", Color.black);
-                        break;
-                    }
-                }
-            }
-            // se non sono nella casella iniziale visualizzo una domanda
-            else {
-                //ricevo check se la casella in cui sono è la casella iniziale
-                if(!checkreceivedInitialSquare){
-                    checkinitialSquare=clientInterface.getCheckInitialSquare();
-                    checkreceivedInitialSquare=true;
-                }
-                //se non sono sulla casella iniziale renderizzo la domanda
-                if (!checkinitialSquare) {
-                    domanda.render(gameContainer, stateBasedGame, graphics);
-                }
-                // se sono nella casella iniziale controllo se ho abbastanza spicchi per la vittoria, altrimenti
-                // passa il turno
-                else {
-                    if(!checkreceivedVictory){
-                        checkplayerVictory=clientInterface.receiveOutcome();
-                        checkreceivedVictory=true;
-                    }
-                    if (checkplayerVictory) {
-                        fonx1.drawString(1190, 700, "HAI VINTO", Color.black);
-                        checkVictory = true;
-                    } else {
-                        fonx1.drawString(1190, 700, "CASELLA INIZIALE, PASSI IL TURNO!", Color.black);
-                        pGUI.get(indexPlayerOnTurn).setReady(false);
-                        launched = false;
-                    }
-                }
-            }
-            pGUI.get(indexPlayerOnTurn).setReady(false);
-            launched = false;
-        }
-
-        //se il flag quit = true vuol dire che ho premuto Esc e renderizzo lo state esc.
         if (esc.isQuit()) {
             try {
                 esc.render(gameContainer, stateBasedGame, graphics);
@@ -230,48 +162,39 @@ public class Trivia extends BasicGameState {
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException{
         float xpos = Mouse.getX();
         float ypos = Mouse.getY();
-        if(!checkreceivedInformationPLAYERS) initializePlayers();
         Input input = gameContainer.getInput();
 
-        /*
-        Se sono nelle coordinate del bottone Launch, ottengo il numero estratto, metto launched a true e aggiorno la
-        faccia del dado. Resetto answered, esito a false perchè risponderò ad una domanda.
-         */
+        if(!checkreceivedInformationPLAYERS) initializePlayers();
+
+        /*Se sono nelle coordinate del bottone Launch, ottengo il numero estratto, launched=true e aggiorno la
+        faccia del dado. Resetto answered, esito a false perchè risponderò ad una domanda.*/
         if (xpos > 1322 && xpos < 1505 && ypos > 57 && ypos < 143) {
-            if (input.isMousePressed(0) && !launched) {
-                clientInterface.sendOutcome(true); //comunica al server che deve eseguire setplayerOnturn
+            if (input.isMousePressed(0) && !launched && domanda.isClicked()) {
+                clientInterface.sendOutcome(); //comunica al server che deve eseguire setplayerOnturn
                 indexPlayerOnTurn=clientInterface.getIndex();
                 pGUI.get(indexPlayerOnTurn).setClicked(false);
                 launched = true;
                 diceN = clientInterface.getDiceValue();
                 d.setCurrentDie(diceN);
                 domanda.reset();
+                domanda.setClicked(false);
                 resetBoolean();
             }
         }
 
-        /*
-        se ho lanciato il dado, controllo le coordinate in cui ho cliccato (una delle due frecce).
-        in uno o nell'altro caso, informo il controller della direzione presa, aggiorno le coordinate delle gui
-         */
+        /*Controllo di essere nelle coordinate di una delle due frecce, aggiorno il server sulla direzione presa e
+        aggiorno la gui dei giocatori*/
         if (launched) {
             if (input.isMousePressed(0)) {
                 if (ypos > 45 && ypos < 145) {
-                    if (xpos > 1045 && xpos < 1160) {
-                        pGUI.get(indexPlayerOnTurn).setClicked(true);
-                        clientInterface.sendDirection(Direction.FORWARD);
-                        pGUI.get(indexPlayerOnTurn).getP().update(diceN, Direction.FORWARD);
-                        pGUI.get(indexPlayerOnTurn).updateCoordinates();
-                    }
-                    if (xpos > 1180 && xpos < 1290) {
-                        pGUI.get(indexPlayerOnTurn).setClicked(true);
-                        clientInterface.sendDirection(Direction.BACK);
-                        pGUI.get(indexPlayerOnTurn).getP().update(diceN, Direction.BACK);
-                        pGUI.get(indexPlayerOnTurn).updateCoordinates();
-                    }
+                    if (xpos > 1045 && xpos < 1160)
+                        updateGui(Direction.FORWARD);
+                    if (xpos > 1180 && xpos < 1290)
+                        updateGui(Direction.BACK);
                 }
             }
         }
+
         try {
             domanda.update(gameContainer, stateBasedGame, i);
             esc.update(gameContainer, stateBasedGame, i);
@@ -279,7 +202,7 @@ public class Trivia extends BasicGameState {
             e.printStackTrace();
         }
 
-        pGUI.get(indexPlayerOnTurn).updateOnEachFrame(i);
+        pGUI.get(indexPlayerOnTurn).updateOnEachFrame();
         if (input.isKeyPressed(Input.KEY_ESCAPE)) { esc.setQuit(true); }
 
         if (checkVictory) {
@@ -288,30 +211,118 @@ public class Trivia extends BasicGameState {
         }
     }
 
-    //non occcorre piu che ricevo dallo state precedente il num di giocatori, lo prendo dal client direttamente
-    //con questo metodo istanzio i giocatori nell'ordine di gioco corretto coerentemente con lo state precedente
-    public void initializePlayers()throws SlickException{
+    /** controllo se la pedina si è fermata e in tal caso posso ricevere una domanda. Il primo controllo è se una
+     * casella di bonus o di malus.
+     * @param gameContainer container della finestra di gioco
+     * @param stateBasedGame oggetto che permette di passare tra state diversi
+     * @param graphics oggetto che permette di disegnare sulla finestra
+     */
+    private void checkReady(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics){
+        if (pGUI.get(indexPlayerOnTurn).isReady() ) {
+            //entra se è una bonus/malus o random
+            if(!checkreceivedBonusMalus){
+                checkBonusMalus=clientInterface.checkBonusMalus();
+                checkreceivedBonusMalus=true;
+            }
+            //se il checkbonusmalus è vero esegui l'effetto del bonus malus
+            checkBonusMalusState(gameContainer,stateBasedGame,graphics);
+            pGUI.get(indexPlayerOnTurn).setReady(false);
+            launched = false;
+        }
+    }
+
+    /** Metodo che esegue la bonus malus oppure controlla se sono sulla casella iniziale */
+    private void checkBonusMalusState(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics){
+        //se il checkbonusmalus è vero esegui l'effetto del bonus malus
+        if (checkBonusMalus) {
+            //ricevo il tipo estratto
+            if(!checkreceivedtype){
+                checktype=clientInterface.getType();
+                checkreceivedtype=true;
+            }
+            //a seconda del tipo estratto eseguo bonus o malus
+            switch (checktype) {
+                case BONUS:
+                    fonx1.drawString(1190, 700, "PUOI RILANCIARE IL DADO!", Color.black);
+                    domanda.setClicked(true);
+                    break;
+                case MALUS:
+                    fonx1.drawString(1190, 700, "HAI PERSO IL TURNO!", Color.black);
+                    domanda.setClicked(true);
+                    break;
+            }
+        }
+        else {
+            //ricevo check se la casella in cui sono è la casella iniziale
+            if(!checkreceivedInitialSquare){
+                checkinitialSquare=clientInterface.getCheckInitialSquare();
+                checkreceivedInitialSquare=true;
+            }
+            checkVictoryState(gameContainer,stateBasedGame,graphics);
+        }
+    }
+
+    /** Se non sono nei casi precedenti, sono su una casella classica e quindi render dello state domanda
+     * o verifica se l'utente ha vinto */
+    private void checkVictoryState(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics){
+        //se non sono sulla casella iniziale renderizzo la domanda
+        if (!checkinitialSquare) {
+            domanda.render(gameContainer, stateBasedGame, graphics);
+            if (domanda.isEsito()) {
+                if (!checkReceivedSlices) {
+                    String c = clientInterface.getCategoriesOfTheSliceObtained();
+                    if (!c.equals("Nessuna")) {
+                        Categories categories = Categories.valueOf(c);
+                        Slice slice = new Slice(categories);
+                        pGUI.get(indexPlayerOnTurn).addSliceObtained(slice);
+                    }
+                    checkReceivedSlices = true;
+                }
+            }
+        }
+        // se sono nella casella iniziale controllo se ho abbastanza spicchi per la vittoria, altrimenti
+        // passa il turno
+        else {
+            if(!checkreceivedVictory){
+                checkplayerVictory=clientInterface.receiveOutcome();
+                checkreceivedVictory=true;
+            }
+            if (checkplayerVictory) {
+                fonx1.drawString(1190, 700, "HAI VINTO", Color.black);
+                checkVictory = true;
+            } else {
+                fonx1.drawString(1190, 700, "CASELLA INIZIALE, PASSI IL TURNO!", Color.black);
+                pGUI.get(indexPlayerOnTurn).setReady(false);
+                domanda.setClicked(true);
+                launched = false;
+            }
+        }
+    }
+
+    private void updateGui (Direction direction) {
+        pGUI.get(indexPlayerOnTurn).setClicked(true);
+        clientInterface.sendDirection(direction);
+        pGUI.get(indexPlayerOnTurn).getP().update(diceN, direction);
+        pGUI.get(indexPlayerOnTurn).updateCoordinates();
+    }
+
+    /** istanzio i giocatori nell'ordine di gioco corretto coerentemente con lo state precedente @see GameOrderState*/
+    private void initializePlayers()throws SlickException{
         ArrayList<String> nicknames=new ArrayList<>(clientInterface.getNicknames());
         NPLAYERS=nicknames.size();
         for (int i = 0; i <NPLAYERS; i++) {
             Player p = new Player(nicknames.get(i), i + 1, map);
             playerBack.add(new Image("res/backgrounds/PlayerBackgrounds/SfondoGiocatore"+i+".png"));
-            if (i == 0) {
+            if (i == 0)
                 pGUI.add(i, new PlayerGUI(p, piece));
-            }
-            if (i == 1) {
+            if (i == 1)
                 pGUI.add(i, new PlayerGUI(p, piece1));
-            }
-            if (i == 2) {
+            if (i == 2)
                 pGUI.add(i, new PlayerGUI(p, piece2));
-            }
-            if (i == 3) {
+            if (i == 3)
                 pGUI.add(i, new PlayerGUI(p, piece3));
-            }
         }
-        for (PlayerGUI p : pGUI) {
-            p.getPedina().stop();
-        }
+        for (PlayerGUI p : pGUI) { p.getPedina().stop(); }
         checkreceivedInformationPLAYERS=true;
     }
 
@@ -327,23 +338,23 @@ public class Trivia extends BasicGameState {
 
     private void drawDiamonds(Graphics graphics, Categories c, int x, int y){
         switch (c){
-            case Geografia:
-                graphics.drawImage(diamanti.get(5),x+70,y+40 );
+            case GEOGRAFIA:
+                graphics.drawImage(diamanti.get(5),x+100,y+40 );
                 break;
-            case Storia:
-                graphics.drawImage(diamanti.get(3), x+100,y+40);
+            case STORIA:
+                graphics.drawImage(diamanti.get(3), x+125,y+40);
                 break;
-            case Scienze:
-                graphics.drawImage(diamanti.get(4), x+130,y+40);
+            case SCIENZE:
+                graphics.drawImage(diamanti.get(4), x+150,y+40);
                 break;
-            case Spettacolo:
-                graphics.drawImage(diamanti.get(2), x+160,y+40);
+            case SPETTACOLO:
+                graphics.drawImage(diamanti.get(2), x+175,y+40);
                 break;
-            case ArteLetteratura:
-                graphics.drawImage(diamanti.get(1), x+190,y+40);
+            case ARTELETTERATURA:
+                graphics.drawImage(diamanti.get(1), x+200,y+40);
                 break;
-            case Sport:
-                graphics.drawImage(diamanti.get(0), x+210,y+40);
+            case SPORT:
+                graphics.drawImage(diamanti.get(0), x+225,y+40);
                 break;
         }
     }
@@ -364,6 +375,7 @@ public class Trivia extends BasicGameState {
         checkreceivedInitialSquare=false;
         checkreceivedVictory=false;
         domanda.setCheckreceivedQuestion(false);
+        checkReceivedSlices = false;
     }
 }
 

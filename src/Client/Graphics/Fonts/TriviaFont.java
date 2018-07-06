@@ -6,8 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * @author Rita
- *
+ * @author Stefano
  * Classe del font utilizzato nel gioco.
  */
 

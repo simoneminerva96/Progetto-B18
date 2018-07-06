@@ -3,16 +3,23 @@ package Server.GameClasses;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Controller implements Serializable {
+/**
+ * Classe Controller tra ServerInterface e la logica di gioco.
+ * - match: oggetto di tipo partita TrivialGame
+ * - request: oggetto di tipo Request, può svolgere sia login che registrazione
+ * @author Jacopo Ansaldi
+ */
+class Controller implements Serializable {
     private TrivialGame match;
     private Request request;
 
-    public Controller(){
+    Controller(){
         match=new TrivialGame();
         request = new Request();
     }
 
-    public void initializePlayers(int nplayers){
+    /**inizializza i giocatori nella logica di gioco*/
+    void initializePlayers(int nplayers){
         ArrayList<String> gamingPlayers=new ArrayList<>();
         //INSERISCO GIOCATORI DI PROVA, POI ANDRANNO INSERITI I NICKNAME DEI GIOCATORI
         // PARTECIPANTI PASSANDOLI A QUESTO COSTRUTTORE
@@ -22,73 +29,67 @@ public class Controller implements Serializable {
         match.initializePlayers(gamingPlayers); //inizializzo i giocatori
     }
 
-    public void beginningDieRoll(){
+    /** Si definisce l'ordine di gioco lanciando i dadi. Inoltre, viene settato il primo giocatore di turno. */
+    void beginningDieRoll(){
         match.BeginningDieRoll();
         match.initializePhase(); //setto il primo giocatore di turno
     }
-    //metodo che ritorna i risultati dei lanci dei dadi iniziali
-    public ArrayList<Integer> getResultsOfRoll(){
-        ArrayList<Integer> results=new ArrayList<Integer>();
+    /** @return lanci del dado iniziali */
+    ArrayList<Integer> getResultsOfRoll(){
+        ArrayList<Integer> results=new ArrayList<>();
         for(int i=0;i<match.getPlayers().size();i++){
             results.add(match.getPlayers().get(i).getInitialRollResult());
         }
         return results;
     }
-    public int getIndex(){
-        return match.getIndex();
-    }
 
-    public int getDiceValue(){
-       return match.throwDie();
-    }
+    /** @return indice del giocatore di turno */
+    int getIndex(){ return match.getIndex(); }
 
-    public void setDirection(Direction direction){
+    /** @return valore estratto dal lancio del dado */
+    int getDiceValue(){ return match.throwDie(); }
+
+    /**setta la direzione selezionata dal giocatore*/
+    void setDirection(Direction direction){
         match.chooseDirection(direction);
         match.movePlayer();
     }
 
-    //metodo che ritorna true se il giocatore finisce nella casella iniziale
-    public boolean checkInitialSquare(){
-        return match.checkInitialSquare();
-    }
-    public Question getQuestion(){
-        return match.visualizeQuestion();
-    }
+    /** @return true se il giocatore finisce nella casella iniziale */
+    boolean checkInitialSquare(){ return match.checkInitialSquare(); }
 
-    //il giocatore dalla grafica seleziona la risposta, il metodo ritorna se è corretta o sbagliata, incrementa l'indice del giocatore
-    //di turno se è sbagliata
-    public boolean answerQuestion(int index){
-        return match.answerQuestion(index);
-    }
-    //metodo che aggiorna l'indice corrispondente al giocator di turno se la rispsota data è sbagliata
-    public void setPlayerOnTurn(){
-        match.setPlayerOnTurn();
-    }
+    /** @return oggetto Question che contiene la domanda e le 4 risposte della casella in cui si trova il player */
+    Question getQuestion(){ return match.visualizeQuestion(); }
 
-    //metodo che controlla se la casella attuale è un bonus/malus/random
-    public boolean checkBonusMalus() {
-        return match.checkBonusMalus();
-    }
+    /** @return boolean se la risposta è corretta o sbagliata e incrementa l'indice del giocatore di turno se la risposta
+    è sbagliata */
+    boolean answerQuestion(int index){ return match.answerQuestion(index); }
 
-    //metodo che esegue il bonus/malus e ritorna l'effetto eseguito(nel caso del random l'effetto viene estratto nel metodo moveplayer)
-    public BonusMalusRandom checkType(){
-        return match.executeBonusMalus();
-    }
+    /** Aggiorna l'indice corrispondente al giocator di turno se la rispsota data è sbagliata */
+    void setPlayerOnTurn(){ match.setPlayerOnTurn(); }
 
-    public ArrayList<Slice> getSliceObtained(int index){
-        return match.obtainedSlices(index);
-    }
+    /** @return true se la casella attuale è un bonus/malus/random */
+    boolean checkBonusMalus() { return match.checkBonusMalus(); }
 
-    public boolean verifyVictory(){
-        return match.verifyVictory();
-    }
+    /** @return il tipo se Bonus, Malus e Random ed esegue il bonus o il malus o il random */
+    BonusMalusRandom checkType(){ return match.executeBonusMalus(); }
 
-    //metodo che restituisce i nicknames ordinati(dopo il lancio del dado iniziale)
-    public ArrayList<String> getOrdinatedNicknames(){
-        return match.getordinatednicknames();
-    }
+    /** @return true o false se è stata vinta la partita o no */
+    boolean verifyVictory(){ return match.verifyVictory(); }
 
-    public boolean request (Credenziali credenziali, TypeOfRequest typeOfRequest) {
-        return request.request(credenziali, typeOfRequest);
-    }
+    /** @return arrayList di nickname ordinati dopo il lancio del dado */
+    ArrayList<String> getOrdinatedNicknames(){ return match.getordinatednicknames(); }
+
+    /**
+     * @param credenziali Username e password dell'utente
+     * @param typeOfRequest tipo della richiesta: può essere LOGIN o REGISTRAZIONE
+     * @return boolean se è andata a buon fine o no
+     */
+    boolean request (Credenziali credenziali, TypeOfRequest typeOfRequest) { return request.request(credenziali, typeOfRequest); }
+
+    /** @return boolean se è una domanda finale oppure no */
+    boolean isFinalQuestion () { return match.isFinalQuestion(); }
+
+    /** @return categoria dello spicchio ottenuto */
+    Categories getCategoriesOfTheSliceObtained () { return match.getCategoriesOfTheSliceObtained(); }
 }

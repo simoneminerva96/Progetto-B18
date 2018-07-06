@@ -2,7 +2,6 @@ package Server.GameClasses;
 
 import Server.GameClasses.Squares.*;
 import Server.GameClasses.ConnectionDB.ConnectionDB;
-
 import java.sql.SQLException;
 import java.util.ArrayList;
 /**
@@ -51,32 +50,32 @@ public class Board {
                 squares.get(i).setPossibleQuestions(possibleQuestionSto);
             }
             if(i==5){
-                squares.add(new FinalQuestionSquare(i,Categories.Sport));
+                squares.add(new FinalQuestionSquare(i,Categories.SPORT));
                 ArrayList<Question> possibleQuestionSpoFinal=new ArrayList<>(connectionDB.getQuestion("FSPO"));
                 squares.get(i).setPossibleQuestions(possibleQuestionSpoFinal);
             }
             if(i==9){
-                squares.add(new FinalQuestionSquare(i,Categories.ArteLetteratura));
+                squares.add(new FinalQuestionSquare(i,Categories.ARTELETTERATURA));
                 ArrayList<Question> possibleQuestionArtFinal=new ArrayList<>(connectionDB.getQuestion("FART"));
                 squares.get(i).setPossibleQuestions(possibleQuestionArtFinal);
             }
             if(i==14){
-                squares.add(new FinalQuestionSquare(i,Categories.Spettacolo));
+                squares.add(new FinalQuestionSquare(i,Categories.SPETTACOLO));
                 ArrayList<Question> possibleQuestionShowFinal=new ArrayList<>(connectionDB.getQuestion("FSPE"));
                 squares.get(i).setPossibleQuestions(possibleQuestionShowFinal);
             }
             if(i==23){
-                squares.add(new FinalQuestionSquare(i,Categories.Storia));
+                squares.add(new FinalQuestionSquare(i,Categories.STORIA));
                 ArrayList<Question> possibleQuestionStoFinal=new ArrayList<>(connectionDB.getQuestion("FSTO"));
                 squares.get(i).setPossibleQuestions(possibleQuestionStoFinal);
             }
             if(i==27){
-                squares.add(new FinalQuestionSquare(i,Categories.Scienze));
+                squares.add(new FinalQuestionSquare(i,Categories.SCIENZE));
                 ArrayList<Question> possibleQuestionScieFinal=new ArrayList<>(connectionDB.getQuestion("FSCI"));
                 squares.get(i).setPossibleQuestions(possibleQuestionScieFinal);
             }
             if(i==32){
-                squares.add(new FinalQuestionSquare(i,Categories.Geografia));
+                squares.add(new FinalQuestionSquare(i,Categories.GEOGRAFIA));
                 ArrayList<Question> possibleQuestionGeofinal=new ArrayList<>(connectionDB.getQuestion("FGEO"));
                 squares.get(i).setPossibleQuestions(possibleQuestionGeofinal);
             }

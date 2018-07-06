@@ -10,10 +10,11 @@ public class ServerInterface extends Thread implements Serializable {
     private ObjectOutputStream out;
     private TypeOfRequest typeOfRequest;
     private int numberOfPlayers;
-    private boolean esitoRisposta;
+    private boolean esitoRisposta, loginEffettuato;
     private int index;
+    private boolean isFinalQuestion;
 
-    public ServerInterface(Socket socketClient){
+    ServerInterface(Socket socketClient){
         this.socketClient = socketClient;
         controller = new Controller();
         try{
@@ -27,7 +28,9 @@ public class ServerInterface extends Thread implements Serializable {
 
     @Override
     public void run() {
-        //getCredenziali();
+        /*while (!loginEffettuato) {
+            loginEffettuato = getCredenziali();
+        }*/
         //riceve il numero di giocatori selezionato nel client
         numberOfPlayers = getIndex();
         //istanzia i giocatori e esegue il lancio iniziale del dado
@@ -39,11 +42,10 @@ public class ServerInterface extends Thread implements Serializable {
         sendResultsOfRoll();
         //invio i nicknames ordinati per lo state trivia
         sendNicknames();
-        while (true)
-        {
-            if(receiveOutcome()){
+
+        while (true) {
+            if(receiveOutcome())
                 controller.setPlayerOnTurn();
-            }
             sendIndex();
             sendDiceValue();
             controller.setDirection(getDirection());
@@ -51,25 +53,28 @@ public class ServerInterface extends Thread implements Serializable {
             if(controller.checkBonusMalus()) sendType();
             else {
                 sendCheckInitialSquare();
-                if(!controller.checkInitialSquare()){
+                if(!controller.checkInitialSquare()) {
                     sendQuestion();
-                    System.out.println("sended question");
-                    index=getIndex();
-                    System.out.println("received index");
-                    esitoRisposta=controller.answerQuestion(index);
+                    index = getIndex();
+                    esitoRisposta = controller.answerQuestion(index);
                     sendCheck(esitoRisposta);
-                    System.out.println("sended check");
+                    if (esitoRisposta) {
+                        if (controller.isFinalQuestion())
+                            sendCategories(controller.getCategoriesOfTheSliceObtained().name());
+                        else
+                        sendCategories("Nessuna");
+                    }
                 }
-                else {
+                else
                     sendCheck(controller.verifyVictory());
-                }
             }
         }
     }
-    //riceve le credenziali per il login/registrazione dal client
-    public void getCredenziali(){
+
+    /** riceve le credenziali per il login/registrazione dal client. Restituisce true se è stato effettuato il login*/
+    private boolean getCredenziali(){
         boolean check = false;
-        Credenziali credenziali = null;
+        Credenziali credenziali;
         try {
             credenziali = (Credenziali) in.readObject();
             typeOfRequest = (TypeOfRequest) in.readObject();
@@ -79,41 +84,41 @@ public class ServerInterface extends Thread implements Serializable {
                     break;
                 case LOGIN:
                     check = request(credenziali, TypeOfRequest.LOGIN);
+                    if (check)
+                        loginEffettuato = true;
                     break;
             }
             sendCheck(check);
         }
-        catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        catch (Exception e) {
             e.printStackTrace();
         }
+        return loginEffettuato;
     }
-    public int getIndex(){
+
+    /** riceve l'indice della risposta */
+    private int getIndex(){
         Integer index=0;
         try {
             index = (int) in.readObject();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return index;
     }
-    public boolean receiveOutcome (){
+    /** riceve un boolean che indica se è stato lanciato il dado*/
+    private boolean receiveOutcome (){
         boolean check = false;
         try {
             check = (boolean) in.readObject();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return check;
     }
 
-    //invia al client la conferma di avvenuta registrazione o login
-    public void sendCheck(boolean check){
+    /** invia al client la conferma di avvenuta registrazione o login */
+    private void sendCheck(boolean check){
         try {
             out.writeObject(check);
         }
@@ -121,11 +126,11 @@ public class ServerInterface extends Thread implements Serializable {
             e.printStackTrace();
         }
     }
-    public boolean request (Credenziali credenziali, TypeOfRequest typeOfRequest) {
-        return controller.request(credenziali, typeOfRequest);
-    }
+    /** esegue il login o la registrazione */
+    private boolean request (Credenziali credenziali, TypeOfRequest typeOfRequest) { return controller.request(credenziali, typeOfRequest); }
 
-    public void sendNicknames(){
+    /** invia al client i nickname dei giocatori */
+    private void sendNicknames(){
         try{
             out.writeObject(controller.getOrdinatedNicknames());
         }
@@ -134,7 +139,8 @@ public class ServerInterface extends Thread implements Serializable {
         }
     }
 
-    public void sendResultsOfRoll(){
+    /** invia al client i lanci dei dadi iniziali ottenuti */
+    private void sendResultsOfRoll(){
         try{
             out.writeObject(controller.getResultsOfRoll());
         }
@@ -142,8 +148,9 @@ public class ServerInterface extends Thread implements Serializable {
             e.printStackTrace();
         }
     }
-    //invia l'indice del giocatore che è di turno
-    public void sendIndex(){
+
+    /** invia l'indice del giocatore che è di turno */
+    private void sendIndex(){
         try{
             out.writeObject(controller.getIndex());
         }
@@ -151,8 +158,9 @@ public class ServerInterface extends Thread implements Serializable {
             e.printStackTrace();
         }
     }
-    //invia il risultato del lancio del dado
-    public void sendDiceValue () {
+
+    /** invia il risultato del lancio del dado */
+    private void sendDiceValue () {
         try {
             out.writeObject(controller.getDiceValue());
         } catch (IOException e) {
@@ -160,19 +168,19 @@ public class ServerInterface extends Thread implements Serializable {
         }
     }
 
-    public Direction getDirection () {
+    /** riceve dal client la direzione presa dal giocatore */
+    private Direction getDirection () {
         Direction direction=null;
         try {
             direction=(Direction)in.readObject();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return direction;
     }
 
-    public void sendcheckBonusMalus () {
+    /** invia al client un boolean se la casella è di bonus o malus */
+    private void sendcheckBonusMalus () {
         try {
             out.writeObject(controller.checkBonusMalus());
         } catch (IOException e) {
@@ -181,7 +189,8 @@ public class ServerInterface extends Thread implements Serializable {
         }
     }
 
-    public void sendType () {
+    /** invia al client il tipo della bonus */
+    private void sendType () {
         try {
             out.writeObject(controller.checkType());
         } catch (IOException e) {
@@ -190,7 +199,8 @@ public class ServerInterface extends Thread implements Serializable {
         }
     }
 
-    public void sendCheckInitialSquare () {
+    /** invia al client se la casella è iniziale o no */
+    private void sendCheckInitialSquare () {
         try {
             out.writeObject(controller.checkInitialSquare());
         } catch (IOException e) {
@@ -199,12 +209,22 @@ public class ServerInterface extends Thread implements Serializable {
         }
     }
 
-    public void sendQuestion () {
+    /** invia al client la domanda e le relative risposte */
+    private void sendQuestion () {
         try {
             out.writeObject(controller.getQuestion());
         } catch (IOException e) {
             e.printStackTrace();
 
+        }
+    }
+
+    /** invia al client la categoria dello spicchio ottenuto oppure la stringa "nessuna" se non è una domanda finale */
+    private void sendCategories (String categoria) {
+        try {
+            out.writeObject(categoria);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

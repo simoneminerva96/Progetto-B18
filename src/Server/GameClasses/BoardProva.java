@@ -4,7 +4,7 @@ import Server.GameClasses.ConnectionDB.ConnectionDB;
 import Server.GameClasses.Squares.*;
 import java.util.ArrayList;
 /**
- * classe che corrisponde al tabellone di gioco
+ * classe che corrisponde al tabellone di gioco. versione di prova senza connessione al DB
  * @author Ansaldi Jacopo <jacopo.ansaldi01@universitadipavia.it>
  */
 public class BoardProva{
@@ -49,32 +49,32 @@ public class BoardProva{
                 squares.get(i).setPossibleQuestions(possibleQuestionSto);
             }
             if(i==5){
-                squares.add(new FinalQuestionSquare(i,Categories.Sport));
+                squares.add(new FinalQuestionSquare(i,Categories.SPORT));
                 ArrayList<Question> possibleQuestionSpoFinal=new ArrayList<>(creaDomandaDiProva("provaSpoFinal","A",true,"b",false,"c",false,"d",false));
                 squares.get(i).setPossibleQuestions(possibleQuestionSpoFinal);
             }
             if(i==9){
-                squares.add(new FinalQuestionSquare(i,Categories.ArteLetteratura));
+                squares.add(new FinalQuestionSquare(i,Categories.ARTELETTERATURA));
                 ArrayList<Question> possibleQuestionArtFinal=new ArrayList<>(creaDomandaDiProva("provaArtFinal","A",true,"b",false,"c",false,"d",false));
                 squares.get(i).setPossibleQuestions(possibleQuestionArtFinal);
             }
             if(i==14){
-                squares.add(new FinalQuestionSquare(i,Categories.Spettacolo));
+                squares.add(new FinalQuestionSquare(i,Categories.SPETTACOLO));
                 ArrayList<Question> possibleQuestionShowFinal=new ArrayList<>(creaDomandaDiProva("provaShowFinal","A",true,"b",false,"c",false,"d",false));
                 squares.get(i).setPossibleQuestions(possibleQuestionShowFinal);
             }
             if(i==23){
-                squares.add(new FinalQuestionSquare(i,Categories.Storia));
+                squares.add(new FinalQuestionSquare(i,Categories.STORIA));
                 ArrayList<Question> possibleQuestionStoFinal=new ArrayList<>(creaDomandaDiProva("provaStoFinal","A",true,"b",false,"c",false,"d",false));
                 squares.get(i).setPossibleQuestions(possibleQuestionStoFinal);
             }
             if(i==27){
-                squares.add(new FinalQuestionSquare(i,Categories.Scienze));
+                squares.add(new FinalQuestionSquare(i,Categories.SCIENZE));
                 ArrayList<Question> possibleQuestionScieFinal=new ArrayList<>(creaDomandaDiProva("provaSciFinal","A",true,"b",false,"c",false,"d",false));
                 squares.get(i).setPossibleQuestions(possibleQuestionScieFinal);
             }
             if(i==32){
-                squares.add(new FinalQuestionSquare(i,Categories.Geografia));
+                squares.add(new FinalQuestionSquare(i,Categories.GEOGRAFIA));
                 ArrayList<Question> possibleQuestionGeofinal=new ArrayList<>(creaDomandaDiProva("provaGeoFinal","A",true,"b",false,"c",false,"d",false));
                 squares.get(i).setPossibleQuestions(possibleQuestionGeofinal);
             }
