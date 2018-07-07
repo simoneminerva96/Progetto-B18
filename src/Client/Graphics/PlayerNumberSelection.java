@@ -1,5 +1,6 @@
 package Client.Graphics;
 
+import Client.Graphics.ClientInteface.ClientInterface;
 import Client.Graphics.com.sticky.NumberButton;
 import Client.Graphics.com.sticky.StateButton;
 import org.newdawn.slick.*;

@@ -1,4 +1,7 @@
-package Client.Graphics;
+package Client.Graphics.ClientInteface;
+
+import Client.Graphics.CheckControls;
+import Client.Graphics.MainGraphics;
 
 public class ClientApplication {
     public static void main(String[] args) {

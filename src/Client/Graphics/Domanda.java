@@ -1,5 +1,6 @@
 package Client.Graphics;
 
+import Client.Graphics.ClientInteface.ClientInterface;
 import Server.GameClasses.Question;
 import Client.Graphics.Fonts.TriviaFont;
 import org.lwjgl.input.Mouse;

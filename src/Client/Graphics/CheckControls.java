@@ -1,4 +1,5 @@
 package Client.Graphics;
+import Client.Graphics.ClientInteface.ClientInterface;
 import Server.GameClasses.BonusMalusRandom;
 
 /**@author Di Cecca Rita, Kothuwa Gamage Thenuka Stefano

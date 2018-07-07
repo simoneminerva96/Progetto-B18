@@ -1,4 +1,4 @@
-package Client.Graphics;
+package Client.Graphics.ClientInteface;
 
 import Server.GameClasses.*;
 import java.io.Serializable;
@@ -12,7 +12,7 @@ public class ClientInterface implements Serializable {
     private ObjectInputStream in = null;
     private boolean connected = false;
 
-    ClientInterface(){
+    public ClientInterface(){
         try {
             //93.41.247.149 1201
             //InetAddress.getLocalHost() 8888
@@ -27,7 +27,7 @@ public class ClientInterface implements Serializable {
         }
     }
 
-    void sendCredential(String usr, String psw, TypeOfRequest typeOfRequest){
+    public void sendCredential(String usr, String psw, TypeOfRequest typeOfRequest){
         Credenziali credenziali = new Credenziali(usr, psw);
         try {
             out.writeObject(credenziali);
@@ -37,7 +37,7 @@ public class ClientInterface implements Serializable {
         }
     }
 
-    boolean receiveOutcome (){
+    public boolean receiveOutcome (){
         boolean check = false;
         try {
             check = (boolean) in.readObject();
@@ -48,7 +48,7 @@ public class ClientInterface implements Serializable {
     }
 
     /**metodo generico che invia un check al server (per fargli eseguire determinare operaz.) */
-    void sendOutcome(){
+    public void sendOutcome(){
         try {
             out.writeObject(true);
         } catch (IOException e) {
@@ -66,7 +66,7 @@ public class ClientInterface implements Serializable {
         return index;
     }
 
-    void sendindex(int n){
+    public void sendindex(int n){
         try {
             out.writeObject(n);
         } catch (IOException e) {
@@ -74,7 +74,7 @@ public class ClientInterface implements Serializable {
         }
     }
 
-    ArrayList<Integer> getResultsOfRoll(){
+    public ArrayList<Integer> getResultsOfRoll(){
         ArrayList<Integer> results=new ArrayList<>();
         try {
             results.addAll((ArrayList< Integer>)in.readObject());
@@ -84,7 +84,7 @@ public class ClientInterface implements Serializable {
         return results;
     }
 
-    int getDiceValue () {
+    public int getDiceValue () {
         int diceValue = 0;
         try {
             diceValue = (int) in.readObject();
@@ -94,7 +94,7 @@ public class ClientInterface implements Serializable {
         return diceValue;
     }
 
-    void sendDirection (Direction direction) {
+    public void sendDirection (Direction direction) {
         try {
             out.writeObject(direction);
         } catch (IOException e) {
@@ -113,7 +113,7 @@ public class ClientInterface implements Serializable {
     }
 
 
-    boolean checkBonusMalus () {
+    public boolean checkBonusMalus () {
         boolean esito = false;
         try {
             esito = (boolean) in.readObject();
@@ -123,7 +123,7 @@ public class ClientInterface implements Serializable {
         return esito;
     }
 
-    BonusMalusRandom getType () {
+    public BonusMalusRandom getType () {
         BonusMalusRandom bonusMalus=null;
         try {
             bonusMalus = (BonusMalusRandom) in.readObject();
@@ -134,7 +134,7 @@ public class ClientInterface implements Serializable {
         return bonusMalus;
     }
 
-    Boolean getCheckInitialSquare() {
+    public Boolean getCheckInitialSquare() {
         boolean check=false;
         try {
             check = (boolean) in.readObject();
@@ -144,7 +144,7 @@ public class ClientInterface implements Serializable {
         return check;
     }
 
-    ArrayList<String>getNicknames(){
+    public ArrayList<String>getNicknames(){
         ArrayList<String>nicknames=new ArrayList<>();
         try{
             nicknames.addAll((ArrayList<String>) in.readObject());
@@ -154,7 +154,7 @@ public class ClientInterface implements Serializable {
         return nicknames;
     }
 
-    String getCategoriesOfTheSliceObtained () {
+    public String getCategoriesOfTheSliceObtained () {
         String c = null;
         try {
             c = (String) in.readObject();
@@ -164,5 +164,5 @@ public class ClientInterface implements Serializable {
         return c;
     }
 
-    boolean isConnected() { return connected; }
+    public boolean isConnected() { return connected; }
 }

@@ -1,5 +1,6 @@
 package Client.Graphics;
 
+import Client.Graphics.ClientInteface.ClientInterface;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.*;
 
@@ -10,7 +11,7 @@ public class MainGraphics extends StateBasedGame{
     private CheckControls checkControls;
     private static final String gameName = "Trivial Pursuit";
 
-    MainGraphics(String gameName, ClientInterface clientInterface,CheckControls checkControls) {
+    public MainGraphics(String gameName, ClientInterface clientInterface,CheckControls checkControls) {
         super(gameName);
         this.clientInterface = clientInterface;
         this.checkControls=checkControls;
@@ -21,16 +22,16 @@ public class MainGraphics extends StateBasedGame{
      * @param gc contenitore associato alla finestra*/
     @Override
     public void initStatesList(GameContainer gc)  {
+        this.addState(new LoginRegistrationInterface(clientInterface));
         this.addState(new MainMenu());
         this.addState(new PlayerNumberSelection(clientInterface));
-        this.addState(new LoginRegistrationInterface(clientInterface));
         this.addState(new GameOrderState(clientInterface));
         this.addState(new Trivia(clientInterface,checkControls));
     }
 
     /**Metodo che deve essere chiamato per avviare la grafica. Esso viene richiamato in {@see Clientinferface}
      * - appgc: finestra di gioco di nome gameName*/
-     void run() {
+     public void run() {
         AppGameContainer appgc;
         try {
             appgc = new AppGameContainer(new MainGraphics(gameName, clientInterface,checkControls));
