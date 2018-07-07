@@ -1,20 +1,28 @@
 package Client.Graphics;
+import Server.GameClasses.BonusMalusRandom;
 
-/**@author Di Cecca Rita, Stefano Gamage
- * Classe contenente dei flag che segnalano a Trivia se alcune informazioni sono state già ricevute da ClientInterface
+/**@author Di Cecca Rita, Kothuwa Gamage Thenuka Stefano
+ * Classe contentente dei flag che segnalano a Trivia se alcune informazioni sono state già ricevute da ClientInterface
  * @see Trivia
- * @see ClientInterface */
+ * @see ClientInterface
+ */
 
 public class CheckControls {
     private boolean checkreceivedBonusMalus,checkreceivedtype,checkreceivedInitialSquare;
     private boolean checkreceivedVictory,checkReceivedSlices;
+    private boolean checkBonusMalus,checkinitialSquare,checkplayerVictory;
+    private boolean esitoDomanda=false;
+    private BonusMalusRandom checktype;
+    private ClientInterface clientInterface;
+    private String c="NULL";
 
-    public CheckControls(){
+    public CheckControls(ClientInterface clientInterface){
         checkreceivedBonusMalus=false;
         checkreceivedInitialSquare=false;
         checkreceivedtype=false;
         checkreceivedVictory=false;
         checkReceivedSlices=false;
+        this.clientInterface=clientInterface;
     }
 
     public boolean isCheckreceivedBonusMalus() { return checkreceivedBonusMalus; }
@@ -49,5 +57,71 @@ public class CheckControls {
         checkreceivedtype=false;
         checkreceivedVictory=false;
         checkReceivedSlices=false;
+    }
+
+    public void getStatus(){
+        if(!checkreceivedBonusMalus){
+            checkBonusMalus=clientInterface.checkBonusMalus();
+            checkreceivedBonusMalus=true;
+        }
+        if(checkBonusMalus){
+            if(!checkreceivedtype){
+                checktype=clientInterface.getType();
+                checkreceivedtype=true;
+            }
+        }
+        if(!checkBonusMalus){
+            if(!checkreceivedInitialSquare){
+                checkinitialSquare=clientInterface.getCheckInitialSquare();
+                checkreceivedInitialSquare=true;
+            }
+        }
+        if(checkinitialSquare){
+            if(!checkreceivedVictory){
+                checkplayerVictory=clientInterface.receiveOutcome();
+                checkreceivedVictory=true;
+            }
+        }
+    }
+
+    public void checkReceivedSlices(){
+        if(!checkinitialSquare){
+            if(esitoDomanda){
+                if(!checkReceivedSlices){
+                    c = clientInterface.getCategoriesOfTheSliceObtained();
+                    checkReceivedSlices=true;
+                }
+            }
+        }
+
+    }
+
+
+    public boolean isCheckBonusMalus() {
+        return checkBonusMalus;
+    }
+
+    public boolean isCheckinitialSquare() {
+        return checkinitialSquare;
+    }
+
+    public boolean isCheckplayerVictory() {
+        return checkplayerVictory;
+    }
+
+    public BonusMalusRandom getChecktype() {
+        return checktype;
+    }
+
+    public void setEsitoDomanda(boolean b){
+        esitoDomanda=b;
+    }
+
+    public String getC() {
+        return c;
+    }
+
+    public void setC(String c) {
+        this.c = c;
     }
 }
