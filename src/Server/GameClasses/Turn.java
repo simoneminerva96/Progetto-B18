@@ -109,7 +109,7 @@ public class Turn {
         return correctAnswer;
     }
 
-    boolean getCorrectAnswer(){ return this.correctAnswer; }
+    public boolean getCorrectAnswer(){ return this.correctAnswer; }
 
     /**AGGIUNGE LO SPICCHIO AL GIOCATORE SE LA DOMANDA è UNA DOMANDA FINALE*/
     private void obtainSlice(){
