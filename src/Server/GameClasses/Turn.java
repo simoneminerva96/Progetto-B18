@@ -20,7 +20,7 @@ public class Turn {
     private boolean isFinalQuestion;
     private Categories categoriesOfTheSliceObtained;
 
-    Turn(Player playerOnTurn,BoardProva playBoard){
+    public Turn(Player playerOnTurn,BoardProva playBoard){
         this.playerOnTurn=playerOnTurn;
         this.playBoard=playBoard;
         die=new Die();
@@ -30,21 +30,25 @@ public class Turn {
     }
 
     /**metodo da chiamare in @see TrivialGame per cambiar turno */
-    void setPlayerOnTurn(Player playerOnTurn) { this.playerOnTurn = playerOnTurn; }
+    public void setPlayerOnTurn(Player playerOnTurn) { this.playerOnTurn = playerOnTurn; }
 
     public void setCorrectAnswer(boolean correctAnswer) { this.correctAnswer = correctAnswer; }
 
+    public int getDieresult() {
+        return dieresult;
+    }
+
     /**metodo che effettua il lancio del dado*/
-    int dieLaunch(){
+    public int dieLaunch(){
         dieresult=die.Launch();
         return dieresult;
     }
 
     /**setta la direzione scelta dal giocatore */
-    void setChosenDirection(Direction direction){ this.chosenDirection=direction; }
+    public void setChosenDirection(Direction direction){ this.chosenDirection=direction; }
 
     /**metodo che muove la pedina del risultato del dado nella direzione scelta */
-    void movePlayer(){
+    public void movePlayer(){
         if(chosenDirection.equals(Direction.FORWARD)){
             if(playerOnTurn.getActualPosition() + dieresult >= NSQUARES){
                 Integer position=playerOnTurn.getActualPosition() + dieresult -NSQUARES;

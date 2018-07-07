@@ -74,13 +74,13 @@ public class ConnectionDB {
         String IDNAME = credenziali.getUser();
         String PW = credenziali.getPassword();
         String query = "{ ?=call PLAYER_EXIST(?,?) }";
-       return connect(query,credenziali);
+        return connect(query,credenziali);
     }
 
     public boolean connect(String query,Credenziali credenziali){
         String IDNAME = credenziali.getUser();
         String PW = credenziali.getPassword();
-        Boolean returnMessage = null;
+        Boolean returnMessage = false;
         ResultSet rs;
 
         try (Connection conn = DriverManager.getConnection("jdbc:mysql://93.41.247.149:3306/trivial?useSSL=false", "root", "root");

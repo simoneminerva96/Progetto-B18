@@ -8,13 +8,13 @@ import java.util.ArrayList;
  * - slicesObtained: arrayList di spicchi ottenuti
  * @author Ansaldi Jacopo <jacopo.ansaldi01@universitadipavia.it>
  */
-    class Player {
+    public class Player {
     private String nickname;
     private int initialRollResult;
     private int actualPosition;
     private ArrayList<Slice> slicesObtained;
 
-    Player(String nickname){
+    public Player(String nickname){
         this.nickname=nickname;
         initialRollResult=0;
         actualPosition=0;   //quando viene istanziato un giocatore viene inizializzato sulla casella iniziale(index=0)
@@ -26,7 +26,7 @@ import java.util.ArrayList;
      * @param category categoria dello spicchio da verificare
      *
      */
-     void obtainSlice(Categories category){
+     public void obtainSlice(Categories category){
         if(!checkSliceAlreadyObtained(category))
             slicesObtained.add(new Slice(category));
     }
@@ -41,16 +41,16 @@ import java.util.ArrayList;
         return check;
     }
 
-    int getInitialRollResult() { return initialRollResult; }
+    public int getInitialRollResult() { return initialRollResult; }
 
-    void setInitialRollResult(int initialRollResult) { this.initialRollResult = initialRollResult; }
+    public void setInitialRollResult(int initialRollResult) { this.initialRollResult = initialRollResult; }
 
-    String getNickname() { return nickname; }
+    public String getNickname() { return nickname; }
 
-    int getActualPosition() { return actualPosition; }
+    public int getActualPosition() { return actualPosition; }
 
-    void setActualPosition(int actualPosition) { this.actualPosition = actualPosition; }
+    public void setActualPosition(int actualPosition) { this.actualPosition = actualPosition; }
 
-    ArrayList<Slice> getSlicesObtained() { return slicesObtained; }
+    public ArrayList<Slice> getSlicesObtained() { return slicesObtained; }
 
 }
