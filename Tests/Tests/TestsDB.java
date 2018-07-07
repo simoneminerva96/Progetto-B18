@@ -1,7 +1,5 @@
 package Tests;
 
-import Client.Graphics.Player.Coordinate;
-import Client.Graphics.Player.Player;
 import Server.GameClasses.ConnectionDB.ConnectionDB;
 import Server.GameClasses.Credenziali;
 
@@ -34,8 +32,7 @@ public class TestsDB {
     }
 
     public static void main(String[] args) {
-        TestsDB test = new TestsDB();
-        TestsDB.TestDB();
+        TestDB();
     }
 
 }
