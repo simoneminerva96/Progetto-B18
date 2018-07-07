@@ -1,4 +1,6 @@
 package Tests;
+import Client.Graphics.CheckControls;
+import Client.Graphics.ClientInterface;
 import Client.Graphics.Player.Player;
 import Server.GameClasses.*;
 import Server.GameClasses.ConnectionDB.ConnectionDB;
@@ -28,5 +30,15 @@ public class Tests {
         turn.setChosenDirection(Direction.FORWARD);
         turn.movePlayer();
         Assertions.assertEquals(p.getActualPosition(),turn.getDieresult());
+    }
+
+    @Test
+    public void testClient(){
+        boolean test;
+        CheckControls checkControls=new CheckControls();
+        ClientInterface clientInterface = new ClientInterface(checkControls);
+        test = clientInterface.isConnected();
+        Assertions.assertEquals(test,true);
+
     }
 }

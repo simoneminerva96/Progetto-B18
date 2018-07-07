@@ -13,7 +13,7 @@ public class ClientInterface implements Serializable {
     private boolean connected = false;
     private CheckControls checkControls;
 
-    ClientInterface(CheckControls checkControls){
+    public ClientInterface(CheckControls checkControls){
         this.checkControls=checkControls;
         try {
             //93.41.247.149 1201
@@ -170,5 +170,5 @@ public class ClientInterface implements Serializable {
         return c;
     }
 
-    boolean isConnected() { return connected; }
+    public boolean isConnected() { return connected; }
 }
