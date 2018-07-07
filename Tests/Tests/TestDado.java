@@ -14,7 +14,7 @@ public class TestDado {
                 break;
             }
 
-            assert false : "Il lancio del dado ha dei problemi";
+            if (true) throw new AssertionError("Il lancio del dado ha dei problemi");
             break;
 
         }

@@ -11,7 +11,7 @@ public class TestsDB {
     private static Scanner scanner = new Scanner(System.in);
 
     private static void TestDB(){
-        Object test = null;
+        Object test;
         String Nome;
         String Pass;
         ConnectionDB connection = new ConnectionDB();
@@ -28,7 +28,7 @@ public class TestsDB {
         test = connection.ExistsPlayer(cred);
         System.out.println(test);
 
-        assert test != null : "Login andato male";
+        if (test == null) throw new AssertionError("Login andato male");
     }
 
     public static void main(String[] args) {
