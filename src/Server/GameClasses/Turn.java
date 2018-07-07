@@ -34,9 +34,6 @@ public class Turn {
 
     public void setCorrectAnswer(boolean correctAnswer) { this.correctAnswer = correctAnswer; }
 
-    public int getDieresult() {
-        return dieresult;
-    }
 
     /**metodo che effettua il lancio del dado*/
     public int dieLaunch(){
@@ -112,7 +109,7 @@ public class Turn {
         return correctAnswer;
     }
 
-    boolean getCorrectAnswer(){ return this.correctAnswer; }
+    public boolean getCorrectAnswer(){ return this.correctAnswer; }
 
     /**AGGIUNGE LO SPICCHIO AL GIOCATORE SE LA DOMANDA è UNA DOMANDA FINALE*/
     private void obtainSlice(){

@@ -6,6 +6,8 @@ import org.junit.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.awt.*;
+
 public class Tests {
 
     @Test
@@ -19,14 +21,36 @@ public class Tests {
         test = connection.ExistsPlayer(cred);
         Assertions.assertEquals(test,true);
     }
-
+    //testa il movimento partendo da casella iniziale in avanti
     @Test
-    public void testMovement(){
+    public void testMovementForward(){
         Server.GameClasses.Player p=new Server.GameClasses.Player("prova");
         Turn turn=new Turn(p,new BoardProva());
-        turn.dieLaunch();
+        int DieResult=turn.dieLaunch();
         turn.setChosenDirection(Direction.FORWARD);
         turn.movePlayer();
-        Assertions.assertEquals(p.getActualPosition(),turn.getDieresult());
+        Assertions.assertEquals(p.getActualPosition(),DieResult);
     }
+    //testa il movimento all'indietro partendo dalla casella iniziale
+    @Test
+    public void testMovementBack(){
+        Server.GameClasses.Player p=new Server.GameClasses.Player("prova");
+        Turn turn=new Turn(p,new BoardProva());
+        int DieResult=turn.dieLaunch();
+        turn.setChosenDirection(Direction.BACK);
+        turn.movePlayer();
+        Assertions.assertEquals(p.getActualPosition(),36-DieResult);
+    }
+    //testa il movimento in avanti partendo dall'ultima casella (index=35)
+    @Test
+    public void testMovementForwardWithDifferentStart(){
+        Server.GameClasses.Player p=new Server.GameClasses.Player("prova");
+        p.setActualPosition(35);    //ultima casella
+        Turn turn=new Turn(p,new BoardProva());
+        int DieResult=turn.dieLaunch();
+        turn.setChosenDirection(Direction.FORWARD);
+        turn.movePlayer();
+        Assertions.assertEquals(p.getActualPosition(),DieResult -1);
+    }
+
 }

@@ -1,4 +1,9 @@
-package Server.GameClasses;
+package Server.GameClasses.ServerInterface;
+
+import Server.GameClasses.Controller;
+import Server.GameClasses.Credenziali;
+import Server.GameClasses.Direction;
+import Server.GameClasses.TypeOfRequest;
 
 import java.io.*;
 import java.net.Socket;
@@ -12,9 +17,8 @@ public class ServerInterface extends Thread implements Serializable {
     private int numberOfPlayers;
     private boolean esitoRisposta, loginEffettuato;
     private int index;
-    private boolean isFinalQuestion;
 
-    ServerInterface(Socket socketClient){
+    public ServerInterface(Socket socketClient){
         this.socketClient = socketClient;
         controller = new Controller();
         try{
@@ -97,7 +101,7 @@ public class ServerInterface extends Thread implements Serializable {
     }
 
     /** riceve l'indice della risposta */
-    private int getIndex(){
+    public int getIndex(){
         Integer index=0;
         try {
             index = (int) in.readObject();
@@ -219,7 +223,7 @@ public class ServerInterface extends Thread implements Serializable {
         }
     }
 
-    /** invia al client la categoria dello spicchio ottenuto oppure la stringa "nessuna" se non è una domanda finale */
+    /** invia al client la categoria dello spicchio ottenuto */
     private void sendCategories (String categoria) {
         try {
             out.writeObject(categoria);
