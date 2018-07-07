@@ -2,8 +2,9 @@ package Client.Graphics;
 
 public class ClientApplication {
     public static void main(String[] args) {
-        CheckControls checkControls=new CheckControls();
-        ClientInterface clientInterface = new ClientInterface(checkControls);
+
+        ClientInterface clientInterface = new ClientInterface();
+        CheckControls checkControls=new CheckControls(clientInterface);
         if (clientInterface.isConnected()) {
             try {
                 MainGraphics m = new MainGraphics("Trivial", clientInterface,checkControls);

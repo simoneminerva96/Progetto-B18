@@ -11,10 +11,8 @@ public class ClientInterface implements Serializable {
     private ObjectOutputStream out = null;
     private ObjectInputStream in = null;
     private boolean connected = false;
-    private CheckControls checkControls;
 
-    ClientInterface(CheckControls checkControls){
-        this.checkControls=checkControls;
+    ClientInterface(){
         try {
             //93.41.247.149 1201
             //InetAddress.getLocalHost() 8888
@@ -46,7 +44,6 @@ public class ClientInterface implements Serializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        checkControls.setCheckreceivedVictory(true);
         return check;
     }
 
@@ -123,7 +120,6 @@ public class ClientInterface implements Serializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        checkControls.setCheckreceivedBonusMalus(true);
         return esito;
     }
 
@@ -134,7 +130,7 @@ public class ClientInterface implements Serializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        checkControls.setCheckreceivedtype(true);
+
         return bonusMalus;
     }
 
@@ -145,7 +141,6 @@ public class ClientInterface implements Serializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        checkControls.setCheckreceivedInitialSquare(true);
         return check;
     }
 
@@ -166,7 +161,6 @@ public class ClientInterface implements Serializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        checkControls.setCheckReceivedSlices(true);
         return c;
     }
 
