@@ -36,27 +36,21 @@ public class PlayerGUI {
         slc = new ArrayList<>();
     }
 
-    /**
-     * Calcolo le coordinate (x,y) che devono essere raggiunte da (xUpdate,yUpdate). Vengono aggiornate
-     * ogni volta che viene eseguito il metodo update di Player.
-     */
+    /** Calcolo le coordinate (x,y) che devono essere raggiunte da (xUpdate,yUpdate). Vengono aggiornate
+     * ogni volta che viene eseguito il metodo update di Player. */
     public void updateCoordinates(){
         finali.setX((p.getX()*MINMOVEMENT));
         finali.setY((p.getY()*MINMOVEMENT));
     }
 
-    /**
-     * updateOnEachFrame aggiorna le coordinate (xUpdate,yUpdate) delle animazioni di +- 1 finchè non raggiungono i
-     * valori delle coordinate (x,y) sulla matrice. Il modo con cui vengono aggiornati dipende
-     * dalla direzione di spostamento (BACK o FORWARD).**/
+    /** updateOnEachFrame aggiorna le coordinate (xUpdate,yUpdate) delle animazioni di +- 1 finchè non raggiungono i
+     * valori delle coordinate (x,y) sulla matrice. Il modo con cui vengono aggiornati dipende dalla direzione di s
+     * postamento (BACK o FORWARD).**/
     public void updateOnEachFrame() {
-        int x = update.getX();
-        int y = update.getY();
-
        if(p.getDirection()==Direction.FORWARD)
-           updateForward(x,y);
+           updateForward( update.getX(), update.getY());
        else
-           updateBack(x,y);
+           updateBack(update.getX(),update.getY());
     }
 
     private void updateForward(int x,int y){

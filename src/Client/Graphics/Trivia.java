@@ -15,9 +15,7 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import java.util.ArrayList;
 
-/**
- * @author Di Cecca Rita, Kothuwa Gamage Stefano
- *
+/**@author Di Cecca Rita, Kothuwa Gamage Stefano
  * La classe Trivia rappresenta lo state del tabellone.
  * - backgroundMap: immagine della mappa di gioco, tabellone
  * - back,forward: immagine freccia che torna indietro e che va avanti
@@ -146,12 +144,10 @@ public class Trivia extends BasicGameState {
 
         if (launched) { d.getCurrentDie().draw(1550, 870); }
 
-        /*
-            METODI DI VERIFICA STATO POSIZIONE UTENTE
+        /* METODI DI VERIFICA STATO POSIZIONE UTENTE
          Se la pedina si è fermata (ready=true) controllo se è una casella di bonus malus.Se non è una bonus malus
          controllo se è la casella iniziale, se non è allora posso renderizzare la domanda, altrimenti controllo
-         se ho vinto o se passo il turno. Se ho risposto e mi è uscita la stringa, allora resetto ready e launched.
-         */
+         se ho vinto o se passo il turno. Se ho risposto e mi è uscita la stringa, allora resetto ready e launched. */
         checkReady(gameContainer,stateBasedGame,graphics);
 
         if (esc.isQuit()) {
@@ -209,7 +205,6 @@ public class Trivia extends BasicGameState {
             pause();
             gameContainer.exit();
         }
-
         launchButton.onMouseEnter(launchButton,input.getMouseX(),input.getMouseY());
     }
 
@@ -241,13 +236,12 @@ public class Trivia extends BasicGameState {
             switch (checktype) {
                 case BONUS:
                     fonx1.drawString(1190, 700, "PUOI RILANCIARE IL DADO!", Color.black);
-                    domanda.setClicked(true);
                     break;
                 case MALUS:
                     fonx1.drawString(1190, 700, "HAI PERSO IL TURNO!", Color.black);
-                    domanda.setClicked(true);
                     break;
             }
+            domanda.setClicked(true);
         }
         else {
             //ricevo check se la casella in cui sono è la casella iniziale
@@ -274,8 +268,7 @@ public class Trivia extends BasicGameState {
                 }
             }
         }
-        // se sono nella casella iniziale controllo se ho abbastanza spicchi per la vittoria, altrimenti
-        // passa il turno
+        // se sono nella casella iniziale controllo se ho abbastanza spicchi per la vittoria, altrimenti passa il turno
         else {
             if(!checkControls.isCheckreceivedVictory())
                 checkplayerVictory=clientInterface.receiveOutcome();
@@ -360,7 +353,7 @@ public class Trivia extends BasicGameState {
     }
 
     private void resetBoolean(){
-        domanda.setCheckreceivedQuestion(false);
+        domanda.setCheckreceivedQuestion();
         checkControls.reset();
     }
 }

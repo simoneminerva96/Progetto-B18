@@ -14,13 +14,11 @@ import Client.Graphics.Map.Map;
 
 public class Player{
     private Coordinate minime, massime, finali, matrice;
-    //private int id;
     private String name;
     private final int MINMOVEMENT = 2;
     private Direction direction = Direction.FORWARD;
 
     public Player(String name,int id,Map map){
-       // this.id = id;
         matrice = new Coordinate(map.getdimO(), map.getdimV());
         switch(id){
             case 1:
