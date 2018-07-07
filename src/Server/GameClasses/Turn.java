@@ -34,9 +34,6 @@ public class Turn {
 
     public void setCorrectAnswer(boolean correctAnswer) { this.correctAnswer = correctAnswer; }
 
-    public int getDieresult() {
-        return dieresult;
-    }
 
     /**metodo che effettua il lancio del dado*/
     public int dieLaunch(){
