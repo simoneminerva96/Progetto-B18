@@ -17,11 +17,9 @@ public class MainMenu extends BasicGameState {
 
     private Image background;
     private Image logo;
-    private TrueTypeFont fonx1;
     private StateButton play;
-    private TriviaFont f;
 
-    MainMenu()  { f = new TriviaFont(); }
+    MainMenu()  { }
 
     @Override
     public int getID() { return 2; }
@@ -30,7 +28,6 @@ public class MainMenu extends BasicGameState {
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
             background =new Image("res/backgrounds/green_landscape.png");
             logo=new Image("res/backgrounds/trivial logo.png");
-            fonx1 = new TrueTypeFont(f.getFont().deriveFont(23f),false);
             play=new StateButton(new Rectangle(750,400,189,91),new Image("res/buttons/Button_Play/Button_Play_01.png"),new Image("res/buttons/Button_Play/Button_Play_02.png"),new Image("res/buttons/Button_Play/Button_Play_01.png"),null);
     }
 
@@ -38,7 +35,6 @@ public class MainMenu extends BasicGameState {
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics)  {
             graphics.drawImage(background,0,0);
             graphics.drawImage(logo,440,150);
-            //fonx1.drawString(700,150,"TRIVIAL PURSUIT RELOADED", Color.white);
             play.render(gameContainer,graphics);
     }
 

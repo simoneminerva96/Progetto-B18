@@ -23,6 +23,7 @@ import org.newdawn.slick.state.StateBasedGame;
  * - f, fonx1: font
  * - clientInterface: oggetto per comunicare con il server
  * - checkReceivedQuestion: flag che indica se ho già ricevuto l'informazione dal server o no
+ * - clicked: flag che indica se si è risposto ad una domanda
  */
 
 public class Domanda extends BasicGameState {
@@ -68,11 +69,10 @@ public class Domanda extends BasicGameState {
         fonx1.drawString(1190,540, question.getAnswers().get(2).getAnswer(), Color.black);
         fonx1.drawString(1190,600, question.getAnswers().get(3).getAnswer(), Color.black);
         if (answered) {
-            if (esito) {
+            if (esito)
                 fonx1.drawString(1190, 700, "RISPOSTA ESATTA!", Color.black);
-            } else {
+            else
                 fonx1.drawString(1190,700, "RISPOSTA SBAGLIATA!", Color.black);
-            }
         }
     }
 

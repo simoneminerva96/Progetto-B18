@@ -40,18 +40,13 @@ public class CheckControls {
         this.checkreceivedInitialSquare = checkreceivedInitialSquare;
     }
 
-    public void setCheckreceivedVictory(boolean checkreceivedVictory) {
-        this.checkreceivedVictory = checkreceivedVictory;
-    }
+    public void setCheckreceivedVictory(boolean checkreceivedVictory) { this.checkreceivedVictory = checkreceivedVictory; }
 
     public void setCheckReceivedSlices(boolean checkReceivedSlices) {
         this.checkReceivedSlices = checkReceivedSlices;
     }
 
-    public boolean isCheckReceivedSlices() {
-        return checkReceivedSlices;
-
-    }
+    public boolean isCheckReceivedSlices() { return checkReceivedSlices; }
 
     public void reset(){
         checkreceivedBonusMalus=false;
