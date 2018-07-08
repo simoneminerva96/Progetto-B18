@@ -51,7 +51,7 @@ public class TrivialGame {
         orderPlayers(orderedLaunches);
     }
     /**ritorna i nickname dei giocatori dopo l'ordinamento iniziale*/
-    ArrayList<String> getordinatednicknames(){
+    public ArrayList<String> getordinatednicknames(){
         ArrayList<String> nicknames=new ArrayList<>();
         for (Player p : players) {
             nicknames.add(p.getNickname());
@@ -128,28 +128,28 @@ public class TrivialGame {
     }
 
     /** effettua il lancio del dado */
-    int throwDie(){ return turn.dieLaunch(); }
+    public int throwDie(){ return turn.dieLaunch(); }
 
-    void chooseDirection(Direction d){ turn.setChosenDirection(d); }
+    public void chooseDirection(Direction d){ turn.setChosenDirection(d); }
 
-    void movePlayer(){ turn.movePlayer(); }
+    public void movePlayer(){ turn.movePlayer(); }
 
-    boolean checkInitialSquare(){
+    public boolean checkInitialSquare(){
         boolean check=turn.checkInitialSquare();
         if(check) turn.setCorrectAnswer(false);
         return check;
     }
 
-    boolean checkBonusMalus(){ return turn.checkBonusMalus(); }
+    public boolean checkBonusMalus(){ return turn.checkBonusMalus(); }
 
-    BonusMalusRandom executeBonusMalus(){ return turn.executeBonusMalus(); }
+    public BonusMalusRandom executeBonusMalus(){ return turn.executeBonusMalus(); }
 
-    Question visualizeQuestion(){ return turn.visualizeQuestion(); }
+    public Question visualizeQuestion(){ return turn.visualizeQuestion(); }
 
-    boolean answerQuestion(int indexOfQuestion){ return turn.AnswerQuestion(indexOfQuestion); }
+    public boolean answerQuestion(int indexOfQuestion){ return turn.AnswerQuestion(indexOfQuestion); }
 
     /**Se la risposta data è sbagliata incrementa l'indice e aggiorna il giocatore di turno*/
-    void setPlayerOnTurn(){
+    public void setPlayerOnTurn(){
         if(!turn.getCorrectAnswer()){
             incrementIndex();
             turn.setPlayerOnTurn(players.get(index));
@@ -161,11 +161,11 @@ public class TrivialGame {
         if(index==players.size()) index=0;
     }
 
-    boolean verifyVictory(){ return turn.verifyVictory(); }
+    public boolean verifyVictory(){ return turn.verifyVictory(); }
 
-    boolean isFinalQuestion () { return turn.isFinalQuestion(); }
+    public boolean isFinalQuestion () { return turn.isFinalQuestion(); }
 
-    Categories getCategoriesOfTheSliceObtained () {
+    public Categories getCategoriesOfTheSliceObtained () {
         return turn.getCategoriesOfTheSliceObtained();
     }
 }
