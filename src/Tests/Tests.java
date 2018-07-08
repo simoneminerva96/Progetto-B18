@@ -69,4 +69,42 @@ public class Tests {
         Assertions.assertEquals(p.getActualPosition(),DieResult -1);
     }
 
+    @Test
+    public void testDomandaFinale(){
+
+        boolean test = true;
+        Server.GameClasses.Player p=new Server.GameClasses.Player("prova");
+        p.setActualPosition(32); //setto una caseela con una domanda
+        Turn turn= null;
+        try {
+            turn = new Turn(p,new Board());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        turn.obtainSlice();
+
+        Assertions.assertEquals(turn.isFinalQuestion(),test);
+
+    }
+
+    @Test
+    public void testSpicchio(){
+
+        Categories test = Categories.GEOGRAFIA;
+        Server.GameClasses.Player p=new Server.GameClasses.Player("prova");
+        p.setActualPosition(32); //setto una caseela con una domanda
+        Turn turn= null;
+        try {
+            turn = new Turn(p,new Board());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        turn.obtainSlice();
+
+        Assertions.assertEquals(turn.getCategoriesOfTheSliceObtained(),test);
+
+    }
+
 }

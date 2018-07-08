@@ -112,7 +112,7 @@ public class Turn {
     public boolean getCorrectAnswer(){ return this.correctAnswer; }
 
     /**AGGIUNGE LO SPICCHIO AL GIOCATORE SE LA DOMANDA è UNA DOMANDA FINALE*/
-    private void obtainSlice(){
+    public void obtainSlice(){
         Square actualSquare=getcurrentSquare();
         if(actualSquare instanceof FinalQuestionSquare){
             isFinalQuestion = true;
