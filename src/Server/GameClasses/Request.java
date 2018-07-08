@@ -5,14 +5,14 @@ import Server.GameClasses.ConnectionDB.ConnectionDB;
 /**
  * classe che rappresenta la richiesta di login o registrazione che avvengono collegandosi al database
  */
-    class Request {
+    public class Request {
         private ConnectionDB connection;
 
-    Request () {
+    public Request () {
         connection = new ConnectionDB();
     }
 
-    boolean request (Credenziali credenziali, TypeOfRequest typeOfRequest) {
+    public boolean request (Credenziali credenziali, TypeOfRequest typeOfRequest) {
         boolean check = false;
         switch (typeOfRequest) {
             case LOGIN:

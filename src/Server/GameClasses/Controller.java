@@ -19,12 +19,13 @@ public class Controller implements Serializable {
     }
 
     /**inizializza i giocatori nella logica di gioco*/
-    public void initializePlayers(int nplayers){
+    public void initializePlayers(int nplayers,String user1){
         ArrayList<String> gamingPlayers=new ArrayList<>();
         //INSERISCO GIOCATORI DI PROVA, POI ANDRANNO INSERITI I NICKNAME DEI GIOCATORI
         // PARTECIPANTI PASSANDOLI A QUESTO COSTRUTTORE
-        for(int i=0;i<nplayers;i++){
-            gamingPlayers.add("prova" + (i +1));
+        gamingPlayers.add(user1);
+        for(int i=1;i<nplayers;i++){
+            gamingPlayers.add("player" + (i +1));
         }
         match.initializePlayers(gamingPlayers); //inizializzo i giocatori
     }

@@ -17,6 +17,7 @@ public class ServerInterface extends Thread implements Serializable {
     private int numberOfPlayers;
     private boolean esitoRisposta, loginEffettuato;
     private int index;
+    private String nicknameOfPlayerLogged;
 
     public ServerInterface(Socket socketClient){
         this.socketClient = socketClient;
@@ -38,7 +39,7 @@ public class ServerInterface extends Thread implements Serializable {
         //riceve il numero di giocatori selezionato nel client
         numberOfPlayers = getIndex();
         //istanzia i giocatori e esegue il lancio iniziale del dado
-        controller.initializePlayers(numberOfPlayers);
+        controller.initializePlayers(numberOfPlayers,nicknameOfPlayerLogged);
         controller.beginningDieRoll();
         //invio i nicknames dei giocatori
         sendNicknames();
@@ -81,6 +82,7 @@ public class ServerInterface extends Thread implements Serializable {
         Credenziali credenziali;
         try {
             credenziali = (Credenziali) in.readObject();
+            nicknameOfPlayerLogged=credenziali.getUser();
             typeOfRequest = (TypeOfRequest) in.readObject();
             switch (typeOfRequest) {
                 case REGISTRAZIONE:
@@ -101,7 +103,7 @@ public class ServerInterface extends Thread implements Serializable {
     }
 
     /** riceve l'indice della risposta */
-    public int getIndex(){
+    private int getIndex(){
         Integer index=0;
         try {
             index = (int) in.readObject();
