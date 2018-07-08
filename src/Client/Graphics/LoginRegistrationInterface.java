@@ -1,5 +1,6 @@
 package Client.Graphics;
 
+import Client.Graphics.ClientInteface.ClientInterface;
 import Client.Graphics.Fonts.TextFieldTest;
 import Client.Graphics.Fonts.TriviaFont;
 import Client.Graphics.com.sticky.FormButton;

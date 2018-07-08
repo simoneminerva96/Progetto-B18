@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;
+import java.sql.SQLException;
 
 public class Tests {
 
@@ -25,7 +26,12 @@ public class Tests {
     @Test
     public void testMovementForward(){
         Server.GameClasses.Player p=new Server.GameClasses.Player("prova");
-        Turn turn=new Turn(p,new BoardProva());
+        Turn turn= null;
+        try {
+            turn = new Turn(p,new Board());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         int DieResult=turn.dieLaunch();
         turn.setChosenDirection(Direction.FORWARD);
         turn.movePlayer();
@@ -35,7 +41,12 @@ public class Tests {
     @Test
     public void testMovementBack(){
         Server.GameClasses.Player p=new Server.GameClasses.Player("prova");
-        Turn turn=new Turn(p,new BoardProva());
+        Turn turn= null;
+        try {
+            turn = new Turn(p,new Board());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         int DieResult=turn.dieLaunch();
         turn.setChosenDirection(Direction.BACK);
         turn.movePlayer();
@@ -46,7 +57,12 @@ public class Tests {
     public void testMovementForwardWithDifferentStart(){
         Server.GameClasses.Player p=new Server.GameClasses.Player("prova");
         p.setActualPosition(35);    //ultima casella
-        Turn turn=new Turn(p,new BoardProva());
+        Turn turn= null;
+        try {
+            turn = new Turn(p,new Board());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         int DieResult=turn.dieLaunch();
         turn.setChosenDirection(Direction.FORWARD);
         turn.movePlayer();

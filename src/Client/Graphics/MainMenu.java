@@ -1,18 +1,14 @@
 package Client.Graphics;
 
-import Client.Graphics.Fonts.TriviaFont;
 import Client.Graphics.com.sticky.StateButton;
 import org.newdawn.slick.*;
-import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-/**
- * State in cui è presente il tasto play per iniziare a giocare.
- */
+/** State in cui è presente il tasto play per iniziare a giocare. */
 public class MainMenu extends BasicGameState {
 
     private Image background;

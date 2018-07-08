@@ -32,9 +32,9 @@ public class ServerInterface extends Thread implements Serializable {
 
     @Override
     public void run() {
-        /*while (!loginEffettuato) {
+        while (!loginEffettuato) {
             loginEffettuato = getCredenziali();
-        }*/
+        }
         //riceve il numero di giocatori selezionato nel client
         numberOfPlayers = getIndex();
         //istanzia i giocatori e esegue il lancio iniziale del dado

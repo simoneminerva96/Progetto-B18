@@ -1,5 +1,6 @@
 package Client.Graphics;
 
+import Client.Graphics.ClientInteface.ClientInterface;
 import Client.Graphics.Player.Player;
 import Client.Graphics.com.sticky.StateButton;
 import Server.GameClasses.*;
@@ -66,8 +67,7 @@ public class Trivia extends BasicGameState {
     private Escape esc;
     private TrueTypeFont fonx1;
     private TriviaFont f;
-    private boolean checkBonusMalus,checkinitialSquare,checkplayerVictory;
-    private BonusMalusRandom checktype;
+    private boolean checkBonusMalus,checkinitialSquare;
     private boolean checkreceivedInformationPLAYERS; //diventa true quando ho ricevuto l'informazione sul num di giocatori
     private int indexPlayerOnTurn;
 
@@ -152,6 +152,7 @@ public class Trivia extends BasicGameState {
          controllo se è la casella iniziale, se non è allora posso renderizzare la domanda, altrimenti controllo
          se ho vinto o se passo il turno. Se ho risposto e mi è uscita la stringa, allora resetto ready e launched.
          */
+
         checkReady(gameContainer,stateBasedGame,graphics);
 
         if (esc.isQuit()) {
@@ -170,8 +171,8 @@ public class Trivia extends BasicGameState {
         if(!checkreceivedInformationPLAYERS) initializePlayers();
 
         if(input.isMousePressed(0)){
-            /*ottengo il numero estratto, launched=true e aggiorno la
-        faccia del dado. Resetto answered, esito a false perchè risponderò ad una domanda.*/
+            /*ottengo il numero estratto, launched=true e aggiorno la faccia del dado. Resetto answered, esito a false
+            perchè risponderò ad una domanda.*/
             if(launchButton.onClickBoolean(input.getMouseX(),input.getMouseY())){
                 if(!launched && domanda.isClicked()){
                     clientInterface.sendOutcome(); //comunica al server che deve eseguire setplayerOnturn
@@ -185,8 +186,8 @@ public class Trivia extends BasicGameState {
                     resetBoolean();
                 }
             }
-        /*aggiorno il server sulla direzione presa e
-        aggiorno la gui dei giocatori verificando se è stato cliccato il tasto per il lancio del dado*/
+        /*aggiorno il server sulla direzione presa e aggiorno la gui dei giocatori verificando se è stato cliccato il
+        tasto per il lancio del dado*/
             if(launched){
                 if(bkButton.onClickBoolean(input.getMouseX(),input.getMouseY()))
                     updateGui(Direction.BACK);
@@ -221,9 +222,9 @@ public class Trivia extends BasicGameState {
      */
     private void checkReady(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics){
         if (pGUI.get(indexPlayerOnTurn).isReady() ) {
+            checkControls.getStatus();
             //entra se è una bonus/malus o random
-           if(!checkControls.isCheckreceivedBonusMalus())
-               checkBonusMalus=clientInterface.checkBonusMalus();
+            checkBonusMalus=checkControls.isCheckBonusMalus();
             checkBonusMalusState(gameContainer,stateBasedGame,graphics);
             pGUI.get(indexPlayerOnTurn).setReady(false);
             launched = false;
@@ -232,27 +233,25 @@ public class Trivia extends BasicGameState {
 
     /** Metodo che esegue la bonus malus oppure controlla se sono sulla casella iniziale */
     private void checkBonusMalusState(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics){
+        BonusMalusRandom checktype;
         //se il checkbonusmalus è vero esegui l'effetto del bonus malus
         if (checkBonusMalus) {
             //ricevo il tipo estratto
-           if(!checkControls.isCheckreceivedtype())
-               checktype=clientInterface.getType();
+            checktype=checkControls.getChecktype();
             //a seconda del tipo estratto eseguo bonus o malus
             switch (checktype) {
                 case BONUS:
                     fonx1.drawString(1190, 700, "PUOI RILANCIARE IL DADO!", Color.black);
-                    domanda.setClicked(true);
                     break;
                 case MALUS:
                     fonx1.drawString(1190, 700, "HAI PERSO IL TURNO!", Color.black);
-                    domanda.setClicked(true);
                     break;
             }
+            domanda.setClicked(true);
         }
         else {
             //ricevo check se la casella in cui sono è la casella iniziale
-           if(!checkControls.isCheckreceivedInitialSquare())
-               checkinitialSquare=clientInterface.getCheckInitialSquare();
+            checkinitialSquare=checkControls.isCheckinitialSquare();
             checkVictoryState(gameContainer,stateBasedGame,graphics);
         }
     }
@@ -260,31 +259,31 @@ public class Trivia extends BasicGameState {
     /** Se non sono nei casi precedenti, sono su una casella classica e quindi render dello state domanda
      * o verifica se l'utente ha vinto */
     private void checkVictoryState(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics){
+        boolean checkplayerVictory;
+
         //se non sono sulla casella iniziale renderizzo la domanda
         if (!checkinitialSquare) {
             domanda.render(gameContainer, stateBasedGame, graphics);
-            if (domanda.isEsito()) {
-                if(!checkControls.isCheckReceivedSlices()){
-                    String c = clientInterface.getCategoriesOfTheSliceObtained();
-                    if (!c.equals("Nessuna")) {
-                        Categories categories = Categories.valueOf(c);
-                        Slice slice = new Slice(categories);
-                        pGUI.get(indexPlayerOnTurn).addSliceObtained(slice);
-                    }
-                }
+            checkControls.setEsitoDomanda(domanda.isEsito());
+            checkControls.checkReceivedSlices();
+            String c=checkControls.getC();
+            if(!c.equals("NULL")&&!c.equals("Nessuna")){
+                pGUI.get(indexPlayerOnTurn).addSliceObtained(new Slice(Categories.valueOf(c)));
+                checkControls.setC("NULL");
             }
         }
         // se sono nella casella iniziale controllo se ho abbastanza spicchi per la vittoria, altrimenti
         // passa il turno
         else {
-            if(!checkControls.isCheckreceivedVictory())
-                checkplayerVictory=clientInterface.receiveOutcome();
+           checkplayerVictory=checkControls.isCheckplayerVictory();
             if (checkplayerVictory) {
                 fonx1.drawString(1190, 700, "HAI VINTO", Color.black);
                 checkVictory = true;
             } else {
                 fonx1.drawString(1190, 700, "CASELLA INIZIALE, PASSI IL TURNO!", Color.black);
+                pGUI.get(indexPlayerOnTurn).setReady(false);
                 domanda.setClicked(true);
+                launched = false;
             }
         }
     }
@@ -360,7 +359,7 @@ public class Trivia extends BasicGameState {
     }
 
     private void resetBoolean(){
-        domanda.setCheckreceivedQuestion(false);
+        domanda.setCheckreceivedQuestion();
         checkControls.reset();
     }
 }

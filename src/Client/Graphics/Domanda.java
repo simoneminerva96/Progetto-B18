@@ -1,5 +1,6 @@
 package Client.Graphics;
 
+import Client.Graphics.ClientInteface.ClientInterface;
 import Server.GameClasses.Question;
 import Client.Graphics.Fonts.TriviaFont;
 import org.lwjgl.input.Mouse;
@@ -10,12 +11,10 @@ import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-/**
- * @author Rita
- * La classe Domanda rappresenta lo state che viene renderizzato sul tabellone {@see Trivia} che
- * comprende la domanda e le relative 4 risposte. Inoltre, prevede dei controlli sulla gestione
- * della domanda corretta e di mostrare una stringa che informa se la risposta cliccata è corretta o
- * meno.
+/** @author Rita
+ * La classe Domanda rappresenta lo state che viene renderizzato sul tabellone che comprende la domanda e le relative
+ * 4 risposte. Inoltre, prevede dei controlli sulla gestione della domanda corretta e di mostrare una stringa che
+ * informa se la risposta cliccata è corretta o meno.
  * - esito: flag in cui salvo l'esito della risposta che ho cliccato
  * - answered: flag che indica se ho risposto o meno
  * - question: oggetto di tipo Question che contiene la domanda estratta
@@ -23,8 +22,8 @@ import org.newdawn.slick.state.StateBasedGame;
  * - f, fonx1: font
  * - clientInterface: oggetto per comunicare con il server
  * - checkReceivedQuestion: flag che indica se ho già ricevuto l'informazione dal server o no
- * - clicked: flag che indica se si è risposto ad una domanda
- */
+ * - clicked: flag che indica se ho cliccato sulla domanda
+ * @see Trivia per il tabellone */
 
 public class Domanda extends BasicGameState {
     private boolean esito = false;
@@ -44,8 +43,8 @@ public class Domanda extends BasicGameState {
     @Override
     public int getID() { return 6; }
 
-    void setCheckreceivedQuestion(boolean check){
-        this.checkreceivedQuestion=check;
+    void setCheckreceivedQuestion(){
+        this.checkreceivedQuestion= false;
     }
 
     @Override
@@ -53,10 +52,8 @@ public class Domanda extends BasicGameState {
         fonx1 = new TrueTypeFont(f.getFont().deriveFont(23f), false);
     }
 
-    /**
-     * Visualizzo nella grafica le domande e le risposte. Se ho risposto, aggiorno il flag relativo. In base al valore
-     * di esito visualizzo risposta1 o risposta2. Se ho risposto e ho visualizzato la stringa, end = true.
-     */
+    /** Visualizzo nella grafica le domande e le risposte. Se ho risposto, aggiorno il flag relativo. In base al valore
+     * di esito visualizzo la stringa appropriata. Se ho risposto ho cliccato e quindi clicked=true */
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
         if(!checkreceivedQuestion){
@@ -76,11 +73,9 @@ public class Domanda extends BasicGameState {
         }
     }
 
-    /**
-     * Controllo le coordinate delle risposte in cui l'utente clicca. In ogni caso, posso cliccare solo
+    /** Controllo le coordinate delle risposte in cui l'utente clicca. In ogni caso, posso cliccare solo
      * se premo il tasto sinistro del mouse e se non ho già risposto. Una volta cliccato, aggiorno
-     * il flag answered, clicked e mi salvo l'esito della risposta ricevuta dal server.
-     */
+     * il flag answered, clicked e mi salvo l'esito della risposta ricevuta dal server.*/
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) {
         int posX = Mouse.getX();

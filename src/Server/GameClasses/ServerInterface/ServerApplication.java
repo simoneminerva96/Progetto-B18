@@ -1,7 +1,5 @@
 package Server.GameClasses.ServerInterface;
 
-import Server.GameClasses.ServerInterface.ServerInterface;
-
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
