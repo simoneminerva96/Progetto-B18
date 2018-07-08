@@ -99,4 +99,28 @@ public class ConnectionDB {
         }
         return returnMessage;
     }
+
+    public void getPartite(){
+
+        //
+        String query = "{ call SHOW_GAMES() }";
+        ResultSet rs;
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/trivial?useSSL=false", "root", "root");
+             CallableStatement stmt = conn.prepareCall(query)) {
+
+            stmt.executeUpdate();
+
+            rs = stmt.getResultSet();
+
+            while (rs.next()) {
+                System.out.println(rs.getString(1) + "       " + rs.getString(2) + "       " + rs.getString(3));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+
+
+
+    }
 }
