@@ -1,4 +1,4 @@
-package Server.GameClasses;
+package Server.GameClasses.GameClasses;
 
 import Server.GameClasses.ConnectionDB.ConnectionDB;
 

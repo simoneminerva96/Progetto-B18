@@ -1,6 +1,7 @@
 package Server.GameClasses.Squares;
 
-import Server.GameClasses.*;
+import Server.GameClasses.GameClasses.Categories;
+
 /**
     casella corrispondente a una domanda finale
  */

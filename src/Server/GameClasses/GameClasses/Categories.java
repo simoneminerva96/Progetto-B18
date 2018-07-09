@@ -1,4 +1,4 @@
-package Server.GameClasses;
+package Server.GameClasses.GameClasses;
 
 /**
  * enum con le possibili categorie di domande, caselle,spicchi

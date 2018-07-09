@@ -1,4 +1,6 @@
-package Server.GameClasses;
+package Server.GameClasses.GameClasses;
+
+import Server.GameClasses.GameClasses.Categories;
 
 /**
  * classe che corrisponde a uno spicchio, ottenibile rispondendo a una domanda finale

@@ -1,7 +1,7 @@
 package Client.Graphics.Player;
 
-import Server.GameClasses.Direction;
-import Server.GameClasses.Slice;
+import Server.GameClasses.GameClasses.Direction;
+import Server.GameClasses.GameClasses.Slice;
 import org.newdawn.slick.Animation;
 import java.util.ArrayList;
 

@@ -1,12 +1,9 @@
-package Tests;
-import Client.Graphics.Player.Player;
-import Server.GameClasses.*;
+
 import Server.GameClasses.ConnectionDB.ConnectionDB;
-import org.junit.*;
+import Server.GameClasses.GameClasses.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.awt.*;
 import java.sql.SQLException;
 
 public class Tests {
@@ -25,7 +22,7 @@ public class Tests {
     //testa il movimento partendo da casella iniziale in avanti
     @Test
     public void testMovementForward(){
-        Server.GameClasses.Player p=new Server.GameClasses.Player("prova");
+        Player p=new Player("prova");
         Turn turn= null;
         try {
             turn = new Turn(p,new Board());
@@ -40,7 +37,7 @@ public class Tests {
     //testa il movimento all'indietro partendo dalla casella iniziale
     @Test
     public void testMovementBack(){
-        Server.GameClasses.Player p=new Server.GameClasses.Player("prova");
+        Player p=new Player("prova");
         Turn turn= null;
         try {
             turn = new Turn(p,new Board());
@@ -55,7 +52,7 @@ public class Tests {
     //testa il movimento in avanti partendo dall'ultima casella (index=35)
     @Test
     public void testMovementForwardWithDifferentStart(){
-        Server.GameClasses.Player p=new Server.GameClasses.Player("prova");
+        Player p=new Player("prova");
         p.setActualPosition(35);    //ultima casella
         Turn turn= null;
         try {
@@ -73,7 +70,7 @@ public class Tests {
     public void testDomandaFinale(){
 
         boolean test = true;
-        Server.GameClasses.Player p=new Server.GameClasses.Player("prova");
+        Player p=new Player("prova");
         p.setActualPosition(32); //setto una caseela con una domanda
         Turn turn= null;
         try {
@@ -92,7 +89,7 @@ public class Tests {
     public void testSpicchio(){
 
         Categories test = Categories.GEOGRAFIA;
-        Server.GameClasses.Player p=new Server.GameClasses.Player("prova");
+        Player p=new Player("prova");
         p.setActualPosition(32); //setto una caseela con una domanda
         Turn turn= null;
         try {

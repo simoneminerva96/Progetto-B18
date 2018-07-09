@@ -1,4 +1,6 @@
-package Server.GameClasses;
+package Server.GameClasses.ServerInterface;
+
+import Server.GameClasses.GameClasses.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;

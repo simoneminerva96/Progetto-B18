@@ -1,8 +1,8 @@
 package Server.GameClasses.ConnectionDB;
 
-import Server.GameClasses.Answer;
-import Server.GameClasses.Credenziali;
-import Server.GameClasses.Question;
+import Server.GameClasses.GameClasses.Answer;
+import Server.GameClasses.GameClasses.Credenziali;
+import Server.GameClasses.GameClasses.Question;
 import java.sql.*;
 import java.util.ArrayList;
 

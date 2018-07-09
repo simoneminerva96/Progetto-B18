@@ -1,6 +1,7 @@
-package Server.GameClasses;
+package Server.GameClasses.GameClasses;
 
-import java.sql.SQLException;
+import Server.GameClasses.GameClasses.*;
+
 import java.util.*;
 
 /**

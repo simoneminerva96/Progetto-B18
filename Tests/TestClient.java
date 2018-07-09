@@ -1,12 +1,9 @@
-package Tests;
+
 import Client.Graphics.CheckControls;
 import Client.Graphics.ClientInteface.ClientInterface;
 import Client.Graphics.Player.Coordinate;
-import Client.Graphics.Player.Player;
 import Client.Graphics.Map.Map;
-import Server.GameClasses.Board;
-import Server.GameClasses.Direction;
-import Server.GameClasses.Turn;
+import Server.GameClasses.GameClasses.Direction;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.newdawn.slick.SlickException;

@@ -1,6 +1,6 @@
 package Client.Graphics;
 import Client.Graphics.ClientInteface.ClientInterface;
-import Server.GameClasses.BonusMalusRandom;
+import Server.GameClasses.GameClasses.BonusMalusRandom;
 
 /**@author Di Cecca Rita, Kothuwa Gamage Thenuka Stefano
  * Classe contentente dei flag che segnalano a Trivia se alcune informazioni sono state già ricevute da ClientInterface

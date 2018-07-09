@@ -1,6 +1,7 @@
 package Client.Graphics.ClientInteface;
 
-import Server.GameClasses.*;
+import Server.GameClasses.GameClasses.*;
+
 import java.io.Serializable;
 import java.io.*;
 import java.net.InetAddress;

@@ -1,9 +1,8 @@
 package Server.GameClasses.ServerInterface;
 
-import Server.GameClasses.Controller;
-import Server.GameClasses.Credenziali;
-import Server.GameClasses.Direction;
-import Server.GameClasses.TypeOfRequest;
+import Server.GameClasses.GameClasses.Credenziali;
+import Server.GameClasses.GameClasses.Direction;
+import Server.GameClasses.GameClasses.TypeOfRequest;
 
 import java.io.*;
 import java.net.Socket;

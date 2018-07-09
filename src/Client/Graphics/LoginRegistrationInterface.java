@@ -4,7 +4,7 @@ import Client.Graphics.ClientInteface.ClientInterface;
 import Client.Graphics.Fonts.TextFieldTest;
 import Client.Graphics.Fonts.TriviaFont;
 import Client.Graphics.com.sticky.FormButton;
-import Server.GameClasses.TypeOfRequest;
+import Server.GameClasses.GameClasses.TypeOfRequest;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
