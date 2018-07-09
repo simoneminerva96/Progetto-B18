@@ -1,4 +1,4 @@
-package Server.GameClasses.Squares;
+package Server.GameClasses.GameClasses.Squares;
 
 public class ScienceSquare extends Square {
 

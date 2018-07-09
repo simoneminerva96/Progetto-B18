@@ -1,7 +1,7 @@
 package Server.GameClasses.GameClasses;
 
 import Server.GameClasses.ConnectionDB.ConnectionDB;
-import Server.GameClasses.Squares.*;
+import Server.GameClasses.GameClasses.Squares.*;
 import java.util.ArrayList;
 /**
  * classe che corrisponde al tabellone di gioco. versione di prova senza connessione al DB

@@ -1,7 +1,6 @@
 package Server.GameClasses.GameClasses;
 
-import Server.GameClasses.GameClasses.*;
-import Server.GameClasses.Squares.*;
+import Server.GameClasses.GameClasses.Squares.*;
 
 /**
  * Classe che corrisponde a un turno di gioco, effettua la movimentazione delle pedine sul tabellone

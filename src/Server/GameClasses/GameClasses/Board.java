@@ -1,6 +1,6 @@
 package Server.GameClasses.GameClasses;
 
-import Server.GameClasses.Squares.*;
+import Server.GameClasses.GameClasses.Squares.*;
 import Server.GameClasses.ConnectionDB.ConnectionDB;
 import java.sql.SQLException;
 import java.util.ArrayList;
