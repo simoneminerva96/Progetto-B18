@@ -15,22 +15,14 @@ import org.newdawn.slick.SlickException;
  */
 
 public class Map {
-    private Tile[][] matrix;
-    private int dimO,dimV,counter=0;
-    private Coordinate coordinate;
+    private int dimO,dimV;
     private int tilesize;
 
     public Map(int dimO,int dimV,int size) throws SlickException {
         this.dimO = dimO;
         this.dimV = dimV;
-        matrix = new Tile[dimO][dimV];
         tilesize = size;
-        for(int j=0;j<dimO;j++){
-            for(int z=0;z<dimV;z++){
-                matrix[z][j] = new Tile(counter);
-                counter++;
-            }
-        }
+
     }
 
     public int getdimO() {
