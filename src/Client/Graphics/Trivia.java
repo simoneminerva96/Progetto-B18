@@ -40,7 +40,7 @@ import java.util.ArrayList;
  * - playerBack: arrayList di sfondi dei giocatori
  * - checkVictory: flag che indica se ho vinto la partita. in tal caso, visualizzo stringa e dopo 5s chiude il gioco
  * - diamanti: arrayList di image di diamanti
- * - indexPlayerOnTurn: indice del giocatore di turno
+ * - indexPlayerOnTurn: indice del  giocatore di turno
  */
 
 public class Trivia extends BasicGameState {
