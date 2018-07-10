@@ -15,7 +15,7 @@ public class CheckControls {
     private boolean esitoDomanda=false;
     private BonusMalusRandom checktype;
     private ClientInterface clientInterface;
-    private String c="NULL";
+    private String c="Nessuna";
 
     public CheckControls(ClientInterface clientInterface){
         checkreceivedBonusMalus=false;

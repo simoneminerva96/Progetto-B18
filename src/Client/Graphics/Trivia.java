@@ -270,9 +270,9 @@ public class Trivia extends BasicGameState {
             checkControls.setEsitoDomanda(domanda.isEsito());
             checkControls.checkReceivedSlices();
             String c=checkControls.getC();
-            if(!c.equals("NULL")&&!c.equals("Nessuna")){
+            if(!c.equals("Nessuna")){
                 pGUI.get(indexPlayerOnTurn).addSliceObtained(new Slice(Categories.valueOf(c)));
-                checkControls.setC("NULL");
+                checkControls.setC("Nessuna");
             }
         }
         // se sono nella casella iniziale controllo se ho abbastanza spicchi per la vittoria, altrimenti
