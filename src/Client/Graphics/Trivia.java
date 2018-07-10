@@ -221,7 +221,7 @@ public class Trivia extends BasicGameState {
      * casella di bonus o di malus.
      * @param gameContainer container della finestra di gioco
      * @param stateBasedGame oggetto che permette di passare tra state diversi
-     * @param graphics oggetto che permette di disegnare sulla finestra
+     * @param graphics oggetto che permette di disegnare sulla  finestra
      */
     private void checkReady(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics){
         if (pGUI.get(indexPlayerOnTurn).isReady() ) {
