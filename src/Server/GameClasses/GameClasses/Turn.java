@@ -127,6 +127,6 @@ public class Turn {
 
     /**ritorna true se la casella attuale è una casella corrispondente a una domanda finale*/
     public boolean isFinalQuestion() { return isFinalQuestion; }
-
+    /**ritorna la categoria dello spicchio ottenuto*/
     public Categories getCategoriesOfTheSliceObtained () { return categoriesOfTheSliceObtained; }
 }
