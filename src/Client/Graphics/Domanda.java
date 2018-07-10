@@ -109,17 +109,17 @@ public class Domanda extends BasicGameState {
     }
 
     private void drawQuestion(){
-        if(question.getQuestion().length()>60) {
-            String part1=question.getQuestion().substring(0,30);
-            String part2=question.getQuestion().substring(30,60);
-            String part3=question.getQuestion().substring(60);
+        if(question.getQuestion().length()>70) {
+            String part1=question.getQuestion().substring(0,35);
+            String part2=question.getQuestion().substring(35,70);
+            String part3=question.getQuestion().substring(70);
             fonx1.drawString( 1100,310, part1+ "-", Color.black);
             fonx1.drawString( 1100,340, part2+"-", Color.black);
             fonx1.drawString( 1100,370, part3, Color.black);
         }
-        else if(question.getQuestion().length() > 30 ){
-            String part1=question.getQuestion().substring(0,30);
-            String part2=question.getQuestion().substring(30);
+        else if(question.getQuestion().length() > 35 ){
+            String part1=question.getQuestion().substring(0,35);
+            String part2=question.getQuestion().substring(35);
             fonx1.drawString( 1100,340, part1+ "-", Color.black);
             fonx1.drawString( 1100,370, part2, Color.black);
         }
