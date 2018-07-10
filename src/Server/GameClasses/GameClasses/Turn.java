@@ -125,7 +125,7 @@ public class Turn {
     /**verifica la vittoria del giocatore di turno*/
     public Boolean verifyVictory(){ return playerOnTurn.getSlicesObtained().size() == 6 && playerOnTurn.getActualPosition() ==0; }
 
-    /**ritorna true se la casella attuale è una casella corrispondente a una domanda finale*/
+    /**ritorna true se la casella attuale è una casella corrispondente a una domanda finale */
     public boolean isFinalQuestion() { return isFinalQuestion; }
     /**ritorna la categoria dello spicchio ottenuto*/
     public Categories getCategoriesOfTheSliceObtained () { return categoriesOfTheSliceObtained; }
