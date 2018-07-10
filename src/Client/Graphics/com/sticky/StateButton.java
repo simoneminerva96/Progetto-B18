@@ -72,6 +72,7 @@ public class StateButton extends ButtonSkeleton implements ButtonListener,
         if(mx>=minx&&mx<=maxx&&my>=miny&&my<=maxy) {
             current = press;
             gc.setMusicOn(!on);
+
         }
     }
 

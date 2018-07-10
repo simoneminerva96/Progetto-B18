@@ -59,6 +59,7 @@ public class LoginRegistrationInterface extends BasicGameState {
         psw.setMaskEnabled(true);
         music = new Music("res/music/Kevin MacLeod _ Enter the Party.wav");
         music.play();
+        music.loop();
     }
 
     @Override
@@ -104,6 +105,7 @@ public class LoginRegistrationInterface extends BasicGameState {
         }
         regButton.onMouseEnter(regButton,in.getMouseX(),in.getMouseY());
         logButton.onMouseEnter(logButton, in.getMouseX(), in.getMouseY());
+
     }
 
 }
