@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.sql.SQLException;
 
 public class Tests {
-
+    //test connessione db
     @Test
     public void testconnection(){
         Boolean test;
